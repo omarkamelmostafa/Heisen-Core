@@ -1,0 +1,752 @@
+// frontend/src/headache.txt
+
+TO DO LIST - AUTH PAGES - FRONTEND PART
+[#01]- break down & clean up auth pages (✔)
+[#02]- error pages for auth pages (✔)
+[#03]- auth configrautions variabes (✔)
+[#04]- password strenghen meter (✔)
+[#05]- zod schema, RHF (✔)
+[#06]- redux auth slice, store
+[#07]- 
+[#08]- 
+[#09]- 
+[#10]- 
+
+
+
+
+// use simulated loading => use suspense 
+// use lazy loading => use suspense
+// animations text for auth right panal => framer motion
+
+
+ 
+
+
+
+
+
+ // major update
+ PROJECT STRUCTURE REPORT
+Generated: 2025-10-26T11:47:30.223Z
+Root Directory: D:\DEV CLOUD\PROJECTS\myProjects\LEARNING_APPS\NEW-STARTER\frontend
+Total Files: 235
+
+FILE TYPES BREAKDOWN:
+.local: 1 files
+.production: 1 files
+no-extension: 3 files
+.js: 57 files
+.json: 4 files
+.mjs: 3 files
+.svg: 7 files
+.png: 1 files
+.md: 1 files
+.jsx: 92 files
+.ico: 1 files
+.css: 4 files
+.txt: 11 files
+.download: 49 files
+
+ALL FILES:
+.env.local
+.env.production
+.eslintignore
+.gitignore
+add-path-comments-to-backend-files.js
+add-path-comments-to-frontend-files.js
+components.json
+eslint.config.mjs
+generate-file-paths.js
+jsconfig.json
+next.config.mjs
+package-lock.json
+package.json
+postcss.config.mjs
+public/file.svg
+public/football-svgrepo-com.svg
+public/globe.svg
+public/images/error-image.png
+public/images/logo.svg
+public/next.svg
+public/vercel.svg
+public/window.svg
+README.md
+src/app/(auth)/auth-layout-wrapper.jsx
+src/app/(auth)/forgot-password/error.jsx
+src/app/(auth)/forgot-password/loading.jsx
+src/app/(auth)/forgot-password/page.jsx
+src/app/(auth)/layout.jsx
+src/app/(auth)/login/error.jsx
+src/app/(auth)/login/loading.jsx
+src/app/(auth)/login/page.jsx
+src/app/(auth)/reset-password/error.jsx
+src/app/(auth)/reset-password/loading.jsx
+src/app/(auth)/reset-password/page.jsx
+src/app/(auth)/signup/error.jsx
+src/app/(auth)/signup/loading.jsx
+src/app/(auth)/signup/page.jsx
+src/app/(auth)/verify-email/error.jsx
+src/app/(auth)/verify-email/loading.jsx
+src/app/(auth)/verify-email/page.jsx
+src/app/favicon.ico
+src/app/globals.css
+src/app/layout.jsx
+src/app/not-found.jsx
+src/app/page.jsx
+src/components/auth/error/dev-error-toggle.jsx
+src/components/auth/error/dev-wrapper.jsx
+src/components/auth/error/error-boundary.jsx
+src/components/auth/error/error-simulator.jsx
+src/components/auth/error/production-error-trigger.jsx
+src/components/auth/forgot-password/back-to-login-link.jsx
+src/components/auth/forgot-password/combine.js
+src/components/auth/forgot-password/combined_data.txt
+src/components/auth/forgot-password/forgot-password-header.jsx
+src/components/auth/forgot-password/form-header.jsx
+src/components/auth/forgot-password/form-state.jsx
+src/components/auth/forgot-password/help-text.jsx
+src/components/auth/forgot-password/reset-password-form.jsx
+src/components/auth/forgot-password/success-actions.jsx
+src/components/auth/forgot-password/success-icon.jsx
+src/components/auth/forgot-password/success-message.jsx
+src/components/auth/forgot-password/success-state.jsx
+src/components/auth/forgot-password/troubleshooting-tips.jsx
+src/components/auth/forms/auth-form-provider.jsx
+src/components/auth/forms/auth-submit-button.jsx
+src/components/auth/forms/Authentication System Flow.txt
+src/components/auth/forms/combine.js
+src/components/auth/forms/combined_data.txt
+src/components/auth/forms/form-field.jsx
+src/components/auth/login/combine.js
+src/components/auth/login/combined_data.txt
+src/components/auth/login/divider.jsx
+src/components/auth/login/login-form.jsx
+src/components/auth/login/login-header.jsx
+src/components/auth/login/login-options.jsx
+src/components/auth/login/welcome-section.jsx
+src/components/auth/panels/auth-right-panel.jsx
+src/components/auth/panels/background-decoration.jsx
+src/components/auth/panels/combine.js
+src/components/auth/panels/combined_data.txt
+src/components/auth/panels/content-card.jsx
+src/components/auth/panels/header-section.jsx
+src/components/auth/panels/index.jsx
+src/components/auth/providers/auth-providers.jsx
+src/components/auth/providers/combine.js
+src/components/auth/providers/combined_data.txt
+src/components/auth/reset-password/back-to-login-link.jsx
+src/components/auth/reset-password/combine.js
+src/components/auth/reset-password/combined_data.txt
+src/components/auth/reset-password/form-header.jsx
+src/components/auth/reset-password/form-state.jsx
+src/components/auth/reset-password/help-text.jsx
+src/components/auth/reset-password/password-match-indicator.jsx
+src/components/auth/reset-password/password-requirements.jsx
+src/components/auth/reset-password/password-strength-indicator.jsx
+src/components/auth/reset-password/reset-password-form.jsx
+src/components/auth/reset-password/reset-password-header.jsx
+src/components/auth/reset-password/security-tips.jsx
+src/components/auth/reset-password/success-actions.jsx
+src/components/auth/reset-password/success-icon.jsx
+src/components/auth/reset-password/success-message.jsx
+src/components/auth/reset-password/success-state.jsx
+src/components/auth/shared/combine.js
+src/components/auth/shared/combined_data.txt
+src/components/auth/shared/password-match-indicator.jsx
+src/components/auth/shared/password-strength-meter.jsx
+src/components/auth/signup/combine.js
+src/components/auth/signup/combined_data.txt
+src/components/auth/signup/name-fields.jsx
+src/components/auth/signup/password-fields.jsx
+src/components/auth/signup/signup-form.jsx
+src/components/auth/signup/signup-header.jsx
+src/components/auth/signup/signup-options.jsx
+src/components/auth/signup/terms-and-conditions.jsx
+src/components/auth/signup/welcome-section.jsx
+src/components/auth/verify-email/back-to-login-link.jsx
+src/components/auth/verify-email/combine.js
+src/components/auth/verify-email/combined_data.txt
+src/components/auth/verify-email/help-text.jsx
+src/components/auth/verify-email/resend-code-section.jsx
+src/components/auth/verify-email/success-state.jsx
+src/components/auth/verify-email/timer-display.jsx
+src/components/auth/verify-email/verification-form.jsx
+src/components/auth/verify-email/verification-input.jsx
+src/components/auth/verify-email/verify-email-header.jsx
+src/components/auth/verify-email/welcome-section.jsx
+src/components/ui/button.jsx
+src/components/ui/card.jsx
+src/components/ui/checkbox.jsx
+src/components/ui/input.jsx
+src/components/ui/label.jsx
+src/components/ui/letters-pull-up.jsx
+src/components/ui/logo.jsx
+src/components/ui/skeleton.jsx
+src/components/utils/error-handler.jsx
+src/headache.txt
+src/hooks/environment-debug.jsx
+src/hooks/use-error-toggle.js
+src/hooks/use-loading-simulator.js
+src/lib/animations/auth/authAnimations.js
+src/lib/config/auth-content.js
+src/lib/environment.js
+src/lib/utils.js
+src/lib/validations/auth-schemas.js
+src/middleware.js
+src/notFound_files/1022-49c0a03c2695c6e1.js.download
+src/notFound_files/1350-ffe0e918f5022a0f.js.download
+src/notFound_files/147b5626-0bfdffa8d5e06b95.js.download
+src/notFound_files/1545-c48c3ad28efd0365.js.download
+src/notFound_files/1558-ddc0092a783bb40b.js.download
+src/notFound_files/1812-e74b5774e8d62ad8.js.download
+src/notFound_files/2156-db354c6fb32e9fa9.js.download
+src/notFound_files/2531-6c3137be303fd39b.js.download
+src/notFound_files/2706-f8f7fe8ce66e186f.js.download
+src/notFound_files/3023-86335184ed61a59f.js.download
+src/notFound_files/340-7cf61950311f5668.js.download
+src/notFound_files/3400-cf5cb2e6d40ea9d1.js.download
+src/notFound_files/3438-83f4d602cbb2dac3.js.download
+src/notFound_files/38-1c49bb43047762cb.js.download
+src/notFound_files/3864-6b34e623a6ca48e3.js.download
+src/notFound_files/4004-f4600ac19c5c838a.js.download
+src/notFound_files/447-d146931cad31ff97.js.download
+src/notFound_files/4602-6781d281ace7c8be.js.download
+src/notFound_files/4962-1236b591d9c41569.js.download
+src/notFound_files/4aadb537e50b167c.css
+src/notFound_files/5100-8d036c2c3f7caba3.js.download
+src/notFound_files/5210-8d6e2822959a9051.js.download
+src/notFound_files/5458-025db244fe181c41.js.download
+src/notFound_files/5625-fd41b638c1f85341.js.download
+src/notFound_files/5788-38bd83453d8d21bf.js.download
+src/notFound_files/6384-9e1aa1797ed1648c.js.download
+src/notFound_files/6539-ce04576a0e7a27ee.js.download
+src/notFound_files/66-5057dad273130e02.js.download
+src/notFound_files/6932-7b64270685a2a4ef.js.download
+src/notFound_files/6bd1a95468629087.css
+src/notFound_files/7140-3e34a17bde1aefe9.js.download
+src/notFound_files/7459-5005415957adc6ff.js.download
+src/notFound_files/8178-19f0dc0e1cab65c2.js.download
+src/notFound_files/8193-8c46e6d6ea853398.js.download
+src/notFound_files/8580-890a1fe806d57eea.js.download
+src/notFound_files/9308-62fcb15c66f534f1.js.download
+src/notFound_files/9512-08a9ed19741474ac.js.download
+src/notFound_files/956-13a40688ba58701d.js.download
+src/notFound_files/9709-68aacc1f4beeb509.js.download
+src/notFound_files/9871-6acf7ab61a7fd556.js.download
+src/notFound_files/ab250eab-95c2c1f2638354dc.js.download
+src/notFound_files/css2
+src/notFound_files/f6cb3627-16297abd7d3a080a.js.download
+src/notFound_files/fd819a0784f99ca6.css
+src/notFound_files/gtm.js.download
+src/notFound_files/layout-bbaf463523e2bb6a.js.download
+src/notFound_files/layout-e216c321933c3048.js.download
+src/notFound_files/lemon.js.download
+src/notFound_files/main-app-88d5322280b7b04e.js.download
+src/notFound_files/page-8aeed36b1257f2d8.js.download
+src/notFound_files/page-af553381a940d7e5.js.download
+src/notFound_files/polyfills-42372ed130431b0a.js.download
+src/notFound_files/webpack-850198c1d51218bd.js.download
+src/services/api/client/base-client.js
+src/services/api/client/public-client.js
+src/services/api/client/secured-client.js
+src/services/api/endpoints/admin-endpoints.js
+src/services/api/endpoints/auth-endpoints.js
+src/services/api/endpoints/index.js
+src/services/api/endpoints/user-endpoints.js
+src/services/api/interceptors/auth-interceptor.js
+src/services/api/interceptors/error-interceptor.js
+src/services/api/interceptors/logging-interceptor.js
+src/services/domain/auth-service.js
+src/services/domain/notification-service.js
+src/services/domain/user-service.js
+src/store/index.js
+src/store/modules/api/api-slice.js
+src/store/modules/api/api-thunks.js
+src/store/modules/api/index.js
+src/store/modules/auth/auth-selectors.js
+src/store/modules/auth/auth-slice.js
+src/store/modules/auth/auth-thunks.js
+src/store/modules/auth/index.js
+src/store/modules/ui/index.js
+src/store/modules/ui/ui-slice.js
+src/store/modules/ui/ui-thunks.js
+src/store/modules/user/index.js
+src/store/modules/user/user-selectors.js
+src/store/modules/user/user-slice.js
+src/store/modules/user/user-thunks.js
+src/store/root-actions.js
+src/store/root-reducer.js
+src/to-delete/auth/use-auth-form.js
+src/to-delete/forgot-password/use-forgot-password.js
+src/to-delete/login/use-login-form.js
+src/to-delete/reset-password/use-reset-password.js
+src/to-delete/signup/use-signup-form.js
+src/to-delete/verify-email/use-verify-email.js
+tailwind.config.js
+
+
+
+Okay here are the paths of the whole frontend project using next and i need your support:
+
+** remember: no code now is required and i am just thinking with you loudly **
+
+1) judgmental opinion as a senior frontend engineer  
+
+2) And now I need to do a major update of using redux toolkit and redux persist to handle the state over the app 
+
+3) I need to create two functions to handle all api requests over the app and one of them would be pubic with no auth token and the other one would be with auth token like asking for secured data and the user must be logged in and the other one would be used for non authenticated requests like login user assuming there is no auth token and user asked for login 
+
+4) I need also use axios to handle these requests over the whole app and als to get its benefits about interceptors to handle rejected requests for instance if the requests got rejected so send a request to /refresh endpoint to get a new token and then if valid so resend the original rejected request again and if not valid so return the original rejected request response 
+
+4) cookie management lib to create, delete, update, checking cookies which are secured and not accessible via a Javascript and would use them to store like refresh token
+
+5) need support with no code at first about that structure if we need to update or delete or create another folders or files 
+
+6) I need you support right now to think with me and suggest me what are the steps that should i do one by one steps like do 1), 2), 3), to get the whole picture like i draw like that 
+ 
+** remember: no code now is required and i am just thinking with you loudly **
+ 
+Excellent! This is a great way to approach a major refactor. Let's think through this systematically. As a senior engineer, here's my assessment and step-by-step plan:
+
+## 🧐 Senior Engineer Assessment
+
+**Current Structure Positives:**
+- Good separation of concerns (components, services, store, hooks)
+- Proper API layer abstraction
+- Error handling infrastructure exists
+- Authentication flow is well-structured
+
+**Immediate Concerns:**
+- `src/notFound_files/` - 49 `.download` files suggest build artifacts or corrupted files
+- `src/to-delete/` - Should be removed before major refactor
+- Multiple `combine.js` and `combined_data.txt` files - potential duplication
+- Store structure exists but might need RTK Query migration
+
+## 🗺️ Step-by-Step Refactor Plan
+
+### **PHASE 1: CLEANUP & PREPARATION**
+
+**Step 1.1:** Remove technical debt
+- Delete `src/notFound_files/` (build artifacts)
+- Delete `src/to-delete/` (legacy code)
+- Audit `combine.js` files - determine if they're needed
+
+**Step 1.2:** Update dependencies
+- Add to package.json: `@reduxjs/toolkit`, `redux-persist`, `axios`, `js-cookie` or `universal-cookie`
+
+### **PHASE 2: AXIOS HTTP CLIENT ARCHITECTURE**
+
+**Step 2.1:** Create base axios configuration
+```
+src/services/api/
+├── clients/
+│   ├── base-client.js          # Common axios config, interceptors
+│   ├── public-client.js        # No auth token
+│   └── secured-client.js       # With auth token, auto-refresh logic
+```
+
+**Step 2.2:** Implement interceptor chain
+- Request interceptor: add auth headers
+- Response interceptor: handle success
+- Error interceptor: token refresh logic
+
+### **PHASE 3: REDUX TOOLKIT MIGRATION**
+
+**Step 3.1:** Restructure store with RTK
+```
+src/store/
+├── index.js                    # Store configuration + persist
+├── root-reducer.js
+├── root-actions.js
+└── slices/                     # Replace modules/
+    ├── auth.slice.js
+    ├── user.slice.js
+    ├── ui.slice.js
+    └── api/                    # Consider RTK Query instead
+```
+
+**Step 3.2:** Configure Redux Persist
+- Decide what to persist (auth, user preferences)
+- Setup storage engine (localStorage vs sessionStorage)
+
+### **PHASE 4: COOKIE MANAGEMENT LAYER**
+
+**Step 4.1:** Create cookie service
+```
+src/services/storage/
+├── cookie-service.js           # Wrapper around js-cookie
+├── storage-constants.js        # Token names, expiry times
+└── token-manager.js            # Token refresh coordination
+```
+
+### **PHASE 5: INTEGRATION & MIGRATION**
+
+**Step 5.1:** Update existing services
+- Migrate `auth-service.js`, `user-service.js` to use new HTTP clients
+- Update components to use new RTK hooks and patterns
+
+**Step 5.2:** Implement token refresh flow
+- Silent refresh logic in secured-client
+- Automatic retry of failed requests
+- Logout on refresh failure
+
+## 🔄 Proposed API Client Flow
+
+```
+Public Requests → public-client → API
+                ↓
+Secured Requests → secured-client → [add token] → API
+                                  ↓
+                            [401/403 response?] → pause requests → refresh endpoint
+                                  ↓
+                            [success?] → update token → retry original
+                                  ↓  
+                            [fail?] → clear tokens → dispatch logout → redirect to login
+```
+
+## 🚨 Critical Considerations
+
+1. **Error Handling Strategy**: How to handle simultaneous refresh requests?
+2. **SSR Compatibility**: Cookies need to work with Next.js server components
+3. **Migration Path**: Gradual migration vs big bang? I'd recommend feature-by-feature
+4. **Testing Strategy**: Mock axios adapters for testing the refresh flow
+
+
+Token Refresh Coordination - This is your most critical path
+
+How will secured-client communicate with Redux store during refresh?
+
+How to handle multiple simultaneous API calls during refresh?
+
+Critical Thinking Points:
+
+Should the refresh logic live in:
+
+Axios interceptor (current plan) OR
+
+Redux middleware (alternative approach) OR
+
+A combination?
+
+How to handle "refresh in progress" state across the app?
+
+What happens to components making API calls during refresh?
+
+
+
+## 📋 Immediate Next Steps
+
+1. **Clean up the project** (Phase 1)
+2. **Design the exact API client interfaces** 
+3. **Create the token refresh state machine** - this is the most complex part
+4. **Implement one slice with RTK** as proof of concept
+
+The foundation is solid - this is about modernizing patterns rather than fixing broken architecture. Want me to dive deeper into any specific phase? 
+ 
+
+
+
+
+********************* 
+*** MAJOR UPDATES ***
+********************* 
+PROJECT STRUCTURE REPORT
+Generated: 2025-10-28T11:43:16.822Z
+Root Directory: D:\DEV CLOUD\PROJECTS\myProjects\LEARNING_APPS\NEW-STARTER\frontend
+Total Files: 212
+
+FILE TYPES BREAKDOWN:
+.local: 1 files
+.production: 1 files
+no-extension: 2 files
+.js: 81 files
+.json: 4 files
+.mjs: 3 files
+.txt: 12 files
+.svg: 7 files
+.png: 1 files
+.md: 1 files
+.jsx: 97 files
+.ico: 1 files
+.css: 1 files
+
+ALL FILES:
+.env.local
+.env.production
+.eslintignore
+.gitignore
+add-path-comments-to-backend-files.js
+add-path-comments-to-frontend-files.js
+components.json
+eslint.config.mjs
+generate-file-paths.js
+jsconfig.json
+next.config.mjs
+package-lock.json
+package.json
+postcss.config.mjs
+project-structure.txt
+public/file.svg
+public/football-svgrepo-com.svg
+public/globe.svg
+public/images/error-image.png
+public/images/logo.svg
+public/next.svg
+public/vercel.svg
+public/window.svg
+README.md
+src/app/(auth)/auth-layout-wrapper.jsx
+src/app/(auth)/forgot-password/error.jsx
+src/app/(auth)/forgot-password/loading.jsx
+src/app/(auth)/forgot-password/page.jsx
+src/app/(auth)/layout.jsx
+src/app/(auth)/login/error.jsx
+src/app/(auth)/login/loading.jsx
+src/app/(auth)/login/page.jsx
+src/app/(auth)/reset-password/error.jsx
+src/app/(auth)/reset-password/loading.jsx
+src/app/(auth)/reset-password/page.jsx
+src/app/(auth)/signup/error.jsx
+src/app/(auth)/signup/loading.jsx
+src/app/(auth)/signup/page.jsx
+src/app/(auth)/verify-email/error.jsx
+src/app/(auth)/verify-email/loading.jsx
+src/app/(auth)/verify-email/page.jsx
+src/app/AnimatedLogoLoader/page.jsx
+src/app/favicon.ico
+src/app/globals.css
+src/app/layout.jsx
+src/app/not-found.jsx
+src/app/page.jsx
+src/components/auth/error/dev-error-toggle.jsx
+src/components/auth/error/dev-wrapper.jsx
+src/components/auth/error/error-boundary.jsx
+src/components/auth/error/error-simulator.jsx
+src/components/auth/error/production-error-trigger.jsx
+src/components/auth/forgot-password/back-to-login-link.jsx
+src/components/auth/forgot-password/combine.js
+src/components/auth/forgot-password/combined_data.txt
+src/components/auth/forgot-password/forgot-password-header.jsx
+src/components/auth/forgot-password/form-header.jsx
+src/components/auth/forgot-password/form-state.jsx
+src/components/auth/forgot-password/help-text.jsx
+src/components/auth/forgot-password/reset-password-form.jsx
+src/components/auth/forgot-password/success-actions.jsx
+src/components/auth/forgot-password/success-icon.jsx
+src/components/auth/forgot-password/success-message.jsx
+src/components/auth/forgot-password/success-state.jsx
+src/components/auth/forgot-password/troubleshooting-tips.jsx
+src/components/auth/forms/auth-form-provider.jsx
+src/components/auth/forms/auth-submit-button.jsx
+src/components/auth/forms/Authentication System Flow.txt
+src/components/auth/forms/combine.js
+src/components/auth/forms/combined_data.txt
+src/components/auth/forms/form-field.jsx
+src/components/auth/login/combine.js
+src/components/auth/login/combined_data.txt
+src/components/auth/login/divider.jsx
+src/components/auth/login/login-form.jsx
+src/components/auth/login/login-header.jsx
+src/components/auth/login/login-options.jsx
+src/components/auth/login/welcome-section.jsx
+src/components/auth/panels/auth-right-panel.jsx
+src/components/auth/panels/background-decoration.jsx
+src/components/auth/panels/combine.js
+src/components/auth/panels/combined_data.txt
+src/components/auth/panels/content-card.jsx
+src/components/auth/panels/header-section.jsx
+src/components/auth/panels/index.jsx
+src/components/auth/providers/auth-providers.jsx
+src/components/auth/providers/combine.js
+src/components/auth/providers/combined_data.txt
+src/components/auth/reset-password/back-to-login-link.jsx
+src/components/auth/reset-password/combine.js
+src/components/auth/reset-password/combined_data.txt
+src/components/auth/reset-password/form-header.jsx
+src/components/auth/reset-password/form-state.jsx
+src/components/auth/reset-password/help-text.jsx
+src/components/auth/reset-password/password-match-indicator.jsx
+src/components/auth/reset-password/password-requirements.jsx
+src/components/auth/reset-password/password-strength-indicator.jsx
+src/components/auth/reset-password/reset-password-form.jsx
+src/components/auth/reset-password/reset-password-header.jsx
+src/components/auth/reset-password/security-tips.jsx
+src/components/auth/reset-password/success-actions.jsx
+src/components/auth/reset-password/success-icon.jsx
+src/components/auth/reset-password/success-message.jsx
+src/components/auth/reset-password/success-state.jsx
+src/components/auth/shared/combine.js
+src/components/auth/shared/combined_data.txt
+src/components/auth/shared/password-match-indicator.jsx
+src/components/auth/shared/password-strength-meter.jsx
+src/components/auth/signup/combine.js
+src/components/auth/signup/combined_data.txt
+src/components/auth/signup/name-fields.jsx
+src/components/auth/signup/password-fields.jsx
+src/components/auth/signup/signup-form.jsx
+src/components/auth/signup/signup-header.jsx
+src/components/auth/signup/signup-options.jsx
+src/components/auth/signup/terms-and-conditions.jsx
+src/components/auth/signup/welcome-section.jsx
+src/components/auth/verify-email/back-to-login-link.jsx
+src/components/auth/verify-email/combine.js
+src/components/auth/verify-email/combined_data.txt
+src/components/auth/verify-email/help-text.jsx
+src/components/auth/verify-email/resend-code-section.jsx
+src/components/auth/verify-email/success-state.jsx
+src/components/auth/verify-email/timer-display.jsx
+src/components/auth/verify-email/verification-form.jsx
+src/components/auth/verify-email/verification-input.jsx
+src/components/auth/verify-email/verify-email-header.jsx
+src/components/auth/verify-email/welcome-section.jsx
+src/components/ui/animated-logo.jsx
+src/components/ui/button.jsx
+src/components/ui/card.jsx
+src/components/ui/checkbox.jsx
+src/components/ui/fantasy-loader.jsx
+src/components/ui/input.jsx
+src/components/ui/label.jsx
+src/components/ui/letters-pull-up.jsx
+src/components/ui/logo.jsx
+src/components/ui/skeleton.jsx
+src/components/utils/error-handler.jsx
+src/deepseek/admin-endpoints.js
+src/deepseek/api-config.js
+src/deepseek/auth-endpoints.js
+src/deepseek/auth-selectors.js
+src/deepseek/auth-service.js
+src/deepseek/auth-slice.js
+src/deepseek/auth-thunks.js
+src/deepseek/base-client.js
+src/deepseek/cookie-service.js
+src/deepseek/FLOW.js
+src/deepseek/index.js
+src/deepseek/notification-service.js
+src/deepseek/private-client.js
+src/deepseek/public-client.js
+src/deepseek/refresh-queue.js
+src/deepseek/root-actions.js
+src/deepseek/root-reducer.js
+src/deepseek/storage-constants.js
+src/deepseek/store-provider.jsx
+src/deepseek/token-manager.js
+src/deepseek/ui-selectors.js
+src/deepseek/ui-slice.js
+src/deepseek/ui-thunks.js
+src/deepseek/user-endpoints.js
+src/deepseek/user-selectors.js
+src/deepseek/user-service.js
+src/deepseek/user-slice.js
+src/deepseek/user-thunks.js
+src/headache.txt
+src/hooks/environment-debug.jsx
+src/hooks/redux.js
+src/hooks/use-error-toggle.js
+src/hooks/use-loading-simulator.js
+src/lib/animations/auth/authAnimations.js
+src/lib/config/api-config.js
+src/lib/config/auth-content.js
+src/lib/environment.js
+src/lib/utils.js
+src/lib/validations/auth-schemas.js
+src/middleware.js
+src/providers/store-provider.jsx
+src/services/api/client/base-client.js
+src/services/api/client/index.js
+src/services/api/client/private-client.js
+src/services/api/client/public-client.js
+src/services/api/endpoints/admin-endpoints.js
+src/services/api/endpoints/auth-endpoints.js
+src/services/api/endpoints/index.js
+src/services/api/endpoints/user-endpoints.js
+src/services/api/refresh-queue.js
+src/services/domain/auth-service.js
+src/services/domain/notification-service.js
+src/services/domain/user-service.js
+src/services/storage/cookie-service.js
+src/services/storage/storage-constants.js
+src/services/storage/token-manager.js
+src/store/FLOW.js
+src/store/index.js
+src/store/root-actions.js
+src/store/root-reducer.js
+src/store/slices/auth/auth-selectors.js
+src/store/slices/auth/auth-slice.js
+src/store/slices/auth/auth-thunks.js
+src/store/slices/auth/index.js
+src/store/slices/ui/index.js
+src/store/slices/ui/ui-selectors.js
+src/store/slices/ui/ui-slice.js
+src/store/slices/ui/ui-thunks.js
+src/store/slices/user/index.js
+src/store/slices/user/user-selectors.js
+src/store/slices/user/user-slice.js
+src/store/slices/user/user-thunks.js
+tailwind.config.js
+
+** remember: no code now is required and i am just thinking with you loudly **
+
+okay here are the modules of service classes and store and slice and other required modules for my support and here i provided also the whole folder structure since i could forget the other modules that i should upload and i need some support right here:
+
+
+1) judgmental opinion as a senior frontend engineer  
+
+
+2) my vision is to save the refresh token at cookie and when the user close the browser or refresh the cookie is still there and then i can send a request to /refresh to get the a new access token and then if valid to update the state firstly and retry the original request and if not valid to return the original rejected request 
+
+
+[DONE] ==:> 3) here are the endpoints from the backend that i extracted from post man after tetsting to edit the endpoints if they need to be edited 
+
+
+[DONE] ==:> 4) at api-config.js I just need to add all other possible http status and also error messages that could be found 
+and also enhanve the API_CONFIG to make it more advanced like real world apps
+
+4
+
+5) at store and store provider i need to keep the refresh token at the cookie which is not accessible by javascript and accessible in env development to get benefits of that while getting a new access token and also learn me where to save the other persisted state and how to access them wven the user closes the browser or refreshes the browser 
+
+
+6) at these slices while i build my app for training so i need to make it a little simple but with necessary and required state so i need to divide the state inside these slices to primary and later that we can provide and that would be applied to all of these slices: auth, user and ui and their selectors and also their thunks to make it more simpler and focus on the primary that i should start implementing and let others for a later enhancement.
+
+
+7) for these classes of services can i turn them into functions or other way to make it more simpler ot i should leave them as they are since it is the most professionally and most common way followed in real world apps using that design pattern singleton and i need to write another module of ui services.
+
+
+8) for all of these services i need to keep the services divided to two type which is primary and later implemented since i build this app for learning and i want to keep it more simpler and leave the others for later enhancement.
+
+
+9) I need to link Middleware of next js about these process which is when the user refreshes the route or close the broswer so we need to ensure that the user had the required access token which is nulled in state and now the refresh token would be fired to get a new access token and if it valid so would update the state and retry the original request or invalid to returning to original rejected response so i need to do that process via the Middleware of next js to get benefits of its next js build like a guard of the app if that user is authenticated or not to pass o that route.
+
+
+10) okay now i provided 
+the page of login, signup, verify email, forgot password and reset password to see how to integrate them to the redux store and start implementing and connecting with the store thunks and actions and so on so how to connect all of these modules together to get the whole puzzle solved at one place.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

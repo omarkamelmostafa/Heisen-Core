@@ -1,0 +1,18 @@
+{
+  "HomePage": {
+    "title": "Fantasy Coach | Estrategia Deportiva Profesional",
+    "description": "Domina la estrategia deportiva con Fantasy Coach. Herramientas avanzadas de análisis y gestión de equipos para ligas de fantasía profesionales.",
+    "getStarted": "Empezar"
+  },
+  "Auth": {
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña"
+  },
+  "Loading": {
+    "streaming": "Transmitiendo tu experiencia de fantasía...",
+    "securing": "Asegurando tu sesión..."
+  }
+}

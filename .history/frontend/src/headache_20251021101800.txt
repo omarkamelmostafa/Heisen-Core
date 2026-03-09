@@ -1,0 +1,22 @@
+
+TO DO LIST - AUTH PAGES - FRONTEND PART
+[#01]- break down & clean up auth pages (✔)
+[#02]- error pages for auth pages (✔)
+[#03]- auth configrautions variabes (✔)
+[#04]- password strenghen meter
+[#05]- zod schema
+[#06]- redux auth slice, store
+[#07]- 
+[#08]- 
+[#09]- 
+[#10]- 
+
+
+
+
+// use simulated loading => use suspense 
+// use lazy loading => use suspense
+// animations text for auth right panal => framer motion
+
+
+ 
