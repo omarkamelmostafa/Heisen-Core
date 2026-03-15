@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import { ExtensionErrorHandler } from "@/components/utils/error-handler";
 import { StoreProvider } from "@/providers/store-provider";
 import ErrorBoundary from "@/components/shared/error-boundary";
+import { AuthBootstrap } from "@/components/auth/auth-bootstrap";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,9 +49,11 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <StoreProvider>
-          <ErrorBoundary>
-            {children}
-          </ErrorBoundary>
+          <AuthBootstrap>
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
+          </AuthBootstrap>
         </StoreProvider>
       </body>
     </html>

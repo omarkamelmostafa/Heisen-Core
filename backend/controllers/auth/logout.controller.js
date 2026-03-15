@@ -5,7 +5,7 @@ import { REFRESH_TOKEN_COOKIE_NAME, sendUseCaseResponse } from "./auth-shared.js
 
 /**
  * Logout Controller — Thin HTTP adapter.
- * Clears cookie immediately, delegates to logoutUseCase for cleanup.
+ * Clears cookie immediately, delegates to logoutUseCase for server-side cleanup.
  */
 export const handleLogout = async (req, res) => {
   // Always clear cookie first (HTTP concern)
@@ -13,9 +13,8 @@ export const handleLogout = async (req, res) => {
 
   const refreshToken = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME];
   const accessToken = req.headers.authorization?.replace("Bearer ", "");
-  const logoutAll = String(req.query?.all) === "true";
 
-  const result = await logoutUseCase({ refreshToken, accessToken, logoutAll });
+  const result = await logoutUseCase({ refreshToken, accessToken });
 
   return sendUseCaseResponse(req, res, result);
 };

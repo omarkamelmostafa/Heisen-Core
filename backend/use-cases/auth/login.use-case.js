@@ -12,9 +12,11 @@ import logger from "../../utilities/general/logger.js";
  * @param {Object} dto
  * @param {string} dto.email
  * @param {string} dto.password
+ * @param {string} dto.userAgent - User-Agent header for session identification
+ * @param {string} dto.ipAddress - Client IP for session identification
  * @returns {Object} { success, statusCode, errorCode?, message, data? }
  */
-export async function loginUseCase({ email, password }) {
+export async function loginUseCase({ email, password, userAgent, ipAddress }) {
   // Input validation
   if (!email || !password) {
     return {
@@ -28,6 +30,7 @@ export async function loginUseCase({ email, password }) {
   try {
     const foundUser = await User.findByEmailWithSecurity(email);
 
+    // Generic error response — same for wrong email AND wrong password (FR-028)
     const invalidCredentials = {
       success: false,
       statusCode: 401,
@@ -47,40 +50,45 @@ export async function loginUseCase({ email, password }) {
       };
     }
 
-    // Account lock check
-    if (foundUser.isAccountLocked()) {
-      const timeLeft = Math.ceil((foundUser.lockUntil - new Date()) / 60000);
+    // Email verification check (FR-005)
+    if (!foundUser.isVerified) {
       return {
         success: false,
-        statusCode: 423,
-        message: `Account temporarily locked. Try again in ${timeLeft} minutes.`,
-        errorCode: "ACCOUNT_LOCKED",
+        statusCode: 403,
+        message:
+          "Please verify your email address before logging in. Check your inbox for the verification link.",
+        errorCode: "ACCOUNT_NOT_VERIFIED",
       };
     }
 
     // Password verification
     const match = await bcrypt.compare(password, foundUser.password);
     if (!match) {
-      await foundUser.incrementLoginAttempts();
       return invalidCredentials;
     }
 
-    // Success path
-    await foundUser.resetLoginAttempts();
+    // Success path — generate tokens (creates RefreshToken document in DB)
+    const { accessToken, refreshTokenValue, accessTokenExpiresIn } =
+      await generateTokens(foundUser, userAgent, ipAddress);
 
-    const { accessToken, refreshToken, accessTokenExpiresIn } =
-      await generateTokens(foundUser);
-
-    foundUser.refreshToken = refreshToken;
+    // Update last login
+    foundUser.lastLogin = new Date();
     await foundUser.save();
 
     const userData = sanitizeUserForResponse(foundUser);
+
+    logger.info({ userId: foundUser._id, ip: ipAddress }, "User logged in");
 
     return {
       success: true,
       statusCode: 200,
       message: "Login successful",
-      data: { user: userData, accessToken, refreshToken, expiresIn: accessTokenExpiresIn },
+      data: {
+        user: userData,
+        accessToken,
+        refreshTokenValue,
+        expiresIn: accessTokenExpiresIn,
+      },
     };
   } catch (error) {
     logger.error({ err: error, email }, "Login use-case error");

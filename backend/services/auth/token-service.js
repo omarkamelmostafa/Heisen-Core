@@ -1,25 +1,46 @@
 // backend/services/auth/token-service.js
 // Centralized token management service for JWT operations and token blacklisting.
+// Refresh tokens are now DB-backed via the RefreshToken model for multi-device
+// session support, rotation chains, and reuse detection.
 
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import redis from "../../config/redis.js";
+import RefreshToken from "../../model/RefreshToken.js";
+import logger from "../../utilities/general/logger.js";
 
 // ==================== TOKEN GENERATION ====================
 
 /**
- * Generate unique JWT ID for tracking and revocation
+ * Generate unique JWT ID for tracking and revocation.
  */
 const generateJwtId = () => crypto.randomBytes(16).toString("hex");
 
 /**
- * Generate access + refresh token pair for a user session.
+ * Hash a raw token value using SHA-256 for secure storage.
+ * @param {string} rawToken - The unhashed token value
+ * @returns {string} SHA-256 hex digest
  */
-export const generateTokens = async (user) => {
+export const hashToken = (rawToken) =>
+  crypto.createHash("sha256").update(rawToken).digest("hex");
+
+/**
+ * Generate an access token + a new RefreshToken document in the database.
+ *
+ * The raw (unhashed) refresh token value is returned so the controller can set
+ * it in the HttpOnly cookie. Only the hash is persisted in MongoDB.
+ *
+ * @param {Object} user - Mongoose user document (must have _id, email, uuid, tokenVersion)
+ * @param {string} userAgent - User-Agent header from the request
+ * @param {string} ipAddress - Client IP address
+ * @returns {{ accessToken: string, refreshTokenValue: string, accessTokenExpiresIn: string }}
+ */
+export const generateTokens = async (user, userAgent = "", ipAddress = "") => {
   const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY || "15m";
-  const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY || "1d";
+  const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY || "7d";
   const userId = user._id.toString();
 
+  // ── Access Token (JWT) ──
   const accessToken = jwt.sign(
     {
       UserInfo: {
@@ -28,8 +49,8 @@ export const generateTokens = async (user) => {
         uuid: user.uuid,
         type: "access",
       },
-      iss: process.env.JWT_ISSUER || "fantasy-coach-app-backend-v1",
-      aud: process.env.JWT_AUDIENCE || "fantasy-coach-app-web-client",
+      iss: process.env.JWT_ISSUER || "new-starter-backend-v1",
+      aud: process.env.JWT_AUDIENCE || "new-starter-web-client",
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -38,40 +59,33 @@ export const generateTokens = async (user) => {
     }
   );
 
-  const refreshToken = jwt.sign(
-    {
-      userId,
-      uuid: user.uuid,
-      type: "refresh",
-      tokenVersion: user.tokenVersion || 1,
-      iss: process.env.JWT_ISSUER || "fantasy-coach-app-backend-v1",
-      aud: process.env.JWT_AUDIENCE || "fantasy-coach-app-web-client",
-    },
-    process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn: refreshTokenExpiry,
-      jwtid: generateJwtId(),
-    }
-  );
+  // ── Refresh Token (opaque, DB-backed) ──
+  const rawRefreshToken = crypto.randomBytes(40).toString("hex");
+  const hashedRefreshToken = hashToken(rawRefreshToken);
 
-  return { accessToken, refreshToken, accessTokenExpiresIn: accessTokenExpiry };
+  // Calculate expiry date from duration string (e.g. "7d")
+  const daysMatch = refreshTokenExpiry.match(/^(\d+)d$/);
+  const expiresInMs = daysMatch
+    ? parseInt(daysMatch[1], 10) * 24 * 60 * 60 * 1000
+    : 7 * 24 * 60 * 60 * 1000; // default 7 days
+
+  await RefreshToken.create({
+    token: hashedRefreshToken,
+    user: user._id,
+    expiresAt: new Date(Date.now() + expiresInMs),
+    userAgent,
+    ipAddress,
+    tokenVersion: user.tokenVersion || 1,
+  });
+
+  return {
+    accessToken,
+    refreshTokenValue: rawRefreshToken,
+    accessTokenExpiresIn: accessTokenExpiry,
+  };
 };
 
 // ==================== TOKEN VERIFICATION ====================
-
-/**
- * Verify a refresh token. Throws on failure.
- */
-export const verifyRefreshToken = (token) => {
-  try {
-    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, {
-      issuer: process.env.JWT_ISSUER,
-      audience: process.env.JWT_AUDIENCE,
-    });
-  } catch (error) {
-    throw new Error(`Refresh token invalid: ${error.message}`);
-  }
-};
 
 /**
  * Safely verify or decode a JWT.
@@ -89,20 +103,94 @@ export const safeVerifyOrDecode = (token, secret, options = {}) => {
   }
 };
 
-// ==================== TOKEN REFRESH ====================
+// ==================== TOKEN REFRESH (ROTATION + REUSE DETECTION) ====================
 
 /**
- * Refresh an access token using a valid refresh token.
- * Validates token version to support "logout all devices" flows.
+ * Refresh an access token using a valid refresh token cookie value.
+ *
+ * Implements rotation: old token is revoked and linked to the new one via `replacedBy`.
+ * Implements reuse detection: if a revoked+replaced token is presented, ALL tokens
+ * for the user are revoked (nuclear option — theft assumed).
+ *
+ * @param {string} rawRefreshToken - The unhashed refresh token from the cookie
+ * @param {string} userAgent - User-Agent header from the request
+ * @param {string} ipAddress - Client IP address
+ * @returns {{ accessToken: string, refreshTokenValue: string, accessTokenExpiresIn: string, user: Object }}
  */
-export const refreshAccessToken = async (refreshToken, user) => {
-  const decoded = verifyRefreshToken(refreshToken);
+export const refreshAccessToken = async (rawRefreshToken, userAgent = "", ipAddress = "") => {
+  const hashedToken = hashToken(rawRefreshToken);
 
-  if (decoded.tokenVersion !== (user.tokenVersion || 1)) {
-    throw new Error("Token revoked. Please login again.");
+  // Look up the RefreshToken document by hashed value
+  const tokenDoc = await RefreshToken.findOne({ token: hashedToken }).populate("user");
+
+  if (!tokenDoc) {
+    throw new Error("Invalid refresh token.");
   }
 
-  return generateTokens(user);
+  // ── Reuse Detection ──
+  // If the token is already revoked AND has a replacement, this is a reuse attempt.
+  // An attacker is replaying a stolen token after the legitimate user rotated it.
+  if (tokenDoc.isRevoked) {
+    if (tokenDoc.replacedBy) {
+      // NUCLEAR: revoke ALL tokens for this user
+      await RefreshToken.updateMany(
+        { user: tokenDoc.user._id },
+        { isRevoked: true }
+      );
+      logger.warn(
+        { userId: tokenDoc.user._id, ip: ipAddress },
+        "Refresh token reuse detected — all sessions revoked"
+      );
+      throw new Error("Token reuse detected. All sessions have been invalidated.");
+    }
+    throw new Error("Refresh token has been revoked.");
+  }
+
+  // ── Expiry Check ──
+  if (tokenDoc.expiresAt < new Date()) {
+    tokenDoc.isRevoked = true;
+    await tokenDoc.save();
+    throw new Error("Refresh token expired.");
+  }
+
+  // ── Token Version Check ──
+  // If user's tokenVersion was incremented (e.g. "logout all", password change),
+  // all previously-issued tokens are stale.
+  const user = tokenDoc.user;
+  // Need to fetch tokenVersion which is select: false
+  const userWithVersion = await (await import("../../model/User.js")).default
+    .findById(user._id)
+    .select("+tokenVersion");
+
+  if (!userWithVersion) {
+    throw new Error("User not found.");
+  }
+
+  if (tokenDoc.tokenVersion !== (userWithVersion.tokenVersion || 1)) {
+    tokenDoc.isRevoked = true;
+    await tokenDoc.save();
+    throw new Error("Session expired. Please login again.");
+  }
+
+  // ── Rotation: issue new tokens ──
+  const { accessToken, refreshTokenValue, accessTokenExpiresIn } =
+    await generateTokens(userWithVersion, userAgent, ipAddress);
+
+  // Mark the old token as revoked and point to the new one
+  const newTokenDoc = await RefreshToken.findOne({
+    token: hashToken(refreshTokenValue),
+  });
+
+  tokenDoc.isRevoked = true;
+  tokenDoc.replacedBy = newTokenDoc._id;
+  await tokenDoc.save();
+
+  return {
+    accessToken,
+    refreshTokenValue,
+    accessTokenExpiresIn,
+    user: userWithVersion,
+  };
 };
 
 /**
@@ -140,7 +228,7 @@ export const isTokenRevoked = async (jti) => {
     const result = await redis.get(`blacklist:${jti}`);
     return result === "1";
   } catch (error) {
-    console.warn("Redis blacklist check unavailable:", error.message);
+    logger.warn({ err: error }, "Redis blacklist check unavailable");
     return false; // Graceful fallback
   }
 };
@@ -183,7 +271,7 @@ export const getBlacklistStats = async () => {
       revokedPercentage: revokedPercentage.toFixed(2),
     };
   } catch (error) {
-    console.error("Redis error in getBlacklistStats:", error.message);
+    logger.error({ err: error }, "Redis error in getBlacklistStats");
     return {
       connected: false,
       error: error.message,

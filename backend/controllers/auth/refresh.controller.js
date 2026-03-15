@@ -1,18 +1,20 @@
 // backend/controllers/auth/refresh.controller.js
 import { refreshTokenUseCase } from "../../use-cases/auth/index.js";
 import { clearCookie, setCookie } from "../../services/auth/cookie-service.js";
-import { REFRESH_TOKEN_COOKIE_NAME, ACCESS_TOKEN_COOKIE_NAME, sendUseCaseResponse } from "./auth-shared.js";
+import { REFRESH_TOKEN_COOKIE_NAME, sendUseCaseResponse } from "./auth-shared.js";
 
 /**
  * Refresh Token Controller — Thin HTTP adapter.
- * Reads cookie, delegates to refreshTokenUseCase, sets new cookies, formats response.
+ * Reads cookie, delegates to refreshTokenUseCase, sets new cookie on success.
+ * Access token is returned in the response body only (FR-010: memory-only).
  */
 export const handleRefreshToken = async (req, res) => {
   const refreshToken = req.cookies?.[REFRESH_TOKEN_COOKIE_NAME];
 
   const result = await refreshTokenUseCase({
     refreshToken,
-    clientIP: req.ip,
+    userAgent: req.headers["user-agent"] || "",
+    ipAddress: req.ip,
   });
 
   // Clear cookie on failure if use case signals it
@@ -21,26 +23,15 @@ export const handleRefreshToken = async (req, res) => {
   }
 
   if (result.success && result.data) {
-    // Set new refresh token cookie (httpOnly)
+    // Set new refresh token cookie (httpOnly, path-restricted)
     if (result.data.newRefreshToken) {
-      setCookie(res, REFRESH_TOKEN_COOKIE_NAME, result.data.newRefreshToken, {
-        maxAge: process.env.REFRESH_TOKEN_COOKIE_MAX_AGE || 24 * 60 * 60 * 1000,
-      });
+      setCookie(res, REFRESH_TOKEN_COOKIE_NAME, result.data.newRefreshToken);
 
       // Remove newRefreshToken from response (it's in the cookie)
       const { newRefreshToken, ...responseData } = result.data;
       result.data = responseData;
     }
-
-    // Set new access token as non-httpOnly cookie (frontend middleware needs to read it)
-    if (result.data.accessToken) {
-      setCookie(res, ACCESS_TOKEN_COOKIE_NAME, result.data.accessToken, {
-        httpOnly: false,
-        maxAge: 60 * 60 * 1000, // 1 hour (matches ACCESS_TOKEN_EXPIRY)
-      });
-    }
   }
 
   return sendUseCaseResponse(req, res, result);
 };
-

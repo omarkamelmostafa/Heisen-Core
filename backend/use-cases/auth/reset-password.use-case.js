@@ -2,6 +2,7 @@
 
 import crypto from "crypto";
 import User from "../../model/User.js";
+import RefreshToken from "../../model/RefreshToken.js";
 import bcrypt from "bcrypt";
 import logger from "../../utilities/general/logger.js";
 import { EmailService } from "../../services/email/email.service.js";
@@ -11,15 +12,18 @@ const emailService = new EmailService();
 /**
  * Reset Password Use Case — Pure business logic, no req/res.
  *
+ * Validates the reset token, updates the password, increments tokenVersion,
+ * and revokes ALL RefreshToken documents for the user (FR-022).
+ *
  * @param {Object} dto
  * @param {string} dto.token    - Raw reset token from URL
  * @param {string} dto.password - New password
- * @returns {Object} { success, statusCode, errorCode?, message, data? }
+ * @returns {Object} { success, statusCode, errorCode?, message }
  */
 export async function resetPasswordUseCase({ token, password }) {
   try {
     // Input validation
-    if (!token || typeof token !== "string" || token.length < 100) {
+    if (!token || typeof token !== "string" || token.length < 20) {
       return {
         success: false,
         statusCode: 400,
@@ -38,13 +42,16 @@ export async function resetPasswordUseCase({ token, password }) {
     }
 
     // Hash token to match stored value
-    const resetTokenHash = crypto.createHash("sha256").update(token).digest("hex");
+    const resetTokenHash = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
 
     const user = await User.findOne({
       resetPasswordToken: resetTokenHash,
       resetPasswordExpiresAt: { $gt: new Date() },
       isActive: true,
-    });
+    }).select("+password +tokenVersion");
 
     if (!user) {
       logger.warn(
@@ -75,16 +82,22 @@ export async function resetPasswordUseCase({ token, password }) {
     user.password = await bcrypt.hash(password, 12);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpiresAt = undefined;
-    user.isLocked = false;
-    user.lockUntil = undefined;
-    user.loginAttempts = 0;
-    user.tokenVersion += 1;
-    user.refreshToken = null;
+    user.tokenVersion += 1; // Invalidates all refresh tokens on next check
     user.lastPasswordChange = new Date();
     user.lastSecurityEvent = new Date();
-    user.lastLogin = new Date();
 
     await user.save();
+
+    // Revoke ALL RefreshToken documents for this user (FR-022)
+    const revokeResult = await RefreshToken.updateMany(
+      { user: user._id, isRevoked: false },
+      { isRevoked: true }
+    );
+
+    logger.info(
+      { email: user.email, revokedSessions: revokeResult.modifiedCount },
+      "Password reset completed — all sessions revoked"
+    );
 
     // Queue success email (non-blocking)
     setImmediate(async () => {
@@ -99,24 +112,11 @@ export async function resetPasswordUseCase({ token, password }) {
       }
     });
 
-    logger.info({ email: user.email }, "Password reset completed");
-
     return {
       success: true,
       statusCode: 200,
-      message: "Password reset successfully. Please login with your new password.",
-      data: {
-        user: {
-          id: user._id,
-          email: user.email,
-          firstname: user.firstname,
-        },
-        nextSteps: [
-          "Login with your new password",
-          "Update your security settings if needed",
-          "Contact support if you didn't request this reset",
-        ],
-      },
+      message:
+        "Password reset successful. Please log in with your new password.",
     };
   } catch (error) {
     logger.error({ err: error }, "Reset password use-case error");

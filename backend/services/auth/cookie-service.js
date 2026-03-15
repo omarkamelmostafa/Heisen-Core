@@ -3,13 +3,16 @@
 
 /**
  * Default cookie options for auth cookies.
+ * Path restricted to /api/v1/auth/refresh per FR-011 — the browser only
+ * sends the refresh token cookie when calling the refresh endpoint.
  */
 const AUTH_COOKIE_DEFAULTS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "Lax",
   path: "/",
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  ...(process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN }),
 };
 
 /**
@@ -26,15 +29,17 @@ export const setCookie = (res, cookieName, value, options = {}) => {
 
 /**
  * Clear a cookie by expiring it immediately.
+ * Uses the same path as AUTH_COOKIE_DEFAULTS so the browser matches the cookie.
  * @param {import('express').Response} res
  * @param {string} cookieName
  */
 export const clearCookie = (res, cookieName) => {
   res.cookie(cookieName, "", {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "Lax",
     path: "/",
+    ...(process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN }),
     expires: new Date(0),
     maxAge: 0,
   });

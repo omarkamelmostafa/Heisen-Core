@@ -1,38 +1,56 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "@/store/slices/auth/auth-thunks";
-import { selectAuthUser } from "@/store/slices/auth/auth-selectors";
+import { useDashboard } from "@/features/dashboard/hooks/useDashboard";
 import { Button } from "@/components/ui/button";
+import { ProtectedGuard } from "@/components/auth/guards/protected-guard";
 
 export default function DashboardPage() {
-  const dispatch = useDispatch();
-  const user = useSelector(selectAuthUser);
+  const { user, handleLogout, initials, memberSince } = useDashboard();
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
+  if (!user) return null;
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-950 text-white p-6">
-      <div className="max-w-md w-full space-y-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-slate-400">
-          Welcome back, <span className="text-primary font-semibold">{user?.name || user?.email || "User"}</span>!
-        </p>
-        <div className="p-8 border border-slate-800 bg-slate-900/50 rounded-2xl">
-          <p className="text-sm text-slate-500 mb-6">
-            This is a placeholder dashboard. You are successfully authenticated using HttpOnly cookies.
-          </p>
+    <ProtectedGuard>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 text-slate-900 p-6">
+        <div className="max-w-md w-full space-y-8 text-center bg-white p-10 rounded-3xl shadow-xl shadow-slate-200/50">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-indigo-600 text-3xl font-bold text-white shadow-lg shadow-indigo-200">
+              {initials}
+            </div>
+
+            <div className="space-y-1">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                {user?.firstName} {user?.lastName}
+              </h1>
+              <p className="text-sm font-medium text-slate-500">{user?.email}</p>
+            </div>
+          </div>
+
+          <div className="py-6 space-y-4">
+            <div className="flex items-center justify-between py-3 border-b border-slate-100">
+              <span className="text-sm font-medium text-slate-500">Status</span>
+              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${user?.isVerified ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}>
+                {user?.isVerified ? "Verified" : "Unverified"}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between py-3 border-b border-slate-100">
+              <span className="text-sm font-medium text-slate-500">Member Since</span>
+              <span className="text-sm font-semibold text-slate-900">
+                {memberSince}
+              </span>
+            </div>
+          </div>
+
           <Button
             onClick={handleLogout}
             variant="destructive"
-            className="w-full"
+            className="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-6 rounded-xl transition-all active:scale-[0.98]"
           >
-            Log Out
+            Sign Out
           </Button>
         </div>
       </div>
-    </div>
+    </ProtectedGuard>
   );
 }

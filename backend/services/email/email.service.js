@@ -1,6 +1,7 @@
 import { MailtrapProvider } from "./providers/mailtrap.provider.js";
 import { EmailQueue } from "./email.queue.js";
 import { TemplateEngine } from "./templates/template.engine.js";
+import logger from "../../utilities/general/logger.js";
 
 export class EmailService {
   constructor() {
@@ -13,6 +14,7 @@ export class EmailService {
     const templateData = {
       user: {
         name: `${user.firstname} ${user.lastname}`,
+        firstName: user.firstname,
         email: user.email,
       },
       verificationCode: verificationToken,
@@ -48,6 +50,7 @@ export class EmailService {
     const templateData = {
       user: {
         name: user.firstname,
+        firstName: user.firstname,
         email: user.email,
       },
       resetURL: resetURL,
@@ -71,6 +74,7 @@ export class EmailService {
     const templateData = {
       user: {
         name: user.firstname,
+        firstName: user.firstname,
         email: user.email,
       },
     };
@@ -107,7 +111,7 @@ export class EmailService {
         return await this.provider.send(emailData);
       }
     } catch (error) {
-      console.error(`Error sending ${templateName} email:`, error);
+      logger.error({ err: error, template: templateName }, `Error sending ${templateName} email`);
       throw error;
     }
   }

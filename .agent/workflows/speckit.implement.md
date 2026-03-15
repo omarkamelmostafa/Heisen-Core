@@ -1,6 +1,21 @@
 ---
 description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
+agent: speckit.implementation-engineer
+role: entry-point for Implementation Engineer
+handoffs:
+  - label: Validate Implementation
+    agent: speckit.validate
+    prompt: All phases are complete. Begin QA validation.
+    send: true
 ---
+
+> **Agent**: This workflow is executed by the **Implementation Engineer**.  
+> **Full agent definition** (Role, Objective, Constraints, Memory Contract, Handoff Record):  
+> → [`.agent/workflows/speckit.implementation-engineer.md`](.agent/workflows/speckit.implementation-engineer.md)
+
+> **⚠️ GATE**: Before beginning, read `specs/NNN/analysis-report.md`.  
+> If `Status: BLOCKED` or the file is absent, **stop immediately** and route to Delivery Planner (`/speckit.tasks`).  
+> Only `Status: APPROVED` permits implementation to begin.
 
 ## User Input
 
@@ -9,6 +24,40 @@ $ARGUMENTS
 ```
 
 You **MUST** consider the user input before proceeding (if not empty).
+
+## Pre-Execution Checks
+
+**Check for extension hooks (before implementation)**:
+- Check if `.specify/extensions.yml` exists in the project root.
+- If it exists, read it and look for entries under the `hooks.before_implement` key
+- If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
+- Filter to only hooks where `enabled: true`
+- For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
+  - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
+  - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
+- For each executable hook, output the following based on its `optional` flag:
+  - **Optional hook** (`optional: true`):
+    ```
+    ## Extension Hooks
+
+    **Optional Pre-Hook**: {extension}
+    Command: `/{command}`
+    Description: {description}
+
+    Prompt: {prompt}
+    To execute: `/{command}`
+    ```
+  - **Mandatory hook** (`optional: false`):
+    ```
+    ## Extension Hooks
+
+    **Automatic Pre-Hook**: {extension}
+    Executing: `/{command}`
+    EXECUTE_COMMAND: {command}
+    
+    Wait for the result of the hook command before proceeding to the Outline.
+    ```
+- If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
 
 ## Outline
 
@@ -85,7 +134,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **Rust**: `target/`, `debug/`, `release/`, `*.rs.bk`, `*.rlib`, `*.prof*`, `.idea/`, `*.log`, `.env*`
    - **Kotlin**: `build/`, `out/`, `.gradle/`, `.idea/`, `*.class`, `*.jar`, `*.iml`, `*.log`, `.env*`
    - **C++**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.so`, `*.a`, `*.exe`, `*.dll`, `.idea/`, `*.log`, `.env*`
-   - **C**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.a`, `*.so`, `*.exe`, `autom4te.cache/`, `config.status`, `config.log`, `.idea/`, `*.log`, `.env*`
+   - **C**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.a`, `*.so`, `*.exe`, `*.dll`, `autom4te.cache/`, `config.status`, `config.log`, `.idea/`, `*.log`, `.env*`
    - **Swift**: `.build/`, `DerivedData/`, `*.swiftpm/`, `Packages/`
    - **R**: `.Rproj.user/`, `.Rhistory`, `.RData`, `.Ruserdata`, `*.Rproj`, `packrat/`, `renv/`
    - **Universal**: `.DS_Store`, `Thumbs.db`, `*.tmp`, `*.swp`, `.vscode/`, `.idea/`
@@ -133,3 +182,58 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Report final status with summary of completed work
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
+
+   **After each phase completes — write a checkpoint record**:
+   Append the following block to `specs/NNN/checkpoint-log.md`:
+
+   ```markdown
+   ## Checkpoint: Phase [N] — [Phase Name]
+   Completed: [ISO 8601 timestamp]
+   Tasks Completed: [T001, T002, ...] — all marked [x]
+   Independent Test: PASS | FAIL — [description of what was verified]
+   External Side Effects:
+     - Migrations run: [list or NONE]
+     - Queues activated: [list or NONE]
+     - Feature flags set: [list or NONE]
+     - External service calls made: [list or NONE]
+     - Data written to production: YES | NO — [detail if YES]
+   Rollback Scope:
+     - Files changed: [git diff --stat summary or file list]
+     - Config changed: [env vars, config files — list or NONE]
+     - Reversible: YES | PARTIAL | NO — [explain if PARTIAL or NO]
+   Approved By: self | user-override | constitution-rule [Section X]
+   Status: COMPLETE | FAILED
+   Notes: [optional — flag anything unusual for QA]
+   ```
+
+   **If a planning gap is discovered during a task** (file path or component not defined in plan.md):
+   Append a `PLANNING_GAP` defect record to `specs/NNN/defect-log.md`, stop the current phase, and route to the Solution Architect before continuing.
+
+10. **Check for extension hooks**: After completion validation, check if `.specify/extensions.yml` exists in the project root.
+    - If it exists, read it and look for entries under the `hooks.after_implement` key
+    - If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
+    - Filter to only hooks where `enabled: true`
+    - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
+      - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
+      - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
+    - For each executable hook, output the following based on its `optional` flag:
+      - **Optional hook** (`optional: true`):
+        ```
+        ## Extension Hooks
+
+        **Optional Hook**: {extension}
+        Command: `/{command}`
+        Description: {description}
+
+        Prompt: {prompt}
+        To execute: `/{command}`
+        ```
+      - **Mandatory hook** (`optional: false`):
+        ```
+        ## Extension Hooks
+
+        **Automatic Hook**: {extension}
+        Executing: `/{command}`
+        EXECUTE_COMMAND: {command}
+        ```
+    - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently

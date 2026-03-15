@@ -13,7 +13,7 @@ export function createRateLimiterMiddleware(options = {}) {
     // Redis store configuration
     store: new RedisStore({
       sendCommand: (...args) => redis.call(...args),
-      prefix: "rl:", // Prefix for redis keys
+      prefix: options.prefix || "rl:", // Prefix for redis keys
     }),
     ...options,
   });
