@@ -3,6 +3,7 @@ import BaseClient from "./base-client";
 import { tokenManager } from "@/services/auth/token-manager";
 import { HTTP_STATUS } from "@/lib/config/api-config";
 import { refreshQueue } from "@/services/api/refresh-queue";
+import StoreAccessor from "@/store/store-accessor";
 
 class PrivateClient extends BaseClient {
   constructor() {
@@ -17,7 +18,7 @@ class PrivateClient extends BaseClient {
   }
 
   setupAuthInterceptors() {
-    // Auth request interceptor
+    // Auth request interceptor — injects access token from Redux
     this.instance.interceptors.request.use(
       this.injectAuthToken.bind(this),
       (error) => Promise.reject(error)
@@ -30,11 +31,25 @@ class PrivateClient extends BaseClient {
     );
   }
 
-  // Inject tracking headers (authentication is now automatic via cookies)
+  /**
+   * Inject the access token from Redux state into the Authorization header.
+   * Since the access token is no longer in a cookie (FR-010), we must
+   * read it from Redux and attach it manually.
+   */
   async injectAuthToken(config) {
-    // Skip auth check logic if needed, but cookies are sent by browser
     if (this.shouldSkipAuth(config.url)) {
       return config;
+    }
+
+    // Read access token from Redux state (memory-only)
+    try {
+      const state = StoreAccessor.getState();
+      const accessToken = state?.auth?.accessToken;
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+    } catch {
+      // Store not yet initialized — token will be missing, 401 triggers refresh
     }
 
     // Add request ID for tracking
@@ -43,7 +58,6 @@ class PrivateClient extends BaseClient {
     return config;
   }
 
-  // Handle authentication errors with retry logic
   /**
    * Enhanced auth error handler with three-path flow:
    *   1. No token present → immediate redirect (unauthenticated access)
@@ -54,11 +68,9 @@ class PrivateClient extends BaseClient {
     const originalRequest = error.config;
 
     // PATH 1: No tokens present — short-circuit to login
-    // Unauthenticated users should never trigger refresh logic
     if (!tokenManager.hasValidSession()) {
-      console.log('PrivateClient: No tokens present, redirecting to login');
-      if (typeof window !== 'undefined') {
-        window.location.href = '/login';
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
       }
       return Promise.reject(this.normalizeError(error));
     }
@@ -66,21 +78,25 @@ class PrivateClient extends BaseClient {
     // PATH 2: Expired token — attempt refresh via queue
     if (this.shouldRetryWithRefresh(error, originalRequest)) {
       try {
-        console.log('PrivateClient: Token expired, delegating to refresh queue');
-
         await refreshQueue.handleTokenRefresh({
           config: originalRequest,
           instance: this.instance,
-          error: error
+          error: error,
         });
 
-        // Retry original request (cookies are set automatically by browser)
-        return this.instance(originalRequest);
+        // After successful refresh, re-inject the new access token
+        // (the refresh thunk/service will have updated Redux state)
+        const state = StoreAccessor.getState();
+        const newToken = state?.auth?.accessToken;
+        if (newToken) {
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        }
 
+        // Retry original request with updated token
+        return this.instance(originalRequest);
       } catch (refreshError) {
         // PATH 3: Refresh failed — refreshQueue.handleAuthFailure() already
         // handled cleanup (logout + redirect). Just propagate the error.
-        console.error('PrivateClient: Refresh failed, auth failure handled by queue');
         return Promise.reject(this.normalizeError(refreshError));
       }
     }
@@ -89,54 +105,42 @@ class PrivateClient extends BaseClient {
     return Promise.reject(this.normalizeError(error));
   }
 
-
-
   // Check if request should skip auth
   shouldSkipAuth(url) {
     const skipAuthEndpoints = ["/auth/refresh", "/auth/logout", "/public/"];
-
     return skipAuthEndpoints.some((endpoint) => url.includes(endpoint));
   }
 
   // Determine if request should be retried with token refresh
   shouldRetryWithRefresh(error, config) {
-    // Only retry on specific status codes
     const isAuthError = error.response?.status === HTTP_STATUS.UNAUTHORIZED;
-
-    // Check if this is the first retry attempt
     const isFirstAttempt = !config.__isRetry;
-
-    // Check if endpoint supports retry (not auth endpoints)
     const canRetryEndpoint = !this.shouldSkipAuth(config.url);
-
     return isAuthError && isFirstAttempt && canRetryEndpoint;
   }
 
-
-
   // Generate unique request ID
   generateRequestId() {
-    return `req_${new Date().toISOString().replace(/T/, "-").slice(0, -13)}_${crypto.randomUUID().split("-")[0]
-      }`;
+    return `req_${new Date()
+      .toISOString()
+      .replace(/T/, "-")
+      .slice(0, -13)}_${crypto.randomUUID().split("-")[0]}`;
   }
 
-
   setupEnhancedLogging() {
-    this.instance.interceptors.request.use(
-      (config) => {
-        config.metadata = { startTime: Date.now() };
-        if (process.env.NODE_ENV === "development") {
-          this.sanitizedLog("REQUEST", config);
-        }
-        return config;
+    this.instance.interceptors.request.use((config) => {
+      config.metadata = { startTime: Date.now() };
+      if (process.env.NODE_ENV === "development") {
+        this.sanitizedLog("REQUEST", config);
       }
-    );
+      return config;
+    });
   }
 
   sanitizedLog(type, config) {
-    // Copy the sanitization logic only
     const sanitizedHeaders = this.sanitizeHeaders(config.headers);
     if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
       console.log(`🔒 [SECURE] ${type}`, sanitizedHeaders);
     }
   }

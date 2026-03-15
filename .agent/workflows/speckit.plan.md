@@ -1,5 +1,7 @@
 ---
 description: Execute the implementation planning workflow using the plan template to generate design artifacts.
+agent: speckit.solution-architect
+role: entry-point for Solution Architect
 handoffs: 
   - label: Create Tasks
     agent: speckit.tasks
@@ -9,6 +11,10 @@ handoffs:
     agent: speckit.checklist
     prompt: Create a checklist for the following domain...
 ---
+
+> **Agent**: This workflow is executed by the **Solution Architect**.  
+> **Full agent definition** (Role, Objective, Constraints, Memory Contract, Handoff Record):  
+> → [`.agent/workflows/speckit.solution-architect.md`](.agent/workflows/speckit.solution-architect.md)
 
 ## User Input
 
@@ -88,3 +94,18 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 - Use absolute paths
 - ERROR on gate failures or unresolved clarifications
+
+## Handoff Readiness
+
+Before handing off to Delivery Planner (`/speckit.tasks`), confirm all items below are complete:
+
+```
+- [ ] research.md: all unknowns resolved, Decision/Rationale/Alternatives format
+- [ ] data-model.md: complete — or explicitly marked N/A in plan.md
+- [ ] contracts/: complete — or explicitly marked N/A in plan.md
+- [ ] quickstart.md: skeleton written with at least one integration scenario per user story
+- [ ] Constitution Check: all gates PASS or VIOLATION + JUSTIFICATION in Complexity Tracking
+- [ ] Technical Context: zero NEEDS CLARIFICATION remaining
+```
+
+Do not proceed to `/speckit.tasks` until all items above are checked.

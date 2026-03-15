@@ -6,9 +6,9 @@ import { sendUseCaseResponse } from "./auth-shared.js";
  * Verify Email Controller — Thin HTTP adapter.
  */
 export const handleVerifyEmail = async (req, res) => {
-  const { code } = req.body;
+  const { token } = req.body;
 
-  const result = await verifyEmailUseCase({ code });
+  const result = await verifyEmailUseCase({ token });
 
   return sendUseCaseResponse(req, res, result);
 };

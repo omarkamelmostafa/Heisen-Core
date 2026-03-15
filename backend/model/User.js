@@ -56,20 +56,6 @@ const UserSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    loginAttempts: {
-      type: Number,
-      default: 0,
-      select: false,
-    },
-    isLocked: {
-      type: Boolean,
-      default: false,
-      select: false,
-    },
-    lockUntil: {
-      type: Date,
-      select: false,
-    },
     isVerified: {
       type: Boolean,
       default: false,
@@ -79,13 +65,7 @@ const UserSchema = new Schema(
       default: true,
     },
 
-    // Token fields
-    refreshToken: {
-      type: String,
-      select: false,
-      index: true,
-      sparse: true,
-    },
+    // Token fields (refresh tokens are now in the RefreshToken collection)
     resetPasswordToken: {
       type: String,
       select: false,
@@ -135,12 +115,8 @@ const UserSchema = new Schema(
       transform: function (doc, ret) {
         // Always remove password and sensitive fields when converting to JSON
         delete ret.password;
-        delete ret.refreshToken;
         delete ret.resetPasswordToken;
         delete ret.verificationToken;
-        delete ret.loginAttempts;
-        delete ret.isLocked;
-        delete ret.lockUntil;
         return ret;
       },
     },
@@ -159,57 +135,15 @@ UserSchema.pre("save", function (next) {
   next();
 }); // ::TODO:: three cases, password change, log out all devices, admin security action
 
-// Enhanced pre-save middleware for security
-UserSchema.pre("save", function (next) {
-  // Clear sessions when sensitive data changes
-  if (
-    this.isModified("password") ||
-    this.isModified("email") ||
-    this.isModified("isActive")
-  ) {
-    this.refreshToken = null; // Log out from all sessions
-  }
-
-  // Auto-unlock account when lockUntil expires
-  if (this.lockUntil && this.lockUntil < new Date()) {
-    this.isLocked = false;
-    this.lockUntil = undefined;
-    this.loginAttempts = 0;
-  }
-
-  next();
-});
-
-// Instance method to check if account is locked
-UserSchema.methods.isAccountLocked = function () {
-  return this.isLocked && this.lockUntil > new Date();
-};
-
-// Instance method to increment failed login attempts
-UserSchema.methods.incrementLoginAttempts = function () {
-  this.loginAttempts += 1;
-
-  if (this.loginAttempts >= 5) {
-    this.isLocked = true;
-    this.lockUntil = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
-  }
-
-  return this.save();
-};
-
-// Instance method to reset login attempts on successful login
-UserSchema.methods.resetLoginAttempts = function () {
-  this.loginAttempts = 0;
-  this.isLocked = false;
-  this.lockUntil = undefined;
-  this.lastLogin = new Date();
-  return this.save();
-};
+// Note: Session invalidation on sensitive data changes is now handled
+// via tokenVersion increment (already in the pre-save hook above).
+// Refresh tokens are in the RefreshToken collection and are invalidated
+// by comparing tokenVersion at refresh time.
 
 // Static method to find by email including security fields
 UserSchema.statics.findByEmailWithSecurity = function (email) {
   return this.findOne({ email }).select(
-    "+password +refreshToken +loginAttempts +isLocked +lockUntil"
+    "+password +tokenVersion"
   );
 };
 

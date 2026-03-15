@@ -1,5 +1,7 @@
 ---
 description: Create or update the feature specification from a natural language feature description.
+agent: speckit.requirements-analyst
+role: entry-point for Requirements Analyst
 handoffs: 
   - label: Build Technical Plan
     agent: speckit.plan
@@ -8,6 +10,12 @@ handoffs:
     agent: speckit.clarify
     prompt: Clarify specification requirements
     send: true
+---
+
+> **Agent**: This workflow is executed by the **Requirements Analyst**.  
+> **Full agent definition** (Role, Objective, Constraints, Memory Contract, Handoff Record):  
+> → [`.agent/workflows/speckit.requirements-analyst.md`](.agent/workflows/speckit.requirements-analyst.md)
+
 ---
 
 ## User Input
@@ -36,37 +44,18 @@ Given that feature description, do this:
      - "Create a dashboard for analytics" → "analytics-dashboard"
      - "Fix payment processing timeout bug" → "fix-payment-timeout"
 
-2. **Check for existing branches before creating new one**:
+2. **Create the feature branch** by running the script with `--short-name` (and `--json`), and do NOT pass `--number` (the script auto-detects the next globally available number across all branches and spec directories):
 
-   a. First, fetch all remote branches to ensure we have the latest information:
-
-      ```bash
-      git fetch --all --prune
-      ```
-
-   b. Find the highest feature number across all sources for the short-name:
-      - Remote branches: `git ls-remote --heads origin | grep -E 'refs/heads/[0-9]+-<short-name>$'`
-      - Local branches: `git branch | grep -E '^[* ]*[0-9]+-<short-name>$'`
-      - Specs directories: Check for directories matching `specs/[0-9]+-<short-name>`
-
-   c. Determine the next available number:
-      - Extract all numbers from all three sources
-      - Find the highest number N
-      - Use N+1 for the new branch number
-
-   d. Run the script `.specify/scripts/powershell/create-new-feature.ps1 -Json "$ARGUMENTS"` with the calculated number and short-name:
-      - Pass `--number N+1` and `--short-name "your-short-name"` along with the feature description
-      - Bash example: `.specify/scripts/powershell/create-new-feature.ps1 -Json "$ARGUMENTS" --json --number 5 --short-name "user-auth" "Add user authentication"`
-      - PowerShell example: `.specify/scripts/powershell/create-new-feature.ps1 -Json "$ARGUMENTS" -Json -Number 5 -ShortName "user-auth" "Add user authentication"`
+   - Bash example: `.specify/scripts/powershell/create-new-feature.ps1 "$ARGUMENTS" --json --short-name "user-auth" "Add user authentication"`
+   - PowerShell example: `.specify/scripts/powershell/create-new-feature.ps1 "$ARGUMENTS" -Json -ShortName "user-auth" "Add user authentication"`
 
    **IMPORTANT**:
-   - Check all three sources (remote branches, local branches, specs directories) to find the highest number
-   - Only match branches/directories with the exact short-name pattern
-   - If no existing branches/directories found with this short-name, start with number 1
+   - Do NOT pass `--number` — the script determines the correct next number automatically
+   - Always include the JSON flag (`--json` for Bash, `-Json` for PowerShell) so the output can be parsed reliably
    - You must only ever run this script once per feature
    - The JSON is provided in the terminal as output - always refer to it to get the actual content you're looking for
    - The JSON output will contain BRANCH_NAME and SPEC_FILE paths
-   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot")
+   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''"m Groot' (or double-quote if possible: "I'm Groot")
 
 3. Load `.specify/templates/spec-template.md` to understand required sections.
 

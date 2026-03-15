@@ -1,8 +1,8 @@
 // frontend/src/app/(auth)/forgot-password/page.jsx
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useForgotPassword } from "@/features/auth/hooks/useForgotPassword";
 import { ForgotPasswordHeader } from "@/components/auth/forgot-password/forgot-password-header";
 import { FormState } from "@/components/auth/forgot-password/form-state";
 import { SuccessState } from "@/components/auth/forgot-password/success-state";
@@ -15,42 +15,19 @@ import {
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import ForgotPasswordLoading from "./loading";
 import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { forgotPassword } from "@/store/slices/auth/auth-thunks";
-import { clearError } from "@/store/slices/auth/auth-slice";
-import { selectAuthLoading } from "@/store/slices/auth/auth-selectors";
 import { AuthErrorAlert } from "@/components/auth/forms/auth-error-alert";
 
 export default function ForgotPasswordPage() {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [submittedEmail, setSubmittedEmail] = useState("");
-
-  const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectAuthLoading);
+  const {
+    isSuccess,
+    submittedEmail,
+    isLoading,
+    error,
+    handleSubmit,
+    handleTryAnotherEmail,
+  } = useForgotPassword();
 
   const isLoadingPage = useSimulatedLoading(0);
-
-  // Clear any stale auth error on mount
-  useEffect(() => {
-    dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleSubmit = async (data) => {
-    try {
-      await dispatch(forgotPassword(data.userEmail)).unwrap();
-      setSubmittedEmail(data.userEmail);
-      setIsSuccess(true);
-    } catch (err) {
-      // Error is handled via Redux and shown below
-      console.error("Forgot password error:", err);
-    }
-  };
-
-  const handleTryAnotherEmail = () => {
-    setIsSuccess(false);
-    setSubmittedEmail("");
-  };
 
   if (isLoadingPage) {
     return <ForgotPasswordLoading />;
@@ -81,7 +58,7 @@ export default function ForgotPasswordPage() {
                 mode="onTouched"
                 reValidateMode="onChange"
               >
-                <AuthErrorAlert />
+                <AuthErrorAlert error={error} />
 
                 <FormState isLoading={isLoading} />
               </AuthFormProvider>

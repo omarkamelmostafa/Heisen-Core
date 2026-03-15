@@ -1,49 +1,50 @@
 // backend/use-cases/auth/logout.use-case.js
 
-import User from "../../model/User.js";
+import RefreshToken from "../../model/RefreshToken.js";
 import {
+  hashToken,
   safeVerifyOrDecode,
   revokeByJti,
 } from "../../services/auth/token-service.js";
 import logger from "../../utilities/general/logger.js";
 
 /**
- * Logout Use Case — Pure business logic, no req/res.
+ * Logout Use Case — Single device logout.
+ *
+ * Revokes the current device's refresh token and blacklists the access token JTI.
+ * Returns 204 if no cookie present (idempotent) per contract.
  *
  * @param {Object} dto
- * @param {string|null} dto.refreshToken - From cookie
+ * @param {string|null} dto.refreshToken - Raw refresh token from cookie
  * @param {string|null} dto.accessToken  - From Authorization header
- * @param {boolean}     dto.logoutAll    - Whether to invalidate all sessions
  * @returns {Object} { success, statusCode, message }
  */
-export async function logoutUseCase({ refreshToken, accessToken, logoutAll = false }) {
+export async function logoutUseCase({ refreshToken, accessToken }) {
   try {
-    let decodedRefresh = null;
-
-    // 1. Process refresh token — blacklist in Redis
-    if (refreshToken) {
-      decodedRefresh = safeVerifyOrDecode(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        {
-          issuer: process.env.JWT_ISSUER,
-          audience: process.env.JWT_AUDIENCE,
-        }
-      );
-
-      if (decodedRefresh?.jti && decodedRefresh.exp > Date.now() / 1000) {
-        try {
-          await revokeByJti(decodedRefresh.jti, decodedRefresh.exp);
-        } catch (redisError) {
-          logger.warn(
-            { err: redisError, jti: decodedRefresh.jti },
-            "Redis unavailable for blacklisting refresh token"
-          );
-        }
-      }
+    // No cookie = already logged out (idempotent)
+    if (!refreshToken) {
+      return {
+        success: true,
+        statusCode: 204,
+        message: "No active session.",
+      };
     }
 
-    // 2. Process access token — blacklist in Redis
+    // 1. Revoke the refresh token in the database
+    const hashedToken = hashToken(refreshToken);
+    const tokenDoc = await RefreshToken.findOneAndUpdate(
+      { token: hashedToken, isRevoked: false },
+      { isRevoked: true }
+    );
+
+    if (tokenDoc) {
+      logger.info(
+        { userId: tokenDoc.user },
+        "Refresh token revoked on logout"
+      );
+    }
+
+    // 2. Blacklist the access token's JTI in Redis (if provided)
     if (accessToken) {
       const decodedAccess = safeVerifyOrDecode(
         accessToken,
@@ -66,27 +67,10 @@ export async function logoutUseCase({ refreshToken, accessToken, logoutAll = fal
       }
     }
 
-    // 3. Invalidate database tokens
-    if (decodedRefresh?.userId) {
-      const userId = decodedRefresh.userId;
-
-      if (logoutAll) {
-        await User.findByIdAndUpdate(userId, {
-          $inc: { tokenVersion: 1 },
-          $unset: { refreshToken: "" },
-        }).exec();
-      } else if (refreshToken) {
-        await User.findOneAndUpdate(
-          { _id: userId, refreshToken: refreshToken },
-          { $unset: { refreshToken: "" } }
-        ).exec();
-      }
-    }
-
     return {
       success: true,
       statusCode: 200,
-      message: "Logged out successfully",
+      message: "Logged out successfully.",
     };
   } catch (error) {
     logger.error({ err: error }, "Logout use-case error");
@@ -95,7 +79,7 @@ export async function logoutUseCase({ refreshToken, accessToken, logoutAll = fal
     return {
       success: true,
       statusCode: 200,
-      message: "Logged out successfully",
+      message: "Logged out successfully.",
     };
   }
 }

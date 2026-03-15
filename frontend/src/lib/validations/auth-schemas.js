@@ -11,8 +11,8 @@ const emailSchema = z
 const passwordSchema = z
   .string()
   .min(1, "Password is required")
-  .min(6, "Password must be at least 6 characters")
-  .max(20, "Password must be at most 20 characters")
+  .min(8, "Password must be at least 8 characters")
+  .max(128, "Password must be at most 128 characters")
   .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[a-z]/, "Password must contain at least one lowercase letter")
   .regex(/[0-9]/, "Password must contain at least one number")
@@ -25,14 +25,14 @@ const passwordSchema = z
 const loginPasswordSchema = z
   .string()
   .min(1, "Password is required")
-  .min(6, "Password must be at least 6 characters");
+  .min(8, "Password must be at least 8 characters");
 
 // Name validation schema
 const nameSchema = z
   .string()
   .min(1, "This field is required")
-  .min(2, "Must be at least 2 characters")
-  .max(20, "Must be at most 20 characters")
+  .min(3, "Must be at least 3 characters")
+  .max(16, "Must be at most 16 characters")
   .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces");
 
 // Login Schema

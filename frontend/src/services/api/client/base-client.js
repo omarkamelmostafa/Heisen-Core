@@ -6,6 +6,19 @@ import {
   HTTP_STATUS,
   ERROR_MESSAGES,
 } from "@/lib/config/api-config";
+import storeAccessor from "@/store/store-accessor";
+import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
+
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) reject(error);
+    else resolve(token);
+  });
+  failedQueue = [];
+};
 
 class BaseClient {
   constructor(baseURL = API_CONFIG.FULL_BASE_URL) {
@@ -38,6 +51,16 @@ class BaseClient {
   handleRequestSuccess(config) {
     // Add timestamp for request tracking
     config.metadata = { startTime: Date.now() };
+
+    // Attach Authorization header if access token exists in Redux store
+    const state = storeAccessor.getState();
+    const token = state?.auth?.accessToken;
+    
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    config.withCredentials = true;
 
     if (process.env.NODE_ENV === "development") {
       console.log(`🚀 [API] ${config.method?.toUpperCase()} ${config.url}`, {
@@ -88,6 +111,59 @@ class BaseClient {
           error: error.response?.data || error.message,
         }
       );
+    }
+    
+    const originalRequest = error.config;
+
+    if (
+      error.response?.status === 401 &&
+      error.response?.data?.errorCode === "TOKEN_EXPIRED"
+    ) {
+      if (originalRequest._retry) {
+        storeAccessor.dispatch(clearCredentials());
+        storeAccessor.dispatch(setSessionExpired(true));
+        return Promise.reject(error);
+      }
+
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return this.instance(originalRequest);
+          })
+          .catch((err) => {
+            return Promise.reject(err);
+          });
+      }
+
+      isRefreshing = true;
+
+      return new Promise((resolve, reject) => {
+        // Plain axios instance for refresh to avoid interceptor loop
+        axios
+          .post(`${API_CONFIG.FULL_BASE_URL}/auth/refresh`, {}, { withCredentials: true })
+          .then((res) => {
+            const newAccessToken = res.data?.data?.accessToken;
+            storeAccessor.dispatch(updateAccessToken(newAccessToken));
+            
+            isRefreshing = false;
+            processQueue(null, newAccessToken);
+
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            resolve(this.instance(originalRequest));
+          })
+          .catch((err) => {
+            storeAccessor.dispatch(clearCredentials());
+            storeAccessor.dispatch(setSessionExpired(true));
+            isRefreshing = false;
+            processQueue(err, null);
+            reject(err);
+          });
+      });
     }
 
     return Promise.reject(error);

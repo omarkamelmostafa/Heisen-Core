@@ -21,6 +21,7 @@ export const selectRefreshToken = () => null;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectAuthLoading = (state) => state.auth.isLoading;
 export const selectAuthError = (state) => state.auth.error;
+export const selectIsBootstrapComplete = (state) => state.auth.isBootstrapComplete;
 
 // Memoized/computed selectors
 // export const selectUserRole = (state) => state.auth.user?.role;

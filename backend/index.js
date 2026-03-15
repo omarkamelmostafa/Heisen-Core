@@ -47,6 +47,7 @@ import authRoutes from "./routes/auth/auth-routes.js";
 import healthRoutes from "./routes/health/health-routes.js";
 
 import testRoutes from "./routes/test/test-routes.js";
+import userRoutes from "./routes/user/user-routes.js";
 
 // 🧰 Utilities
 import { emitLogMessage } from "./utilities/general/emit-log.js";
@@ -97,9 +98,8 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/health", healthRoutes);
 
-// 🔒 Protected Routes (if you add auth middleware later)
-// app.use("/api/v1/users", authTokenMiddleware, userRoutes);
-// app.use("/api/v1/admin", authTokenMiddleware, adminRoutes);
+// 🔒 Protected Routes
+app.use("/api/v1/user", userRoutes);
 
 // 🧪 Test Routes (Development only)
 

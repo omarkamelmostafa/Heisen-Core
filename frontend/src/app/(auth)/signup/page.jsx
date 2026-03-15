@@ -1,16 +1,9 @@
 // frontend/src/app/(auth)/signup/page.jsx
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { registerUser } from "@/store/slices/auth/auth-thunks";
-import { clearError } from "@/store/slices/auth/auth-slice";
-import {
-  selectAuthLoading,
-  selectIsAuthenticated,
-} from "@/store/slices/auth/auth-selectors";
+import { useSignup } from "@/features/auth/hooks/useSignup";
 import { SignupHeader } from "@/components/auth/signup/signup-header";
 import { WelcomeSection } from "@/components/auth/signup/welcome-section";
 import { SignupForm } from "@/components/auth/signup/signup-form";
@@ -25,6 +18,7 @@ import {
 import { motion } from "framer-motion";
 import SignupLoading from "./loading";
 import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
+import { PublicGuard } from "@/components/auth/guards/public-guard";
 
 export default function SignupPage() {
   const [passwordVisibility, setPasswordVisibility] = useState({
@@ -32,11 +26,11 @@ export default function SignupPage() {
     confirmPassword: false,
   });
 
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
-  const isLoading = useAppSelector(selectAuthLoading);
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const {
+    isLoading,
+    error,
+    handleSignup,
+  } = useSignup();
 
   const isLoadingPage = useSimulatedLoading(0);
 
@@ -48,35 +42,12 @@ export default function SignupPage() {
     }));
   };
 
-  // Clear any stale auth error on mount
-  useEffect(() => {
-    dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // After successful signup, direct user to verify-email flow
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/verify-email");
-    }
-  }, [isAuthenticated, router]);
-
-  const handleSignupSubmit = async (data) => {
-    try {
-      await dispatch(registerUser(data)).unwrap();
-      // Redirect handled by useEffect when isAuthenticated becomes true
-    } catch (error) {
-      // Error is stored in Redux and displayed below
-      console.error("Signup error:", error);
-    }
-  };
-
   if (isLoadingPage) {
     return <SignupLoading />;
   }
 
   return (
-    <>
+    <PublicGuard>
       <div className="flex min-h-[100vh] items-center justify-center overflow-hidden">
         <motion.div
           {...motionProps.page}
@@ -102,10 +73,10 @@ export default function SignupPage() {
                 confirmPassword: "",
                 terms: false,
               }}
-              onSubmit={handleSignupSubmit}
+              onSubmit={handleSignup}
               className="space-y-6"
             >
-              <AuthErrorAlert />
+              <AuthErrorAlert error={error} />
 
               <SignupForm
                 variants={itemVariants}
@@ -122,6 +93,6 @@ export default function SignupPage() {
         </motion.div>
       </div>
       <ProductionErrorTrigger />
-    </>
+    </PublicGuard>
   );
 }

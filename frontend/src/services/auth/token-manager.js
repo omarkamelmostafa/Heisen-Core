@@ -2,51 +2,50 @@
 /**
  * TokenManager — Single source of truth for token lifecycle.
  *
- * Centralizes three concerns that were previously scattered across
- * refresh-queue, private-client, auth-thunks, and cookie-service:
- *
+ * Centralizes three concerns:
  *   1. Session detection  — hasValidSession()
  *   2. Session cleanup    — clearSession(dispatch)
  *   3. Auth failure       — handleSessionExpired()
  *
- * Phase 1: Additive only — existing code continues to work.
- * Phase 2: Modules redirect here one-at-a-time.
- * Phase 3: Dead code removed from cookie-service.
+ * Access token is stored in Redux state only (not cookies, not localStorage).
+ * The refresh token is HttpOnly and invisible to JavaScript.
  */
 
-import { cookieService } from "@/services/storage/cookie-service";
-import { STORAGE_KEYS } from "@/services/storage/storage-constants";
 import StoreAccessor from "@/store/store-accessor";
 import { logout } from "@/store/slices/auth/auth-slice";
 
 class TokenManager {
   /**
-   * Check whether the current browser session has a valid access token.
+   * Check whether the current session has a valid access token.
    *
-   * NOTE: The refresh token is set as httpOnly by the backend and is
-   * invisible to JavaScript. We can only check the access token cookie.
-   * If the access token is missing but the refresh token still lives in
-   * the httpOnly cookie, the next API call will 401 and trigger the
+   * Checks Redux state for the in-memory access token (FR-010).
+   * If the access token is missing but the refresh token cookie exists
+   * (invisible to JS), the next API call will 401 and trigger the
    * refresh flow automatically.
    */
   hasValidSession() {
-    return !!cookieService.get(STORAGE_KEYS.ACCESS_TOKEN);
+    try {
+      const state = StoreAccessor.getState();
+      return !!state?.auth?.accessToken;
+    } catch {
+      return false;
+    }
   }
 
   /**
    * Clear all client-side auth state.
    * Called during intentional logout (user-initiated).
    *
+   * Does NOT attempt to clear the refresh token cookie — it is HttpOnly
+   * and can only be cleared by the backend via the /logout endpoint.
+   *
    * @param {Function} [dispatch] - Redux dispatch. Falls back to StoreAccessor.
    */
   clearSession(dispatch) {
     const d = dispatch || StoreAccessor.dispatch.bind(StoreAccessor);
 
-    // 1. Clear Redux auth state
+    // Clear Redux auth state (access token, user, isAuthenticated)
     d(logout());
-
-    // 2. Clear auth cookies (access token + any non-httpOnly data)
-    cookieService.clearAuthData();
   }
 
   /**
@@ -59,9 +58,7 @@ class TokenManager {
    * Performs full cleanup and redirects to login with context.
    */
   handleSessionExpired() {
-    console.error("TokenManager: Session expired — logging out user");
-
-    // 1. Clear Redux + cookies
+    // 1. Clear Redux state
     this.clearSession();
 
     // 2. Redirect to login with context

@@ -1,19 +1,21 @@
 // backend/use-cases/auth/refresh-token.use-case.js
 
-import User from "../../model/User.js";
-import jwt from "jsonwebtoken";
 import { refreshAccessToken } from "../../services/auth/token-service.js";
 import logger from "../../utilities/general/logger.js";
 
 /**
  * Refresh Token Use Case — Pure business logic, no req/res.
  *
+ * Delegates rotation + reuse detection to the token service.
+ * Returns the new raw refresh token for the controller to set as a cookie.
+ *
  * @param {Object} dto
- * @param {string|null} dto.refreshToken - From cookie
- * @param {string}      dto.clientIP     - For security logging
+ * @param {string|null} dto.refreshToken - Raw token from cookie
+ * @param {string}      dto.userAgent    - User-Agent header
+ * @param {string}      dto.ipAddress    - Client IP
  * @returns {Object} { success, statusCode, errorCode?, message, data?, clearCookie? }
  */
-export async function refreshTokenUseCase({ refreshToken, clientIP }) {
+export async function refreshTokenUseCase({ refreshToken, userAgent, ipAddress }) {
   if (!refreshToken) {
     return {
       success: false,
@@ -24,66 +26,10 @@ export async function refreshTokenUseCase({ refreshToken, clientIP }) {
   }
 
   try {
-    // Verify refresh token
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, {
-      issuer: process.env.JWT_ISSUER,
-      audience: process.env.JWT_AUDIENCE,
-    });
+    const { accessToken, refreshTokenValue, accessTokenExpiresIn } =
+      await refreshAccessToken(refreshToken, userAgent, ipAddress);
 
-    const user = await User.findById(decoded.userId).select(
-      "+refreshToken +tokenVersion"
-    );
-
-    if (!user) {
-      return {
-        success: false,
-        statusCode: 401,
-        message: "User not found",
-        errorCode: "USER_NOT_FOUND",
-        clearCookie: true,
-      };
-    }
-
-    // Token version check
-    if (decoded.tokenVersion !== user.tokenVersion) {
-      user.refreshToken = null;
-      await user.save();
-
-      return {
-        success: false,
-        statusCode: 401,
-        message: "Session expired. Please login again.",
-        errorCode: "TOKEN_VERSION_MISMATCH",
-        clearCookie: true,
-      };
-    }
-
-    // Token reuse detection
-    if (user.refreshToken !== refreshToken) {
-      user.refreshToken = null;
-      await user.save();
-
-      logger.warn({ userId: user._id, ip: clientIP }, "Token reuse detected");
-
-      return {
-        success: false,
-        statusCode: 401,
-        message: "Security alert: Invalid session detected.",
-        errorCode: "TOKEN_REUSE_DETECTED",
-        clearCookie: true,
-      };
-    }
-
-    // Generate new tokens
-    const {
-      accessToken,
-      refreshToken: newRefreshToken,
-      accessTokenExpiresIn,
-    } = await refreshAccessToken(refreshToken, user);
-
-    // Rotate refresh token in DB
-    user.refreshToken = newRefreshToken;
-    await user.save();
+    logger.info({ ip: ipAddress }, "Token refreshed successfully");
 
     return {
       success: true,
@@ -91,39 +37,32 @@ export async function refreshTokenUseCase({ refreshToken, clientIP }) {
       message: "Token refreshed successfully",
       data: {
         accessToken,
-        newRefreshToken,
+        newRefreshToken: refreshTokenValue,
         tokenType: "Bearer",
         expiresIn: accessTokenExpiresIn,
       },
     };
   } catch (error) {
-    logger.error({ err: error }, "Refresh token use-case error");
+    logger.warn({ err: error, ip: ipAddress }, "Refresh token use-case error");
 
-    const errorMap = {
-      TokenExpiredError: {
-        message: "Refresh token expired",
-        errorCode: "REFRESH_TOKEN_EXPIRED",
-      },
-      JsonWebTokenError: {
-        message: "Invalid refresh token",
-        errorCode: "INVALID_TOKEN",
-      },
-      NotBeforeError: {
-        message: "Token not yet active",
-        errorCode: "TOKEN_NOT_ACTIVE",
-      },
-    };
+    // Determine specific error type
+    const isReuse = error.message.includes("reuse detected");
+    const isRevoked = error.message.includes("revoked");
+    const isExpired = error.message.includes("expired");
+    const isVersionMismatch = error.message.includes("Session expired");
 
-    const errorConfig = errorMap[error.name] || {
-      message: "Session invalid. Please login again.",
-      errorCode: "SESSION_INVALID",
-    };
+    let errorCode = "SESSION_INVALID";
+    if (isReuse) errorCode = "TOKEN_REUSE_DETECTED";
+    else if (isRevoked) errorCode = "TOKEN_REVOKED";
+    else if (isExpired) errorCode = "REFRESH_TOKEN_EXPIRED";
+    else if (isVersionMismatch) errorCode = "TOKEN_VERSION_MISMATCH";
 
     return {
       success: false,
       statusCode: 401,
+      message: error.message || "Session invalid. Please login again.",
+      errorCode,
       clearCookie: true,
-      ...errorConfig,
     };
   }
 }

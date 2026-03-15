@@ -1,9 +1,8 @@
-// Shared constants and re-exports for auth controllers
+// backend/controllers/auth/auth-shared.js
+// Shared constants and re-exports for auth controllers.
+
 export const REFRESH_TOKEN_COOKIE_NAME =
   process.env.REFRESH_TOKEN_COOKIE_NAME?.replace(/"/g, "") || "refresh_token";
-
-export const ACCESS_TOKEN_COOKIE_NAME =
-  process.env.ACCESS_TOKEN_COOKIE_NAME?.replace(/"/g, "") || "access_token";
 
 import { apiResponseManager } from "../../utilities/general/response-manager.js";
 

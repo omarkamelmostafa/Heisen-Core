@@ -3,11 +3,17 @@
 import { authEndpoints } from "@/services/api/endpoints";
 import { publicClient, privateClient } from "@/services/api/client";
 import { normalizeError, normalizeResponse } from "@/lib/utils/error-utils";
+import StoreAccessor from "@/store/store-accessor";
+import { setAccessToken } from "@/store/slices/auth/auth-slice";
 
 /**
  * Auth Service
  * Pure data-access layer for authentication operations.
- * All methods are implemented and backed by real backend endpoints.
+ * All methods are backed by real backend endpoints.
+ *
+ * Note on token flow:
+ *   - Refresh token: HttpOnly cookie, sent automatically via withCredentials
+ *   - Access token: Returned in response body, stored in Redux memory only
  */
 class AuthService {
   // ==================== CORE AUTHENTICATION ====================
@@ -27,7 +33,11 @@ class AuthService {
 
   async register(userData, config = {}) {
     try {
-      const response = await publicClient.post(authEndpoints.REGISTER, userData, config);
+      const response = await publicClient.post(
+        authEndpoints.REGISTER,
+        userData,
+        config
+      );
       return normalizeResponse(response);
     } catch (error) {
       throw normalizeError(error, "Registration failed");
@@ -43,10 +53,51 @@ class AuthService {
     }
   }
 
+  /**
+   * Logout from all devices — requires authenticated user.
+   * Backend increments tokenVersion and revokes all RefreshTokens.
+   */
+  async logoutAll(config = {}) {
+    try {
+      const response = await privateClient.post(
+        authEndpoints.LOGOUT_ALL,
+        {},
+        config
+      );
+      return normalizeResponse(response);
+    } catch (error) {
+      throw normalizeError(error, "Logout from all devices failed");
+    }
+  }
+
+  /**
+   * Refresh token — called by refresh-queue and bootstrap flow.
+   * The backend returns a new access token in the response body
+   * and sets a rotated refresh token via Set-Cookie.
+   *
+   * This method also stores the new access token in Redux state,
+   * so subsequent requests from private-client can inject it.
+   */
   async refreshToken(config = {}) {
     try {
-      const response = await publicClient.post(authEndpoints.REFRESH_TOKEN, {}, config);
-      return normalizeResponse(response);
+      const response = await publicClient.post(
+        authEndpoints.REFRESH_TOKEN,
+        {},
+        config
+      );
+      const normalized = normalizeResponse(response);
+
+      // Store the new access token in Redux memory
+      const accessToken = normalized.data?.data?.accessToken;
+      if (accessToken) {
+        try {
+          StoreAccessor.dispatch(setAccessToken(accessToken));
+        } catch {
+          // Store not yet initialized — bootstrapAuth handles this
+        }
+      }
+
+      return normalized;
     } catch (error) {
       throw normalizeError(error, "Token refresh failed");
     }
@@ -56,9 +107,11 @@ class AuthService {
 
   async forgotPassword(email, config = {}) {
     try {
-      const response = await publicClient.post(authEndpoints.FORGOT_PASSWORD, {
-        email,
-      }, config);
+      const response = await publicClient.post(
+        authEndpoints.FORGOT_PASSWORD,
+        { email },
+        config
+      );
       return normalizeResponse(response);
     } catch (error) {
       throw normalizeError(error, "Password reset request failed");
@@ -88,6 +141,22 @@ class AuthService {
       return normalizeResponse(response);
     } catch (error) {
       throw normalizeError(error, "Email verification failed");
+    }
+  }
+
+  /**
+   * Resend verification email for unverified accounts.
+   */
+  async resendVerification(email, config = {}) {
+    try {
+      const response = await publicClient.post(
+        authEndpoints.RESEND_VERIFICATION,
+        { email },
+        config
+      );
+      return normalizeResponse(response);
+    } catch (error) {
+      throw normalizeError(error, "Resend verification failed");
     }
   }
 }

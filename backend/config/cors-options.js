@@ -8,7 +8,7 @@ export const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-
+  credentials: true, // Required for HttpOnly cookie-based auth
   optionsSuccessStatus: 200,
 };
 

@@ -11,6 +11,7 @@ export const handleForgotPassword = async (req, res) => {
   const result = await forgotPasswordUseCase({
     email,
     clientIP: req.ip,
+    origin: req.headers.origin || req.headers.referer,
   });
 
   return sendUseCaseResponse(req, res, result);

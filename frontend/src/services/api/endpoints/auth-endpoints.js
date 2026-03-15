@@ -7,19 +7,22 @@ class AuthEndpoints {
   constructor() {
     // Paths relative to axios base URL (already includes /api/v1)
     this.BASE = "/api";
-    this.VERSION = `/v${process.env.NEXT_PUBLIC_API_VERSION || '1'}`;
+    this.VERSION = `/v${process.env.NEXT_PUBLIC_API_VERSION || "1"}`;
     this.PREFIX = "/auth";
   }
 
-  // ==================== ✅ IMPLEMENTED BACKEND ENDPOINTS ====================
+  // ==================== CORE AUTH ENDPOINTS ====================
 
-  // Core authentication (ACTUALLY IMPLEMENTED IN BACKEND)
   get LOGIN() {
     return `${this.PREFIX}/login`;
   }
 
   get LOGOUT() {
     return `${this.PREFIX}/logout`;
+  }
+
+  get LOGOUT_ALL() {
+    return `${this.PREFIX}/logout-all`;
   }
 
   get REGISTER() {
@@ -30,9 +33,17 @@ class AuthEndpoints {
     return `${this.PREFIX}/refresh`;
   }
 
+  // ==================== VERIFICATION ENDPOINTS ====================
+
   get VERIFY_EMAIL() {
     return `${this.PREFIX}/verify-email`;
   }
+
+  get RESEND_VERIFICATION() {
+    return `${this.PREFIX}/resend-verification`;
+  }
+
+  // ==================== PASSWORD ENDPOINTS ====================
 
   get FORGOT_PASSWORD() {
     return `${this.PREFIX}/forgot-password`;

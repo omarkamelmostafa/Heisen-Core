@@ -1,3 +1,4 @@
+// frontend/src/services/api/refresh-queue.js
 import { tokenManager } from '@/services/auth/token-manager';
 import { authService } from '@/services/domain/auth-service';
 
@@ -10,13 +11,13 @@ import { authService } from '@/services/domain/auth-service';
  * Auth failure flow (consolidated — single source of truth):
  *   1. No token      → PrivateClient short-circuits to /login (never reaches here)
  *   2. Expired token  → handleTokenRefresh() → authService.refreshToken()
- *   3. Refresh fails  → handleAuthFailure() → logout + clear cookies + redirect
+ *   3. Refresh fails  → handleAuthFailure() → logout + redirect
  */
 class RefreshQueue {
   constructor() {
     this.isRefreshing = false;
     this.pendingRequests = [];
-    this.maxQueueSize = 50; // Prevent memory leaks
+    this.maxQueueSize = 50;
     this.retryAttempts = 0;
     this.maxRetries = 3;
   }
@@ -26,12 +27,10 @@ class RefreshQueue {
    */
   addToQueue(failedRequest) {
     if (this.pendingRequests.length >= this.maxQueueSize) {
-      console.warn('RefreshQueue: Queue limit reached, clearing oldest requests');
       this.pendingRequests = this.pendingRequests.slice(-this.maxQueueSize / 2);
     }
 
     this.pendingRequests.push(failedRequest);
-    console.log(`RefreshQueue: Added request to queue. Queue size: ${this.pendingRequests.length}`);
   }
 
   /**
@@ -39,16 +38,13 @@ class RefreshQueue {
    */
   async processQueue(newToken) {
     if (this.pendingRequests.length === 0) {
-      console.log('RefreshQueue: No pending requests to process');
       return;
     }
-
-    console.log(`RefreshQueue: Processing ${this.pendingRequests.length} pending requests`);
 
     // Create a copy and clear the original queue immediately
     const requestsToProcess = [...this.pendingRequests];
     this.pendingRequests = [];
-    this.retryAttempts = 0; // Reset retry counter on success
+    this.retryAttempts = 0;
 
     // Process all queued requests with the new token
     const results = await Promise.allSettled(
@@ -64,24 +60,15 @@ class RefreshQueue {
    */
   async retryRequest(failedRequest, newToken) {
     try {
-      // Update request config (no manual Authorization header needed)
       const retryConfig = {
         ...failedRequest.config,
         __isRetry: true // Mark as retry to prevent infinite loops
       };
 
-      console.log(`RefreshQueue: Retrying ${retryConfig.method?.toUpperCase()} ${retryConfig.url}`);
-
-      // Use the original axios instance to retry
       const response = await failedRequest.instance(retryConfig);
-
-      console.log(`RefreshQueue: Retry successful for ${retryConfig.url}`);
       return response;
 
     } catch (error) {
-      console.error(`RefreshQueue: Retry failed for ${failedRequest.config.url}`, error);
-
-      // If retry also fails with auth error, we might need to logout
       if (error.response?.status === 401) {
         this.handlePersistentAuthError();
       }
@@ -112,13 +99,9 @@ class RefreshQueue {
     this.addToQueue(failedRequest);
 
     try {
-      console.log('RefreshQueue: Starting token refresh process');
-
       // Call auth service directly (no intermediary)
-      // Backend sets new cookies automatically
+      // Backend sets new cookies automatically via withCredentials
       await authService.refreshToken();
-
-      console.log('RefreshQueue: Token refresh successful, processing queue');
 
       // Process all queued requests
       await this.processQueue();
@@ -127,8 +110,6 @@ class RefreshQueue {
       return true;
 
     } catch (error) {
-      console.error('RefreshQueue: Token refresh failed', error);
-
       this.isRefreshing = false;
       this.retryAttempts++;
 
@@ -147,8 +128,6 @@ class RefreshQueue {
    * Reject all pending requests with an error
    */
   rejectPendingRequests(error) {
-    console.log(`RefreshQueue: Rejecting ${this.pendingRequests.length} pending requests`);
-
     this.pendingRequests.forEach(request => {
       if (request.reject) {
         request.reject(error);
@@ -161,11 +140,8 @@ class RefreshQueue {
   /**
    * Handle complete auth failure — SINGLE SOURCE OF TRUTH
    * Called when refresh attempts are exhausted or persistent 401s occur.
-   * No other file should duplicate this logic.
    */
   handleAuthFailure() {
-    console.error('RefreshQueue: Auth failure — delegating to TokenManager');
-
     // Single source of truth for session cleanup + redirect
     tokenManager.handleSessionExpired();
 
@@ -177,7 +153,6 @@ class RefreshQueue {
    * Handle persistent authentication errors (e.g., retry also returns 401)
    */
   handlePersistentAuthError() {
-    console.error('RefreshQueue: Persistent auth error detected');
     this.handleAuthFailure();
   }
 
@@ -185,15 +160,14 @@ class RefreshQueue {
    * Log retry results for monitoring and debugging
    */
   logRetryResults(results) {
-    const successful = results.filter(r => r.status === 'fulfilled').length;
     const failed = results.filter(r => r.status === 'rejected').length;
 
-    console.log(`RefreshQueue: Retry results - ${successful} successful, ${failed} failed`);
-
-    if (failed > 0) {
+    if (failed > 0 && process.env.NODE_ENV === 'development') {
       results.forEach((result, index) => {
         if (result.status === 'rejected') {
-          console.error(`RefreshQueue: Request ${index} failed:`, result.reason);
+          // Development-only logging
+          // eslint-disable-next-line no-console
+          console.warn(`RefreshQueue: Request ${index} retry failed:`, result.reason);
         }
       });
     }
@@ -215,7 +189,6 @@ class RefreshQueue {
    * Clear the queue (useful for logout)
    */
   clearQueue() {
-    console.log('RefreshQueue: Clearing all pending requests');
     this.pendingRequests = [];
     this.isRefreshing = false;
     this.retryAttempts = 0;
