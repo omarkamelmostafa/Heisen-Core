@@ -1,0 +1,530 @@
+
+> server@1.0.0 test:integration
+> vitest run --project integration
+
+
+[1m[46m RUN [49m[22m [36mv4.1.0 [39m[90mD:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend[39m
+
+{"level":30,"time":"2026-03-17T05:10:18.656Z","env":"test","requestId":"2a7d9ccd-a781-487b-802c-4ec6b44f8229","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:18.657Z","env":"test","requestId":"2a7d9ccd-a781-487b-802c-4ec6b44f8229","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+{"level":30,"time":"2026-03-17T05:10:18.666Z","env":"test","requestId":"b3d628ce-ae0a-4720-b516-b6b58a5f51ff","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:18.667Z","env":"test","requestId":"b3d628ce-ae0a-4720-b516-b6b58a5f51ff","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF1: Valid registered email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:18.726Z","env":"test","requestId":"3402b6fc-a0f1-4018-a1c3-fdc4d28cd495","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:18.727Z","env":"test","requestId":"3402b6fc-a0f1-4018-a1c3-fdc4d28cd495","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA1: Valid registration (3-layer assertion)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB1: Valid credentials, verified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:18.792Z","env":"test","requestId":"7896ffe4-5f6b-4dbf-b74a-56302b9a0990","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:18.793Z","env":"test","requestId":"7896ffe4-5f6b-4dbf-b74a-56302b9a0990","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+{"level":30,"time":"2026-03-17T05:10:18.796Z","env":"test","requestId":"212e60db-cf96-4d57-8fc6-16c0d28145d2","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:18.797Z","env":"test","requestId":"212e60db-cf96-4d57-8fc6-16c0d28145d2","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE1: Valid token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:18.897Z","env":"test","requestId":"9282453a-2f44-4e44-aea0-69be2df5bd40","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:18.898Z","env":"test","requestId":"9282453a-2f44-4e44-aea0-69be2df5bd40","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.329Z","env":"test","userId":"69b8e23bb0dc4dc3d18d67ac","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.330Z","env":"test","userId":"69b8e23bb0dc4dc3d18d67ac","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.333Z","env":"test","requestId":"b3d628ce-ae0a-4720-b516-b6b58a5f51ff","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"668ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.334Z","env":"test","userId":"69b8e23bb0dc4dc3d18d67ac","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.339Z","env":"test","userId":"69b8e23b56d9f8e9e40a9c2b","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.339Z","env":"test","userId":"69b8e23b56d9f8e9e40a9c2b","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.343Z","env":"test","requestId":"3402b6fc-a0f1-4018-a1c3-fdc4d28cd495","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"617ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.345Z","env":"test","userId":"69b8e23b56d9f8e9e40a9c2b","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.354Z","env":"test","requestId":"77dcc6d6-a2f1-4755-ac56-9138809f3953","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.354Z","env":"test","requestId":"77dcc6d6-a2f1-4755-ac56-9138809f3953","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB1: Valid credentials, verified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.366Z","env":"test","requestId":"b140ae4e-5b3c-4dd5-b42c-e21cde423762","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.367Z","env":"test","requestId":"b140ae4e-5b3c-4dd5-b42c-e21cde423762","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA2: Duplicate email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.373Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:19.374Z","env":"test","requestId":"77dcc6d6-a2f1-4755-ac56-9138809f3953","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"20ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.380Z","env":"test","requestId":"b8f11a98-ead3-481f-bb38-d0357db04594","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.380Z","env":"test","requestId":"b8f11a98-ead3-481f-bb38-d0357db04594","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB1: Valid credentials, verified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.425Z","env":"test","userId":"69b8e23b82b41069599f83e5","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.426Z","env":"test","userId":"69b8e23b82b41069599f83e5","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.430Z","env":"test","requestId":"7896ffe4-5f6b-4dbf-b74a-56302b9a0990","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"639ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.431Z","env":"test","userId":"69b8e23b82b41069599f83e5","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.434Z","env":"test","userId":"69b8e23b09d8bd6dcc93b071","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.440Z","env":"test","requestId":"a7042276-4640-430f-a9fb-1ba6b8e45b38","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.435Z","env":"test","userId":"69b8e23b09d8bd6dcc93b071","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.439Z","env":"test","requestId":"2a7d9ccd-a781-487b-802c-4ec6b44f8229","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"784ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.440Z","env":"test","userId":"69b8e23b09d8bd6dcc93b071","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.440Z","env":"test","requestId":"a7042276-4640-430f-a9fb-1ba6b8e45b38","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+{"level":30,"time":"2026-03-17T05:10:19.443Z","env":"test","userId":"69b8e23b21e64fb7777ababe","msg":"Cloudinary folders created for user"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE1: Valid token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.443Z","env":"test","userId":"69b8e23b21e64fb7777ababe","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.447Z","env":"test","requestId":"9282453a-2f44-4e44-aea0-69be2df5bd40","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"550ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.448Z","env":"test","userId":"69b8e23b21e64fb7777ababe","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.449Z","env":"test","requestId":"b1e3eb2d-80d2-4248-8023-b5efb2fb72ce","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.450Z","env":"test","requestId":"b1e3eb2d-80d2-4248-8023-b5efb2fb72ce","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF1: Valid registered email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.456Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:19.457Z","env":"test","requestId":"d626fb60-c932-411c-92e3-27623a4c352d","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.457Z","env":"test","requestId":"a7042276-4640-430f-a9fb-1ba6b8e45b38","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"17ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.458Z","env":"test","requestId":"d626fb60-c932-411c-92e3-27623a4c352d","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.468Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:19.468Z","env":"test","requestId":"b1e3eb2d-80d2-4248-8023-b5efb2fb72ce","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"19ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.473Z","env":"test","requestId":"039e3885-b6c2-4e47-a7f7-1d6da6a0e1a6","method":"POST","url":"/api/v1/auth/forgot-password","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.474Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:19.473Z","env":"test","requestId":"039e3885-b6c2-4e47-a7f7-1d6da6a0e1a6","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/forgot-password","path":"/api/v1/auth/forgot-password","action":"user_activity","msg":"User activity"}
+{"level":30,"time":"2026-03-17T05:10:19.475Z","env":"test","requestId":"d626fb60-c932-411c-92e3-27623a4c352d","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"18ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.475Z","env":"test","requestId":"dbec26fa-73d0-4c65-b959-fe4dd98a555d","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.475Z","env":"test","requestId":"dbec26fa-73d0-4c65-b959-fe4dd98a555d","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF1: Valid registered email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.481Z","env":"test","requestId":"62e1acf4-e70e-48dc-887e-8d9e8dd014d2","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.481Z","env":"test","requestId":"62e1acf4-e70e-48dc-887e-8d9e8dd014d2","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE2: Wrong token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.486Z","env":"test","email":"test@example.com","ip":"::ffff:127.0.0.1","msg":"Password reset initiated"}
+{"level":30,"time":"2026-03-17T05:10:19.487Z","env":"test","requestId":"039e3885-b6c2-4e47-a7f7-1d6da6a0e1a6","method":"POST","url":"/api/v1/auth/forgot-password","statusCode":200,"statusMessage":"OK","responseTime":"14ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.487Z","env":"test","email":"test@example.com","msg":"Password reset email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.511Z","env":"test","requestId":"0366afe9-ab2a-4cba-9a72-306ac512c0ad","method":"POST","url":"/api/v1/auth/forgot-password","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.512Z","env":"test","requestId":"0366afe9-ab2a-4cba-9a72-306ac512c0ad","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/forgot-password","path":"/api/v1/auth/forgot-password","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF2: Non-existent email returns identical success message
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.517Z","env":"test","email":"nonexistent@example.com","ip":"::ffff:127.0.0.1","msg":"Password reset attempt for non-existent email"}
+{"level":30,"time":"2026-03-17T05:10:19.518Z","env":"test","requestId":"0366afe9-ab2a-4cba-9a72-306ac512c0ad","method":"POST","url":"/api/v1/auth/forgot-password","statusCode":200,"statusMessage":"OK","responseTime":"7ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.519Z","env":"test","userId":"69b8e23b524c0962ac693a82","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.519Z","env":"test","userId":"69b8e23b524c0962ac693a82","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.523Z","env":"test","requestId":"212e60db-cf96-4d57-8fc6-16c0d28145d2","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"727ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.523Z","env":"test","userId":"69b8e23b524c0962ac693a82","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.528Z","env":"test","requestId":"87e070ed-4e0f-476c-b950-0adac660ee7b","method":"POST","url":"/api/v1/auth/forgot-password","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.528Z","env":"test","requestId":"87e070ed-4e0f-476c-b950-0adac660ee7b","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/forgot-password","path":"/api/v1/auth/forgot-password","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF3: Missing email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.533Z","env":"test","requestId":"87e070ed-4e0f-476c-b950-0adac660ee7b","method":"POST","url":"/api/v1/auth/forgot-password","statusCode":400,"statusMessage":"Bad Request","responseTime":"5ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.533Z","env":"test","requestId":"6cea3462-7b06-4aae-9e78-28a9c9bc0d5f","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.534Z","env":"test","requestId":"6cea3462-7b06-4aae-9e78-28a9c9bc0d5f","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.545Z","env":"test","requestId":"dc6f6053-b70f-4196-ad2d-1ce04ed96d0f","method":"POST","url":"/api/v1/auth/forgot-password","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.545Z","env":"test","requestId":"dc6f6053-b70f-4196-ad2d-1ce04ed96d0f","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/forgot-password","path":"/api/v1/auth/forgot-password","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF4: Invalid email format
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.548Z","env":"test","requestId":"dc6f6053-b70f-4196-ad2d-1ce04ed96d0f","method":"POST","url":"/api/v1/auth/forgot-password","statusCode":400,"statusMessage":"Bad Request","responseTime":"3ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.551Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:19.552Z","env":"test","requestId":"6cea3462-7b06-4aae-9e78-28a9c9bc0d5f","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"19ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.558Z","env":"test","requestId":"bf6d5c46-1614-41d9-b168-fa70a9759135","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.558Z","env":"test","requestId":"bf6d5c46-1614-41d9-b168-fa70a9759135","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.576Z","env":"test","source":"emitLogMessage","success":false,"msg":"📡 MongoDB disconnected"}
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js
+[22m[39m [٧:١٠:١٩ ص] [INFO] 📡 MongoDB disconnected 
+
+ [31m❯[39m [30m[45m integration [49m[39m __tests__/integration/auth-forgot-password.test.js [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 2235[2mms[22m[39m
+[31m     [31m×[31m F1: Valid registered email[39m[33m 916[2mms[22m[39m
+     [32m✓[39m F2: Non-existent email returns identical success message[32m 19[2mms[22m[39m
+     [32m✓[39m F3: Missing email[32m 15[2mms[22m[39m
+     [32m✓[39m F4: Invalid email format[32m 15[2mms[22m[39m
+{"level":30,"time":"2026-03-17T05:10:19.752Z","env":"test","userId":"69b8e23bb0dc4dc3d18d67b6","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.753Z","env":"test","userId":"69b8e23bb0dc4dc3d18d67b6","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.753Z","env":"test","requestId":"b140ae4e-5b3c-4dd5-b42c-e21cde423762","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"387ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.753Z","env":"test","userId":"69b8e23bb0dc4dc3d18d67b6","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.757Z","env":"test","requestId":"4577de96-10f5-4230-8272-8740d7fb679e","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.757Z","env":"test","requestId":"4577de96-10f5-4230-8272-8740d7fb679e","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA2: Duplicate email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.765Z","env":"test","requestId":"4577de96-10f5-4230-8272-8740d7fb679e","method":"POST","url":"/api/v1/auth/register","statusCode":409,"statusMessage":"Conflict","responseTime":"8ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.781Z","env":"test","requestId":"99195789-36d8-49ae-af7d-bc05e59e8ef7","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.781Z","env":"test","requestId":"99195789-36d8-49ae-af7d-bc05e59e8ef7","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA3: Missing fields
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.786Z","env":"test","requestId":"99195789-36d8-49ae-af7d-bc05e59e8ef7","method":"POST","url":"/api/v1/auth/register","statusCode":400,"statusMessage":"Bad Request","responseTime":"5ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.797Z","env":"test","requestId":"6be8c795-03f2-4344-aba0-f1c5d2a08849","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.797Z","env":"test","requestId":"6be8c795-03f2-4344-aba0-f1c5d2a08849","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA4: Invalid email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.803Z","env":"test","requestId":"6be8c795-03f2-4344-aba0-f1c5d2a08849","method":"POST","url":"/api/v1/auth/register","statusCode":400,"statusMessage":"Bad Request","responseTime":"6ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.806Z","env":"test","userId":"69b8e23b56d9f8e9e40a9c2b","ip":"::ffff:127.0.0.1","msg":"User logged in"}
+{"level":30,"time":"2026-03-17T05:10:19.808Z","env":"test","requestId":"b8f11a98-ead3-481f-bb38-d0357db04594","method":"POST","url":"/api/v1/auth/login","statusCode":200,"statusMessage":"OK","responseTime":"428ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.816Z","env":"test","requestId":"6a492c1c-ea3a-4adc-8517-e1d5ffdcd9f9","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.816Z","env":"test","requestId":"6a492c1c-ea3a-4adc-8517-e1d5ffdcd9f9","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA5: Password too short
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.822Z","env":"test","requestId":"6a492c1c-ea3a-4adc-8517-e1d5ffdcd9f9","method":"POST","url":"/api/v1/auth/register","statusCode":400,"statusMessage":"Bad Request","responseTime":"6ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.834Z","env":"test","requestId":"a1e5f7f7-d8e0-406b-a62f-b1a05b7e7374","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.835Z","env":"test","requestId":"90def91e-d453-498c-b290-9f2c08957ebe","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.834Z","env":"test","requestId":"a1e5f7f7-d8e0-406b-a62f-b1a05b7e7374","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+{"level":30,"time":"2026-03-17T05:10:19.835Z","env":"test","requestId":"90def91e-d453-498c-b290-9f2c08957ebe","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB2: Unverified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA6: Mismatched passwords
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.841Z","env":"test","requestId":"90def91e-d453-498c-b290-9f2c08957ebe","method":"POST","url":"/api/v1/auth/register","statusCode":400,"statusMessage":"Bad Request","responseTime":"6ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.857Z","env":"test","source":"emitLogMessage","success":false,"msg":"📡 MongoDB disconnected"}
+{"level":30,"time":"2026-03-17T05:10:19.866Z","env":"test","userId":"69b8e23b82b41069599f83f1","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:19.866Z","env":"test","userId":"69b8e23b82b41069599f83f1","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:19.867Z","env":"test","requestId":"dbec26fa-73d0-4c65-b959-fe4dd98a555d","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"392ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.867Z","env":"test","userId":"69b8e23b82b41069599f83f1","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:19.872Z","env":"test","requestId":"e12a7a96-6e9d-405b-b13e-6c4b42f60695","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.872Z","env":"test","requestId":"e12a7a96-6e9d-405b-b13e-6c4b42f60695","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE2: Wrong token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:19.880Z","env":"test","token":"000000...","msg":"Failed email verification attempt — token not found"}
+{"level":40,"time":"2026-03-17T05:10:19.881Z","env":"test","requestId":"e12a7a96-6e9d-405b-b13e-6c4b42f60695","method":"POST","url":"/api/v1/auth/verify-email","statusCode":400,"statusMessage":"Bad Request","responseTime":"9ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.899Z","env":"test","requestId":"9ce9a68c-e9b9-4782-b775-e9801f2690e0","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.899Z","env":"test","requestId":"9ce9a68c-e9b9-4782-b775-e9801f2690e0","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE3: Expired token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.909Z","env":"test","userId":"69b8e23b21e64fb7777ababe","ip":"::ffff:127.0.0.1","msg":"User logged in"}
+{"level":30,"time":"2026-03-17T05:10:19.911Z","env":"test","requestId":"62e1acf4-e70e-48dc-887e-8d9e8dd014d2","method":"POST","url":"/api/v1/auth/login","statusCode":200,"statusMessage":"OK","responseTime":"430ms","msg":"Request finished"}
+[90mstdout[2m | __tests__/integration/auth-register.test.js
+[22m[39m [٧:١٠:١٩ ص] [INFO] 📡 MongoDB disconnected 
+
+{"level":30,"time":"2026-03-17T05:10:19.935Z","env":"test","requestId":"2bae335d-83c0-4366-8ee5-42885da53e3a","method":"POST","url":"/api/v1/auth/logout","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.936Z","env":"test","requestId":"2bae335d-83c0-4366-8ee5-42885da53e3a","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/logout","path":"/api/v1/auth/logout","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD2: Logout without session
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.939Z","env":"test","requestId":"2bae335d-83c0-4366-8ee5-42885da53e3a","method":"POST","url":"/api/v1/auth/logout","statusCode":204,"statusMessage":"No Content","responseTime":"4ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.952Z","env":"test","requestId":"2671d2d2-64bc-4389-bdac-4e935a9e2625","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.952Z","env":"test","requestId":"2671d2d2-64bc-4389-bdac-4e935a9e2625","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:19.964Z","env":"test","userId":"69b8e23b524c0962ac693a82","ip":"::ffff:127.0.0.1","msg":"User logged in"}
+{"level":30,"time":"2026-03-17T05:10:19.966Z","env":"test","requestId":"bf6d5c46-1614-41d9-b168-fa70a9759135","method":"POST","url":"/api/v1/auth/login","statusCode":200,"statusMessage":"OK","responseTime":"409ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:19.971Z","env":"test","requestId":"6920823c-fd31-4f5b-8de5-23dec615992c","method":"POST","url":"/api/v1/auth/refresh","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:19.971Z","env":"test","requestId":"6920823c-fd31-4f5b-8de5-23dec615992c","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/refresh","path":"/api/v1/auth/refresh","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.000Z","env":"test","ip":"::ffff:127.0.0.1","msg":"Token refreshed successfully"}
+{"level":30,"time":"2026-03-17T05:10:20.001Z","env":"test","requestId":"6920823c-fd31-4f5b-8de5-23dec615992c","method":"POST","url":"/api/v1/auth/refresh","statusCode":200,"statusMessage":"OK","responseTime":"30ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.017Z","env":"test","requestId":"d3fdabca-57bc-4c71-8247-59198cacead1","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.018Z","env":"test","requestId":"d3fdabca-57bc-4c71-8247-59198cacead1","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-register.test.js [2m([22m[2m6 tests[22m[2m)[22m[33m 2618[2mms[22m[39m
+     [33m[2m✓[22m[39m A1: Valid registration (3-layer assertion) [33m 773[2mms[22m[39m
+     [33m[2m✓[22m[39m A2: Duplicate email [33m 417[2mms[22m[39m
+{"level":30,"time":"2026-03-17T05:10:20.238Z","env":"test","userId":"69b8e23c56d9f8e9e40a9c3b","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:20.238Z","env":"test","userId":"69b8e23c56d9f8e9e40a9c3b","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:20.238Z","env":"test","requestId":"a1e5f7f7-d8e0-406b-a62f-b1a05b7e7374","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"404ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.239Z","env":"test","userId":"69b8e23c56d9f8e9e40a9c3b","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:20.243Z","env":"test","requestId":"7ae70e45-0f04-4cf9-a7c1-885891444355","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.243Z","env":"test","requestId":"7ae70e45-0f04-4cf9-a7c1-885891444355","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB2: Unverified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:20.250Z","env":"test","requestId":"7ae70e45-0f04-4cf9-a7c1-885891444355","method":"POST","url":"/api/v1/auth/login","statusCode":403,"statusMessage":"Forbidden","responseTime":"7ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.263Z","env":"test","requestId":"76ff6f94-05de-402f-a2ec-c4cba5a873fc","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.263Z","env":"test","requestId":"76ff6f94-05de-402f-a2ec-c4cba5a873fc","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.287Z","env":"test","userId":"69b8e23c82b41069599f83fc","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:20.287Z","env":"test","userId":"69b8e23c82b41069599f83fc","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:20.288Z","env":"test","requestId":"9ce9a68c-e9b9-4782-b775-e9801f2690e0","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"388ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.288Z","env":"test","userId":"69b8e23c82b41069599f83fc","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-19T05:10:20.289Z","env":"test","requestId":"44e527bc-0d63-4d68-b681-ec9e38234c7b","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-19T05:10:20.289Z","env":"test","requestId":"44e527bc-0d63-4d68-b681-ec9e38234c7b","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE3: Expired token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-19T05:10:20.289Z","env":"test","requestId":"44e527bc-0d63-4d68-b681-ec9e38234c7b","method":"POST","url":"/api/v1/auth/verify-email","statusCode":410,"statusMessage":"Gone","responseTime":"0ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.316Z","env":"test","requestId":"ab86e4c3-aaf5-40ad-af4d-ee8e99a4a1f6","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.316Z","env":"test","requestId":"ab86e4c3-aaf5-40ad-af4d-ee8e99a4a1f6","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE4: Token reuse (already verified)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.371Z","env":"test","userId":"69b8e23c21e64fb7777abad4","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:20.371Z","env":"test","userId":"69b8e23c21e64fb7777abad4","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:20.371Z","env":"test","requestId":"2671d2d2-64bc-4389-bdac-4e935a9e2625","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"419ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.372Z","env":"test","userId":"69b8e23c21e64fb7777abad4","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:20.376Z","env":"test","requestId":"ad6e7c0f-2bce-44b2-9720-e457b6e9f265","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.376Z","env":"test","requestId":"ad6e7c0f-2bce-44b2-9720-e457b6e9f265","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.385Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:20.385Z","env":"test","requestId":"ad6e7c0f-2bce-44b2-9720-e457b6e9f265","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"9ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.390Z","env":"test","requestId":"feaefc47-bf3e-4f02-8294-005d9c2c482d","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.390Z","env":"test","requestId":"feaefc47-bf3e-4f02-8294-005d9c2c482d","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.407Z","env":"test","userId":"69b8e23c524c0962ac693a98","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:20.407Z","env":"test","userId":"69b8e23c524c0962ac693a98","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:20.408Z","env":"test","requestId":"d3fdabca-57bc-4c71-8247-59198cacead1","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"391ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.408Z","env":"test","userId":"69b8e23c524c0962ac693a98","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:20.412Z","env":"test","requestId":"ed13740f-1a56-4121-ad9b-bf733bed7c7f","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.412Z","env":"test","requestId":"ed13740f-1a56-4121-ad9b-bf733bed7c7f","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.419Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:20.420Z","env":"test","requestId":"ed13740f-1a56-4121-ad9b-bf733bed7c7f","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"8ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.423Z","env":"test","requestId":"735497eb-2450-46bc-8fa3-4a12ee947405","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.423Z","env":"test","requestId":"735497eb-2450-46bc-8fa3-4a12ee947405","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.635Z","env":"test","userId":"69b8e23c56d9f8e9e40a9c45","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:20.635Z","env":"test","userId":"69b8e23c56d9f8e9e40a9c45","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:20.635Z","env":"test","requestId":"76ff6f94-05de-402f-a2ec-c4cba5a873fc","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"372ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.635Z","env":"test","userId":"69b8e23c56d9f8e9e40a9c45","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:20.639Z","env":"test","requestId":"293606e0-0332-49b5-8991-2e6ddc8d3dd6","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.639Z","env":"test","requestId":"293606e0-0332-49b5-8991-2e6ddc8d3dd6","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.647Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:20.647Z","env":"test","requestId":"293606e0-0332-49b5-8991-2e6ddc8d3dd6","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"8ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.650Z","env":"test","requestId":"e6133b3c-0b77-4de6-9d47-be9045a73bc5","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.650Z","env":"test","requestId":"e6133b3c-0b77-4de6-9d47-be9045a73bc5","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.689Z","env":"test","userId":"69b8e23c82b41069599f8406","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:20.689Z","env":"test","userId":"69b8e23c82b41069599f8406","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:20.689Z","env":"test","requestId":"ab86e4c3-aaf5-40ad-af4d-ee8e99a4a1f6","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"373ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.689Z","env":"test","userId":"69b8e23c82b41069599f8406","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:20.693Z","env":"test","requestId":"b7de50d0-9c2b-4837-a689-566cdfdbd49f","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.694Z","env":"test","requestId":"b7de50d0-9c2b-4837-a689-566cdfdbd49f","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE4: Token reuse (already verified)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.701Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:20.702Z","env":"test","requestId":"b7de50d0-9c2b-4837-a689-566cdfdbd49f","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"9ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.706Z","env":"test","requestId":"afa54bb5-e15c-46d9-ae51-95131c880f5d","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.707Z","env":"test","requestId":"afa54bb5-e15c-46d9-ae51-95131c880f5d","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE4: Token reuse (already verified)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:20.711Z","env":"test","token":"952458...","msg":"Failed email verification attempt — token not found"}
+{"level":40,"time":"2026-03-17T05:10:20.712Z","env":"test","requestId":"afa54bb5-e15c-46d9-ae51-95131c880f5d","method":"POST","url":"/api/v1/auth/verify-email","statusCode":400,"statusMessage":"Bad Request","responseTime":"6ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.722Z","env":"test","requestId":"3403ba4f-2857-4e67-988d-5815dd0bed6b","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.722Z","env":"test","requestId":"3403ba4f-2857-4e67-988d-5815dd0bed6b","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE5: Non-existent token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:20.726Z","env":"test","token":"999999...","msg":"Failed email verification attempt — token not found"}
+{"level":40,"time":"2026-03-17T05:10:20.727Z","env":"test","requestId":"3403ba4f-2857-4e67-988d-5815dd0bed6b","method":"POST","url":"/api/v1/auth/verify-email","statusCode":400,"statusMessage":"Bad Request","responseTime":"5ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.743Z","env":"test","userId":"69b8e23c21e64fb7777abad4","ip":"::ffff:127.0.0.1","msg":"User logged in"}
+{"level":30,"time":"2026-03-17T05:10:20.744Z","env":"test","requestId":"feaefc47-bf3e-4f02-8294-005d9c2c482d","method":"POST","url":"/api/v1/auth/login","statusCode":200,"statusMessage":"OK","responseTime":"354ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.746Z","env":"test","source":"emitLogMessage","success":false,"msg":"📡 MongoDB disconnected"}
+{"level":30,"time":"2026-03-17T05:10:20.748Z","env":"test","requestId":"6422bac0-f202-4b1e-8bf0-f397e4e06abc","method":"POST","url":"/api/v1/auth/logout","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.748Z","env":"test","requestId":"6422bac0-f202-4b1e-8bf0-f397e4e06abc","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/logout","path":"/api/v1/auth/logout","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.757Z","env":"test","userId":"69b8e23c21e64fb7777abad4","msg":"Refresh token revoked on logout"}
+{"level":30,"time":"2026-03-17T05:10:20.758Z","env":"test","requestId":"6422bac0-f202-4b1e-8bf0-f397e4e06abc","method":"POST","url":"/api/v1/auth/logout","statusCode":200,"statusMessage":"OK","responseTime":"10ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.763Z","env":"test","requestId":"a9684e81-f9c6-486b-a25a-00ec2be780da","method":"POST","url":"/api/v1/auth/logout","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.763Z","env":"test","requestId":"a9684e81-f9c6-486b-a25a-00ec2be780da","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/logout","path":"/api/v1/auth/logout","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:20.765Z","env":"test","requestId":"a9684e81-f9c6-486b-a25a-00ec2be780da","method":"POST","url":"/api/v1/auth/logout","statusCode":204,"statusMessage":"No Content","responseTime":"2ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.775Z","env":"test","userId":"69b8e23c524c0962ac693a98","ip":"::ffff:127.0.0.1","msg":"User logged in"}
+{"level":30,"time":"2026-03-17T05:10:20.776Z","env":"test","requestId":"735497eb-2450-46bc-8fa3-4a12ee947405","method":"POST","url":"/api/v1/auth/login","statusCode":200,"statusMessage":"OK","responseTime":"353ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:20.778Z","env":"test","source":"emitLogMessage","success":false,"msg":"📡 MongoDB disconnected"}
+{"level":30,"time":"2026-03-25T05:10:20.778Z","env":"test","requestId":"473b4539-69f8-4c4e-bcb5-21cf00d48c8d","method":"POST","url":"/api/v1/auth/refresh","msg":"Request started"}
+{"level":30,"time":"2026-03-25T05:10:20.778Z","env":"test","requestId":"473b4539-69f8-4c4e-bcb5-21cf00d48c8d","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/refresh","path":"/api/v1/auth/refresh","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-25T05:10:20.778Z","env":"test","requestId":"473b4539-69f8-4c4e-bcb5-21cf00d48c8d","method":"POST","url":"/api/v1/auth/refresh","statusCode":401,"statusMessage":"Unauthorized","responseTime":"0ms","msg":"Request finished"}
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js
+[22m[39m [٧:١٠:٢٠ ص] [INFO] 📡 MongoDB disconnected 
+
+{"level":30,"time":"2026-03-17T05:10:20.800Z","env":"test","requestId":"6f2a5b9f-9edf-4ca8-b6f5-92bce4e0d276","method":"POST","url":"/api/v1/auth/register","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:20.800Z","env":"test","requestId":"6f2a5b9f-9edf-4ca8-b6f5-92bce4e0d276","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/register","path":"/api/v1/auth/register","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js
+[22m[39m [٧:١٠:٢٠ ص] [INFO] 📡 MongoDB disconnected 
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-verify-email.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 3448[2mms[22m[39m
+     [33m[2m✓[22m[39m E1: Valid token [33m 774[2mms[22m[39m
+     [33m[2m✓[22m[39m E2: Wrong token [33m 422[2mms[22m[39m
+     [33m[2m✓[22m[39m E3: Expired token [33m 420[2mms[22m[39m
+     [33m[2m✓[22m[39m E4: Token reuse (already verified) [33m 408[2mms[22m[39m
+ [31m❯[39m [30m[45m integration [49m[39m __tests__/integration/auth-logout.test.js [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3451[2mms[22m[39m
+[31m     [31m×[31m D1: Valid logout[39m[33m 1192[2mms[22m[39m
+     [32m✓[39m D2: Logout without session[32m 18[2mms[22m[39m
+     [33m[2m✓[22m[39m D3: Double logout does not crash [33m 827[2mms[22m[39m
+{"level":40,"time":"2026-03-17T05:10:21.052Z","env":"test","requestId":"e6133b3c-0b77-4de6-9d47-be9045a73bc5","method":"POST","url":"/api/v1/auth/login","statusCode":401,"statusMessage":"Unauthorized","responseTime":"402ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.055Z","env":"test","requestId":"6d68ff1e-836f-48f5-8636-88b1b118dff8","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.055Z","env":"test","requestId":"6d68ff1e-836f-48f5-8636-88b1b118dff8","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:21.063Z","env":"test","requestId":"6d68ff1e-836f-48f5-8636-88b1b118dff8","method":"POST","url":"/api/v1/auth/login","statusCode":401,"statusMessage":"Unauthorized","responseTime":"8ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.072Z","env":"test","requestId":"8adaaca3-c394-4971-a086-c3b903f6aeb2","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.072Z","env":"test","requestId":"8adaaca3-c394-4971-a086-c3b903f6aeb2","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB5: Missing email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:21.075Z","env":"test","requestId":"8adaaca3-c394-4971-a086-c3b903f6aeb2","method":"POST","url":"/api/v1/auth/login","statusCode":400,"statusMessage":"Bad Request","responseTime":"3ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.085Z","env":"test","requestId":"336ae8f7-afa9-4a55-ab0a-72c9d4aa263a","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.085Z","env":"test","requestId":"336ae8f7-afa9-4a55-ab0a-72c9d4aa263a","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB6: Missing password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:21.087Z","env":"test","requestId":"336ae8f7-afa9-4a55-ab0a-72c9d4aa263a","method":"POST","url":"/api/v1/auth/login","statusCode":400,"statusMessage":"Bad Request","responseTime":"2ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.097Z","env":"test","source":"emitLogMessage","success":false,"msg":"📡 MongoDB disconnected"}
+[90mstdout[2m | __tests__/integration/auth-login.test.js
+[22m[39m [٧:١٠:٢١ ص] [INFO] 📡 MongoDB disconnected 
+
+{"level":30,"time":"2026-03-17T05:10:21.181Z","env":"test","userId":"69b8e23d524c0962ac693aa7","msg":"Cloudinary folders created for user"}
+{"level":30,"time":"2026-03-17T05:10:21.182Z","env":"test","userId":"69b8e23d524c0962ac693aa7","ip":"::ffff:127.0.0.1","msg":"User registered"}
+{"level":30,"time":"2026-03-17T05:10:21.182Z","env":"test","requestId":"6f2a5b9f-9edf-4ca8-b6f5-92bce4e0d276","method":"POST","url":"/api/v1/auth/register","statusCode":201,"statusMessage":"Created","responseTime":"382ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.182Z","env":"test","userId":"69b8e23d524c0962ac693aa7","msg":"Verification email sent"}
+{"level":30,"time":"2026-03-17T05:10:21.186Z","env":"test","requestId":"64bfd325-4f34-4d16-b723-46794b486bc7","method":"POST","url":"/api/v1/auth/verify-email","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.186Z","env":"test","requestId":"64bfd325-4f34-4d16-b723-46794b486bc7","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/verify-email","path":"/api/v1/auth/verify-email","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:21.193Z","env":"test","email":"test@example.com","msg":"Email verified successfully"}
+{"level":30,"time":"2026-03-17T05:10:21.193Z","env":"test","requestId":"64bfd325-4f34-4d16-b723-46794b486bc7","method":"POST","url":"/api/v1/auth/verify-email","statusCode":200,"statusMessage":"OK","responseTime":"7ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.196Z","env":"test","requestId":"3f2c17fc-7484-47f7-9825-16276363010b","method":"POST","url":"/api/v1/auth/login","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.196Z","env":"test","requestId":"3f2c17fc-7484-47f7-9825-16276363010b","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/login","path":"/api/v1/auth/login","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [31m❯[39m [30m[45m integration [49m[39m __tests__/integration/auth-login.test.js [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3721[2mms[22m[39m
+[31m     [31m×[31m B1: Valid credentials, verified user[39m[33m 1205[2mms[22m[39m
+     [33m[2m✓[22m[39m B2: Unverified user [33m 431[2mms[22m[39m
+       [33m[2m✓[22m[39m B3 and B4: returns same message for wrong password and missing account [33m 811[2mms[22m[39m
+     [32m✓[39m B5: Missing email[32m 12[2mms[22m[39m
+     [32m✓[39m B6: Missing password[32m 12[2mms[22m[39m
+{"level":30,"time":"2026-03-17T05:10:21.553Z","env":"test","userId":"69b8e23d524c0962ac693aa7","ip":"::ffff:127.0.0.1","msg":"User logged in"}
+{"level":30,"time":"2026-03-17T05:10:21.554Z","env":"test","requestId":"3f2c17fc-7484-47f7-9825-16276363010b","method":"POST","url":"/api/v1/auth/login","statusCode":200,"statusMessage":"OK","responseTime":"358ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.557Z","env":"test","requestId":"fd2f9f14-1a96-48b8-be67-00f588797126","method":"POST","url":"/api/v1/auth/refresh","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.557Z","env":"test","requestId":"fd2f9f14-1a96-48b8-be67-00f588797126","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/refresh","path":"/api/v1/auth/refresh","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:21.572Z","env":"test","ip":"::ffff:127.0.0.1","msg":"Token refreshed successfully"}
+{"level":30,"time":"2026-03-17T05:10:21.572Z","env":"test","requestId":"fd2f9f14-1a96-48b8-be67-00f588797126","method":"POST","url":"/api/v1/auth/refresh","statusCode":200,"statusMessage":"OK","responseTime":"15ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.576Z","env":"test","requestId":"d366417a-4203-483f-9968-238fa64b0591","method":"POST","url":"/api/v1/auth/logout","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.576Z","env":"test","requestId":"d366417a-4203-483f-9968-238fa64b0591","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/logout","path":"/api/v1/auth/logout","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":30,"time":"2026-03-17T05:10:21.585Z","env":"test","userId":"69b8e23d524c0962ac693aa7","msg":"Refresh token revoked on logout"}
+{"level":30,"time":"2026-03-17T05:10:21.585Z","env":"test","requestId":"d366417a-4203-483f-9968-238fa64b0591","method":"POST","url":"/api/v1/auth/logout","statusCode":200,"statusMessage":"OK","responseTime":"9ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.589Z","env":"test","requestId":"32e7fa7b-4908-4f74-aaca-d737aed1bddb","method":"POST","url":"/api/v1/auth/refresh","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.589Z","env":"test","requestId":"32e7fa7b-4908-4f74-aaca-d737aed1bddb","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/refresh","path":"/api/v1/auth/refresh","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:21.596Z","env":"test","err":{"type":"Error","message":"Refresh token has been revoked.","stack":"Error: Refresh token has been revoked.\n    at refreshAccessToken (D:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend/services/auth/token-service.js:142:11)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at refreshTokenUseCase (D:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend/use-cases/auth/refresh-token.use-case.js:30:7)\n    at handleRefreshToken (D:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend/controllers/auth/refresh.controller.js:14:18)"},"ip":"::ffff:127.0.0.1","msg":"Refresh token use-case error"}
+{"level":40,"time":"2026-03-17T05:10:21.602Z","env":"test","requestId":"32e7fa7b-4908-4f74-aaca-d737aed1bddb","method":"POST","url":"/api/v1/auth/refresh","statusCode":401,"statusMessage":"Unauthorized","responseTime":"13ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.613Z","env":"test","requestId":"95c93817-3016-4947-a126-cb3278d94487","method":"POST","url":"/api/v1/auth/refresh","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.613Z","env":"test","requestId":"95c93817-3016-4947-a126-cb3278d94487","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/refresh","path":"/api/v1/auth/refresh","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC4: No cookie
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:21.615Z","env":"test","requestId":"95c93817-3016-4947-a126-cb3278d94487","method":"POST","url":"/api/v1/auth/refresh","statusCode":401,"statusMessage":"Unauthorized","responseTime":"2ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.624Z","env":"test","requestId":"bcd5513d-143e-4ecb-83fa-c16f816396fd","method":"POST","url":"/api/v1/auth/refresh","msg":"Request started"}
+{"level":30,"time":"2026-03-17T05:10:21.624Z","env":"test","requestId":"bcd5513d-143e-4ecb-83fa-c16f816396fd","userId":"anonymous","userEmail":"anonymous","method":"POST","url":"/api/v1/auth/refresh","path":"/api/v1/auth/refresh","action":"user_activity","msg":"User activity"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC5: Tampered cookie
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+{"level":40,"time":"2026-03-17T05:10:21.629Z","env":"test","err":{"type":"Error","message":"Invalid refresh token.","stack":"Error: Invalid refresh token.\n    at refreshAccessToken (D:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend/services/auth/token-service.js:123:11)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at refreshTokenUseCase (D:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend/use-cases/auth/refresh-token.use-case.js:30:7)\n    at handleRefreshToken (D:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend/controllers/auth/refresh.controller.js:14:18)"},"ip":"::ffff:127.0.0.1","msg":"Refresh token use-case error"}
+{"level":40,"time":"2026-03-17T05:10:21.630Z","env":"test","requestId":"bcd5513d-143e-4ecb-83fa-c16f816396fd","method":"POST","url":"/api/v1/auth/refresh","statusCode":401,"statusMessage":"Unauthorized","responseTime":"6ms","msg":"Request finished"}
+{"level":30,"time":"2026-03-17T05:10:21.646Z","env":"test","source":"emitLogMessage","success":false,"msg":"📡 MongoDB disconnected"}
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js
+[22m[39m [٧:١٠:٢١ ص] [INFO] 📡 MongoDB disconnected 
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-refresh.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 4286[2mms[22m[39m
+     [33m[2m✓[22m[39m C1: Valid refresh token [33m 1331[2mms[22m[39m
+     [33m[2m✓[22m[39m C2: Expired refresh token [33m 783[2mms[22m[39m
+     [33m[2m✓[22m[39m C3: Revoked token (after logout) [33m 816[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[45m integration [49m[39m __tests__/integration/auth-forgot-password.test.js[2m > [22mSuite F — Forgot Password Tests[2m > [22mF1: Valid registered email
+[31m[1mAssertionError[22m: expected undefined to be defined[39m
+[36m [2m❯[22m __tests__/integration/auth-forgot-password.test.js:[2m65:33[22m[39m
+    [90m 63|[39m     [90m// DB Assert: user has resetToken set[39m
+    [90m 64|[39m     [35mconst[39m userInDb [33m=[39m [35mawait[39m [33mUser[39m[33m.[39m[34mfindOne[39m({ email[33m:[39m [33mTEST_USER[39m[33m.[39memail })[33m;[39m
+    [90m 65|[39m     [34mexpect[39m(userInDb[33m.[39mresetToken)[33m.[39m[34mtoBeDefined[39m()[33m;[39m
+    [90m   |[39m                                 [31m^[39m
+    [90m 66|[39m     [34mexpect[39m(userInDb[33m.[39mresetTokenExpiry)[33m.[39m[34mtoBeDefined[39m()[33m;[39m
+    [90m 67|[39m   })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m integration [49m[39m __tests__/integration/auth-login.test.js[2m > [22mSuite B — Login Tests[2m > [22mB1: Valid credentials, verified user
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m __tests__/integration/auth-login.test.js:[2m67:29[22m[39m
+    [90m 65|[39m     [90m// DB Assert: RefreshToken document exists[39m
+    [90m 66|[39m     const tokenExists = await RefreshToken.exists({ user: res.body.dat…
+    [90m 67|[39m     [34mexpect[39m(tokenExists)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   |[39m                             [31m^[39m
+    [90m 68|[39m   })[33m;[39m
+    [90m 69|[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m integration [49m[39m __tests__/integration/auth-logout.test.js[2m > [22mSuite D — Logout Tests[2m > [22mD1: Valid logout
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m __tests__/integration/auth-logout.test.js:[2m49:29[22m[39m
+    [90m 47|[39m     [35mconst[39m userId [33m=[39m loginRes[33m.[39mbody[33m.[39mdata[33m.[39muser[33m.[39m_id[33m;[39m
+    [90m 48|[39m     [35mconst[39m tokenBefore [33m=[39m [35mawait[39m [33mRefreshToken[39m[33m.[39m[34mfindOne[39m({ user[33m:[39m userId })[33m;[39m
+    [90m 49|[39m     [34mexpect[39m(tokenBefore)[33m.[39mnot[33m.[39m[34mtoBeNull[39m()[33m;[39m
+    [90m   |[39m                             [31m^[39m
+    [90m 50|[39m
+    [90m 51|[39m     [35mconst[39m res [33m=[39m [35mawait[39m agent[33m.[39m[34mpost[39m([32m"/api/v1/auth/logout"[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m25 passed[39m[22m[90m (28)[39m
+[2m   Start at [22m 07:10:10
+[2m   Duration [22m 11.03s[2m (transform 8.26s, setup 10.05s, import 26.46s, tests 19.76s, environment 2ms)[22m
+

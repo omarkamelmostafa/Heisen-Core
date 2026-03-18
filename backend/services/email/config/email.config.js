@@ -1,14 +1,19 @@
+// backend/services/email/config/email.config.js
 import dotenv from "dotenv";
 dotenv.config();
 
 export const EMAIL_CONFIG = {
-  provider: "mailtrap", // Can be 'sendgrid', 'ses' in future
+  provider: "mailtrap",
   mailtrap: {
-    endpoint: process.env.MAILTRAP_ENDPOINT,
-    token: process.env.MAILTRAP_TOKEN,
+    host: process.env.MAILTRAP_HOST || "sandbox.smtp.mailtrap.io",
+    port: parseInt(process.env.MAILTRAP_PORT) || 2525,
+    auth: {
+      user: process.env.MAILTRAP_USER,
+      pass: process.env.MAILTRAP_PASS,
+    },
     sender: {
-      email: "hello@demomailtrap.co",
-      name: "Fantasy Coach", // Updated from "Burak"
+      email: process.env.MAIL_FROM_ADDRESS || "hello@example.com",
+      name: process.env.MAIL_FROM_NAME || "Fantasy Coach",
     },
   },
   settings: {

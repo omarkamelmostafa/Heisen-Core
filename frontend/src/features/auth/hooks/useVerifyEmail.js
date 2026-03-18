@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { verifyEmail as verifyEmailThunk } from "@/store/slices/auth/auth-thunks";
 import { clearError, setAuthError } from "@/store/slices/auth/auth-slice";
+import { notify } from "@/lib/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,
@@ -67,6 +68,7 @@ export function useVerifyEmail() {
       setCanResend(false);
     } catch (err) {
       console.error("Resend error:", err);
+      notify.error("Failed to resend verification code. Please try again.");
     }
   };
 

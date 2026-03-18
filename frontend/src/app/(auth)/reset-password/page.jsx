@@ -5,10 +5,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useResetPassword } from "@/features/auth/hooks/useResetPassword";
-import { ResetPasswordHeader } from "@/components/auth/reset-password/reset-password-header";
-import { FormState } from "@/components/auth/reset-password/form-state";
-import { SuccessState } from "@/components/auth/reset-password/success-state";
-import { AuthFormProvider } from "@/components/auth/forms/auth-form-provider";
+import { ResetPasswordHeader } from "@/features/auth/components/reset-password/reset-password-header";
+import { FormState } from "@/features/auth/components/reset-password/form-state";
+import { SuccessState } from "@/features/auth/components/reset-password/success-state";
+import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
 import { resetPasswordSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
@@ -16,9 +16,9 @@ import {
 } from "@/lib/animations/auth/authAnimations";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import ResetPasswordLoading from "./loading";
-import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
-import { AuthErrorAlert } from "@/components/auth/forms/auth-error-alert";
-import { PublicGuard } from "@/components/auth/guards/public-guard";
+import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
+import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
+import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
 export default function ResetPasswordPage() {
   const [passwordVisibility, setPasswordVisibility] = useState({

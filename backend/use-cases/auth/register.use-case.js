@@ -1,11 +1,12 @@
 // backend/use-cases/auth/register.use-case.js
 
 import User from "../../model/User.js";
-import bcrypt from "bcrypt";
+import { hashPassword } from "../../utilities/auth/hash-utils.js";
 import { CloudinaryService } from "../../services/cloudinaryService.js";
 import logger from "../../utilities/general/logger.js";
 import { EmailService } from "../../services/email/email.service.js";
 import crypto from "crypto";
+import { generateVerificationCode } from "../../utilities/auth/crypto-utils.js";
 
 const emailService = new EmailService();
 
@@ -35,7 +36,7 @@ export async function registerUseCase({
       success: false,
       statusCode: 400,
       message: "Validation Error: All required fields are missing.",
-      errorCode: "BadRequest",
+      errorCode: "BAD_REQUEST",
     };
   }
 
@@ -44,7 +45,7 @@ export async function registerUseCase({
       success: false,
       statusCode: 400,
       message: "Validation Error: Passwords do not match. Please try again.",
-      errorCode: "Conflict",
+      errorCode: "CONFLICT",
     };
   }
 
@@ -56,16 +57,16 @@ export async function registerUseCase({
         success: false,
         statusCode: 409,
         message: "User with this email already exists.",
-        errorCode: "Conflict",
+        errorCode: "CONFLICT",
       };
     }
 
     // Create user with hashed password and verification token
-    const passwordHash = await bcrypt.hash(password, 12);
+    const passwordHash = await hashPassword(password);
 
     // Generate verification token — store hashed, send raw in email URL
     // Fix: Generate a purely numeric 6-digit code for the frontend UI format
-    const rawVerificationToken = crypto.randomInt(100000, 999999).toString();
+    const rawVerificationToken = generateVerificationCode();
     const hashedVerificationToken = crypto
       .createHash("sha256")
       .update(rawVerificationToken)
@@ -121,7 +122,7 @@ export async function registerUseCase({
         statusCode: 500,
         message:
           "Registration failed due to storage system error. Please try again.",
-        errorCode: "InternalServerError",
+        errorCode: "INTERNAL_ERROR",
       };
     }
 
@@ -147,7 +148,7 @@ export async function registerUseCase({
       success: false,
       statusCode: 500,
       message: "Registration failed. Please try again.",
-      errorCode: "InternalServerError",
+      errorCode: "INTERNAL_ERROR",
     };
   }
 }

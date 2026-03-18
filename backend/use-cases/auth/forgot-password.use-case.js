@@ -1,6 +1,7 @@
 // backend/use-cases/auth/forgot-password.use-case.js
 
 import crypto from "crypto";
+import { generateResetToken } from "../../utilities/auth/crypto-utils.js";
 import User from "../../model/User.js";
 import logger from "../../utilities/general/logger.js";
 import { EmailService } from "../../services/email/email.service.js";
@@ -52,7 +53,7 @@ export async function forgotPasswordUseCase({ email, clientIP, origin }) {
     }
 
     // Generate reset token — store hashed, send raw in email URL
-    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetToken = generateResetToken();
     const resetTokenHash = crypto
       .createHash("sha256")
       .update(resetToken)

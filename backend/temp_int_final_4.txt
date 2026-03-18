@@ -1,0 +1,373 @@
+
+> server@1.0.0 test:integration
+> vitest run --project integration
+
+
+[1m[46m RUN [49m[22m [36mv4.1.0 [39m[90mD:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend[39m
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH1: Valid access token returns user profile
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG1: Valid reset token + new password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB1: Valid credentials, verified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE1: Valid token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/rate-limiting.test.js[2m > [22m[2mSuite I — Rate Limiting Test[2m > [22m[2mI1: Rate limit triggers on auth endpoint
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH1: Valid access token returns user profile
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH1: Valid access token returns user profile
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB1: Valid credentials, verified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB1: Valid credentials, verified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG1: Valid reset token + new password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG1: Valid reset token + new password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG1: Valid reset token + new password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/rate-limiting.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 7755[2mms[22m[39m
+     [33m[2m✓[22m[39m I1: Rate limit triggers on auth endpoint [33m 5139[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE1: Valid token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE2: Wrong token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH1: Valid access token returns user profile
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC1: Valid refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH2: No authorization header
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH3: Expired access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD1: Valid logout
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB2: Unverified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD2: Logout without session returns 204
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE2: Wrong token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE3: Expired token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH3: Expired access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH3: Expired access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB2: Unverified user
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG1: Valid reset token + new password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE3: Expired token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE4: Token reuse (already verified)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH3: Expired access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH4: Tampered access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC2: Expired refresh token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-logout.test.js[2m > [22m[2mSuite D — Logout Tests[2m > [22m[2mD3: Double logout does not crash
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG1: Valid reset token + new password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-logout.test.js [2m([22m[2m3 tests[22m[2m)[22m[33m 3886[2mms[22m[39m
+     [33m[2m✓[22m[39m D1: Valid logout [33m 1426[2mms[22m[39m
+     [33m[2m✓[22m[39m D3: Double logout does not crash [33m 896[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE4: Token reuse (already verified)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE4: Token reuse (already verified)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-verify-email.test.js[2m > [22m[2mSuite E — Verify Email Tests[2m > [22m[2mE5: Non-existent token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH4: Tampered access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH4: Tampered access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-verify-email.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 4165[2mms[22m[39m
+     [33m[2m✓[22m[39m E1: Valid token [33m 910[2mms[22m[39m
+     [33m[2m✓[22m[39m E2: Wrong token [33m 402[2mms[22m[39m
+     [33m[2m✓[22m[39m E3: Expired token [33m 497[2mms[22m[39m
+     [33m[2m✓[22m[39m E4: Token reuse (already verified) [33m 469[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2merror message consistency[2m > [22m[2mB3 and B4: returns same message for wrong password and missing account
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB5: Missing email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-login.test.js[2m > [22m[2mSuite B — Login Tests[2m > [22m[2mB6: Missing password
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG2: Expired reset token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-login.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 4361[2mms[22m[39m
+     [33m[2m✓[22m[39m B1: Valid credentials, verified user [33m 1431[2mms[22m[39m
+     [33m[2m✓[22m[39m B2: Unverified user [33m 461[2mms[22m[39m
+       [33m[2m✓[22m[39m B3 and B4: returns same message for wrong password and missing account [33m 925[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH4: Tampered access token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH5: Malformed authorization header
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC3: Revoked token (after logout)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC4: No cookie
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-refresh.test.js[2m > [22m[2mSuite C — Refresh Token Tests[2m > [22m[2mC5: Tampered cookie
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG2: Expired reset token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG2: Expired reset token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG2: Expired reset token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG3: Replay attack (already used token)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-refresh.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 4860[2mms[22m[39m
+     [33m[2m✓[22m[39m C1: Valid refresh token [33m 1411[2mms[22m[39m
+     [33m[2m✓[22m[39m C2: Expired refresh token [33m 935[2mms[22m[39m
+     [33m[2m✓[22m[39m C3: Revoked token (after logout) [33m 1001[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH5: Malformed authorization header
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH5: Malformed authorization header
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG3: Replay attack (already used token)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG3: Replay attack (already used token)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG3: Replay attack (already used token)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/user-me.test.js[2m > [22m[2mSuite H — User Profile Tests[2m > [22m[2mH5: Malformed authorization header
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/user-me.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 5634[2mms[22m[39m
+     [33m[2m✓[22m[39m H1: Valid access token returns user profile [33m 1414[2mms[22m[39m
+     [33m[2m✓[22m[39m H3: Expired access token [33m 895[2mms[22m[39m
+     [33m[2m✓[22m[39m H4: Tampered access token [33m 985[2mms[22m[39m
+     [33m[2m✓[22m[39m H5: Malformed authorization header [33m 858[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG3: Replay attack (already used token)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG4: Invalid/tampered token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG4: Invalid/tampered token
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG5: Password validation
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG5: Password validation
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG5: Password validation
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-reset-password.test.js[2m > [22m[2mSuite G — Reset Password Tests[2m > [22m[2mG5: Password validation
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-reset-password.test.js [2m([22m[2m5 tests[22m[2m)[22m[33m 6592[2mms[22m[39m
+     [33m[2m✓[22m[39m G1: Valid reset token + new password [33m 2834[2mms[22m[39m
+     [33m[2m✓[22m[39m G2: Expired reset token [33m 507[2mms[22m[39m
+     [33m[2m✓[22m[39m G3: Replay attack (already used token) [33m 1203[2mms[22m[39m
+     [33m[2m✓[22m[39m G5: Password validation [33m 388[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA1: Valid registration (3-layer assertion)
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA2: Duplicate email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA2: Duplicate email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA3: Missing fields
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA4: Invalid email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA5: Password too short
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-register.test.js[2m > [22m[2mSuite A — Registration Tests[2m > [22m[2mA6: Mismatched passwords
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-register.test.js [2m([22m[2m6 tests[22m[2m)[22m[33m 1988[2mms[22m[39m
+     [33m[2m✓[22m[39m A1: Valid registration (3-layer assertion) [33m 626[2mms[22m[39m
+     [33m[2m✓[22m[39m A2: Duplicate email [33m 388[2mms[22m[39m
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF1: Valid registered email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF1: Valid registered email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF1: Valid registered email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF2: Non-existent email returns identical success message
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF3: Missing email
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+[90mstdout[2m | __tests__/integration/auth-forgot-password.test.js[2m > [22m[2mSuite F — Forgot Password Tests[2m > [22m[2mF4: Invalid email format
+[22m[39m📊 Content Negotiation - Device: unknown, Browser: unknown, Preferred Type: json
+
+ [32m✓[39m [30m[45m integration [49m[39m __tests__/integration/auth-forgot-password.test.js [2m([22m[2m4 tests[22m[2m)[22m[33m 1428[2mms[22m[39m
+     [33m[2m✓[22m[39m F1: Valid registered email [33m 525[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m      Tests [22m [1m[32m39 passed[39m[22m[90m (39)[39m
+[2m   Start at [22m 07:40:49
+[2m   Duration [22m 17.61s[2m (transform 10.29s, setup 17.16s, import 38.17s, tests 40.67s, environment 3ms)[22m
+

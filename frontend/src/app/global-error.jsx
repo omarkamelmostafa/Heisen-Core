@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import ErrorFallback from "@/components/shared/error-fallback";
 
 /**
@@ -8,6 +9,10 @@ import ErrorFallback from "@/components/shared/error-fallback";
  * Must include <html> and <body> tags.
  */
 export default function GlobalError({ error, reset }) {
+  useEffect(() => {
+    console.error("Global error:", error);
+  }, [error]);
+
   return (
     <html lang="en">
       <body className="bg-background text-foreground antialiased min-h-screen">

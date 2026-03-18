@@ -1,6 +1,7 @@
 // backend/use-cases/auth/resend-verification.use-case.js
 
 import crypto from "crypto";
+import { generateResetToken } from "../../utilities/auth/crypto-utils.js";
 import User from "../../model/User.js";
 import logger from "../../utilities/general/logger.js";
 import { EmailService } from "../../services/email/email.service.js";
@@ -47,7 +48,7 @@ export async function resendVerificationUseCase({ email }) {
     }
 
     // Generate new verification token
-    const rawVerificationToken = crypto.randomBytes(32).toString("hex");
+    const rawVerificationToken = generateResetToken();
     const hashedVerificationToken = crypto
       .createHash("sha256")
       .update(rawVerificationToken)

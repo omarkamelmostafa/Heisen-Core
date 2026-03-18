@@ -4,10 +4,19 @@ import redis from "../../config/redis.js";
 
 // Rate limiting middleware configuration
 export function createRateLimiterMiddleware(options = {}) {
+  // Bypass rate limiting in test environment
+  if (process.env.NODE_ENV === 'test') {
+    return (req, res, next) => next();
+  }
+
   return rateLimit({
     windowMs: options.windowMs || 15 * 60 * 1000, // 15 minutes
-    limit: options.max || options.limit || 10000, // Max requests
-    message: "Too many requests from this IP, please try again later.",
+    limit: options.max || options.limit || 200, // Max requests
+    message: options.message || {
+      status: "error",
+      message: "Too many requests. Please try again later.",
+      errorCode: "RATE_LIMITED",
+    },
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     // Redis store configuration

@@ -22,7 +22,7 @@ export const loginLimiter = createRateLimiterMiddleware({
  * Register: 5 requests per hour per IP
  */
 export const registerLimiter = createRateLimiterMiddleware({
-  windowMs: parseInt(process.env.RATE_LIMIT_REGISTER_WINDOW_MS, 10) || 60 * 60 * 1000,
+  windowMs: parseInt(process.env.RATE_LIMIT_REGISTER_WINDOW_MS, 10) || 15 * 60 * 1000,
   max: parseInt(process.env.RATE_LIMIT_REGISTER_MAX, 10) || 5, // 5 requests per hour per IP 
   message: {
     status: "error",
@@ -36,7 +36,7 @@ export const registerLimiter = createRateLimiterMiddleware({
  * Forgot Password: 3 requests per hour per IP
  */
 export const forgotPasswordLimiter = createRateLimiterMiddleware({
-  windowMs: parseInt(process.env.RATE_LIMIT_FORGOT_WINDOW_MS, 10) || 60 * 60 * 1000,
+  windowMs: parseInt(process.env.RATE_LIMIT_FORGOT_WINDOW_MS, 10) || 15 * 60 * 1000,
   max: parseInt(process.env.RATE_LIMIT_FORGOT_MAX, 10) || 3,
   message: {
     status: "error",
@@ -58,4 +58,59 @@ export const refreshLimiter = createRateLimiterMiddleware({
     errorCode: "RATE_LIMITED",
   },
   prefix: "rl:refresh:",
+});
+
+export const resetPasswordLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: {
+    status: "error",
+    message: "Too many password reset attempts. Please try again in 15 minutes.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:reset:",
+});
+
+export const verifyEmailLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    status: "error",
+    message: "Too many verification attempts. Please try again in 15 minutes.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:verify:",
+});
+
+export const userMeLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  message: {
+    status: "error",
+    message: "Too many requests. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:userme:",
+});
+
+export const healthLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: {
+    status: "error",
+    message: "Too many health check requests.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:health:",
+});
+
+export const logoutLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: {
+    status: "error",
+    message: "Too many logout attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:logout:",
 });

@@ -10,7 +10,7 @@
 export const API_CONFIG = {
   // Base URL Configuration
   BASE_URL:
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001",
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
   API_VERSION: process.env.NEXT_PUBLIC_API_VERSION || "1",
   API_PREFIX: "/api",
 
