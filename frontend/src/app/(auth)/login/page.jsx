@@ -4,12 +4,12 @@
 import { useState } from "react";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import { useLogin } from "@/features/auth/hooks/useLogin";
-import { LoginHeader } from "@/components/auth/login/login-header";
-import { WelcomeSection } from "@/components/auth/login/welcome-section";
-import { LoginForm } from "@/components/auth/login/login-form";
-import { Divider } from "@/components/auth/login/divider";
-import { AuthFormProvider } from "@/components/auth/forms/auth-form-provider";
-import { AuthErrorAlert } from "@/components/auth/forms/auth-error-alert";
+import { LoginHeader } from "@/features/auth/components/login/login-header";
+import { WelcomeSection } from "@/features/auth/components/login/welcome-section";
+import { LoginForm } from "@/features/auth/components/login/login-form";
+import { Divider } from "@/features/auth/components/login/divider";
+import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
+import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
 import { loginSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
@@ -18,8 +18,8 @@ import {
 } from "@/lib/animations/auth/authAnimations";
 import { motion } from "framer-motion";
 import LoginLoading from "./loading";
-import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
-import { PublicGuard } from "@/components/auth/guards/public-guard";
+import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
+import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -99,11 +99,11 @@ export default function LoginPage() {
 
 // import { useLoginForm } from "@/hooks/auth/login/use-login-form";
 // import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
-// import { LoginHeader } from "@/components/auth/login/login-header";
-// import { WelcomeSection } from "@/components/auth/login/welcome-section";
-// import { LoginForm } from "@/components/auth/login/login-form";
-// import { AuthProviders } from "@/components/auth/providers/auth-providers";
-// import { Divider } from "@/components/auth/login/divider";
+// import { LoginHeader } from "@/features/auth/components/login/login-header";
+// import { WelcomeSection } from "@/features/auth/components/login/welcome-section";
+// import { LoginForm } from "@/features/auth/components/login/login-form";
+// import { AuthProviders } from "@/features/auth/components/providers/auth-providers";
+// import { Divider } from "@/features/auth/components/login/divider";
 // import {
 //   motionProps,
 //   containerVariants,
@@ -112,7 +112,7 @@ export default function LoginPage() {
 // import { motion } from "framer-motion";
 // import LoginLoading from "./loading";
 // import { Suspense } from "react";
-// import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
+// import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 // import { AuthLayoutWrapper } from "../auth-layout-wrapper";
 
 // export default function LoginPage() {

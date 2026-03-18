@@ -60,6 +60,12 @@ const RefreshTokenSchema = new Schema(
       default: "",
     },
 
+    rememberMe: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+
     // Snapshot of user's tokenVersion at creation time.
     // Used for "logout all" comparison.
     tokenVersion: {

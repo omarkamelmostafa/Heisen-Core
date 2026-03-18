@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { registerUser } from "@/store/slices/auth/auth-thunks";
 import { clearError } from "@/store/slices/auth/auth-slice";
+import { notify } from "@/lib/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,
@@ -28,6 +29,9 @@ export function useSignup() {
   const handleSignup = async (data) => {
     try {
       await dispatch(registerUser(data)).unwrap();
+      notify.success("Account created successfully!", {
+        description: "Check your email to verify your account.",
+      });
       // Redirect to check email page on success
       router.push("/verify-email");
     } catch (err) {

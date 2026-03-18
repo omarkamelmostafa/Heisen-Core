@@ -23,6 +23,9 @@ import {
   registerLimiter,
   forgotPasswordLimiter,
   refreshLimiter,
+  resetPasswordLimiter,
+  verifyEmailLimiter,
+  logoutLimiter,
 } from "../../middleware/security/rate-limiters.js";
 import { authTokenMiddleware } from "../../middleware/auth/authTokenMiddleware.js";
 
@@ -36,13 +39,14 @@ router
   .route("/register")
   .post(registerLimiter, registerValidationRules, handleValidationErrors, handleRegister);
 
-router.route("/logout").post(handleLogout);
-router.route("/logout-all").post(authTokenMiddleware, handleLogoutAll);
+router.route("/logout").post(logoutLimiter, handleLogout);
+router.route("/logout-all").post(logoutLimiter, authTokenMiddleware, handleLogoutAll);
 router.route("/refresh").post(refreshLimiter, handleRefreshToken);
 
 router
   .route("/verify-email")
   .post(
+    verifyEmailLimiter,
     emailVerificationValidationRules,
     handleValidationErrors,
     handleVerifyEmail
@@ -64,6 +68,7 @@ router
 router
   .route("/reset-password")
   .post(
+    resetPasswordLimiter,
     resetPasswordValidationRules,
     handleValidationErrors,
     handleResetPassword

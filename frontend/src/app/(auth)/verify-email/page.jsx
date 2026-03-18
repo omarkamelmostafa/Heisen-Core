@@ -4,13 +4,13 @@
 import { motion } from "framer-motion";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import { useVerifyEmail } from "@/features/auth/hooks/useVerifyEmail";
-import { VerifyEmailHeader } from "@/components/auth/verify-email/verify-email-header";
-import { WelcomeSection } from "@/components/auth/verify-email/welcome-section";
-import { SuccessState } from "@/components/auth/verify-email/success-state";
-import { VerificationForm } from "@/components/auth/verify-email/verification-form";
-import { HelpText } from "@/components/auth/verify-email/help-text";
-import { AuthFormProvider } from "@/components/auth/forms/auth-form-provider";
-import { AuthErrorAlert } from "@/components/auth/forms/auth-error-alert";
+import { VerifyEmailHeader } from "@/features/auth/components/verify-email/verify-email-header";
+import { WelcomeSection } from "@/features/auth/components/verify-email/welcome-section";
+import { SuccessState } from "@/features/auth/components/verify-email/success-state";
+import { VerificationForm } from "@/features/auth/components/verify-email/verification-form";
+import { HelpText } from "@/features/auth/components/verify-email/help-text";
+import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
+import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
 import { verifyEmailSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
@@ -18,8 +18,8 @@ import {
   itemVariants,
 } from "@/lib/animations/auth/authAnimations";
 import VerifyEmailLoading from "./loading";
-import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
-import { PublicGuard } from "@/components/auth/guards/public-guard";
+import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
+import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
 export default function VerifyEmailPage() {
   const {

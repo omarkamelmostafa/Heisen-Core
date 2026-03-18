@@ -1,48 +1,63 @@
-import axios from "axios";
+// backend/services/email/providers/mailtrap.provider.js
+
+import nodemailer from "nodemailer";
 import { EMAIL_CONFIG } from "../config/email.config.js";
+import logger from "../../../utilities/general/logger.js";
 
 export class MailtrapProvider {
   constructor() {
-    this.client = axios.create({
-      baseURL: EMAIL_CONFIG.mailtrap.endpoint,
-      headers: { Authorization: `Bearer ${EMAIL_CONFIG.mailtrap.token}` },
+    this.transporter = nodemailer.createTransport({
+      host: EMAIL_CONFIG.mailtrap.host,
+      port: EMAIL_CONFIG.mailtrap.port,
+      auth: {
+        user: EMAIL_CONFIG.mailtrap.auth.user,
+        pass: EMAIL_CONFIG.mailtrap.auth.pass,
+      },
     });
+
     this.sender = EMAIL_CONFIG.mailtrap.sender;
   }
 
   async send(emailData) {
-    const { to, subject, html, category, metadata } = emailData;
+    const { to, subject, html, category } = emailData;
 
     try {
-      const response = await this.client.post("/send", {
-        from: this.sender,
-        to: [{ email: to }],
+      const info = await this.transporter.sendMail({
+        from: `"${this.sender.name}" <${this.sender.email}>`,
+        to,
         subject,
         html,
-        category,
+        headers: {
+          "X-MT-Category": category,
+        },
       });
 
-      console.log("Email sent successfully", response.data);
-      return response.data;
+      logger.info({ messageId: info.messageId, to }, "Sandbox Email sent successfully via SMTP");
+      return { success: true, messageId: info.messageId };
     } catch (error) {
-      console.error(`Error sending email to ${to}:`, error);
-      throw new Error(`Email sending failed: ${error.message}`);
+      logger.error({ err: error, to }, `Error sending sandbox email via SMTP`);
+      // Return a shape consistent with what might be expected by callers
+      return { success: false, error: error.message };
     }
   }
 
   async sendWithTemplate({ to, template_uuid, template_variables }) {
     try {
-      const response = await this.client.post("/send", {
-        from: this.sender,
-        to: [{ email: to }],
-        template_uuid,
-        template_variables,
+      const info = await this.transporter.sendMail({
+        from: `"${this.sender.name}" <${this.sender.email}>`,
+        to,
+        // Mailtrap SMTP supports templates via custom headers
+        headers: {
+          "X-MT-Template-ID": template_uuid,
+          "X-MT-Variables": JSON.stringify(template_variables),
+        },
       });
 
-      return response.data;
+      logger.info({ messageId: info.messageId, to }, "Template Email sent successfully via SMTP");
+      return { success: true, messageId: info.messageId };
     } catch (error) {
-      console.error(`Error sending template email to ${to}:`, error);
-      throw new Error(`Template email sending failed: ${error.message}`);
+      logger.error({ err: error, to }, `Error sending template email via SMTP`);
+      return { success: false, error: error.message };
     }
   }
 }

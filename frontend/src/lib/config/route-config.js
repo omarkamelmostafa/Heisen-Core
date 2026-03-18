@@ -16,7 +16,7 @@ export const AUTH_ROUTES = [
 
 // Routes that require authentication (e.g., dashboard, settings)
 export const PROTECTED_ROUTES = [
-  "/dashboard",
+  "/",
   "/app",
   "/settings",
   "/profile",

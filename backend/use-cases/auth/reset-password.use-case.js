@@ -3,7 +3,7 @@
 import crypto from "crypto";
 import User from "../../model/User.js";
 import RefreshToken from "../../model/RefreshToken.js";
-import bcrypt from "bcrypt";
+import { hashPassword, comparePassword } from "../../utilities/auth/hash-utils.js";
 import logger from "../../utilities/general/logger.js";
 import { EmailService } from "../../services/email/email.service.js";
 
@@ -68,7 +68,7 @@ export async function resetPasswordUseCase({ token, password }) {
     }
 
     // Prevent reuse of same password
-    const isSamePassword = await bcrypt.compare(password, user.password);
+    const isSamePassword = await comparePassword(password, user.password);
     if (isSamePassword) {
       return {
         success: false,
@@ -79,7 +79,7 @@ export async function resetPasswordUseCase({ token, password }) {
     }
 
     // Update password + security fields
-    user.password = await bcrypt.hash(password, 12);
+    user.password = await hashPassword(password);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpiresAt = undefined;
     user.tokenVersion += 1; // Invalidates all refresh tokens on next check

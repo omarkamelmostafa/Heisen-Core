@@ -1,0 +1,59 @@
+
+> server@1.0.0 test:coverage
+> vitest run --project unit --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.1.0 [39m[90mD:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m [30m[42m unit [49m[39m __tests__/unit/cookie-service.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+[90mstderr[2m | __tests__/unit/token-utils.test.js[2m > [22m[2mToken Utilities (utilities/auth/token-utils.js)[2m > [22m[2mRedis functionalities[2m > [22m[2mrevokeByJti handles fallback warning natively
+[22m[39mRedis blacklisting unavailable: redis-fail
+
+[90mstderr[2m | __tests__/unit/token-utils.test.js[2m > [22m[2mToken Utilities (utilities/auth/token-utils.js)[2m > [22m[2mRedis functionalities[2m > [22m[2misTokenRevoked gracefully handles redis failure
+[22m[39mRedis blacklist check unavailable: fail
+
+[90mstderr[2m | __tests__/unit/token-utils.test.js[2m > [22m[2mToken Utilities (utilities/auth/token-utils.js)[2m > [22m[2mRedis functionalities[2m > [22m[2mgetBlacklistStats handles errors
+[22m[39mRedis error in getBlacklistStats: ping fails
+
+ [32m✓[39m [30m[42m unit [49m[39m __tests__/unit/token-utils.test.js [2m([22m[2m28 tests[22m[2m)[22m[32m 87[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m __tests__/unit/token-service.test.js [2m([22m[2m38 tests[22m[2m)[22m[32m 115[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m __tests__/unit/user-data-utils.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m __tests__/unit/crypto-utils.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m [30m[42m unit [49m[39m __tests__/unit/hash-utils.test.js [2m([22m[2m6 tests[22m[2m)[22m[33m 4194[2mms[22m[39m
+     [33m[2m✓[22m[39m hashPassword returns a valid bcrypt hash [33m 462[2mms[22m[39m
+     [33m[2m✓[22m[39m comparePassword returns true for correct password [33m 815[2mms[22m[39m
+     [33m[2m✓[22m[39m Same password hashed twice yields different hashes [33m 700[2mms[22m[39m
+     [33m[2m✓[22m[39m comparePassword returns false for wrong password [33m 672[2mms[22m[39m
+     [33m[2m✓[22m[39m comparePassword returns false for empty string [33m 803[2mms[22m[39m
+     [33m[2m✓[22m[39m Long password is handled [33m 736[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m86 passed[39m[22m[90m (86)[39m
+[2m   Start at [22m 05:38:22
+[2m   Duration [22m 5.39s[2m (transform 1.05s, setup 0ms, import 4.38s, tests 4.47s, environment 2ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |      93 |    97.93 |      85 |   92.78 |                   
+ config            |   66.66 |      100 |       0 |   66.66 |                   
+  redis.js         |   66.66 |      100 |       0 |   66.66 | 11                
+ model             |      50 |        0 |    37.5 |      50 |                   
+  Album.js         |     100 |      100 |     100 |     100 |                   
+  Favorite.js      |     100 |      100 |     100 |     100 |                   
+  League.js        |   18.75 |        0 |    37.5 |   18.75 | 21-29,51-144      
+  Photo.js         |     100 |      100 |     100 |     100 |                   
+  RefreshToken.js  |     100 |      100 |     100 |     100 |                   
+ services/auth     |     100 |      100 |     100 |     100 |                   
+  ...ie-service.js |     100 |      100 |     100 |     100 |                   
+  token-service.js |     100 |      100 |     100 |     100 |                   
+ utilities/auth    |     100 |      100 |     100 |     100 |                   
+  crypto-utils.js  |     100 |      100 |     100 |     100 |                   
+  hash-utils.js    |     100 |      100 |     100 |     100 |                   
+  token-utils.js   |     100 |      100 |     100 |     100 |                   
+  ...data-utils.js |     100 |      100 |     100 |     100 |                   
+ utilities/general |     100 |      100 |     100 |     100 |                   
+  logger.js        |     100 |      100 |     100 |     100 |                   
+-------------------|---------|----------|---------|---------|-------------------

@@ -1,7 +1,7 @@
 // backend/use-cases/auth/login.use-case.js
 
 import User from "../../model/User.js";
-import bcrypt from "bcrypt";
+import { comparePassword } from "../../utilities/auth/hash-utils.js";
 import { generateTokens } from "../../services/auth/token-service.js";
 import { sanitizeUserForResponse } from "../../utilities/auth/user-data-utils.js";
 import logger from "../../utilities/general/logger.js";
@@ -62,7 +62,7 @@ export async function loginUseCase({ email, password, userAgent, ipAddress }) {
     }
 
     // Password verification
-    const match = await bcrypt.compare(password, foundUser.password);
+    const match = await comparePassword(password, foundUser.password);
     if (!match) {
       return invalidCredentials;
     }

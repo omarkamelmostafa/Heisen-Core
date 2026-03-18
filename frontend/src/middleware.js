@@ -11,7 +11,7 @@ const PUBLIC_ONLY_ROUTES = [
 ];
 
 const PROTECTED_ROUTES = [
-  "/dashboard"
+  "/"
 ];
 
 export async function middleware(request) {
@@ -20,7 +20,9 @@ export async function middleware(request) {
   
   const hasRefreshCookie = cookies.has(REFRESH_TOKEN_COOKIE_KEY);
   
-  const isProtected = PROTECTED_ROUTES.some(route => pathname.startsWith(route));
+  const isProtected = PROTECTED_ROUTES.some(route => 
+    route === "/" ? pathname === "/" : pathname.startsWith(route)
+  );
   const isPublicOnly = PUBLIC_ONLY_ROUTES.some(route => pathname.startsWith(route));
 
   if (isProtected && !hasRefreshCookie) {
@@ -30,7 +32,7 @@ export async function middleware(request) {
   }
 
   if (isPublicOnly && hasRefreshCookie) {
-    return NextResponse.redirect(new URL("/dashboard", nextUrl));
+    return NextResponse.redirect(new URL("/", nextUrl));
   }
 
   return NextResponse.next();

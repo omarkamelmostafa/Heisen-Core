@@ -35,9 +35,8 @@ export const hashToken = (rawToken) =>
  * @param {string} ipAddress - Client IP address
  * @returns {{ accessToken: string, refreshTokenValue: string, accessTokenExpiresIn: string }}
  */
-export const generateTokens = async (user, userAgent = "", ipAddress = "") => {
+export const generateTokens = async (user, userAgent = "", ipAddress = "", rememberMe = false) => {
   const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY || "15m";
-  const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY || "7d";
   const userId = user._id.toString();
 
   // ── Access Token (JWT) ──
@@ -63,16 +62,15 @@ export const generateTokens = async (user, userAgent = "", ipAddress = "") => {
   const rawRefreshToken = crypto.randomBytes(40).toString("hex");
   const hashedRefreshToken = hashToken(rawRefreshToken);
 
-  // Calculate expiry date from duration string (e.g. "7d")
-  const daysMatch = refreshTokenExpiry.match(/^(\d+)d$/);
-  const expiresInMs = daysMatch
-    ? parseInt(daysMatch[1], 10) * 24 * 60 * 60 * 1000
-    : 7 * 24 * 60 * 60 * 1000; // default 7 days
+  const expiresAt = rememberMe
+    ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   await RefreshToken.create({
     token: hashedRefreshToken,
     user: user._id,
-    expiresAt: new Date(Date.now() + expiresInMs),
+    rememberMe: rememberMe,
+    expiresAt: expiresAt,
     userAgent,
     ipAddress,
     tokenVersion: user.tokenVersion || 1,
@@ -95,11 +93,7 @@ export const safeVerifyOrDecode = (token, secret, options = {}) => {
   try {
     return jwt.verify(token, secret, options);
   } catch {
-    try {
-      return jwt.decode(token);
-    } catch {
-      return null;
-    }
+    return jwt.decode(token);
   }
 };
 
@@ -174,7 +168,7 @@ export const refreshAccessToken = async (rawRefreshToken, userAgent = "", ipAddr
 
   // ── Rotation: issue new tokens ──
   const { accessToken, refreshTokenValue, accessTokenExpiresIn } =
-    await generateTokens(userWithVersion, userAgent, ipAddress);
+    await generateTokens(userWithVersion, userAgent, ipAddress, tokenDoc.rememberMe);
 
   // Mark the old token as revoked and point to the new one
   const newTokenDoc = await RefreshToken.findOne({
@@ -261,8 +255,7 @@ export const getBlacklistStats = async () => {
     }, 0);
 
     const totalTokens = keys.length;
-    const revokedPercentage =
-      totalTokens > 0 ? (revokedCount / totalTokens) * 100 : 0;
+    const revokedPercentage = (revokedCount / totalTokens) * 100;
 
     return {
       connected: true,

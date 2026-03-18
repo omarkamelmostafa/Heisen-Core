@@ -4,11 +4,11 @@
 import { useState } from "react";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import { useSignup } from "@/features/auth/hooks/useSignup";
-import { SignupHeader } from "@/components/auth/signup/signup-header";
-import { WelcomeSection } from "@/components/auth/signup/welcome-section";
-import { SignupForm } from "@/components/auth/signup/signup-form";
-import { AuthFormProvider } from "@/components/auth/forms/auth-form-provider";
-import { AuthErrorAlert } from "@/components/auth/forms/auth-error-alert";
+import { SignupHeader } from "@/features/auth/components/signup/signup-header";
+import { WelcomeSection } from "@/features/auth/components/signup/welcome-section";
+import { SignupForm } from "@/features/auth/components/signup/signup-form";
+import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
+import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
 import { signupSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
@@ -17,8 +17,8 @@ import {
 } from "@/lib/animations/auth/authAnimations";
 import { motion } from "framer-motion";
 import SignupLoading from "./loading";
-import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
-import { PublicGuard } from "@/components/auth/guards/public-guard";
+import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
+import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
 export default function SignupPage() {
   const [passwordVisibility, setPasswordVisibility] = useState({

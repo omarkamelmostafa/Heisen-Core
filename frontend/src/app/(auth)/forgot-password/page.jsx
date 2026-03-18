@@ -3,10 +3,10 @@
 
 import { motion } from "framer-motion";
 import { useForgotPassword } from "@/features/auth/hooks/useForgotPassword";
-import { ForgotPasswordHeader } from "@/components/auth/forgot-password/forgot-password-header";
-import { FormState } from "@/components/auth/forgot-password/form-state";
-import { SuccessState } from "@/components/auth/forgot-password/success-state";
-import { AuthFormProvider } from "@/components/auth/forms/auth-form-provider";
+import { ForgotPasswordHeader } from "@/features/auth/components/forgot-password/forgot-password-header";
+import { FormState } from "@/features/auth/components/forgot-password/form-state";
+import { SuccessState } from "@/features/auth/components/forgot-password/success-state";
+import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
 import { forgotPasswordSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
@@ -14,8 +14,8 @@ import {
 } from "@/lib/animations/auth/authAnimations";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import ForgotPasswordLoading from "./loading";
-import { ProductionErrorTrigger } from "@/components/auth/error/production-error-trigger";
-import { AuthErrorAlert } from "@/components/auth/forms/auth-error-alert";
+import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
+import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
 
 export default function ForgotPasswordPage() {
   const {

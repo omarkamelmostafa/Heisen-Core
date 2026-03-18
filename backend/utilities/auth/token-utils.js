@@ -6,7 +6,7 @@ import redis from "../../config/redis.js";
 
 export const generateTokens = async (user) => {
   const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY || "15m"; // Shorter for security
-  const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY || "1d";
+  const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY || "7d";
   const userId = user._id.toString();
 
   // Enhanced token payload with security features
@@ -19,8 +19,8 @@ export const generateTokens = async (user) => {
       // permissions: user.permissions || [],
       type: "access", // Token type identification
     },
-    iss: process.env.JWT_ISSUER || "fantasy-coach-app-backend-v1",
-    aud: process.env.JWT_AUDIENCE || "fantasy-coach-app-web-client",
+    iss: process.env.JWT_ISSUER || "new-starter-backend-v1",
+    aud: process.env.JWT_AUDIENCE || "new-starter-web-client",
   };
 
   const refreshTokenPayload = {
@@ -28,8 +28,8 @@ export const generateTokens = async (user) => {
     uuid: user.uuid,
     type: "refresh",
     tokenVersion: user.tokenVersion || 1, // Important for token invalidation
-    iss: process.env.JWT_ISSUER || "fantasy-coach-app-backend-v1",
-    aud: process.env.JWT_AUDIENCE || "fantasy-coach-app-web-client",
+    iss: process.env.JWT_ISSUER || "new-starter-backend-v1",
+    aud: process.env.JWT_AUDIENCE || "new-starter-web-client",
   };
 
   // Generate tokens with enhanced options
@@ -115,11 +115,7 @@ export const safeVerifyOrDecode = (token, secret, options = {}) => {
     return jwt.verify(token, secret, options);
   } catch (err) {
     // Graceful fallback to decode (useful for expired tokens)
-    try {
-      return jwt.decode(token);
-    } catch {
-      return null;
-    }
+    return jwt.decode(token);
   }
 };
 
@@ -199,9 +195,7 @@ export const getBlacklistStats = async () => {
     }, 0);
 
     const totalTokens = keys.length;
-    const revokedPercentage = totalTokens > 0
-      ? (revokedCount / totalTokens) * 100
-      : 0;
+    const revokedPercentage = (revokedCount / totalTokens) * 100;
 
     return {
       connected: true,

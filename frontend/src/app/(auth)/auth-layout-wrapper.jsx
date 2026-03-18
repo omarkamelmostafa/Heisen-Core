@@ -2,7 +2,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { AuthRightPanel } from "@/components/auth/panels/auth-right-panel";
+import { AuthRightPanel } from "@/features/auth/components/panels/auth-right-panel";
 import { loginLayoutContent } from "@/lib/config/auth/login";
 import { signupLayoutContent } from "@/lib/config/auth/signup";
 import { verifyEmailLayoutContent } from "@/lib/config/auth/verify-email";

@@ -1,3 +1,20 @@
+// Environment validation (runs at build time and dev server start)
+const requiredEnvVars = [
+  "NEXT_PUBLIC_API_URL",
+];
+
+const missingVars = requiredEnvVars.filter(
+  (name) => !process.env[name]
+);
+
+if (missingVars.length > 0) {
+  console.warn(
+    `\n⚠️  Missing recommended environment variables:\n` +
+    missingVars.map((v) => `   - ${v}`).join("\n") +
+    `\n   Defaults will be used.\n`
+  );
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
