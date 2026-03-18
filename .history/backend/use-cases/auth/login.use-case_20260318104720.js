@@ -14,10 +14,9 @@ import logger from "../../utilities/general/logger.js";
  * @param {string} dto.password
  * @param {string} dto.userAgent - User-Agent header for session identification
  * @param {string} dto.ipAddress - Client IP for session identification
- * @param {boolean} dto.rememberMe - Whether to persist the session beyond browser close
  * @returns {Object} { success, statusCode, errorCode?, message, data? }
  */
-export async function loginUseCase({ email, password, userAgent, ipAddress, rememberMe }) {
+export async function loginUseCase({ email, password, userAgent, ipAddress }) {
   // Input validation
   if (!email || !password) {
     return {
@@ -70,7 +69,7 @@ export async function loginUseCase({ email, password, userAgent, ipAddress, reme
 
     // Success path — generate tokens (creates RefreshToken document in DB)
     const { accessToken, refreshTokenValue, accessTokenExpiresIn } =
-      await generateTokens(foundUser, userAgent, ipAddress, rememberMe ?? false);
+      await generateTokens(foundUser, userAgent, ipAddress);
 
     // Update last login
     foundUser.lastLogin = new Date();

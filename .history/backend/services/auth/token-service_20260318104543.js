@@ -184,7 +184,6 @@ export const refreshAccessToken = async (rawRefreshToken, userAgent = "", ipAddr
     refreshTokenValue,
     accessTokenExpiresIn,
     user: userWithVersion,
-    rememberMe: tokenDoc.rememberMe ?? false,
   };
 };
 
@@ -274,4 +273,4 @@ export const getBlacklistStats = async () => {
       revokedPercentage: 0,
     };
   }
-}; 
+};

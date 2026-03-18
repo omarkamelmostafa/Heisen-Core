@@ -159,12 +159,7 @@ export const loginValidationRules = [
 
   body("password")
     .notEmpty()
-    .withMessage("Password is required"),
-
-  body("rememberMe")
-    .optional()
-    .isBoolean()
-    .withMessage("rememberMe must be a boolean"),
+    .withMessage("Password is required")
 ];
 
 export const emailVerificationValidationRules = [

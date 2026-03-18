@@ -26,7 +26,7 @@ export async function refreshTokenUseCase({ refreshToken, userAgent, ipAddress }
   }
 
   try {
-    const { accessToken, refreshTokenValue, accessTokenExpiresIn } =
+    const { accessToken, refreshTokenValue, accessTokenExpiresIn, rememberMe } =
       await refreshAccessToken(refreshToken, userAgent, ipAddress);
 
     logger.info({ ip: ipAddress }, "Token refreshed successfully");
@@ -40,6 +40,7 @@ export async function refreshTokenUseCase({ refreshToken, userAgent, ipAddress }
         newRefreshToken: refreshTokenValue,
         tokenType: "Bearer",
         expiresIn: accessTokenExpiresIn,
+        rememberMe,
       },
     };
   } catch (error) {
