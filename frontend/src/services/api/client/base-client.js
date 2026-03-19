@@ -183,9 +183,12 @@ class BaseClient {
       });
     } else {
       if (error.response.status === 403) {
-        notify.error("You don't have permission to perform this action.", {
-          id: "global-403",
-        });
+        const errorCode = error.response?.data?.errorCode;
+        if (errorCode !== "ACCOUNT_NOT_VERIFIED") {
+          notify.error("You don't have permission to perform this action.", {
+            id: "global-403",
+          });
+        }
       }
       if (error.response.status === 429) {
         const retryAfter = error.response.headers["retry-after"];

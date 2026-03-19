@@ -13,7 +13,7 @@ export function AuthErrorAlert({ className, error }) {
     >
       <div className="flex items-start gap-2">
         <span className="font-semibold">Error:</span>
-        <span>{error}</span>
+        <span>{typeof error === 'string' ? error : (error?.message || 'An unexpected error occurred')}</span>
       </div>
     </div>
   );

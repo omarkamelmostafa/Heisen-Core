@@ -1,31 +1,62 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { verifyEmail as verifyEmailThunk } from "@/store/slices/auth/auth-thunks";
+import {
+  verifyEmail as verifyEmailThunk,
+  resendVerification,
+} from "@/store/slices/auth/auth-thunks";
 import { clearError, setAuthError } from "@/store/slices/auth/auth-slice";
 import { notify } from "@/lib/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,
   selectAuthError,
+  selectAuthUser,
 } from "@/store/slices/auth/auth-selectors";
 
 export function useVerifyEmail() {
-  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
-  const [canResend, setCanResend] = useState(false);
-
-  const dispatch = useAppDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
 
+  const user = useAppSelector(selectAuthUser);
   const isLoading = useAppSelector(selectAuthLoading);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const error = useAppSelector(selectAuthError);
+
+  const hasInitializedTimer = useRef(false);
+
+  // Email source: URL search params > Redux state
+  const emailFromUrl = searchParams.get("email");
+  const email = emailFromUrl || user?.email;
+  const hasEmail = !!email;
+
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [canResend, setCanResend] = useState(true);
 
   // Clear any stale error on mount
   useEffect(() => {
     dispatch(clearError());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Initialize timer from URL params on mount
+  useEffect(() => {
+    if (hasInitializedTimer.current) return;
+    hasInitializedTimer.current = true;
+
+    const sent = searchParams.get("sent");
+    if (sent === "true" && email) {
+      setTimeLeft(300);
+      setCanResend(false);
+
+      // Clean sent param from URL to prevent timer restart on refresh
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("sent");
+      const query = params.toString();
+      window.history.replaceState(null, '', `/verify-email${query ? '?' + query : ''}`);
+    }
+  }, [searchParams, email]);
 
   // Timer countdown
   useEffect(() => {
@@ -34,7 +65,7 @@ export function useVerifyEmail() {
         setTimeLeft(timeLeft - 1);
       }, 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
+    } else if (timeLeft === 0 && !canResend) {
       setCanResend(true);
     }
   }, [timeLeft, canResend]);
@@ -52,6 +83,7 @@ export function useVerifyEmail() {
           token: code,
         })
       ).unwrap();
+      
       // On success, redirect to login page with success state
       router.push("/login?verified=true");
     } catch (err) {
@@ -60,15 +92,28 @@ export function useVerifyEmail() {
   };
 
   const handleResendCode = async () => {
+    if (!email) {
+      notify.error("No email address found. Please go back and try again.");
+      return;
+    }
+
     try {
-      console.log("Resending verification code...");
-      // TODO: call backend resend endpoint when available
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setTimeLeft(300); // Reset to 5 minutes
+      await dispatch(resendVerification(email)).unwrap();
+      
+      notify.success("Verification code sent!", {
+        description: `A new 6-digit code has been sent to ${email}.`,
+      });
+      
+      setTimeLeft(300);
       setCanResend(false);
     } catch (err) {
       console.error("Resend error:", err);
-      notify.error("Failed to resend verification code. Please try again.");
+      // Error notification is usually handled by thunk/middleware or locally
+      if (err.errorCode === "RATE_LIMITED") {
+         notify.error("Too many attempts. Please wait a few minutes.");
+      } else {
+         notify.error("Failed to resend verification code. Please try again.");
+      }
     }
   };
 
@@ -79,6 +124,8 @@ export function useVerifyEmail() {
   };
 
   return {
+    email,
+    hasEmail,
     timeLeft,
     canResend,
     isLoading,

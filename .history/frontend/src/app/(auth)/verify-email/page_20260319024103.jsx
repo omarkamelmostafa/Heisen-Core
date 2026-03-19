@@ -1,8 +1,7 @@
 // frontend/src/app/(auth)/verify-email/page.jsx
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+
 import { motion } from "framer-motion";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import { useVerifyEmail } from "@/features/auth/hooks/useVerifyEmail";
@@ -23,9 +22,7 @@ import VerifyEmailLoading from "./loading";
 import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
-import { Suspense } from "react";
-
-function VerifyEmailPage() {
+export default function VerifyEmailPage() {
   const {
     email,
     hasEmail,
@@ -93,13 +90,5 @@ function VerifyEmailPage() {
       </div>
       <ProductionErrorTrigger />
     </PublicGuard>
-  );
-}
-
-export default function VerifyEmailPageWrapper() {
-  return (
-    <Suspense fallback={<VerifyEmailLoading />}>
-      <VerifyEmailPage />
-    </Suspense>
   );
 }

@@ -18,7 +18,11 @@ export const createAppThunk = (type, payloadCreator, defaultErrorMessage = "Acti
       
       // If it's a cancellation, we can let the thunk be aborted naturally or reject
       // Conventional RTK thunks return the error for rejection
-      return thunkAPI.rejectWithValue(normalized.message);
+      return thunkAPI.rejectWithValue({
+        message: normalized.message,
+        errorCode: normalized.errorCode,
+        status: normalized.status,
+      });
     }
   });
 };

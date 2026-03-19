@@ -52,7 +52,9 @@ const authSlice = createSlice({
 
     // Set error manually (primarily for UI validation)
     setAuthError: (state, action) => {
-      state.error = action.payload;
+      state.error = typeof action.payload === 'string'
+        ? action.payload
+        : (action.payload?.message || action.error?.message || 'An unexpected error occurred');
       state.isLoading = false;
     },
 
@@ -126,7 +128,9 @@ const authSlice = createSlice({
     // Helper to handle error state
     const handleRejected = (state, action) => {
       state.isLoading = false;
-      state.error = action.payload || action.error?.message || "An unexpected error occurred";
+      state.error = typeof action.payload === 'string'
+        ? action.payload
+        : (action.payload?.message || action.error?.message || 'An unexpected error occurred');
     };
 
     // Login — stores access token in Redux memory
@@ -197,7 +201,9 @@ const authSlice = createSlice({
       .addCase(verifyEmail.rejected, (state, action) => {
         state.isLoading = false;
         state.isVerifying = false;
-        state.error = action.payload || "Email verification failed";
+        state.error = typeof action.payload === 'string'
+          ? action.payload
+          : (action.payload?.message || action.error?.message || 'Email verification failed');
       });
 
     // Forgot Password
