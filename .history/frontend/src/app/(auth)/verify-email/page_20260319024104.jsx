@@ -23,9 +23,7 @@ import VerifyEmailLoading from "./loading";
 import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
-import { Suspense } from "react";
-
-function VerifyEmailPage() {
+export default function VerifyEmailPage() {
   const {
     email,
     hasEmail,
@@ -93,13 +91,5 @@ function VerifyEmailPage() {
       </div>
       <ProductionErrorTrigger />
     </PublicGuard>
-  );
-}
-
-export default function VerifyEmailPageWrapper() {
-  return (
-    <Suspense fallback={<VerifyEmailLoading />}>
-      <VerifyEmailPage />
-    </Suspense>
   );
 }

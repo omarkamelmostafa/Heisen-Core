@@ -82,6 +82,17 @@ export const verifyEmailLimiter = createRateLimiterMiddleware({
   prefix: "rl:verify:",
 });
 
+export const resendVerificationLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 3,
+  message: {
+    status: "error",
+    message: "Too many resend attempts. Please try again in 15 minutes.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:resend:",
+});
+
 export const userMeLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
   max: 60,

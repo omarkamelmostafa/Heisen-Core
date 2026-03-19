@@ -33,7 +33,7 @@ export function useSignup() {
         description: "Check your email to verify your account.",
       });
       // Redirect to check email page on success
-      router.push("/verify-email");
+      router.push(`/verify-email?email=${encodeURIComponent(data.email)}&sent=true`);
     } catch (err) {
       // Error is stored in Redux and displayed below
       console.error("Signup error:", err);

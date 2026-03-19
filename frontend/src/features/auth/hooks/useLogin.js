@@ -32,11 +32,14 @@ export function useLogin() {
     }
   }, [isAuthenticated, router, returnTo]);
 
-  // Clear any stale error when component mounts
+  // Clear any stale error when component mounts & on unmount
   useEffect(() => {
     dispatch(clearError());
+    return () => {
+      dispatch(clearError());
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run on mount
+  }, []); // Only run on mount & unmount
 
   const handleLogin = async (data) => {
     try {
@@ -51,6 +54,12 @@ export function useLogin() {
       channel.postMessage('LOGIN');
       channel.close();
     } catch (err) {
+      if (err.errorCode === "ACCOUNT_NOT_VERIFIED") {
+        notify.warning("Please verify your email before logging in.");
+        dispatch(clearError());
+        router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+        return;
+      }
       // Error is stored in Redux state
       console.error("Login error:", err);
     }

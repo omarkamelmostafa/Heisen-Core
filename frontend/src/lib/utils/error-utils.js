@@ -9,8 +9,9 @@ export const normalizeError = (error, defaultMessage = "An unexpected error occu
 
   return {
     message: error?.response?.data?.message || error?.message || defaultMessage,
+    errorCode: error?.response?.data?.errorCode || null,
     code: error?.code,
-    status: error?.response?.status,
+    status: error?.response?.status || null,
     details: error?.response?.data?.details,
     isNormalized: true,
     isCancelled: error?.name === "CanceledError" || error?.code === "ERR_CANCELED",

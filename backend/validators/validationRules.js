@@ -181,6 +181,10 @@ export const emailVerificationValidationRules = [
     .customSanitizer((value) => String(value).trim()),
 ];
 
+export const resendVerificationValidationRules = [
+  emailRules(),
+];
+
 export const forgotPasswordValidationRules = [
   emailRules(),
 ];

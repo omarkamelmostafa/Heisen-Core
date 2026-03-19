@@ -17,6 +17,7 @@ import {
   loginValidationRules,
   registerValidationRules,
   resetPasswordValidationRules,
+  resendVerificationValidationRules,
 } from "../../validators/validationRules.js";
 import {
   loginLimiter,
@@ -25,6 +26,7 @@ import {
   refreshLimiter,
   resetPasswordLimiter,
   verifyEmailLimiter,
+  resendVerificationLimiter,
   logoutLimiter,
 } from "../../middleware/security/rate-limiters.js";
 import { authTokenMiddleware } from "../../middleware/auth/authTokenMiddleware.js";
@@ -54,7 +56,12 @@ router
 
 router
   .route("/resend-verification")
-  .post(registerLimiter, handleResendVerification);
+  .post(
+    resendVerificationLimiter,
+    resendVerificationValidationRules,
+    handleValidationErrors,
+    handleResendVerification
+  );
 
 router
   .route("/forgot-password")

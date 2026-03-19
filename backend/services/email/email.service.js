@@ -18,7 +18,7 @@ export class EmailService {
         email: user.email,
       },
       verificationCode: verificationToken,
-      expiryMinutes: 15,
+      expiryMinutes: 1440,
     };
 
     const emailData = {
