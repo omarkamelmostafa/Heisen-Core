@@ -5,7 +5,7 @@ describe("Suite I — Rate Limiting Test", () => {
   it("I1: Rate limit triggers on auth endpoint", async () => {
     // Avoid double-running if global setup already imported app
     vi.resetModules();
-
+    
     // Temporarily enable rate limiting
     const originalEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "production";

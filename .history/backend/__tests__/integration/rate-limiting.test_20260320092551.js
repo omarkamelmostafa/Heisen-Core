@@ -5,7 +5,7 @@ describe("Suite I — Rate Limiting Test", () => {
   it("I1: Rate limit triggers on auth endpoint", async () => {
     // Avoid double-running if global setup already imported app
     vi.resetModules();
-
+    
     // Temporarily enable rate limiting
     const originalEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "production";
@@ -25,7 +25,7 @@ describe("Suite I — Rate Limiting Test", () => {
             email: "ratelimit@test.com",
             password: "TestPassword123!",
           });
-      }
+      } 
 
       // The 11th request (index 10) must be 429
       expect(lastResponse.status).toBe(429);
