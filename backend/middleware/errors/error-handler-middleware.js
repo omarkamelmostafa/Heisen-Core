@@ -1,7 +1,6 @@
-// error-handler-middleware.js
-import { logMessage } from "../core/logging-middleware.js";
 import { AppError } from "../../errors/AppError.js";
 import { apiResponseManager } from "../../utilities/general/response-manager.js";
+import logger from "../../utilities/general/logger.js";
 
 /**
  * Global error handler middleware.
@@ -9,9 +8,9 @@ import { apiResponseManager } from "../../utilities/general/response-manager.js"
  * - Falls back to a generic 500 for unexpected (non-operational) errors.
  */
 export const errorHandlerMiddleware = (err, req, res, next) => {
-  // Log every error to the error log file
+  // Log every error to the pino logger
   const statusCode = err.statusCode || 500;
-  logMessage(`${statusCode}\t${err.message}`, "error.log", "error");
+  logger.error({ err, statusCode, url: req.originalUrl }, "Unhandled error");
 
   // If headers are already sent, delegate to Express default handler
   if (res.headersSent) {

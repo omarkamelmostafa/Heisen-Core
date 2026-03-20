@@ -75,6 +75,7 @@ export const contentTypeNegotiationMiddleware = (req, res, next) => {
     );
   }
 
+
   // Set appropriate Content-Type header based on the negotiated type
   switch (preferredType) {
     case "json":

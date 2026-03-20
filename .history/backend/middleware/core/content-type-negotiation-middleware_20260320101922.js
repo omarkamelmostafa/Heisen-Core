@@ -1,4 +1,4 @@
-// backend/middleware/core/content-type-negotiation-middleware.js
+//
 import accepts from "accepts";
 import logger from "../../utilities/general/logger.js";
 
@@ -69,11 +69,9 @@ export const contentTypeNegotiationMiddleware = (req, res, next) => {
   logger.info(analyticsData, "Content negotiation analytics");
 
   // Optional: Log a simplified version to console for development
-  if (process.env.NODE_ENV === "development") {
-    console.log(
-      `📊 Content Negotiation - Device: ${analyticsData.deviceType}, Browser: ${analyticsData.browser}, Preferred Type: ${analyticsData.preferredType}`
-    );
-  }
+  console.log(
+    `📊 Content Negotiation - Device: ${analyticsData.deviceType}, Browser: ${analyticsData.browser}, Preferred Type: ${analyticsData.preferredType}`
+  );
 
   // Set appropriate Content-Type header based on the negotiated type
   switch (preferredType) {

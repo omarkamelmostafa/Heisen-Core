@@ -2,7 +2,7 @@ import { allowedOrigins } from "../../config/allowed-origins.js";
 import logger from "../../utilities/general/logger.js";
 
 export const credentialsMiddleware = (req, res, next) => {
-  const origin = req.headers.origin;
+  const origin = req;
   const userAgent = req.get("User-Agent") || "Unknown";
   const ip = req.ip || req.connection.remoteAddress;
 
@@ -55,7 +55,7 @@ const applyCORSHeaders = (res, origin) => {
   res.header(
     "Access-Control-Allow-Headers",
     process.env.ALLOWED_HEADERS ||
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-Key"
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-Key"
   );
 
   // Optional: Add exposed headers if needed

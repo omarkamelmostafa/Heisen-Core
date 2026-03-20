@@ -73,7 +73,9 @@ export const contentTypeNegotiationMiddleware = (req, res, next) => {
     console.log(
       `📊 Content Negotiation - Device: ${analyticsData.deviceType}, Browser: ${analyticsData.browser}, Preferred Type: ${analyticsData.preferredType}`
     );
+
   }
+
 
   // Set appropriate Content-Type header based on the negotiated type
   switch (preferredType) {
