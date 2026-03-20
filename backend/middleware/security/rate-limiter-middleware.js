@@ -13,9 +13,18 @@ export function createRateLimiterMiddleware(options = {}) {
     windowMs: options.windowMs || 15 * 60 * 1000, // 15 minutes
     limit: options.max || options.limit || 200, // Max requests
     message: options.message || {
-      status: "error",
-      message: "Too many requests. Please try again later.",
+      text: "Too many requests. Please try again later.",
       errorCode: "RATE_LIMITED",
+    },
+    handler: (req, res, next, options) => {
+      const payload = {
+        success: false,
+        message: options.message.text || "Too many requests. Please try again later.",
+        errorCode: options.message.errorCode || "RATE_LIMITED",
+        timestamp: new Date().toISOString(),
+        requestId: req.requestId || req.headers["x-request-id"] || "unknown",
+      };
+      res.status(429).json(payload);
     },
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
