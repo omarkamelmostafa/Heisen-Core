@@ -29,6 +29,7 @@ export async function registerUseCase({
   password,
   confirmPassword,
   clientIP,
+  termsAccepted,
 }) {
   // Input validation
   if (!firstname || !lastname || !email || !password || !confirmPassword) {
@@ -85,6 +86,7 @@ export async function registerUseCase({
         password: passwordHash,
         verificationToken: hashedVerificationToken,
         verificationTokenExpiresAt,
+        ...(termsAccepted && { termsAcceptedAt: new Date() }),
       });
 
       const [cloudinaryResult, emailResult] = await Promise.all([

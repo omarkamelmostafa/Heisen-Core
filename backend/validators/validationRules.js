@@ -102,7 +102,7 @@ const passwordRules = (field = "password") =>
  * Registration Validation Rules 
  */
 export const registerValidationRules = [
-  body("firstName")
+  body("firstname")
     .notEmpty()
     .withMessage("First name is required").bail()
     .isString()
@@ -111,7 +111,7 @@ export const registerValidationRules = [
     .withMessage("First name must be between 3 and 16 characters long")
     .trim(),
 
-  body("lastName")
+  body("lastname")
     .notEmpty()
     .withMessage("Last name is required").bail()
     .isString()
@@ -126,15 +126,15 @@ export const registerValidationRules = [
     .custom((password, { req }) => {
       const lower = password.toLowerCase();
       const email = (req.body.email || "").toLowerCase();
-      const firstName = (req.body.firstName || "").toLowerCase();
-      const lastName = (req.body.lastName || "").toLowerCase();
+      const firstname = (req.body.firstname || "").toLowerCase();
+      const lastname = (req.body.lastname || "").toLowerCase();
       if (lower.includes(email.split("@")[0]) && email.split("@")[0].length > 2) {
         throw new Error("Password must not contain your email");
       }
-      if (firstName.length > 2 && lower.includes(firstName)) {
+      if (firstname.length > 2 && lower.includes(firstname)) {
         throw new Error("Password must not contain your first name");
       }
-      if (lastName.length > 2 && lower.includes(lastName)) {
+      if (lastname.length > 2 && lower.includes(lastname)) {
         throw new Error("Password must not contain your last name");
       }
       return true;
@@ -146,6 +146,16 @@ export const registerValidationRules = [
     .custom((confirmPassword, { req }) => {
       if (confirmPassword !== req.body.password) {
         throw new Error("Passwords do not match");
+      }
+      return true;
+    }),
+
+  body("terms")
+    .notEmpty().withMessage("You must accept the terms and conditions.").bail()
+    .isBoolean().withMessage("Terms must be a boolean value.").bail()
+    .custom((value) => {
+      if (value !== true) {
+        throw new Error("You must accept the terms and conditions.");
       }
       return true;
     }),

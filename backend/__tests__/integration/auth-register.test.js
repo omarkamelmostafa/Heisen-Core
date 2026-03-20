@@ -58,6 +58,9 @@ describe("Suite A — Registration Tests", () => {
     // Assert: body.data.user.isVerified === false
     expect(res.body.data.user.isVerified).toBe(false);
 
+    // Assert: email was sent successfully
+    expect(res.body.data.emailSent).toBe(true);
+
     // DB Assert: User exists with matching email
     const userInDb = await User.findOne({ email: TEST_USER.email }).select("+password");
     expect(userInDb).not.toBeNull();

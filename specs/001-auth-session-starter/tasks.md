@@ -163,75 +163,6 @@
 - **Phase 9 (P3 story)**: US7 is a verification phase — depends on all prior token logic being complete
 - **Phase 10 (Polish)**: Depends on all user story phases being complete
 
-### User Story Dependencies
-
-```
-Phase 1 (Setup) ─┬─ T001, T002 (sequential — model changes)
-                  └─ T003, T004, T005 (parallel — independent files)
-                       │
-                       ▼
-Phase 2 (Foundation) ── T006 → T007 (sequential — token service rewrite)
-                        T008, T009 (parallel with T006/T007)
-                       │
-                       ▼
-Phase 3 (US1: Register+Verify) ── T010 → T011 → T013 (sequential)
-                                   T012 (parallel with T010)
-                       │
-                       ▼
-Phase 4 (US2: Login+Session) ── T014 → T015 (sequential)
-                                T016 (parallel with T014)
-                       │
-                       ▼
-Phase 5 (US3: Silent Refresh) ── T017 → T018 → T019 → T020 (mostly sequential)
-                       │
-                       ▼
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
-Phase 6 (US4)    Phase 7 (US5)  Phase 8 (US6)
-  Logout           Password        Route
-  T021→T022→T023   T024→T025       T027→T028
-                   T026 (parallel)
-        └──────────────┼──────────────┘
-                       ▼
-Phase 9 (US7: Multi-Device) ── T029 → T030 (verification only)
-                       │
-                       ▼
-Phase 10 (Polish) ── T031, T032, T033, T034 (all parallel)
-                     T035 (after all above)
-```
-
-### Parallel Opportunities
-
-**Phase 1**: T003, T004, T005 can all run in parallel (different files)
-**Phase 2**: T008, T009 can run in parallel with each other and with T006/T007
-**Phase 4**: T016 (frontend) can run in parallel with T014 (backend)
-**Phase 6+7**: Phases 6, 7, 8 can run in parallel with each other
-**Phase 10**: T031, T032, T033, T034 all touch different files — fully parallel
-
----
-
-## Implementation Strategy
-
-### MVP First (User Stories 1–3)
-
-1. Complete Phase 1: Setup (T001–T005)
-2. Complete Phase 2: Foundation (T006–T009)
-3. Complete Phase 3: Registration + Verification (T010–T013)
-4. Complete Phase 4: Login + Authenticated Session (T014–T016)
-5. Complete Phase 5: Silent Refresh + Bootstrap (T017–T020)
-6. **STOP and VALIDATE**: The core auth loop (register → verify → login → use API → refresh → page reload) is now fully functional
-
-### Incremental Delivery
-
-1. Setup + Foundation → Token model and service ready
-2. US1 (Register+Verify) → Users can create accounts (**first testable increment**)
-3. US2 (Login+Session) → Users can log in (**second testable increment**)
-4. US3 (Silent Refresh) → Sessions survive token expiry and page refresh (**MVP complete**)
-5. US4 (Logout) + US5 (Password Reset) → Session control + recovery (**full auth**)
-6. US6 (Route Protection) → Frontend guards enforced (**frontend complete**)
-7. US7 (Multi-Device) → Verification of advanced token scenarios (**polish**)
-8. Phase 10 → Logging, error handling, CORS audit (**production ready**)
-
 ---
 
 ## Notes
@@ -241,4 +172,31 @@ Phase 10 (Polish) ── T031, T032, T033, T034 (all parallel)
 - No test files generated — no automated test framework per constitution §III.6
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
-- Total tasks: 35 (T001–T035)
+- Total tasks: 43 (T001–T043)
+
+---
+
+## Phase 2.1: OpenAPI/Swagger Setup (Batch 1 — Infrastructure)
+
+**Objective**: Set up the Swagger/OpenAPI infrastructure with reusable schemas, security definitions, and mount the Swagger UI.
+
+- [x] T036 Install dependencies (swagger-jsdoc, swagger-ui-express)
+- [x] T037 Create `backend/docs/swagger/components/security/security-schemes.js`
+- [x] T038 Create `backend/docs/swagger/components/schemas/common.schemas.js`
+- [x] T039 Create `backend/docs/swagger/components/schemas/auth.schemas.js`
+- [x] T040 Create `backend/docs/swagger/components/schemas/user.schemas.js`
+- [x] T041 Create `backend/docs/swagger/components/responses/error-responses.js`
+- [x] T042 Create `backend/docs/swagger/index.js`
+- [x] T043 Mount Swagger in `backend/app.js`
+
+---
+
+## Phase 2.1: OpenAPI/Swagger — Auth Path Documentation (Batch 2a)
+
+**Objective**: Create OpenAPI path documentation for the first 5 auth endpoints using JSDoc-style YAML comments.
+
+- [x] T044 [US2] Create `/auth/login` documentation in `backend/docs/swagger/paths/auth/login.js`
+- [x] T045 [US1] Create `/auth/register` documentation in `backend/docs/swagger/paths/auth/register.js`
+- [x] T046 [US4] Create `/auth/logout` documentation in `backend/docs/swagger/paths/auth/logout.js`
+- [x] T047 [US4] Create `/auth/logout-all` documentation in `backend/docs/swagger/paths/auth/logout-all.js`
+- [x] T048 [US3] Create `/auth/refresh` documentation in `backend/docs/swagger/paths/auth/refresh.js`

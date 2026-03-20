@@ -40,11 +40,12 @@ beforeEach(() => {
 
 describe("Suite G — Reset Password Tests", () => {
   const TEST_USER = {
-    firstName: "Reset",
-    lastName: "User",
+    firstname: "Reset",
+    lastname: "User",
     email: "reset@example.com",
     password: "OldPassword123!",
     confirmPassword: "OldPassword123!",
+    terms: true,
   };
 
   async function getResetToken(email) {
