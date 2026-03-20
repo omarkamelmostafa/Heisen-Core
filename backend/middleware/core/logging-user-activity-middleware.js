@@ -6,7 +6,6 @@ import {
   ensureDirectoryExists,
   ensureFileExists,
 } from "../../utilities/utils.js";
-import { logMessage } from "./logging-middleware.js";
 import logger from "../../utilities/general/logger.js";
 
 const logDirName = "logs";
@@ -23,9 +22,9 @@ export const logUserActivity = async (userInfo, fileName, action) => {
     await ensureFileExists(fileName, path.join(logsDir, userActivityLogFile));
 
     const dateTime = `${format(new Date(), "yyyyMMdd\tHH:mm:ss")}`;
-    const logMessage = `${dateTime}\t${uuid()}\tUser\t${userInfo}\t${action}\n`;
+    const logItem = `${dateTime}\t${uuid()}\tUser\t${userInfo}\t${action}\n`;
 
-    await fs.appendFile(path.join(logsDir, fileName), logMessage);
+    await fs.appendFile(path.join(logsDir, fileName), logItem);
   } catch (err) {
     console.error("Error logging user activity:", err);
   }
@@ -48,15 +47,9 @@ export const createUserActivityLogger = ({ excludedRoutes = [] } = {}) => {
           path: req.path,
           action: "user_activity"
         }, "User activity");
-
-        // Also call legacy logUserActivity to maintain existing file logs during transition
-        const legacyUserInfo = user.email || "anonymous";
-        const legacyAction = `${req.method}\t${req.originalUrl}`;
-        await logUserActivity(legacyUserInfo, "user_activity.log", legacyAction);
       }
     } catch (err) {
       logger.error({ err, requestId: req.requestId }, "Error in user activity middleware");
-      logMessage(err.message, "error.log", "error");
     }
     next();
   };

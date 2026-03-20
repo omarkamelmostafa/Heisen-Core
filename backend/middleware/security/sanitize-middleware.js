@@ -1,7 +1,5 @@
-// sanitize-middleware.js
-
 import xss from "xss";
-import { logMessage } from "../core/logging-middleware.js";
+import logger from "../../utilities/general/logger.js";
 
 // XSS configuration options
 const xssOptions = {
@@ -285,18 +283,13 @@ export const createSanitizeMiddleware = (req, res, next) => {
         ? "warn"
         : "info";
 
-    logMessage(
-      `XSS Sanitization - ${totalSanitizations} items (Risk: ${maxRiskLevel}) - Request: ${requestId}`,
-      "security.log",
-      logLevel
+    logger[logLevel](
+      { riskLevel: maxRiskLevel, totalSanitizations, requestId },
+      "XSS sanitization applied"
     );
 
     // Detailed audit log
-    logMessage(
-      `Sanitization Audit: ${JSON.stringify(securityEvent)}`,
-      "sanitization-audit.log",
-      "info"
-    );
+    logger.info({ securityEvent }, "Sanitization audit");
 
     // Development console output
     if (process.env.NODE_ENV === "development" && totalSanitizations > 0) {

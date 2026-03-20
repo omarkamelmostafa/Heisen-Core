@@ -2,7 +2,7 @@ import { allowedOrigins } from "../../config/allowed-origins.js";
 import logger from "../../utilities/general/logger.js";
 
 export const credentialsMiddleware = (req, res, next) => {
-  const origin = req.headers.origin;
+  const origin = JSON.parse(JSON.stringify(req.headers.origin));
   const userAgent = req.get("User-Agent") || "Unknown";
   const ip = req.ip || req.connection.remoteAddress;
 
