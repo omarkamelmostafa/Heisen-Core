@@ -37,7 +37,7 @@ export function useSignup() {
         });
         // Redirect to check email page on success with timer enabled
         router.push(
-          `/verify-email?email=${encodeURIComponent(data.email)}&sent=${emailSent}`
+          `/verify-email?email=${encodeURIComponent(data.email)}&sent=true`
         );
       } else {
         notify.warning(

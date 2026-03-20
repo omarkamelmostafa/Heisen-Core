@@ -87,24 +87,38 @@ export async function registerUseCase({
         verificationTokenExpiresAt,
       });
 
-      await CloudinaryService.createUserFolder(newUser._id.toString());
-      logger.info(
-        { userId: newUser._id },
-        "Cloudinary folders created for user"
-      );
+      const [cloudinaryResult, emailResult] = await Promise.all([
+        CloudinaryService.createUserFolder(newUser._id.toString())
+          .then(() => ({ success: true }))
+          .catch((err) => ({ success: false, error: err })),
 
-      // Send verification email (synchronous) AFTER Cloudinary succeeds
-      let emailSent = true;
-      try {
-        await emailService.sendVerificationEmail(
-          newUser,
-          rawVerificationToken
+        emailService.sendVerificationEmail(newUser, rawVerificationToken)
+          .then(() => ({ success: true }))
+          .catch((err) => ({ success: false, error: err })),
+      ]);
+
+      // Handle Cloudinary result
+      if (cloudinaryResult.success) {
+        logger.info(
+          { userId: newUser._id },
+          "Cloudinary folders created for user"
         );
-        logger.info({ userId: newUser._id }, "Verification email sent");
-      } catch (emailError) {
-        emailSent = false;
+      } else {
+        // Log error and throw to trigger existing catch block (deletes user)
         logger.error(
-          { err: emailError, userId: newUser._id },
+          { err: cloudinaryResult.error, userId: newUser._id },
+          "Failed to create Cloudinary folders"
+        );
+        throw cloudinaryResult.error;
+      }
+
+      // Handle Email result
+      const emailSent = emailResult.success;
+      if (emailSent) {
+        logger.info({ userId: newUser._id }, "Verification email sent");
+      } else {
+        logger.error(
+          { err: emailResult.error, userId: newUser._id, email: newUser.email },
           "Failed to send verification email"
         );
       }
@@ -127,10 +141,6 @@ export async function registerUseCase({
         },
       };
     } catch (cloudinaryError) {
-      logger.error(
-        { err: cloudinaryError, userId: newUser?._id },
-        "Cloudinary folder creation failed"
-      );
       if (newUser) {
         await User.findByIdAndDelete(newUser._id);
       }
