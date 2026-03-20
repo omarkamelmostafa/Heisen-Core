@@ -60,20 +60,28 @@ export async function resendVerificationUseCase({ email }) {
     ); // 24 hours
     await user.save();
 
-    // Send verification email (non-blocking)
-    setImmediate(async () => {
-      try {
-        await emailService.sendVerificationEmail(user, verificationCode);
-        logger.info({ email: user.email }, "Resent verification email");
-      } catch (emailError) {
-        logger.error(
-          { err: emailError, email: user.email },
-          "Failed to resend verification email"
-        );
-      }
-    });
+    // Send verification email (synchronous)
+    try {
+      await emailService.sendVerificationEmail(user, verificationCode);
+      logger.info({ email: user.email }, "Resent verification email");
+    } catch (emailError) {
+      logger.error(
+        { err: emailError, email: user.email },
+        "Failed to resend verification email"
+      );
+      return {
+        success: false,
+        statusCode: 500,
+        message: "Failed to send verification email. Please try again later.",
+        errorCode: "EMAIL_DISPATCH_FAILED",
+      };
+    }
 
-    return successResponse;
+    return {
+      success: true,
+      statusCode: 200,
+      message: "Verification code sent successfully.",
+    };
   } catch (error) {
     logger.error({ err: error }, "Resend verification use-case error");
     return successResponse;

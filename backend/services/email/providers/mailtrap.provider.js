@@ -36,8 +36,7 @@ export class MailtrapProvider {
       return { success: true, messageId: info.messageId };
     } catch (error) {
       logger.error({ err: error, to }, `Error sending sandbox email via SMTP`);
-      // Return a shape consistent with what might be expected by callers
-      return { success: false, error: error.message };
+      throw error;
     }
   }
 
@@ -57,7 +56,7 @@ export class MailtrapProvider {
       return { success: true, messageId: info.messageId };
     } catch (error) {
       logger.error({ err: error, to }, `Error sending template email via SMTP`);
-      return { success: false, error: error.message };
+      throw error;
     }
   }
 }

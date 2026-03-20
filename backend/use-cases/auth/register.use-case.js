@@ -93,21 +93,39 @@ export async function registerUseCase({
         "Cloudinary folders created for user"
       );
 
-      // Send verification email (non-blocking) AFTER Cloudinary succeeds
-      setImmediate(async () => {
-        try {
-          await emailService.sendVerificationEmail(
-            newUser,
-            rawVerificationToken
-          );
-          logger.info({ userId: newUser._id }, "Verification email sent");
-        } catch (emailError) {
-          logger.error(
-            { err: emailError, userId: newUser._id },
-            "Failed to send verification email"
-          );
-        }
-      });
+      // Send verification email (synchronous) AFTER Cloudinary succeeds
+      let emailSent = true;
+      try {
+        await emailService.sendVerificationEmail(
+          newUser,
+          rawVerificationToken
+        );
+        logger.info({ userId: newUser._id }, "Verification email sent");
+      } catch (emailError) {
+        emailSent = false;
+        logger.error(
+          { err: emailError, userId: newUser._id },
+          "Failed to send verification email"
+        );
+      }
+
+      logger.info({ userId: newUser._id, ip: clientIP }, "User registered");
+
+      return {
+        success: true,
+        statusCode: 201,
+        message: emailSent
+          ? "Registration successful. Please check your email to verify your account."
+          : "Account created successfully. We couldn't send the verification email — please use Resend Code on the verification page.",
+        data: {
+          user: {
+            uuid: newUser.uuid,
+            email: newUser.email,
+            isVerified: false,
+          },
+          emailSent,
+        },
+      };
     } catch (cloudinaryError) {
       logger.error(
         { err: cloudinaryError, userId: newUser?._id },
@@ -125,22 +143,6 @@ export async function registerUseCase({
         errorCode: "INTERNAL_ERROR",
       };
     }
-
-    logger.info({ userId: newUser._id, ip: clientIP }, "User registered");
-
-    return {
-      success: true,
-      statusCode: 201,
-      message:
-        "Registration successful. Please check your email to verify your account.",
-      data: {
-        user: {
-          uuid: newUser.uuid,
-          email: newUser.email,
-          isVerified: false,
-        },
-      },
-    };
   } catch (error) {
     logger.error({ err: error, email }, "Registration use-case error");
 

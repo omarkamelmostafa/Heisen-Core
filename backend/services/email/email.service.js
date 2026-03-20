@@ -106,9 +106,17 @@ export class EmailService {
 
       // Use queue in production, direct send in development
       if (process.env.NODE_ENV === "production") {
-        return await this.queue.add(emailData);
+        const job = await this.queue.add(emailData);
+        if (!job || !job.id) {
+          throw new Error("Failed to queue email for delivery");
+        }
+        return job;
       } else {
-        return await this.provider.send(emailData);
+        const result = await this.provider.send(emailData);
+        if (!result || !result.success) {
+          throw new Error(`Email delivery failed: ${result?.error || "Unknown error"}`);
+        }
+        return result;
       }
     } catch (error) {
       logger.error({ err: error, template: templateName }, `Error sending ${templateName} email`);
