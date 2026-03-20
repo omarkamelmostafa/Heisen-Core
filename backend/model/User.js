@@ -86,6 +86,10 @@ const UserSchema = new Schema(
       type: Date,
       select: false,
     },
+    termsAcceptedAt: {
+      type: Date,
+      default: null,
+    },
     tokenVersion: {
       type: Number,
       default: 1,

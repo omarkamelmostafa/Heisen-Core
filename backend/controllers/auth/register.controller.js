@@ -7,14 +7,15 @@ import { sendUseCaseResponse } from "./auth-shared.js";
  * Parses request, delegates to registerUseCase, formats response.
  */
 export const handleRegister = async (req, res) => {
-  const { firstName, lastName, email, password, confirmPassword } = req.body;
+  const { firstname, lastname, email, password, confirmPassword, terms } = req.body;
 
   const result = await registerUseCase({
-    firstname: firstName,
-    lastname: lastName,
+    firstname,
+    lastname,
     email,
     password,
     confirmPassword,
+    termsAccepted: terms === true,
     clientIP: req.ip,
   });
 

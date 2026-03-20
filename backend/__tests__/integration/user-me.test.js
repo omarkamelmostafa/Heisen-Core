@@ -32,11 +32,12 @@ beforeEach(() => {
 
 describe("Suite H — User Profile Tests", () => {
   const getTestUser = (id) => ({
-    firstName: "Profile",
-    lastName: "User",
+    firstname: "Profile",
+    lastname: "User",
     email: `profile-${id}@example.com`,
     password: "Password123!",
     confirmPassword: "Password123!",
+    terms: true,
   });
 
   it("H1: Valid access token returns user profile", async () => {
@@ -53,7 +54,7 @@ describe("Suite H — User Profile Tests", () => {
     expect(res.body.success).toBe(true);
     expect(res.body.data.user).toBeDefined();
     expect(res.body.data.user.email).toBe(userData.email.toLowerCase());
-    expect(res.body.data.user.firstname).toBe(userData.firstName);
+    expect(res.body.data.user.firstname).toBe(userData.firstname);
     
     // Security check: sensitive fields must be absent
     expect(res.body.data.user.password).toBeUndefined();

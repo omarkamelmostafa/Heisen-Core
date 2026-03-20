@@ -1,19 +1,21 @@
 import request from "supertest";
 
 export const TEST_USER = {
-  firstName: "Test",
-  lastName: "User",
+  firstname: "Test",
+  lastname: "User",
   email: "test@example.com",
   password: "SecurePassword123!",
   confirmPassword: "SecurePassword123!",
+  terms: true,
 };
 
 export const TEST_USER_2 = {
-  firstName: "Second",
-  lastName: "User",
+  firstname: "Second",
+  lastname: "User",
   email: "test2@example.com",
   password: "SecurePassword123!",
   confirmPassword: "SecurePassword123!",
+  terms: true,
 };
 
 export async function registerUser(app, overrides = {}) {

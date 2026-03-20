@@ -39,6 +39,7 @@ import authRoutes from "./routes/auth/auth-routes.js";
 import healthRoutes from "./routes/health/health-routes.js";
 import testRoutes from "./routes/test/test-routes.js";
 import userRoutes from "./routes/user/user-routes.js";
+import { mountSwagger } from "./docs/swagger/index.js";
 
 // 🌍 Environment & Core Dependencies
 // Cloudinary initialization moved to index.js to ensure env vars are loaded first
@@ -46,6 +47,9 @@ import userRoutes from "./routes/user/user-routes.js";
 // 🔧 Initialization
 const app = express();
 app.set('trust proxy', 1);
+
+// Swagger API Documentation
+mountSwagger(app);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
