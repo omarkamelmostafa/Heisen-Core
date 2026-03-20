@@ -12,7 +12,7 @@ export const EMAIL_CONFIG = {
       pass: process.env.MAILTRAP_PASS,
     },
     sender: {
-      email: process.env.MAIL_FROM_ADDRESS || "noreply@fantasycoach.com",
+      email: process.env.MAIL_FROM_ADDRESS || "noreply@example.com",
       name: process.env.MAIL_FROM_NAME || "Fantasy Coach",
     },
   },
