@@ -114,7 +114,7 @@ class PrivateClient extends BaseClient {
   // Determine if request should be retried with token refresh
   shouldRetryWithRefresh(error, config) {
     const isAuthError = error.response?.status === HTTP_STATUS.UNAUTHORIZED;
-    const isFirstAttempt = !config.__isRetry;
+    const isFirstAttempt = !config._retry;
     const canRetryEndpoint = !this.shouldSkipAuth(config.url);
     return isAuthError && isFirstAttempt && canRetryEndpoint;
   }
@@ -143,6 +143,18 @@ class PrivateClient extends BaseClient {
       // eslint-disable-next-line no-console
       console.log(`🔒 [SECURE] ${type}`, sanitizedHeaders);
     }
+  }
+
+  sanitizeHeaders(headers) {
+    if (!headers) return {};
+    const sanitized = { ...headers };
+    if (sanitized.Authorization) {
+      sanitized.Authorization = "Bearer [REDACTED]";
+    }
+    if (sanitized.Cookie) {
+      sanitized.Cookie = "[REDACTED]";
+    }
+    return sanitized;
   }
 
   // Enhanced methods with automatic auth retry

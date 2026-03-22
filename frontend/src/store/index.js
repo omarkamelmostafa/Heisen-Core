@@ -46,7 +46,7 @@ const authPersistConfig = {
 const userPersistConfig = {
   key: "user",
   storage: storage,
-  whitelist: ["preferences", "theme"], // Only persist these
+  whitelist: ["preferences"], // Only persist these
 };
 
 // Create persisted reducers out of the plain reducers map

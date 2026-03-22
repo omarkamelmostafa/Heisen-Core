@@ -10,7 +10,6 @@ import {
   openModal,
   closeModal,
   setPageLoading as setLoading,
-  setThemeMode as setTheme,
   setSidebarCollapsed as setSidebarOpen,
   showConfirmation,
   hideConfirmation
@@ -120,44 +119,7 @@ class UIService {
     }
   }
 
-  // ==================== THEME MANAGEMENT ====================
 
-  /**
-   * Set application theme
-   */
-  setTheme(theme) {
-    StoreAccessor.dispatch(setTheme(theme));
-    localStorage.setItem('app-theme', theme);
-    document.documentElement.setAttribute('data-theme', theme);
-  }
-
-  /**
-   * Get current theme
-   */
-  getTheme() {
-    const state = StoreAccessor.getState();
-    return state.ui.theme || 'light';
-  }
-
-  /**
-   * Toggle between light/dark theme
-   */
-  toggleTheme() {
-    const currentTheme = this.getTheme();
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    this.setTheme(newTheme);
-  }
-
-  /**
-   * Initialize theme from user preferences
-   */
-  initializeTheme() {
-    const savedTheme = localStorage.getItem('app-theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-    this.setTheme(theme);
-  }
 
   // ==================== LAYOUT MANAGEMENT ====================
 

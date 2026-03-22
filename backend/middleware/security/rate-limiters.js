@@ -115,3 +115,13 @@ export const logoutLimiter = createRateLimiterMiddleware({
   },
   prefix: "rl:logout:",
 });
+
+export const updateProfileLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    text: "Too many profile update attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:updateprofile:",
+});

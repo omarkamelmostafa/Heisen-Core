@@ -21,7 +21,7 @@ export const corsConfig = {
   // Allowed headers (can be overridden by environment variable)
   allowedHeaders:
     process.env.ALLOWED_HEADERS ||
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-Key",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-Key, X-Request-ID",
 
   // Exposed headers (optional)
   exposedHeaders: process.env.EXPOSED_HEADERS || "",

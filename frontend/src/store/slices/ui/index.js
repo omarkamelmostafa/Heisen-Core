@@ -1,7 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
 // ─── Import Reducers ────────────────────────────────────────────────
-import themeReducer from "./theme/theme-slice";
 import layoutReducer from "./layout/layout-slice";
 import modalReducer from "./modal/modal-slice";
 import notificationReducer from "./notification/notification-slice";
@@ -16,7 +15,6 @@ import errorsReducer from "./errors/errors-slice";
 import performanceReducer from "./performance/performance-slice";
 
 // ─── Export Actions ─────────────────────────────────────────────────
-export * from "./theme/theme-slice";
 export * from "./layout/layout-slice";
 export * from "./modal/modal-slice";
 export * from "./notification/notification-slice";
@@ -31,7 +29,6 @@ export * from "./errors/errors-slice";
 export * from "./performance/performance-slice";
 
 // ─── Export Selectors ───────────────────────────────────────────────
-export * from "./theme/theme-selectors";
 export * from "./layout/layout-selectors";
 export * from "./modal/modal-selectors";
 export * from "./notification/notification-selectors";
@@ -51,7 +48,6 @@ export * from "./ui-thunks";
 // ─── Combine under 'ui' namespace ───────────────────────────────────
 // State shape: state.ui.theme, state.ui.layout, state.ui.modal, etc.
 export const uiReducer = combineReducers({
-  theme: themeReducer,
   layout: layoutReducer,
   modal: modalReducer,
   notification: notificationReducer,

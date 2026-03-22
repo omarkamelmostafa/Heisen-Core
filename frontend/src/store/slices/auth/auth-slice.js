@@ -118,6 +118,7 @@ const authSlice = createSlice({
       bootstrapAuth,
       logoutAllDevices,
     } = require("./auth-thunks");
+    const { updateProfile } = require("../user/user-thunks");
 
     // Helper to handle loading state
     const handlePending = (state) => {
@@ -132,6 +133,14 @@ const authSlice = createSlice({
         ? action.payload
         : (action.payload?.message || action.error?.message || 'An unexpected error occurred');
     };
+
+    // Update Profile — stores updated user in Redux
+    builder
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        if (action.payload?.data?.user) {
+          state.user = action.payload.data.user;
+        }
+      });
 
     // Login — stores access token in Redux memory
     builder

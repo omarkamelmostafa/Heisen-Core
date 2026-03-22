@@ -9,6 +9,7 @@ import {
 import storeAccessor from "@/store/store-accessor";
 import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
 import { notify } from "@/lib/notify";
+import { normalizeError } from "@/lib/utils/error-utils";
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -31,6 +32,11 @@ class BaseClient {
     });
 
     this.setupInterceptors();
+  }
+
+  // Helper to normalize errors consistently
+  normalizeError(error, defaultMessage) {
+    return normalizeError(error, defaultMessage);
   }
 
   // Setup request and response interceptors
@@ -178,6 +184,7 @@ class BaseClient {
     }
 
     if (!error.response) {
+      error.isGlobalError = true;
       notify.error("Unable to connect. Check your internet connection.", {
         id: "global-network",
       });
@@ -185,12 +192,14 @@ class BaseClient {
       if (error.response.status === 403) {
         const errorCode = error.response?.data?.errorCode;
         if (errorCode !== "ACCOUNT_NOT_VERIFIED") {
+          error.isGlobalError = true;
           notify.error("You don't have permission to perform this action.", {
             id: "global-403",
           });
         }
       }
       if (error.response.status === 429) {
+        error.isGlobalError = true;
         const retryAfter = error.response.headers["retry-after"];
         let waitMessage = "Too many requests. Please wait a moment.";
 
@@ -207,11 +216,13 @@ class BaseClient {
         notify.warning(waitMessage, { id: "global-429" });
       }
       if (error.response.status === 500) {
+        error.isGlobalError = true;
         notify.error("Something went wrong on our end. Please try again.", {
           id: "global-500",
         });
       }
       if ([502, 503, 504].includes(error.response.status)) {
+        error.isGlobalError = true;
         notify.error("Service temporarily unavailable. Please try again.", {
           id: "global-5xx",
         });

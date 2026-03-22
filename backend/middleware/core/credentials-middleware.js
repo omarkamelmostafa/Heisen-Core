@@ -55,7 +55,7 @@ const applyCORSHeaders = (res, origin) => {
   res.header(
     "Access-Control-Allow-Headers",
     process.env.ALLOWED_HEADERS ||
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-Key"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-Key, X-Request-ID"
   );
 
   // Optional: Add exposed headers if needed

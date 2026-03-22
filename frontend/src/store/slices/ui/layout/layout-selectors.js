@@ -10,3 +10,8 @@ export const selectCurrentSidebarWidth = (state) =>
   state.ui.layout.sidebar.collapsed
     ? state.ui.layout.sidebar.collapsedWidth
     : state.ui.layout.sidebar.width;
+
+export const selectResponsive = (state) => state.ui.layout.responsive;
+export const selectScreenSize = (state) => state.ui.layout.responsive.screenSize;
+export const selectOrientation = (state) => state.ui.layout.responsive.orientation;
+export const selectTouchDevice = (state) => state.ui.layout.responsive.touchDevice;

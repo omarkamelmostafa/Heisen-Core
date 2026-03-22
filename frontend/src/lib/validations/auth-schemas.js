@@ -81,3 +81,9 @@ export const verifyEmailSchema = z.object({
     .array(z.string().min(1, "Digit is required"))
     .length(6, "Verification code must be 6 digits"),
 });
+
+// Profile Update Schema
+export const updateProfileSchema = z.object({
+  firstname: nameSchema,
+  lastname: nameSchema,
+});
