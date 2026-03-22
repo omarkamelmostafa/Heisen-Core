@@ -11,6 +11,11 @@ class UserEndpoints {
     this.PREFIX = "/users";
   }
 
+  // ==================== ACTUAL ENDPOINTS ====================
+  get ME() {
+    return "/user/me";
+  }
+
   // ==================== 🚧 PLANNED ENDPOINTS (NOT YET IMPLEMENTED IN BACKEND) ====================
 
   /* 

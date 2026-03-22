@@ -14,17 +14,10 @@ export const fetchUserProfile = createAppThunk(
 );
 
 // Update user profile
-export const updateUserProfile = createAppThunk(
+export const updateProfile = createAppThunk(
   "user/updateProfile",
-  async (profileData, { dispatch, signal }) => {
+  async (profileData, { signal }) => {
     const response = await userService.updateProfile(profileData, { signal });
-    dispatch(
-      showNotification({
-        type: "success",
-        title: "Profile Updated",
-        message: "Your profile has been updated successfully",
-      })
-    );
     return response.data;
   },
   "Failed to update profile"

@@ -22,6 +22,7 @@ export const createAppThunk = (type, payloadCreator, defaultErrorMessage = "Acti
         message: normalized.message,
         errorCode: normalized.errorCode,
         status: normalized.status,
+        isGlobalError: normalized.originalError?.isGlobalError || false,
       });
     }
   });

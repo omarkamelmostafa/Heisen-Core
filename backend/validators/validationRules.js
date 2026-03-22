@@ -229,25 +229,31 @@ export const resetPasswordValidationRules = [
  * Users Tags Validation Rules 
  */
 export const updateProfileValidationRules = [
-  body("firstName")
+  body("firstname")
     .notEmpty()
-    .withMessage("First name is required").bail()
+    .withMessage("First name is required")
+    .bail()
     .isString()
-    .withMessage("First name must be a string").bail()
+    .withMessage("First name must be a string")
+    .bail()
     .isLength({ min: 3, max: 16 })
-    .withMessage("First name must be between 3 and 16 characters long")
+    .withMessage("First name must be between 3 and 16 characters")
+    .matches(/^[a-zA-Z\s]+$/)
+    .withMessage("First name can only contain letters and spaces")
     .trim(),
 
-  body("lastName")
+  body("lastname")
     .notEmpty()
-    .withMessage("Last name is required").bail()
+    .withMessage("Last name is required")
+    .bail()
     .isString()
-    .withMessage("Last name must be a string").bail()
+    .withMessage("Last name must be a string")
+    .bail()
     .isLength({ min: 3, max: 16 })
-    .withMessage("Last name must be between 3 and 16 characters long")
+    .withMessage("Last name must be between 3 and 16 characters")
+    .matches(/^[a-zA-Z\s]+$/)
+    .withMessage("Last name can only contain letters and spaces")
     .trim(),
-
-  emailRules({ checkDisposable: true }),
 ];
 
 export const updatePasswordValidationRules = [

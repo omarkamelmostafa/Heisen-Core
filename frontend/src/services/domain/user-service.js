@@ -48,12 +48,9 @@ class UserService {
    * Update user profile
    */
   async updateProfile(profileData, config = {}) {
-    this.validateUserData(profileData, "updateProfile");
-
-    const formattedData = this.formatUserData(profileData);
-    const response = await privateClient.put(
-      userEndpoints.UPDATE_PROFILE,
-      formattedData,
+    const response = await privateClient.securedPatch(
+      userEndpoints.ME,
+      profileData,
       config
     );
     const result = normalizeResponse(response);

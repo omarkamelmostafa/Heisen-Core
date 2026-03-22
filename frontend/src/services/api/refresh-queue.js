@@ -62,7 +62,7 @@ class RefreshQueue {
     try {
       const retryConfig = {
         ...failedRequest.config,
-        __isRetry: true // Mark as retry to prevent infinite loops
+        _retry: true // Mark as retry to prevent infinite loops
       };
 
       const response = await failedRequest.instance(retryConfig);

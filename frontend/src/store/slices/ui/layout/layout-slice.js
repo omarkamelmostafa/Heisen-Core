@@ -13,6 +13,11 @@ const initialState = {
   footer: {
     visible: true,
   },
+  responsive: {
+    screenSize: "desktop",
+    orientation: "landscape",
+    touchDevice: false,
+  },
 };
 
 const layoutSlice = createSlice({
@@ -28,10 +33,25 @@ const layoutSlice = createSlice({
     updateLayout: (state, action) => {
       return { ...state, ...action.payload };
     },
+    setScreenSize: (state, action) => {
+      state.responsive.screenSize = action.payload;
+    },
+    setOrientation: (state, action) => {
+      state.responsive.orientation = action.payload;
+    },
+    setTouchDevice: (state, action) => {
+      state.responsive.touchDevice = action.payload;
+    },
   },
 });
 
-export const { toggleSidebar, setSidebarCollapsed, updateLayout } =
-  layoutSlice.actions;
+export const {
+  toggleSidebar,
+  setSidebarCollapsed,
+  updateLayout,
+  setScreenSize,
+  setOrientation,
+  setTouchDevice,
+} = layoutSlice.actions;
 
 export default layoutSlice.reducer;

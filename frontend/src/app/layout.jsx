@@ -4,6 +4,7 @@ import { ExtensionErrorHandler } from "@/components/utils/error-handler";
 import { StoreProvider } from "@/providers/store-provider";
 import ErrorBoundary from "@/components/shared/error-boundary";
 import { AuthBootstrap } from "@/features/auth/components/auth-bootstrap";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -35,7 +36,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta
@@ -47,25 +48,26 @@ export default function RootLayout({ children }) {
       {ExtensionErrorHandler.init()}
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
-        suppressHydrationWarning
       >
-        <StoreProvider>
-          <AuthBootstrap>
-            <ErrorBoundary>
-              {children}
-            </ErrorBoundary>
-          </AuthBootstrap>
-        </StoreProvider>
-        <Toaster
-          position="top-center"
-          richColors
-          closeButton
-          duration={4000}
-          visibleToasts={3}
-          toastOptions={{
-            className: "font-sans text-sm",
-          }}
-        />
+        <ThemeProvider>
+          <StoreProvider>
+            <AuthBootstrap>
+              <ErrorBoundary>
+                {children}
+              </ErrorBoundary>
+            </AuthBootstrap>
+          </StoreProvider>
+          <Toaster
+            position="top-center"
+            richColors
+            closeButton
+            duration={4000}
+            visibleToasts={3}
+            toastOptions={{
+              className: "font-sans text-sm",
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );
