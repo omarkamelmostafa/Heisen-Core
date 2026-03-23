@@ -76,6 +76,22 @@ const UserSchema = new Schema(
       type: Date,
       select: false,
     },
+    pendingEmail: {
+      type: String,
+      default: null,
+      lowercase: true,
+      trim: true,
+    },
+    pendingEmailToken: {
+      type: String,
+      select: false,
+      default: null,
+    },
+    pendingEmailExpiresAt: {
+      type: Date,
+      select: false,
+      default: null,
+    },
     verificationToken: {
       type: String,
       select: false,
@@ -155,6 +171,7 @@ UserSchema.statics.findByEmailWithSecurity = function (email) {
 UserSchema.index({ email: 1, isActive: 1 });
 UserSchema.index({ verificationToken: 1, isVerified: 1 });
 UserSchema.index({ resetPasswordToken: 1, isActive: 1 });
+UserSchema.index({ pendingEmailToken: 1 }, { sparse: true });
 
 
 const User = mongoose.model("User", UserSchema);

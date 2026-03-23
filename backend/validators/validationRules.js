@@ -278,6 +278,26 @@ export const updatePasswordValidationRules = [
     }),
 ];
 
+export const emailChangeValidationRules = [
+  body("newEmail")
+    .notEmpty()
+    .withMessage("New email is required.")
+    .bail()
+    .isEmail()
+    .withMessage("Please provide a valid email address.")
+    .bail()
+    .normalizeEmail()
+    .isLength({ max: 254 })
+    .withMessage("Email must be at most 254 characters."),
+  body("currentPassword")
+    .notEmpty()
+    .withMessage("Current password is required.")
+    .bail()
+    .isString()
+    .withMessage("Password must be a string.")
+    .bail(),
+];
+
 /* 
  * Album rules
  */

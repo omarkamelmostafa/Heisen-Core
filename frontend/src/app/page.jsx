@@ -9,6 +9,7 @@ import { ProfileContent } from "@/features/user/components/profile-content";
 import { SettingsMobileNav } from "@/features/user/components/settings-mobile-nav";
 import { SecurityContent } from "@/features/user/components/security-content";
 import { useChangePassword } from "@/features/user/hooks/useChangePassword";
+import { useChangeEmail } from "@/features/user/hooks/useChangeEmail";
 
 import { useEditProfile } from "@/features/user/hooks/useEditProfile";
 
@@ -45,6 +46,14 @@ export default function ProfilePage() {
     toggleShowPassword, 
     handleSubmit: handleChangePassword 
   } = useChangePassword();
+
+  const {
+    isSubmitting: isEmailSubmitting,
+    emailSent,
+    sentToEmail,
+    handleSave: handleEmailSave,
+    resetEmailChange,
+  } = useChangeEmail({ currentEmail: email });
 
   const handleSectionChange = (sectionId) => {
     setActiveSection(sectionId);
@@ -88,6 +97,13 @@ export default function ProfilePage() {
               />
             ) : activeSection === "security" ? (
               <SecurityContent
+                currentEmail={email}
+                isEmailVerified={isVerified}
+                isEmailSubmitting={isEmailSubmitting}
+                emailSent={emailSent}
+                sentToEmail={sentToEmail}
+                onEmailSave={handleEmailSave}
+                onEmailReset={resetEmailChange}
                 formData={formData}
                 showPasswords={showPasswords}
                 errors={errors}

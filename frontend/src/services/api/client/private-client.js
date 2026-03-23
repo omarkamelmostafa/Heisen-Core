@@ -67,6 +67,10 @@ class PrivateClient extends BaseClient {
   async handleAuthError(error) {
     const originalRequest = error.config;
 
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
+
     // PATH 1: No tokens present — short-circuit to login
     if (!tokenManager.hasValidSession()) {
       if (typeof window !== "undefined") {

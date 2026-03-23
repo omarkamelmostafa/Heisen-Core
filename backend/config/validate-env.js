@@ -33,6 +33,10 @@ const RECOMMENDED = [
     default: "http://localhost:3000",
     message: "CORS will only allow localhost:3000.",
   },
+  {
+    name: "FRONTEND_URL",
+    message: "FRONTEND_URL is not set. Defaulting to http://localhost:3000",
+  },
 ];
 
 export function validateEnv() {

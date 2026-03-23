@@ -16,6 +16,10 @@ class UserEndpoints {
     return "/user/me";
   }
 
+  get EMAIL_CHANGE_REQUEST() {
+    return "/user/email/request";
+  }
+
   // ==================== 🚧 PLANNED ENDPOINTS (NOT YET IMPLEMENTED IN BACKEND) ====================
 
   /* 
@@ -44,10 +48,6 @@ class UserEndpoints {
   // Security endpoints (PLANNED - NOT IMPLEMENTED)
   get CHANGE_PASSWORD() {
     return `${this.PREFIX}/security/password`;
-  }
-
-  get UPDATE_EMAIL() {
-    return `${this.PREFIX}/security/email`;
   }
 
   get DELETE_ACCOUNT() {
@@ -134,7 +134,6 @@ class UserEndpoints {
         },
         SECURITY: {
           CHANGE_PASSWORD: this.CHANGE_PASSWORD,
-          UPDATE_EMAIL: this.UPDATE_EMAIL,
           DELETE_ACCOUNT: this.DELETE_ACCOUNT,
           SESSIONS: this.SESSIONS,
           SECURITY_LOGS: this.SECURITY_LOGS,
