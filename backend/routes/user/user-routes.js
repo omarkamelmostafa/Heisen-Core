@@ -8,9 +8,10 @@ import {
 } from "../../middleware/security/rate-limiters.js";
 import { updateProfileValidationRules } from "../../validators/validationRules.js";
 import { handleValidationErrors } from "../../middleware/validation/validation-middleware.js";
-import { emailChangeLimiter } from "../../middleware/security/rate-limiters.js";
-import { emailChangeValidationRules } from "../../validators/validationRules.js";
+import { emailChangeLimiter, changePasswordLimiter } from "../../middleware/security/rate-limiters.js";
+import { emailChangeValidationRules, updatePasswordValidationRules } from "../../validators/validationRules.js";
 import { handleRequestEmailChange, handleConfirmEmailChange } from "../../controllers/user/email-change.controller.js";
+import { handleChangePassword } from "../../controllers/user/change-password.controller.js";
 
 const router = express.Router();
 
@@ -42,6 +43,16 @@ router.post(
 router.get(
   "/email/confirm/:token",
   handleConfirmEmailChange
+);
+
+// POST /api/v1/user/security/password
+router.post(
+  "/security/password",
+  changePasswordLimiter,
+  authTokenMiddleware,
+  updatePasswordValidationRules,
+  handleValidationErrors,
+  handleChangePassword
 );
 
 export default router;

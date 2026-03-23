@@ -38,13 +38,8 @@ export default function ProfilePage() {
   } = useEditProfile({ firstname: firstName, lastname: lastName });
 
   const { 
-    formData, 
-    showPasswords, 
-    errors, 
     isSubmitting: isPasswordSubmitting, 
-    updateField, 
-    toggleShowPassword, 
-    handleSubmit: handleChangePassword 
+    handleSave: onPasswordSave 
   } = useChangePassword();
 
   const {
@@ -104,13 +99,8 @@ export default function ProfilePage() {
                 sentToEmail={sentToEmail}
                 onEmailSave={handleEmailSave}
                 onEmailReset={resetEmailChange}
-                formData={formData}
-                showPasswords={showPasswords}
-                errors={errors}
-                isSubmitting={isPasswordSubmitting}
-                onFieldChange={updateField}
-                onTogglePassword={toggleShowPassword}
-                onSubmit={handleChangePassword}
+                isPasswordSubmitting={isPasswordSubmitting}
+                onPasswordSave={onPasswordSave}
               />
             ) : null}
           </div>
