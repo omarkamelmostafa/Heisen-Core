@@ -25,6 +25,12 @@ export function useLogin() {
   const isVerified = searchParams.get("verified") === "true";
   const isReset = searchParams.get("reset") === "true";
 
+  const reason = searchParams.get("reason");
+
+  const isEmailChanged      = reason === "email-changed";
+  const isEmailTokenInvalid = reason === "email-token-invalid";
+  const isEmailTaken        = reason === "email-taken";
+
   // Redirect on successful login
   useEffect(() => {
     if (isAuthenticated) {
@@ -79,5 +85,8 @@ export function useLogin() {
     returnTo,
     isVerified,
     isReset,
+    isEmailChanged,
+    isEmailTokenInvalid,
+    isEmailTaken,
   };
 }

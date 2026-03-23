@@ -30,6 +30,9 @@ export default function LoginPage() {
     handleLogin,
     isVerified,
     isReset,
+    isEmailChanged,
+    isEmailTokenInvalid,
+    isEmailTaken,
   } = useLogin();
 
   const isLoadingPage = useSimulatedLoading(0);
@@ -74,6 +77,32 @@ export default function LoginPage() {
               {isReset && (
                 <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800 border border-green-200">
                   Your password has been successfully reset. Please log in.
+                </div>
+              )}
+
+              {isEmailChanged && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+                  <p className="text-sm text-green-800">
+                    Email updated successfully. Please log in with your new address.
+                  </p>
+                </div>
+              )}
+
+              {isEmailTokenInvalid && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                  <p className="text-sm text-red-800">
+                    This confirmation link is invalid or has expired. Please request a new
+                    one from your account settings.
+                  </p>
+                </div>
+              )}
+
+              {isEmailTaken && (
+                <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-md">
+                  <p className="text-sm text-amber-800">
+                    Your new email was already taken by another account by the time you
+                    confirmed. Please try a different address.
+                  </p>
                 </div>
               )}
 

@@ -40,3 +40,12 @@ export const changePassword = createAppThunk(
   "Failed to change password"
 );
 
+export const requestEmailChange = createAppThunk(
+  "user/requestEmailChange",
+  async (data, { signal }) => {
+    const response = await userService.requestEmailChange(data, { signal });
+    return response.data;
+  },
+  "Failed to request email change"
+);
+

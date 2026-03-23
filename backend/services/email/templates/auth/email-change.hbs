@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Your New Email Address</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+    }
+    .header {
+      background-color: #000;
+      padding: 32px 40px;
+      text-align: center;
+    }
+    .header h1 {
+      color: #fff;
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .body {
+      padding: 40px;
+    }
+    .body p {
+      font-size: 15px;
+      color: #444;
+      margin: 0 0 16px;
+    }
+    .body p.greeting {
+      font-size: 16px;
+      color: #111;
+      font-weight: 500;
+    }
+    .cta {
+      text-align: center;
+      margin: 36px 0;
+    }
+    .button {
+      display: inline-block;
+      padding: 13px 28px;
+      background-color: #000;
+      color: #fff !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 15px;
+    }
+    .expiry-note {
+      font-size: 13px !important;
+      color: #888 !important;
+    }
+    .fallback {
+      font-size: 12px;
+      color: #999;
+      word-break: break-all;
+    }
+    .fallback a {
+      color: #333;
+    }
+    .footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      font-size: 12px;
+      color: #aaa;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>Email Change</h1>
+    </div>
+    <div class="body">
+      <p class="greeting">Hello {{name}},</p>
+      <p>We received a request to change the email address for your account. If you didn't make this request, you can safely ignore this email — nothing will change.</p>
+      <p>To confirm your new email address, click the button below:</p>
+
+      <div class="cta">
+        <a href="{{confirmUrl}}" class="button">Confirm New Email</a>
+      </div>
+
+      <p class="expiry-note">This link will expire in <strong>{{expiryHours}} hours</strong>. After that, you'll need to submit a new request.</p>
+
+      <p class="fallback">If the button isn't working, copy and paste this URL into your browser:<br>
+        <a href="{{confirmUrl}}">{{confirmUrl}}</a>
+      </p>
+    </div>
+  </div>
+  <div class="footer">
+    <p>This is an automated message. Please do not reply directly to this email.</p>
+  </div>
+</body>
+</html>
+
+{{!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm your new email address</title>
+  <style>
+    /* Copy the exact same inline CSS from password-reset.hbs here */
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #000; color: #fff !important; text-decoration: none; border-radius: 6px; font-weight: 500; margin: 20px 0; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <h2>Confirm your new email address</h2>
+  <p>Hi {{name}},</p>
+  <p>You requested to change your email address. Click the button below to confirm this change:</p>
+  <p><a href="{{confirmUrl}}" class="button">Confirm New Email</a></p>
+  <p>This link will expire in {{expiryHours}} hours.</p>
+  <p>If you did not request this change, you can safely ignore this email — nothing will be changed.</p>
+  <div class="footer">
+    <p>If you're having trouble clicking the button, copy and paste this URL into your browser:</p>
+    <p>{{confirmUrl}}</p>
+  </div>
+</body>
+</html> --}}

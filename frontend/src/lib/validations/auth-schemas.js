@@ -87,3 +87,20 @@ export const updateProfileSchema = z.object({
   firstname: nameSchema,
   lastname: nameSchema,
 });
+
+export const changeEmailSchema = z.object({
+  newEmail: z
+    .string()
+    .min(1, "New email is required")
+    .email("Please enter a valid email address")
+    .max(254, "Email must be at most 254 characters"),
+  confirmNewEmail: z
+    .string()
+    .min(1, "Please confirm your new email"),
+  currentPassword: z
+    .string()
+    .min(1, "Current password is required"),
+}).refine((data) => data.newEmail === data.confirmNewEmail, {
+  message: "Emails do not match",
+  path: ["confirmNewEmail"],
+});

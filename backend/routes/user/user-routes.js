@@ -8,6 +8,9 @@ import {
 } from "../../middleware/security/rate-limiters.js";
 import { updateProfileValidationRules } from "../../validators/validationRules.js";
 import { handleValidationErrors } from "../../middleware/validation/validation-middleware.js";
+import { emailChangeLimiter } from "../../middleware/security/rate-limiters.js";
+import { emailChangeValidationRules } from "../../validators/validationRules.js";
+import { handleRequestEmailChange, handleConfirmEmailChange } from "../../controllers/user/email-change.controller.js";
 
 const router = express.Router();
 
@@ -22,6 +25,23 @@ router.patch(
   updateProfileValidationRules,
   handleValidationErrors,
   updateProfile
+);
+
+// POST /api/v1/user/email/request
+router.post(
+  "/email/request",
+  emailChangeLimiter,
+  authTokenMiddleware,
+  emailChangeValidationRules,
+  handleValidationErrors,
+  handleRequestEmailChange
+);
+
+// GET /api/v1/user/email/confirm/:token
+// NO auth, NO rate limiter, NO validation middleware
+router.get(
+  "/email/confirm/:token",
+  handleConfirmEmailChange
 );
 
 export default router;

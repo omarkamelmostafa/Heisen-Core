@@ -92,6 +92,26 @@ export class EmailService {
     return await this.sendEmail("auth/reset-success", templateData, emailData);
   }
 
+  async sendEmailChangeVerification(user, confirmUrl) {
+    const templateData = {
+      name: user.firstname || "User",
+      confirmUrl,
+      expiryHours: 24,
+    };
+
+    const emailData = {
+      to: user.pendingEmail,
+      subject: "Confirm your new email address",
+      category: "Email Change",
+      metadata: {
+        userId: user._id.toString(),
+        emailType: "email_change",
+      },
+    };
+
+    await this.sendEmail("auth/email-change", templateData, emailData);
+  }
+
   async sendEmail(templateName, templateData, emailOptions) {
     try {
       const compiledHtml = await this.templateEngine.compile(

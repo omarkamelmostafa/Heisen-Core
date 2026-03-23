@@ -161,12 +161,10 @@ class UserService {
   /**
    * Update email address
    */
-  async updateEmail(emailData, config = {}) {
-    this.validateUserData(emailData, "updateEmail");
-
+  async requestEmailChange(data, config = {}) {
     const response = await privateClient.post(
-      userEndpoints.UPDATE_EMAIL,
-      emailData,
+      userEndpoints.EMAIL_CHANGE_REQUEST,
+      data,
       config
     );
     return normalizeResponse(response);
