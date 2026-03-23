@@ -1,7 +1,9 @@
 ---
 description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
+agent: speckit.delivery-planner
+role: entry-point for Delivery Planner
 handoffs: 
-  - label: Analyze For Consistency
+  - label: Analyze For Consistency (MANDATORY)
     agent: speckit.analyze
     prompt: Run a project analysis for consistency
     send: true
@@ -10,6 +12,14 @@ handoffs:
     prompt: Start the implementation in phases
     send: true
 ---
+
+> **Agent**: This workflow is executed by the **Delivery Planner**.  
+> **Full agent definition** (Role, Objective, Constraints, Memory Contract, Handoff Record):  
+> → [`.agent/workflows/speckit.delivery-planner.md`](.agent/workflows/speckit.delivery-planner.md)
+
+> **⚠️ MANDATORY GATE**: After `tasks.md` is generated, `/speckit.analyze` MUST be run before `/speckit.implement` is permitted.  
+> The analysis output must be written to `specs/NNN/analysis-report.md` with `Status: APPROVED`.  
+> `/speckit.implement` is BLOCKED unless `analysis-report.md` Status is APPROVED.
 
 ## User Input
 
@@ -25,7 +35,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 - Check if `.specify/extensions.yml` exists in the project root.
 - If it exists, read it and look for entries under the `hooks.before_tasks` key
 - If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
-- Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.
+- Filter to only hooks where `enabled: true`
 - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
   - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
   - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
@@ -97,7 +107,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 6. **Check for extension hooks**: After tasks.md is generated, check if `.specify/extensions.yml` exists in the project root.
    - If it exists, read it and look for entries under the `hooks.after_tasks` key
    - If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
-   - Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.
+   - Filter to only hooks where `enabled: true`
    - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
      - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
      - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
@@ -126,6 +136,8 @@ You **MUST** consider the user input before proceeding (if not empty).
 Context for task generation: $ARGUMENTS
 
 The tasks.md should be immediately executable - each task must be specific enough that an LLM can complete it without additional context.
+
+**Post-generation requirement**: After writing `tasks.md`, initialize `specs/NNN/checkpoint-log.md` with the feature header and one PENDING status row per phase. See `speckit.delivery-planner` Memory Contract for the required format.
 
 ## Task Generation Rules
 

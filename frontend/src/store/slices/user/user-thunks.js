@@ -1,7 +1,6 @@
 // frontend/src/store/slices/user/user-thunks.js
 import { userService } from "@/services/domain/user-service";
 import { createAppThunk } from "@/store/utils/thunk-utils";
-import { showNotification } from "@/store/slices/ui";
 
 // Fetch user profile
 export const fetchUserProfile = createAppThunk(
@@ -26,15 +25,8 @@ export const updateProfile = createAppThunk(
 // Change password
 export const changePassword = createAppThunk(
   "user/changePassword",
-  async (passwordData, { dispatch, signal }) => {
+  async (passwordData, { signal }) => {
     const response = await userService.changePassword(passwordData, { signal });
-    dispatch(
-      showNotification({
-        type: "success",
-        title: "Password Changed",
-        message: "Your password has been updated successfully",
-      })
-    );
     return response.data;
   },
   "Failed to change password"

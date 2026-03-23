@@ -165,7 +165,7 @@ export const emailChangeLimiter = createRateLimiterMiddleware({
  */
 export const changePasswordLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
-  max: 50,
+  max: 5,
   message: {
     text: "Too many password change attempts. Please try again later.",
     errorCode: "RATE_LIMITED",
