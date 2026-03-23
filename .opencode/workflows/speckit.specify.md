@@ -1,5 +1,7 @@
 ---
 description: Create or update the feature specification from a natural language feature description.
+agent: speckit.requirements-analyst
+role: entry-point for Requirements Analyst
 handoffs: 
   - label: Build Technical Plan
     agent: speckit.plan
@@ -10,6 +12,12 @@ handoffs:
     send: true
 ---
 
+> **Agent**: This workflow is executed by the **Requirements Analyst**.  
+> **Full agent definition** (Role, Objective, Constraints, Memory Contract, Handoff Record):  
+> → [`.agent/workflows/speckit.requirements-analyst.md`](.agent/workflows/speckit.requirements-analyst.md)
+
+---
+
 ## User Input
 
 ```text
@@ -17,40 +25,6 @@ $ARGUMENTS
 ```
 
 You **MUST** consider the user input before proceeding (if not empty).
-
-## Pre-Execution Checks
-
-**Check for extension hooks (before specification)**:
-- Check if `.specify/extensions.yml` exists in the project root.
-- If it exists, read it and look for entries under the `hooks.before_specify` key
-- If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
-- Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.
-- For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
-  - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
-  - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
-- For each executable hook, output the following based on its `optional` flag:
-  - **Optional hook** (`optional: true`):
-    ```
-    ## Extension Hooks
-
-    **Optional Pre-Hook**: {extension}
-    Command: `/{command}`
-    Description: {description}
-
-    Prompt: {prompt}
-    To execute: `/{command}`
-    ```
-  - **Mandatory hook** (`optional: false`):
-    ```
-    ## Extension Hooks
-
-    **Automatic Pre-Hook**: {extension}
-    Executing: `/{command}`
-    EXECUTE_COMMAND: {command}
-
-    Wait for the result of the hook command before proceeding to the Outline.
-    ```
-- If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
 
 ## Outline
 
@@ -70,16 +44,10 @@ Given that feature description, do this:
      - "Create a dashboard for analytics" → "analytics-dashboard"
      - "Fix payment processing timeout bug" → "fix-payment-timeout"
 
-2. **Create the feature branch** by running the script with `--short-name` (and `--json`). In sequential mode, do NOT pass `--number` — the script auto-detects the next available number. In timestamp mode, the script generates a `YYYYMMDD-HHMMSS` prefix automatically:
-
-   **Branch numbering mode**: Before running the script, check if `.specify/init-options.json` exists and read the `branch_numbering` value.
-   - If `"timestamp"`, add `--timestamp` (Bash) or `-Timestamp` (PowerShell) to the script invocation
-   - If `"sequential"` or absent, do not add any extra flag (default behavior)
+2. **Create the feature branch** by running the script with `--short-name` (and `--json`), and do NOT pass `--number` (the script auto-detects the next globally available number across all branches and spec directories):
 
    - Bash example: `.specify/scripts/powershell/create-new-feature.ps1 "$ARGUMENTS" --json --short-name "user-auth" "Add user authentication"`
-   - Bash (timestamp): `.specify/scripts/powershell/create-new-feature.ps1 "$ARGUMENTS" --json --timestamp --short-name "user-auth" "Add user authentication"`
    - PowerShell example: `.specify/scripts/powershell/create-new-feature.ps1 "$ARGUMENTS" -Json -ShortName "user-auth" "Add user authentication"`
-   - PowerShell (timestamp): `.specify/scripts/powershell/create-new-feature.ps1 "$ARGUMENTS" -Json -Timestamp -ShortName "user-auth" "Add user authentication"`
 
    **IMPORTANT**:
    - Do NOT pass `--number` — the script determines the correct next number automatically
@@ -87,7 +55,7 @@ Given that feature description, do this:
    - You must only ever run this script once per feature
    - The JSON is provided in the terminal as output - always refer to it to get the actual content you're looking for
    - The JSON output will contain BRANCH_NAME and SPEC_FILE paths
-   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot")
+   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''"m Groot' (or double-quote if possible: "I'm Groot")
 
 3. Load `.specify/templates/spec-template.md` to understand required sections.
 
@@ -166,7 +134,7 @@ Given that feature description, do this:
 
    c. **Handle Validation Results**:
 
-      - **If all items pass**: Mark checklist complete and proceed to step 7
+      - **If all items pass**: Mark checklist complete and proceed to step 6
 
       - **If items fail (excluding [NEEDS CLARIFICATION])**:
         1. List the failing items and specific issues
@@ -213,36 +181,9 @@ Given that feature description, do this:
 
 7. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
 
-8. **Check for extension hooks**: After reporting completion, check if `.specify/extensions.yml` exists in the project root.
-   - If it exists, read it and look for entries under the `hooks.after_specify` key
-   - If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
-   - Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.
-   - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
-     - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
-     - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
-   - For each executable hook, output the following based on its `optional` flag:
-     - **Optional hook** (`optional: true`):
-       ```
-       ## Extension Hooks
-
-       **Optional Hook**: {extension}
-       Command: `/{command}`
-       Description: {description}
-
-       Prompt: {prompt}
-       To execute: `/{command}`
-       ```
-     - **Mandatory hook** (`optional: false`):
-       ```
-       ## Extension Hooks
-
-       **Automatic Hook**: {extension}
-       Executing: `/{command}`
-       EXECUTE_COMMAND: {command}
-       ```
-   - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
-
 **NOTE:** The script creates and checks out the new branch and initializes the spec file before writing.
+
+## General Guidelines
 
 ## Quick Guidelines
 

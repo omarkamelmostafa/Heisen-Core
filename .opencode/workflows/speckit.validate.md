@@ -10,7 +10,6 @@ handoffs:
   - label: Return for Correction
     agent: "[see Routing Table in validation-report.md]"
     prompt: "Validation rejected. Defect records in defect-log.md. Route to indicated agent."
-auto_execution_mode: 3
 ---
 
 # Agent: QA Validator
