@@ -8,7 +8,7 @@ class UserEndpoints {
     // Paths relative to axios base URL (already includes /api/v1)
     this.BASE = "/api";
     this.VERSION = `/v${process.env.NEXT_PUBLIC_API_VERSION || '1'}`;
-    this.PREFIX = "/users";
+    this.PREFIX = "/user";
   }
 
   // ==================== ACTUAL ENDPOINTS ====================

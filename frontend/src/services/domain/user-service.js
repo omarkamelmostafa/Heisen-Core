@@ -251,7 +251,7 @@ class UserService {
   validateUserData(userData, operation) {
     const validations = {
       updateProfile: ["name", "email"],
-      changePassword: ["currentPassword", "newPassword"],
+      changePassword: ["oldPassword", "newPassword"],
       updateEmail: ["newEmail", "password"],
     };
 
