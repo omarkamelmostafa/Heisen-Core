@@ -3,22 +3,21 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { changeEmailSchema } from "@/lib/validations/auth-schemas"
+import { changeEmailSchema, changePasswordSchema } from "@/lib/validations/auth-schemas"
 import { Eye, EyeOff, Smartphone, Monitor } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 
-function PasswordField({ label, value, onChange, show, onToggleShow, error, placeholder }) {
+function PasswordField({ label, registration, show, onToggleShow, error, placeholder }) {
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-xs font-medium text-muted-foreground">{label}</label>
       <div className="relative">
         <Input
           type={show ? "text" : "password"}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          {...registration}
           placeholder={placeholder}
           className={error ? "border-destructive pr-10" : "pr-10"}
         />
@@ -45,14 +44,9 @@ export function SecurityContent({
   sentToEmail,
   onEmailSave,
   onEmailReset,
-  // Password change props (EXISTING — unchanged)
-  formData,
-  showPasswords,
-  errors,
-  isSubmitting,
-  onFieldChange,
-  onTogglePassword,
-  onSubmit,
+  // Password change props
+  isPasswordSubmitting,
+  onPasswordSave,
 }) {
   const {
     register,
@@ -69,7 +63,33 @@ export function SecurityContent({
     },
   });
 
+  const {
+    register: pwRegister,
+    handleSubmit: pwHandleSubmit,
+    formState: { errors: pwErrors },
+    reset: pwReset,
+  } = useForm({
+    resolver: zodResolver(changePasswordSchema),
+    mode: "onTouched",
+    reValidateMode: "onChange",
+    defaultValues: {
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
   const [showEmailPassword, setShowEmailPassword] = React.useState(false);
+  
+  const [showPasswords, setShowPasswords] = React.useState({
+    old: false,
+    new: false,
+    confirm: false,
+  });
+  
+  const togglePassword = (field) => {
+    setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
 
   return (
     <main className="flex-1 min-w-0 bg-card rounded-xl border border-border p-7 md:p-8 shadow-sm flex flex-col gap-8">
@@ -170,38 +190,35 @@ export function SecurityContent({
           <h2 className="text-base font-semibold text-foreground tracking-tight">Change Password</h2>
         </div>
         <p className="text-sm text-muted-foreground mt-3">Update your password to keep your account secure.</p>
-        <div className="mt-4 max-w-md space-y-4">
+        <form onSubmit={pwHandleSubmit((data) => onPasswordSave(data, pwReset))} className="mt-4 max-w-md space-y-4">
           <PasswordField
             label="Current Password"
-            value={formData.currentPassword}
-            onChange={(v) => onFieldChange("currentPassword", v)}
-            show={showPasswords.current}
-            onToggleShow={() => onTogglePassword("current")}
-            error={errors.currentPassword}
+            registration={pwRegister("oldPassword")}
+            show={showPasswords.old}
+            onToggleShow={() => togglePassword("old")}
+            error={pwErrors.oldPassword?.message}
             placeholder="Enter current password"
           />
           <PasswordField
             label="New Password"
-            value={formData.newPassword}
-            onChange={(v) => onFieldChange("newPassword", v)}
+            registration={pwRegister("newPassword")}
             show={showPasswords.new}
-            onToggleShow={() => onTogglePassword("new")}
-            error={errors.newPassword}
+            onToggleShow={() => togglePassword("new")}
+            error={pwErrors.newPassword?.message}
             placeholder="Enter new password"
           />
           <PasswordField
             label="Confirm New Password"
-            value={formData.confirmPassword}
-            onChange={(v) => onFieldChange("confirmPassword", v)}
+            registration={pwRegister("confirmPassword")}
             show={showPasswords.confirm}
-            onToggleShow={() => onTogglePassword("confirm")}
-            error={errors.confirmPassword}
+            onToggleShow={() => togglePassword("confirm")}
+            error={pwErrors.confirmPassword?.message}
             placeholder="Confirm new password"
           />
-          <Button onClick={onSubmit} disabled={isSubmitting} className="w-full sm:w-auto">
-            {isSubmitting ? "Changing Password..." : "Update Password"}
+          <Button type="submit" disabled={isPasswordSubmitting} className="w-full sm:w-auto">
+            {isPasswordSubmitting ? "Updating..." : "Update Password"}
           </Button>
-        </div>
+        </form>
       </section>
 
       <Separator />
