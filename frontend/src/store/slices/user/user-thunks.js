@@ -41,3 +41,11 @@ export const requestEmailChange = createAppThunk(
   "Failed to request email change"
 );
 
+export const toggle2fa = createAppThunk(
+  "user/toggle2fa",
+  async (data, { signal }) => {
+    const response = await userService.toggle2fa(data, { signal });
+    return response.data;
+  },
+  "Failed to update two-factor authentication"
+);

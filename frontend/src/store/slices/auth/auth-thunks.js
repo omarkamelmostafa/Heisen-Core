@@ -146,3 +146,13 @@ export const resetPassword = createAppThunk(
   },
   "Password reset failed"
 );
+
+/** Verify 2FA code */
+export const verify2fa = createAppThunk(
+  "auth/verify2fa",
+  async (data, { signal }) => {
+    const response = await authService.verify2fa(data, { signal });
+    return response.data;
+  },
+  "2FA verification failed"
+);

@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { TwoFactorToggle } from "./two-factor-toggle"
 
 function PasswordField({ label, registration, show, onToggleShow, error, placeholder }) {
   return (
@@ -61,6 +62,17 @@ export function SecurityContent({
   // Sign out all devices props
   isSigningOutAll,
   onSignOutAll,
+  // 2FA props
+  twoFactorEnabled,
+  isToggling2fa,
+  showEnableDialog,
+  showDisableDialog,
+  password,
+  setPassword,
+  onOpenEnable2fa,
+  onOpenDisable2fa,
+  onClose2faDialogs,
+  onConfirmToggle2fa,
 }) {
   const {
     register,
@@ -100,6 +112,8 @@ export function SecurityContent({
     new: false,
     confirm: false,
   });
+
+  const [signOutDialogOpen, setSignOutDialogOpen] = React.useState(false);
 
   const togglePassword = (field) => {
     setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -237,17 +251,25 @@ export function SecurityContent({
 
       <Separator />
 
-      {/* Section B: Two-Factor Authentication (Stub) */}
+      {/* Section B: Two-Factor Authentication */}
       <section>
-        <div className="flex items-center justify-between pb-4 border-b border-border">
+        <div className="pb-4 border-b border-border">
           <h2 className="text-base font-semibold text-foreground tracking-tight">Two-Factor Authentication</h2>
-          <Badge variant="secondary" className="text-[10px] px-1.5 py-0 font-normal">Soon</Badge>
         </div>
-        <p className="text-sm text-muted-foreground mt-3">Add an extra layer of security to your account with two-factor authentication.</p>
-        <Button variant="outline" size="sm" className="mt-4" disabled>
-          <Smartphone className="h-4 w-4 mr-2" />
-          <span>Enable 2FA</span>
-        </Button>
+        <div className="mt-4">
+          <TwoFactorToggle
+            twoFactorEnabled={twoFactorEnabled}
+            isToggling2fa={isToggling2fa}
+            showEnableDialog={showEnableDialog}
+            showDisableDialog={showDisableDialog}
+            password={password}
+            setPassword={setPassword}
+            onOpenEnable={onOpenEnable2fa}
+            onOpenDisable={onOpenDisable2fa}
+            onCloseDialogs={onClose2faDialogs}
+            onConfirmToggle={onConfirmToggle2fa}
+          />
+        </div>
       </section>
 
       <Separator />
@@ -258,13 +280,14 @@ export function SecurityContent({
           <h2 className="text-base font-semibold text-foreground tracking-tight">Active Sessions</h2>
         </div>
         <p className="text-sm text-muted-foreground mt-3">Manage your active sessions and sign out from other devices.</p>
-        <AlertDialog>
+        <AlertDialog open={signOutDialogOpen} onOpenChange={setSignOutDialogOpen}>
           <AlertDialogTrigger asChild>
             <Button
               variant="outline"
               size="sm"
               className="mt-4 text-destructive border-destructive/30 hover:bg-destructive/10"
               disabled={isSigningOutAll}
+              onClick={() => setSignOutDialogOpen(true)}
             >
               <Monitor className="h-4 w-4 mr-2" />
               {isSigningOutAll ? "Signing out..." : "Sign Out All Devices"}
@@ -279,9 +302,14 @@ export function SecurityContent({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel onClick={() => setSignOutDialogOpen(false)}>
+                Cancel
+              </AlertDialogCancel>
               <AlertDialogAction
-                onClick={onSignOutAll}
+                onClick={() => {
+                  onSignOutAll();
+                  setSignOutDialogOpen(false);
+                }}
                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               >
                 Sign Out All Devices

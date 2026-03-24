@@ -1,0 +1,114 @@
+"use client";
+
+import { ShieldCheck, ShieldOff, Smartphone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export function TwoFactorToggle({
+  twoFactorEnabled,
+  isToggling2fa,
+  showEnableDialog,
+  showDisableDialog,
+  password,
+  setPassword,
+  onOpenEnable,
+  onOpenDisable,
+  onCloseDialogs,
+  onConfirmToggle,
+}) {
+  const isDialogOpen = showEnableDialog || showDisableDialog;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-start gap-3">
+        <div className={`p-2 rounded-lg ${twoFactorEnabled ? "bg-green-100" : "bg-muted"}`}>
+          {twoFactorEnabled ? (
+            <ShieldCheck className="h-5 w-5 text-green-600" />
+          ) : (
+            <ShieldOff className="h-5 w-5 text-muted-foreground" />
+          )}
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-medium">Two-Factor Authentication</h3>
+              <p className="text-sm text-muted-foreground">
+                {twoFactorEnabled
+                  ? "Your account is protected with 2FA via email."
+                  : "Add an extra layer of security to your account with two-factor authentication."}
+              </p>
+            </div>
+            <Button
+              variant={twoFactorEnabled ? "outline" : "default"}
+              size="sm"
+              onClick={twoFactorEnabled ? onOpenDisable : onOpenEnable}
+            >
+              <Smartphone className="h-4 w-4 mr-2" />
+              {twoFactorEnabled ? "Disable 2FA" : "Enable 2FA"}
+            </Button>
+          </div>
+
+          {twoFactorEnabled && (
+            <p className="text-xs text-green-600 mt-2">
+              ✓ Enabled — You will receive a verification code via email when logging in
+            </p>
+          )}
+        </div>
+      </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={onCloseDialogs}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {showEnableDialog ? "Enable Two-Factor Authentication" : "Disable Two-Factor Authentication"}
+            </DialogTitle>
+            <DialogDescription>
+              {showEnableDialog
+                ? "Enter your current password to enable 2FA. You will receive a verification code via email each time you log in."
+                : "Enter your current password to disable 2FA. This reduces your account security."}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="2fa-password">Current Password</Label>
+              <Input
+                id="2fa-password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={onCloseDialogs}>
+              Cancel
+            </Button>
+            <Button
+              onClick={onConfirmToggle}
+              disabled={isToggling2fa}
+              variant={showEnableDialog ? "default" : "destructive"}
+            >
+              {isToggling2fa
+                ? "Processing..."
+                : showEnableDialog
+                ? "Enable 2FA"
+                : "Disable 2FA"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}

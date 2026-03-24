@@ -34,6 +34,30 @@ export class EmailService {
     return await this.sendEmail("auth/verification", templateData, emailData);
   }
 
+  async send2faCodeEmail(user, twoFactorCode) {
+    const templateData = {
+      user: {
+        name: `${user.firstname} ${user.lastname}`,
+        firstName: user.firstname,
+        email: user.email,
+      },
+      twoFactorCode,
+      expiryMinutes: 10,
+    };
+
+    const emailData = {
+      to: user.email,
+      subject: "Your Two-Factor Authentication Code",
+      category: "Two-Factor Authentication",
+      metadata: {
+        userId: user._id.toString(),
+        emailType: "2fa_code",
+      },
+    };
+
+    return await this.sendEmail("auth/2fa-code", templateData, emailData);
+  }
+
   async sendWelcomeEmail(user) {
     // Using Mailtrap template system
     return await this.provider.sendWithTemplate({

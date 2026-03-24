@@ -274,4 +274,21 @@ export const getBlacklistStats = async () => {
       revokedPercentage: 0,
     };
   }
+};
+
+export const generate2faTempToken = (userId) => {
+  return jwt.sign(
+    {
+      UserInfo: {
+        userId,
+        type: "2fa",
+      },
+      iss: process.env.JWT_ISSUER || "new-starter-backend-v1",
+      aud: process.env.JWT_AUDIENCE || "new-starter-web-client",
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: "10m",
+    }
+  );
 }; 
