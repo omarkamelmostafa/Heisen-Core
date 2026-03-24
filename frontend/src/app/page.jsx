@@ -10,6 +10,7 @@ import { SettingsMobileNav } from "@/features/user/components/settings-mobile-na
 import { SecurityContent } from "@/features/user/components/security-content";
 import { useChangePassword } from "@/features/user/hooks/useChangePassword";
 import { useChangeEmail } from "@/features/user/hooks/useChangeEmail";
+import { useSignOutAll } from "@/features/user/hooks/useSignOutAll";
 
 import { useEditProfile } from "@/features/user/hooks/useEditProfile";
 
@@ -27,8 +28,8 @@ export default function ProfilePage() {
   } = useUserProfile();
 
   const [activeSection, setActiveSection] = useState("profile");
-  
-  const { 
+
+  const {
     isEditing,
     isSubmitting: isProfileSubmitting,
     startEditing,
@@ -37,9 +38,9 @@ export default function ProfilePage() {
     defaultValues: editDefaultValues,
   } = useEditProfile({ firstname: firstName, lastname: lastName });
 
-  const { 
-    isSubmitting: isPasswordSubmitting, 
-    handleSave: onPasswordSave 
+  const {
+    isSubmitting: isPasswordSubmitting,
+    handleSave: onPasswordSave
   } = useChangePassword();
 
   const {
@@ -49,6 +50,8 @@ export default function ProfilePage() {
     handleSave: handleEmailSave,
     resetEmailChange,
   } = useChangeEmail({ currentEmail: email });
+
+  const { isSigningOutAll, handleSignOutAll } = useSignOutAll();
 
   const handleSectionChange = (sectionId) => {
     setActiveSection(sectionId);
@@ -64,14 +67,14 @@ export default function ProfilePage() {
           onLogout={handleLogout}
         />
         <div className="w-full max-w-[1200px] mx-auto p-4 md:p-7">
-          <SettingsMobileNav 
-            activeId={activeSection} 
-            onItemClick={handleSectionChange} 
+          <SettingsMobileNav
+            activeId={activeSection}
+            onItemClick={handleSectionChange}
           />
           <div className="flex items-start gap-5">
-            <SettingsSidebar 
-              activeId={activeSection} 
-              onItemClick={handleSectionChange} 
+            <SettingsSidebar
+              activeId={activeSection}
+              onItemClick={handleSectionChange}
             />
             {activeSection === "profile" ? (
               <ProfileContent
@@ -101,6 +104,8 @@ export default function ProfilePage() {
                 onEmailReset={resetEmailChange}
                 isPasswordSubmitting={isPasswordSubmitting}
                 onPasswordSave={onPasswordSave}
+                isSigningOutAll={isSigningOutAll}
+                onSignOutAll={handleSignOutAll}
               />
             ) : null}
           </div>
