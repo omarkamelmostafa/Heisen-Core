@@ -66,8 +66,8 @@ export default function SignupPage() {
             <AuthFormProvider
               schema={signupSchema}
               defaultValues={{
-                firstName: "",
-                lastName: "",
+                firstname: "",
+                lastname: "",
                 email: "",
                 password: "",
                 confirmPassword: "",

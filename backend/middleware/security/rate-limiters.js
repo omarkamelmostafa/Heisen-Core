@@ -178,7 +178,7 @@ export const changePasswordLimiter = createRateLimiterMiddleware({
  */
 export const toggle2faLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
-  max: 50,
+  max: 5,
   message: {
     text: "Too many 2FA toggle attempts. Please try again later.",
     errorCode: "RATE_LIMITED",
