@@ -9,6 +9,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 function PasswordField({ label, registration, show, onToggleShow, error, placeholder }) {
   return (
@@ -47,6 +58,9 @@ export function SecurityContent({
   // Password change props
   isPasswordSubmitting,
   onPasswordSave,
+  // Sign out all devices props
+  isSigningOutAll,
+  onSignOutAll,
 }) {
   const {
     register,
@@ -80,13 +94,13 @@ export function SecurityContent({
   });
 
   const [showEmailPassword, setShowEmailPassword] = React.useState(false);
-  
+
   const [showPasswords, setShowPasswords] = React.useState({
     old: false,
     new: false,
     confirm: false,
   });
-  
+
   const togglePassword = (field) => {
     setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
   };
@@ -238,17 +252,43 @@ export function SecurityContent({
 
       <Separator />
 
-      {/* Section C: Active Sessions (Stub) */}
+      {/* Section C: Active Sessions */}
       <section>
         <div className="flex items-center justify-between pb-4 border-b border-border">
           <h2 className="text-base font-semibold text-foreground tracking-tight">Active Sessions</h2>
-          <Badge variant="secondary" className="text-[10px] px-1.5 py-0 font-normal">Soon</Badge>
         </div>
         <p className="text-sm text-muted-foreground mt-3">Manage your active sessions and sign out from other devices.</p>
-        <Button variant="outline" size="sm" className="mt-4 text-destructive hover:text-destructive" disabled>
-          <Monitor className="h-4 w-4 mr-2" />
-          <span>Sign Out All Devices</span>
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-4 text-destructive border-destructive/30 hover:bg-destructive/10"
+              disabled={isSigningOutAll}
+            >
+              <Monitor className="h-4 w-4 mr-2" />
+              {isSigningOutAll ? "Signing out..." : "Sign Out All Devices"}
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Sign out all devices?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will sign you out from all devices including this one.
+                You will need to log in again on every device.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={onSignOutAll}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Sign Out All Devices
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </section>
     </main>
   );
