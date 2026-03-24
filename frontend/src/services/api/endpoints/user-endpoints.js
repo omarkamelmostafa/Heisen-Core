@@ -50,6 +50,10 @@ class UserEndpoints {
     return `${this.PREFIX}/security/password`;
   }
 
+  get TOGGLE_2FA() {
+    return `${this.PREFIX}/security/2fa`;
+  }
+
   get DELETE_ACCOUNT() {
     return `${this.PREFIX}/security/account`;
   }

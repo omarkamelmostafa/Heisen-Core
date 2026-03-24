@@ -75,7 +75,18 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       })
-      .addCase("user/changePassword/rejected", handleRejected);
+      .addCase("user/changePassword/rejected", handleRejected)
+
+      // Toggle 2FA
+      .addCase("user/toggle2fa/pending", handlePending)
+      .addCase("user/toggle2fa/fulfilled", (state, action) => {
+        state.isLoading = false;
+        if (state.profile) {
+          state.profile.twoFactorEnabled = action.payload.data?.twoFactorEnabled;
+        }
+        state.error = null;
+      })
+      .addCase("user/toggle2fa/rejected", handleRejected);
   },
 });
 

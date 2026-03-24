@@ -131,6 +131,15 @@ class AuthService {
     }
   }
 
+  async verify2fa(data, config = {}) {
+    const response = await publicClient.post(
+      authEndpoints.VERIFY_2FA,
+      data,
+      config
+    );
+    return normalizeResponse(response);
+  }
+
   async verifyEmail(verificationData, config = {}) {
     try {
       const response = await publicClient.post(

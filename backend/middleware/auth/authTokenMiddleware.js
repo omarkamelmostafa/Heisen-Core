@@ -38,6 +38,17 @@ export const authTokenMiddleware = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
+    if (decoded?.UserInfo?.type !== "access") {
+      return apiResponseManager(req, res, {
+        statusCode: 401,
+        success: false,
+        message: "Unauthorized - Invalid token type",
+        errorDetails: "Invalid token type",
+        errorCode: "TOKEN_INVALID",
+        requestId: req?.requestId,
+      });
+    }
+
     // Check JTI blacklist (Redis)
     if (decoded.jti) {
       const revoked = await isTokenRevoked(decoded.jti);

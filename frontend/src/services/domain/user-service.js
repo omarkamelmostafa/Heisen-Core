@@ -158,6 +158,17 @@ class UserService {
     return normalizeResponse(response);
   }
 
+  async toggle2fa(data, config = {}) {
+    this.validateUserData(data, "toggle2fa");
+
+    const response = await privateClient.patch(
+      userEndpoints.TOGGLE_2FA,
+      data,
+      config
+    );
+    return normalizeResponse(response);
+  }
+
   /**
    * Update email address
    */
@@ -253,10 +264,13 @@ class UserService {
       updateProfile: ["name", "email"],
       changePassword: ["oldPassword", "newPassword"],
       updateEmail: ["newEmail", "password"],
+      toggle2fa: ["enable", "currentPassword"],
     };
 
     const requiredFields = validations[operation] || [];
-    const missingFields = requiredFields.filter((field) => !userData[field]);
+    const missingFields = requiredFields.filter(
+      (field) => userData[field] === undefined || userData[field] === null
+    );
 
     if (missingFields.length > 0) {
       throw new Error(`Missing required fields: ${missingFields.join(", ")}`);

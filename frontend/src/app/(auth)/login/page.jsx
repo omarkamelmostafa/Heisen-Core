@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
 import { useLogin } from "@/features/auth/hooks/useLogin";
+import { TwoFactorStep } from "@/features/auth/components/login/two-factor-step";
 import { LoginHeader } from "@/features/auth/components/login/login-header";
 import { WelcomeSection } from "@/features/auth/components/login/welcome-section";
 import { LoginForm } from "@/features/auth/components/login/login-form";
@@ -23,7 +24,7 @@ import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const {
     isLoading,
     error,
@@ -33,10 +34,14 @@ export default function LoginPage() {
     isEmailChanged,
     isEmailTokenInvalid,
     isEmailTaken,
+    requiresTwoFactor,
+    isVerifying,
+    handleVerify2fa,
+    handleCancel2fa,
   } = useLogin();
 
   const isLoadingPage = useSimulatedLoading(0);
-  
+
   if (isLoadingPage) {
     return <LoginLoading />;
   }
@@ -57,64 +62,74 @@ export default function LoginPage() {
             <LoginHeader variants={itemVariants} />
             <WelcomeSection variants={itemVariants} />
 
-            <AuthFormProvider
-              schema={loginSchema}
-              defaultValues={{
-                email: "",
-                password: "",
-                rememberMe: false,
-              }}
-              onSubmit={handleLogin}
-              className="space-y-6"
-            >
-              <Divider variants={itemVariants} />
-
-              {isVerified && (
-                <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800 border border-green-200">
-                  Your email has been verified. You can now log in.
-                </div>
-              )}
-              {isReset && (
-                <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800 border border-green-200">
-                  Your password has been successfully reset. Please log in.
-                </div>
-              )}
-
-              {isEmailChanged && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-                  <p className="text-sm text-green-800">
-                    Email updated successfully. Please log in with your new address.
-                  </p>
-                </div>
-              )}
-
-              {isEmailTokenInvalid && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
-                  <p className="text-sm text-red-800">
-                    This confirmation link is invalid or has expired. Please request a new
-                    one from your account settings.
-                  </p>
-                </div>
-              )}
-
-              {isEmailTaken && (
-                <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-md">
-                  <p className="text-sm text-amber-800">
-                    Your new email was already taken by another account by the time you
-                    confirmed. Please try a different address.
-                  </p>
-                </div>
-              )}
-
-              <AuthErrorAlert error={error} />
-
-              <LoginForm
-                variants={itemVariants}
-                showPassword={showPassword}
-                isLoading={isLoading}
-                onTogglePassword={() => setShowPassword((prev) => !prev)}
+            {requiresTwoFactor ? (
+              <TwoFactorStep
+                onVerify={handleVerify2fa}
+                onCancel={handleCancel2fa}
+                isVerifying={isVerifying}
               />
-            </AuthFormProvider>
+            ) : (
+              <>
+                <AuthFormProvider
+                  schema={loginSchema}
+                  defaultValues={{
+                    email: "",
+                    password: "",
+                    rememberMe: false,
+                  }}
+                  onSubmit={handleLogin}
+                  className="space-y-6"
+                >
+                  <Divider variants={itemVariants} />
+
+                  {isVerified && (
+                    <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800 border border-green-200">
+                      Your email has been verified. You can now log in.
+                    </div>
+                  )}
+                  {isReset && (
+                    <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800 border border-green-200">
+                      Your password has been successfully reset. Please log in.
+                    </div>
+                  )}
+
+                  {isEmailChanged && (
+                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+                      <p className="text-sm text-green-800">
+                        Email updated successfully. Please log in with your new address.
+                      </p>
+                    </div>
+                  )}
+
+                  {isEmailTokenInvalid && (
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                      <p className="text-sm text-red-800">
+                        This confirmation link is invalid or has expired. Please request a new
+                        one from your account settings.
+                      </p>
+                    </div>
+                  )}
+
+                  {isEmailTaken && (
+                    <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-md">
+                      <p className="text-sm text-amber-800">
+                        Your new email was already taken by another account by the time you
+                        confirmed. Please try a different address.
+                      </p>
+                    </div>
+                  )}
+
+                  <AuthErrorAlert error={error} />
+
+                  <LoginForm
+                    variants={itemVariants}
+                    showPassword={showPassword}
+                    isLoading={isLoading}
+                    onTogglePassword={() => setShowPassword((prev) => !prev)}
+                  />
+                </AuthFormProvider>
+              </>
+            )}
           </motion.div>
         </motion.div>
       </div>

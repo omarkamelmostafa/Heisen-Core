@@ -278,6 +278,41 @@ export const updatePasswordValidationRules = [
     }),
 ];
 
+export const toggle2faValidationRules = [
+  body("enable")
+    .notEmpty()
+    .withMessage("Enable flag is required").bail()
+    .isBoolean()
+    .withMessage("Enable must be a boolean"),
+
+  body("currentPassword")
+    .notEmpty()
+    .withMessage("Current password is required").bail()
+    .isString()
+    .withMessage("Current password must be a string").bail()
+    .isLength({ max: 128 })
+    .withMessage("Password length exceeded limit"),
+];
+
+export const verify2faValidationRules = [
+  body("token")
+    .notEmpty()
+    .withMessage("Verification code is required").bail()
+    .isString()
+    .withMessage("Verification code must be a string").bail()
+    .isLength({ min: 6, max: 6 })
+    .withMessage("Verification code must be 6 digits").bail()
+    .isNumeric()
+    .withMessage("Verification code must contain only numbers")
+    .customSanitizer((value) => String(value)),
+
+  body("tempToken")
+    .notEmpty()
+    .withMessage("Temporary token is required").bail()
+    .isString()
+    .withMessage("Temporary token must be a string"),
+];
+
 export const emailChangeValidationRules = [
   body("newEmail")
     .notEmpty()

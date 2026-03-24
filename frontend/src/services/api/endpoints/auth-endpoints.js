@@ -52,6 +52,10 @@ class AuthEndpoints {
   get RESET_PASSWORD() {
     return `${this.PREFIX}/reset-password`;
   }
+
+  get VERIFY_2FA() {
+    return `${this.PREFIX}/verify-2fa`;
+  }
 }
 
 // Singleton instance

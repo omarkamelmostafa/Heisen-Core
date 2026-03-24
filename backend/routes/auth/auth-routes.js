@@ -10,6 +10,7 @@ import {
   handleResetPassword,
 } from "../../controllers/auth/password-reset.controller.js";
 import { handleResendVerification } from "../../controllers/auth/resend-verification.controller.js";
+import { handleVerify2fa } from "../../controllers/auth/verify-2fa.controller.js";
 import { handleValidationErrors } from "../../middleware/validation/index.js";
 import {
   emailVerificationValidationRules,
@@ -18,6 +19,7 @@ import {
   registerValidationRules,
   resetPasswordValidationRules,
   resendVerificationValidationRules,
+  verify2faValidationRules,
 } from "../../validators/validationRules.js";
 import {
   loginLimiter,
@@ -28,6 +30,7 @@ import {
   verifyEmailLimiter,
   resendVerificationLimiter,
   logoutLimiter,
+  verify2faLimiter,
 } from "../../middleware/security/rate-limiters.js";
 import { authTokenMiddleware } from "../../middleware/auth/authTokenMiddleware.js";
 
@@ -36,6 +39,15 @@ const router = express.Router();
 router
   .route("/login")
   .post(loginLimiter, loginValidationRules, handleValidationErrors, handleLogin);
+
+// POST /api/v1/auth/verify-2fa
+router.post(
+  "/verify-2fa",
+  verify2faLimiter,
+  verify2faValidationRules,
+  handleValidationErrors,
+  handleVerify2fa
+);
 
 router
   .route("/register")

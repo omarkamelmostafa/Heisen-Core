@@ -172,3 +172,29 @@ export const changePasswordLimiter = createRateLimiterMiddleware({
   },
   prefix: "rl:changepw:",
 });
+
+/**
+ * Toggle 2FA: 5 requests per 15 minutes per IP
+ */
+export const toggle2faLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  message: {
+    text: "Too many 2FA toggle attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:toggle2fa:",
+});
+
+/**
+ * Verify 2FA: 10 requests per 15 minutes per IP
+ */
+export const verify2faLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    text: "Too many verification attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:verify2fa:",
+});

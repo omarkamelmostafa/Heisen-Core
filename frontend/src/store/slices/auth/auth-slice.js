@@ -117,8 +117,9 @@ const authSlice = createSlice({
       resetPassword,
       bootstrapAuth,
       logoutAllDevices,
+      verify2fa,
     } = require("./auth-thunks");
-    const { updateProfile } = require("../user/user-thunks");
+    const { updateProfile, toggle2fa } = require("../user/user-thunks");
 
     // Helper to handle loading state
     const handlePending = (state) => {
@@ -147,10 +148,13 @@ const authSlice = createSlice({
       .addCase(loginUser.pending, handlePending)
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.error = null;
+        if (action.payload.data?.requiresTwoFactor) {
+          return;
+        }
         state.isAuthenticated = true;
         state.user = action.payload.data?.user;
         state.accessToken = action.payload.data?.accessToken || null;
-        state.error = null;
       })
       .addCase(loginUser.rejected, handleRejected);
 
@@ -232,6 +236,31 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(resetPassword.rejected, handleRejected);
+
+    // Verify 2FA
+    builder
+      .addCase(verify2fa.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(verify2fa.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.data?.user;
+        state.accessToken = action.payload.data?.accessToken || null;
+        state.error = null;
+      })
+      .addCase(verify2fa.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload?.message || "2FA verification failed";
+      });
+
+    // Toggle 2FA
+    builder.addCase(toggle2fa.fulfilled, (state, action) => {
+      if (state.user && action.payload.data?.twoFactorEnabled !== undefined) {
+        state.user.twoFactorEnabled = action.payload.data.twoFactorEnabled;
+      }
+    });
   },
 });
 

@@ -76,6 +76,21 @@ const UserSchema = new Schema(
       type: Date,
       select: false,
     },
+    twoFactorEnabled: {
+      type: Boolean,
+      default: false,
+    },
+
+    twoFactorCode: {
+      type: String,
+      select: false,
+    },
+
+    twoFactorExpiry: {
+      type: Date,
+      select: false,
+    },
+
     pendingEmail: {
       type: String,
       default: null,

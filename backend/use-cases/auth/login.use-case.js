@@ -5,6 +5,10 @@ import { comparePassword } from "../../utilities/auth/hash-utils.js";
 import { generateTokens } from "../../services/auth/token-service.js";
 import { sanitizeUserForResponse } from "../../utilities/auth/user-data-utils.js";
 import logger from "../../utilities/general/logger.js";
+import crypto from "crypto";
+import emailService from "../../services/email/email.service.js";
+import { generate2faTempToken } from "../../services/auth/token-service.js";
+import { generateVerificationCode } from "../../utilities/auth/crypto-utils.js";
 
 /**
  * Login Use Case — Pure business logic, no req/res.
@@ -66,6 +70,33 @@ export async function loginUseCase({ email, password, userAgent, ipAddress, reme
     const match = await comparePassword(password, foundUser.password);
     if (!match) {
       return invalidCredentials;
+    }
+
+    // 2FA Branch
+    if (foundUser.twoFactorEnabled) {
+      const otpCode = generateVerificationCode();
+      const hashedCode = crypto.createHash("sha256").update(otpCode).digest("hex");
+
+      foundUser.twoFactorCode = hashedCode;
+      foundUser.twoFactorExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
+      await foundUser.save();
+
+      await emailService.send2faCodeEmail(foundUser, otpCode);
+
+      const tempToken = generate2faTempToken(foundUser._id);
+
+      logger.info({ userId: foundUser._id }, "2FA OTP generated and sent");
+
+      return {
+        success: true,
+        statusCode: 200,
+        message: "Two-factor authentication required",
+        data: {
+          requiresTwoFactor: true,
+          tempToken,
+          message: "A verification code has been sent to your email",
+        },
+      };
     }
 
     // Success path — generate tokens (creates RefreshToken document in DB)

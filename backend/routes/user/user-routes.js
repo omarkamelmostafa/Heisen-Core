@@ -8,10 +8,11 @@ import {
 } from "../../middleware/security/rate-limiters.js";
 import { updateProfileValidationRules } from "../../validators/validationRules.js";
 import { handleValidationErrors } from "../../middleware/validation/validation-middleware.js";
-import { emailChangeLimiter, changePasswordLimiter } from "../../middleware/security/rate-limiters.js";
-import { emailChangeValidationRules, updatePasswordValidationRules } from "../../validators/validationRules.js";
+import { emailChangeLimiter, changePasswordLimiter, toggle2faLimiter } from "../../middleware/security/rate-limiters.js";
+import { emailChangeValidationRules, updatePasswordValidationRules, toggle2faValidationRules } from "../../validators/validationRules.js";
 import { handleRequestEmailChange, handleConfirmEmailChange } from "../../controllers/user/email-change.controller.js";
 import { handleChangePassword } from "../../controllers/user/change-password.controller.js";
+import { handleToggle2fa } from "../../controllers/user/toggle-2fa.controller.js";
 
 const router = express.Router();
 
@@ -53,6 +54,16 @@ router.post(
   updatePasswordValidationRules,
   handleValidationErrors,
   handleChangePassword
+);
+
+// PATCH /api/v1/user/security/2fa
+router.patch(
+  "/security/2fa",
+  toggle2faLimiter,
+  authTokenMiddleware,
+  toggle2faValidationRules,
+  handleValidationErrors,
+  handleToggle2fa
 );
 
 export default router;
