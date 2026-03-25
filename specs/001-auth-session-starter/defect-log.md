@@ -67,7 +67,8 @@ Status: OPEN
 - Date Updated: 2026-03-24T15:45:00Z
 - Classification: SECURITY VULNERABILITY  critical priority
 - Threat: Password change does not revoke sessions, allowing attackers with compromised tokens to retain access after password change.
-- Note: Compare eset-password.use-case.js (lines 85-93) which correctly implements 	okenVersion++ and RefreshToken.updateMany(). change-password.use-case.js missing both.
+- Note: Compare 
+eset-password.use-case.js (lines 85-93) which correctly implements 	okenVersion++ and RefreshToken.updateMany(). change-password.use-case.js missing both.
 - Blocker: YES
 
 ### DEF-004 Status: CLOSED  FIXED
@@ -89,3 +90,16 @@ Status: OPEN
 - DEF-004:  FIXED
 
 Escalation required: Both DEF-001 and DEF-003 exceed normal retry threshold.
+
+## Defect Record — DEF-005
+Date: 2026-03-24T15:55:00Z
+QA Run: 4
+Type: CONSTITUTION
+Severity: CRITICAL
+Route To: Implementation Engineer
+Phase: Phase 10 — Polish
+Description: Production backend contains raw `console.log` / `console.error` calls across middleware and core modules. Constitution §XI.1 forbids `console.log` in production code paths and requires use of `emitLogMessage()` or structured logger. Additionally, some console statements risk logging sensitive data.
+Evidence: occurrences in `backend/app.js` (console.log), `backend/config/redis.js` (console.warn), `backend/middleware/core/logging-middleware.js` (console.error), `backend/middleware/security/helmet-middleware.js` (console.log). Use grep to enumerate: `grep -R "console.(log|error|warn)" backend/`.
+Acceptance Criterion: Constitution §XI.1 compliance; remove all `console.*` from production code paths and replace with structured logging utility.
+Resolution Required: Replace `console.*` usages with `emitLogMessage()` or integrate `pino` structured logger; ensure no sensitive data is logged. Provide commit reference demonstrating replacements and run a code scan to confirm no remaining `console.*` occurrences.
+Status: OPEN

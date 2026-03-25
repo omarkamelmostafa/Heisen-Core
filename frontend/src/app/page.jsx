@@ -14,6 +14,7 @@ import { useSignOutAll } from "@/features/user/hooks/useSignOutAll";
 import { useToggle2fa } from "@/features/user/hooks/useToggle2fa";
 
 import { useEditProfile } from "@/features/user/hooks/useEditProfile";
+import { useProfilePhoto } from "@/features/user/hooks/useProfilePhoto";
 
 export default function ProfilePage() {
   const {
@@ -26,6 +27,7 @@ export default function ProfilePage() {
     isVerified,
     memberSince,
     lastLogin,
+    avatar,
   } = useUserProfile();
 
   const [activeSection, setActiveSection] = useState("profile");
@@ -38,6 +40,15 @@ export default function ProfilePage() {
     handleSave,
     defaultValues: editDefaultValues,
   } = useEditProfile({ firstname: firstName, lastname: lastName });
+
+  const {
+    previewUrl,
+    isUploading,
+    hasSelectedFile,
+    handleFileSelect,
+    handleUpload: onUploadPhoto,
+    handleCancel: onCancelPhoto,
+  } = useProfilePhoto();
 
   const {
     isSubmitting: isPasswordSubmitting,
@@ -79,6 +90,7 @@ export default function ProfilePage() {
           initials={initials}
           displayName={displayName}
           onLogout={handleLogout}
+          avatarUrl={avatar?.url}
         />
         <div className="w-full max-w-[1200px] mx-auto p-4 md:p-7">
           <SettingsMobileNav
@@ -106,6 +118,13 @@ export default function ProfilePage() {
                 onCancel={cancelEditing}
                 onSave={handleSave}
                 editDefaultValues={editDefaultValues}
+                avatarUrl={avatar?.url}
+                previewUrl={previewUrl}
+                isUploading={isUploading}
+                hasSelectedFile={hasSelectedFile}
+                onFileSelect={handleFileSelect}
+                onUploadPhoto={onUploadPhoto}
+                onCancelPhoto={onCancelPhoto}
               />
             ) : activeSection === "security" ? (
               <SecurityContent

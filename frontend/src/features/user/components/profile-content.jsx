@@ -1,8 +1,9 @@
 import * as React from "react"
+import { useRef } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Pencil, X } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Pencil, X, Camera } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -23,12 +24,21 @@ export function ProfileContent({
   onEdit,
   onCancel,
   onSave,
-  editDefaultValues
+  editDefaultValues,
+  avatarUrl,
+  previewUrl,
+  isUploading,
+  hasSelectedFile,
+  onFileSelect,
+  onUploadPhoto,
+  onCancelPhoto,
 }) {
   const form = useForm({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: editDefaultValues || { firstname: "", lastname: "" },
   });
+
+  const fileInputRef = useRef(null);
 
   // Sync form with default values when entering edit mode
   React.useEffect(() => {
@@ -75,11 +85,61 @@ export function ProfileContent({
         </div>
 
         <div className="flex items-start gap-4 mt-4">
-          <Avatar className="h-16 w-16">
-            <AvatarFallback className="text-xl font-semibold bg-muted text-muted-foreground">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+          <div className="flex flex-col items-center gap-2">
+            <div className="relative">
+              <Avatar className="h-16 w-16">
+                {avatarUrl && !previewUrl && (
+                  <AvatarImage src={avatarUrl} alt={displayName} />
+                )}
+                <AvatarFallback className="text-xl font-semibold bg-muted text-muted-foreground">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              {previewUrl && (
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="absolute inset-0 h-full w-full rounded-full object-cover"
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                className="absolute -bottom-0.5 -right-0.5 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center ring-2 ring-background hover:bg-primary/90 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Change profile photo"
+              >
+                <Camera className="h-3 w-3" />
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="hidden"
+                onChange={onFileSelect}
+              />
+            </div>
+            {hasSelectedFile && (
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={onUploadPhoto}
+                  disabled={isUploading}
+                  className="h-7 px-2.5 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                >
+                  {isUploading ? "Uploading..." : "Update"}
+                </button>
+                <button
+                  type="button"
+                  onClick={onCancelPhoto}
+                  disabled={isUploading}
+                  className="h-7 px-2.5 text-xs font-medium rounded-md text-muted-foreground hover:bg-muted transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
           <div className="flex flex-col gap-1.5 min-w-0">
             <h1 className="text-[17px] font-semibold text-foreground tracking-tight">{displayName}</h1>
             <span className="text-[13px] text-muted-foreground">{email}</span>

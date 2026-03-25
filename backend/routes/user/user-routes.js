@@ -13,6 +13,9 @@ import { emailChangeValidationRules, updatePasswordValidationRules, toggle2faVal
 import { handleRequestEmailChange, handleConfirmEmailChange } from "../../controllers/user/email-change.controller.js";
 import { handleChangePassword } from "../../controllers/user/change-password.controller.js";
 import { handleToggle2fa } from "../../controllers/user/toggle-2fa.controller.js";
+import { handleAvatarUpload } from "../../middleware/upload/multer-middleware.js";
+import { avatarUploadLimiter } from "../../middleware/security/rate-limiters.js";
+import { handleUploadAvatar } from "../../controllers/user/upload-avatar.controller.js";
 
 const router = express.Router();
 
@@ -27,6 +30,15 @@ router.patch(
   updateProfileValidationRules,
   handleValidationErrors,
   updateProfile
+);
+
+// POST /api/v1/user/profile/avatar
+router.post(
+  "/profile/avatar",
+  avatarUploadLimiter,
+  authTokenMiddleware,
+  handleAvatarUpload,
+  handleUploadAvatar
 );
 
 // POST /api/v1/user/email/request

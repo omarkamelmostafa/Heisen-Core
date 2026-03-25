@@ -1,5 +1,6 @@
 // services/cloudinaryService.js
 import cloudinary from "../config/cloudinary.js";
+import { Readable } from "stream";
 
 export class CloudinaryService {
   static async createUserFolder(userId) {
@@ -28,6 +29,49 @@ export class CloudinaryService {
         `Could not delete Cloudinary folder for user ${userId}:`,
         error.message
       );
+    }
+  }
+
+  static async uploadAvatar(userId, fileBuffer, mimetype) {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: `users/${userId}/avatars`,
+          public_id: "avatar",
+          resource_type: "image",
+          transformation: [
+            {
+              width: 400,
+              height: 400,
+              crop: "fill",
+              gravity: "face",
+              quality: "auto:good",
+              fetch_format: "auto",
+            },
+          ],
+          overwrite: true,
+          invalidate: true,
+        },
+        (error, result) => {
+          if (error) {
+            console.error(`Cloudinary upload error for user ${userId}:`, error.message);
+            reject(error);
+          } else {
+            resolve({ url: result.secure_url, publicId: result.public_id });
+          }
+        }
+      );
+      uploadStream.end(fileBuffer);
+    });
+  }
+
+  static async deleteImage(publicId) {
+    if (!publicId) return;
+    try {
+      await cloudinary.uploader.destroy(publicId);
+      console.log(`Successfully deleted image with publicId: ${publicId}`);
+    } catch (error) {
+      console.error(`Failed to delete image with publicId ${publicId}:`, error.message);
     }
   }
 }

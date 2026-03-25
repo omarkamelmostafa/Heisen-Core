@@ -49,3 +49,12 @@ export const toggle2fa = createAppThunk(
   },
   "Failed to update two-factor authentication"
 );
+
+export const uploadAvatar = createAppThunk(
+  "user/uploadAvatar",
+  async ({ file, onProgress }, { signal }) => {
+    const response = await userService.uploadAvatar(file, onProgress, { signal });
+    return response.data;
+  },
+  "Failed to upload profile photo"
+);

@@ -69,6 +69,20 @@ const userSlice = createSlice({
       })
       .addCase("user/updateProfile/rejected", handleRejected)
 
+      // Upload Avatar
+      .addCase("user/uploadAvatar/pending", handlePending)
+      .addCase("user/uploadAvatar/fulfilled", (state, action) => {
+        if (action.payload?.data?.user) {
+          state.profile = { ...state.profile, ...action.payload.data.user };
+        }
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase("user/uploadAvatar/rejected", (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
       // Change Password
       .addCase("user/changePassword/pending", handlePending)
       .addCase("user/changePassword/fulfilled", (state) => {
