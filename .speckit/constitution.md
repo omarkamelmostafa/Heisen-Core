@@ -29,7 +29,24 @@ Do not place feature-specific components in src/components/.
 PublicGuard and ProtectedGuard check isBootstrapComplete from Redux. They do NOT check isLoading. isLoading changes during form submissions and causes guards to unmount forms. isBootstrapComplete is set once after AuthBootstrap finishes and never changes again.
 
 ### Rule F4: No Direct Sonner Imports
-Only src/lib/notify.js imports from "sonner". Every other file uses import { notify } from "@/lib/notify". Toast calls use explicit parameter forwarding (id, description, duration, action). No spread operator to Sonner API.
+Only two files may import from "sonner":
+- src/lib/notify.js imports { toast } for the NotificationService facade
+- src/components/ui/sonner.jsx imports the Toaster component for mounting
+
+Every other file in the project must use:
+  import { NotificationService } from "@/lib/notify"
+
+Toast calls use NotificationService static methods:
+  NotificationService.success(msg, opts?)
+  NotificationService.error(msg, opts?)
+  NotificationService.warn(msg, opts?)
+  NotificationService.info(msg, opts?)
+  NotificationService.promise(promise, msgs)
+  NotificationService.loading(msg, opts?)
+  NotificationService.dismiss(id?)
+
+Options use explicit parameter forwarding (id, description, duration, action).
+No spread operator to Sonner API (Rule F9).
 
 ### Rule F5: Toast IDs for Interceptor Errors
 All interceptor toasts must use fixed IDs to prevent duplicate stacking: session-expired, global-403, global-429, global-500, global-5xx, global-network, cross-tab-logout.
@@ -235,7 +252,7 @@ These behaviors are implemented in the codebase but NOT explicitly tested. They 
 
 ## SECTION 9: Forbidden Patterns
 
-1. Any import from "sonner" in any file except src/lib/notify.js
+1. Any import from "sonner" in any file except src/lib/notify.js and src/components/ui/sonner.jsx
 2. useDispatch or useSelector inside a component (except infrastructure)
 3. dotenv.config() in app.js
 4. app.listen() in app.js
@@ -273,7 +290,7 @@ Total: 125 tests passing
 🌗 3.1 Theme system (dark/light)
 🎨 3.2 Design tokens
 ✨ 3.3 Clean layout
-🍞 3.4 Toast UX polish
+🍞 3.4 Toast UX polish ✅
 🦴 3.5 Loading skeletons
 
 🔐 Phase 4: Authorization

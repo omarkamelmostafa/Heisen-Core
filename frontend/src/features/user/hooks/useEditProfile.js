@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateProfile } from "@/store/slices/user/user-thunks";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 /**
  * Hook for managing profile name editing.
@@ -31,11 +31,11 @@ export function useEditProfile({ firstname, lastname }) {
         })
       ).unwrap();
 
-      notify.success("Profile updated successfully");
+      NotificationService.success("Profile updated successfully");
       setIsEditing(false);
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Failed to update profile");
+        NotificationService.error(error?.message || "Failed to update profile");
       }
     } finally {
       setIsSubmitting(false);

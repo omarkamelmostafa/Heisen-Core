@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { uploadAvatar } from "@/store/slices/user/user-thunks";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 export function useProfilePhoto() {
   const dispatch = useAppDispatch();
@@ -33,11 +33,11 @@ export function useProfilePhoto() {
     setIsUploading(true);
     try {
       await dispatch(uploadAvatar({ file: selectedFile })).unwrap();
-      notify.success("Profile photo updated successfully");
+      NotificationService.success("Profile photo updated successfully");
       clearSelection();
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Failed to upload photo");
+        NotificationService.error(error?.message || "Failed to upload photo");
       }
     } finally {
       setIsUploading(false);

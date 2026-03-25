@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { logoutAllDevices } from "@/store/slices/auth/auth-thunks";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 export function useSignOutAll() {
   const dispatch = useDispatch();
@@ -19,11 +19,11 @@ export function useSignOutAll() {
       channel.postMessage('LOGOUT');
       channel.close();
 
-      notify.success("All devices have been signed out");
+      NotificationService.success("All devices have been signed out");
       router.push("/login");
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Failed to sign out all devices");
+        NotificationService.error(error?.message || "Failed to sign out all devices");
       }
     } finally {
       setIsSigningOutAll(false);

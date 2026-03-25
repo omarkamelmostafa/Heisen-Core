@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle2fa } from "@/store/slices/user/user-thunks";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 export function useToggle2fa() {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export function useToggle2fa() {
 
   const handleToggle2fa = async () => {
     if (!password) {
-      notify.error("Please enter your password");
+      NotificationService.error("Please enter your password");
       return;
     }
 
@@ -43,7 +43,7 @@ export function useToggle2fa() {
         toggle2fa({ enable: !twoFactorEnabled, currentPassword: password })
       ).unwrap();
 
-      notify.success(
+      NotificationService.success(
         twoFactorEnabled
           ? "Two-factor authentication disabled"
           : "Two-factor authentication enabled"
@@ -51,7 +51,7 @@ export function useToggle2fa() {
       handleCloseDialogs();
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Failed to update 2FA");
+        NotificationService.error(error?.message || "Failed to update 2FA");
       }
     } finally {
       setIsToggling2fa(false);

@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { registerUser } from "@/store/slices/auth/auth-thunks";
 import { clearError } from "@/store/slices/auth/auth-slice";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,
@@ -32,7 +32,7 @@ export function useSignup() {
       const emailSent = result?.data?.emailSent !== false;
 
       if (emailSent) {
-        notify.success("Account created successfully!", {
+        NotificationService.success("Account created successfully!", {
           description: "Check your email to verify your account.",
         });
         // Redirect to check email page on success with timer enabled
@@ -40,7 +40,7 @@ export function useSignup() {
           `/verify-email?email=${encodeURIComponent(data.email)}&sent=${emailSent}`
         );
       } else {
-        notify.warning(
+        NotificationService.warn(
           "Account created, but we couldn't send the verification email. Please use Resend Code.",
           { id: "email-dispatch-warning", duration: 6000 }
         );

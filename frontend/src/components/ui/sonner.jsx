@@ -9,6 +9,7 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner";
+import { NotificationService } from "@/lib/notify"
 
 const Toaster = ({
   ...props
@@ -18,6 +19,11 @@ const Toaster = ({
   return (
     <Sonner
       theme={theme}
+      position={NotificationService.position}
+      richColors
+      closeButton
+      visibleToasts={3}
+      toastOptions={{ className: "font-sans text-sm" }}
       className="toaster group"
       icons={{
         success: <CircleCheckIcon className="size-4" />,

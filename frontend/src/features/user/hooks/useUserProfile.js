@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { clearCredentials } from "@/store/slices/auth/auth-slice";
 import { selectAuthUser, selectIsAuthenticated } from "@/store/slices/auth/auth-selectors";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 export function useUserProfile() {
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export function useUserProfile() {
       channel.postMessage('LOGOUT');
       channel.close();
 
-      notify.info("Signed out successfully");
+      NotificationService.info("Signed out successfully");
       router.push("/login");
     }
   };

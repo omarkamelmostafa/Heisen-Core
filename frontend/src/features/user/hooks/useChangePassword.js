@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changePassword } from "@/store/slices/user/user-thunks";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 export function useChangePassword() {
   const dispatch = useDispatch();
@@ -11,11 +11,11 @@ export function useChangePassword() {
     setIsSubmitting(true);
     try {
       await dispatch(changePassword(formData)).unwrap();
-      notify.success("Password updated successfully");
+      NotificationService.success("Password updated successfully");
       if (resetForm) resetForm();
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Failed to change password");
+        NotificationService.error(error?.message || "Failed to change password");
       }
     } finally {
       setIsSubmitting(false);

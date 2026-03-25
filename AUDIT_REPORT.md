@@ -346,6 +346,46 @@
 
 ---
 
+## PHASE 3.4 — TOAST UX POLISH (COMPLETED)
+
+**Status**: ✅ COMPLETE | **Date**: March 25, 2026
+
+### Changes Implemented
+
+| Batch | Scope | Files Modified | Status |
+|-------|-------|----------------|--------|
+| Batch 1 | Core redesign | `src/lib/notify.js`, `src/components/ui/sonner.jsx`, `src/app/layout.jsx` | ✅ |
+| Batch 2 | Call site migration + alias removal | 12 hook files + notify.js cleanup | ✅ |
+
+### Architecture Changes
+
+**Before**: Plain object export with method wrappers  
+**After**: Static class with centralized configuration
+
+### Migration Summary
+
+| Metric | Count |
+|--------|-------|
+| Files migrated | 12 |
+| `notify.*` calls replaced | 34 |
+| `notify.warning()` → `NotificationService.warn()` | 5 |
+| New `loading()` method added | 1 |
+| Deprecated alias removed | 1 |
+
+### Verification
+
+- [x] Zero files import `{ notify }` from `@/lib/notify`
+- [x] Zero `notify.` method calls remain in codebase
+- [x] Toaster props consolidated into `sonner.jsx`
+- [x] Position synced via `NotificationService.position` getter
+- [x] All 7 fixed toast IDs preserved
+
+### Files Modified (Batch 2)
+
+`auth-bootstrap.jsx`, `useLogin.js`, `useSignup.js`, `useVerifyEmail.js`, `useChangeEmail.js`, `useChangePassword.js`, `useEditProfile.js`, `useProfilePhoto.js`, `useSignOutAll.js`, `useToggle2fa.js`, `useUserProfile.js`, `base-client.js`, `notify.js`
+
+---
+
 ## VERIFICATION SUMMARY
 
 ### ✅ Passing Checks

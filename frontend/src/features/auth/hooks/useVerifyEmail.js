@@ -6,7 +6,7 @@ import {
   resendVerification,
 } from "@/store/slices/auth/auth-thunks";
 import { clearError, setAuthError } from "@/store/slices/auth/auth-slice";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,
@@ -83,7 +83,7 @@ export function useVerifyEmail() {
           token: code,
         })
       ).unwrap();
-      
+
       // On success, redirect to login page with success state
       router.push("/login?verified=true");
     } catch (err) {
@@ -93,26 +93,26 @@ export function useVerifyEmail() {
 
   const handleResendCode = async () => {
     if (!email) {
-      notify.error("No email address found. Please go back and try again.");
+      NotificationService.error("No email address found. Please go back and try again.");
       return;
     }
 
     try {
       await dispatch(resendVerification(email)).unwrap();
-      
-      notify.success("Verification code sent!", {
+
+      NotificationService.success("Verification code sent!", {
         description: `A new 6-digit code has been sent to ${email}.`,
       });
-      
+
       setTimeLeft(300);
       setCanResend(false);
     } catch (err) {
       console.error("Resend error:", err);
       // Error notification is usually handled by thunk/middleware or locally
       if (err.errorCode === "RATE_LIMITED") {
-         notify.error("Too many attempts. Please wait a few minutes.");
+        NotificationService.error("Too many attempts. Please wait a few minutes.");
       } else {
-         notify.error("Failed to resend verification code. Please try again.");
+        NotificationService.error("Failed to resend verification code. Please try again.");
       }
     }
   };
