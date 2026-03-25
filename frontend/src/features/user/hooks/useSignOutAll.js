@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { logoutAllDevices } from "@/store/slices/auth/auth-thunks";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 
 export function useSignOutAll() {
   const dispatch = useDispatch();

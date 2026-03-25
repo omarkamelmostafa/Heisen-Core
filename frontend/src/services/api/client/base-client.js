@@ -8,7 +8,7 @@ import {
 } from "@/lib/config/api-config";
 import storeAccessor from "@/store/store-accessor";
 import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 import { normalizeError } from "@/lib/utils/error-utils";
 
 let isRefreshing = false;

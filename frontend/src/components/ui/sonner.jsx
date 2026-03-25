@@ -9,7 +9,7 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner";
-import { NotificationService } from "@/lib/notify"
+import { NotificationService } from "@/lib/notifications/notify"
 
 const Toaster = ({
   ...props

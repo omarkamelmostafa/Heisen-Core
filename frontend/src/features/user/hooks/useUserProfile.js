@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { clearCredentials } from "@/store/slices/auth/auth-slice";
 import { selectAuthUser, selectIsAuthenticated } from "@/store/slices/auth/auth-selectors";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 
 export function useUserProfile() {
   const dispatch = useAppDispatch();

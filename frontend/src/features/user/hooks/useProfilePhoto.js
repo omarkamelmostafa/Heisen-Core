@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { uploadAvatar } from "@/store/slices/user/user-thunks";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 
 export function useProfilePhoto() {
   const dispatch = useAppDispatch();

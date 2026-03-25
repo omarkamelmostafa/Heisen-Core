@@ -6,7 +6,7 @@ import {
   resendVerification,
 } from "@/store/slices/auth/auth-thunks";
 import { clearError, setAuthError } from "@/store/slices/auth/auth-slice";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,

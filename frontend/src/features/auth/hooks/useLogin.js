@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { loginUser, verify2fa, resend2fa } from "@/store/slices/auth/auth-thunks";
 import { clearError } from "@/store/slices/auth/auth-slice";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,

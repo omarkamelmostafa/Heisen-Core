@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle2fa } from "@/store/slices/user/user-thunks";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 
 export function useToggle2fa() {
   const dispatch = useDispatch();
