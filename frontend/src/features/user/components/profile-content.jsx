@@ -1,3 +1,4 @@
+// frontend/src/features/user/components/profile-content.jsx
 import * as React from "react"
 import { useRef } from "react"
 import { useForm } from "react-hook-form"

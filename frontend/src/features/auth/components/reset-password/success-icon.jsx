@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/success-icon.jsx
+// frontend/src/features/auth/components/reset-password/success-icon.jsx
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { iconVariants } from "@/lib/animations/auth/authAnimations";

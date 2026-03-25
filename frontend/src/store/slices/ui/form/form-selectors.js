@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/form/form-selectors.js
 export const selectFormState = (state) => state.ui.form;
 
 export const selectFormsDirty = (state) => state.ui.form.dirty;

@@ -1,3 +1,4 @@
+// frontend/audit-report.md
 # Frontend Architecture Validation Audit
 
 ## Step 1: Map Current File Tree

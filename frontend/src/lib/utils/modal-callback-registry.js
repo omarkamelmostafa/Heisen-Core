@@ -1,3 +1,4 @@
+// frontend/src/lib/utils/modal-callback-registry.js
 /**
  * ModalCallbackRegistry
  * 

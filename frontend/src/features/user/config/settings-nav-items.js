@@ -1,3 +1,4 @@
+// frontend/src/features/user/config/settings-nav-items.js
 import { User, Lock, MessageSquare, Settings2, BellRing } from "lucide-react";
 
 export const SETTINGS_NAV_ITEMS = [

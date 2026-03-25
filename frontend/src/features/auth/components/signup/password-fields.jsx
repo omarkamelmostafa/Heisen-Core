@@ -1,4 +1,4 @@
-// frontend/src/components/auth/signup/password-fields.jsx
+// frontend/src/features/auth/components/signup/password-fields.jsx
 import { FormField } from "@/features/auth/components/forms/form-field";
 import { signupContent as content } from "@/lib/config/auth/signup";
 

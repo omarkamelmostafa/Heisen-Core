@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/search/search-selectors.js
 export const selectSearchState = (state) => state.ui.search;
 
 export const selectSearchQueries = (state) => state.ui.search.queries;

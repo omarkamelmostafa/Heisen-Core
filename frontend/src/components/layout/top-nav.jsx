@@ -1,3 +1,4 @@
+// frontend/src/components/layout/top-nav.jsx
 "use client"
 
 import * as React from "react"

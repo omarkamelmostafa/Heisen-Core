@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/layout/layout-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

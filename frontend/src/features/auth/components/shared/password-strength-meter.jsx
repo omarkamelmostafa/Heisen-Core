@@ -1,4 +1,4 @@
-// frontend/src/components/auth/shared/password-strength-meter.jsx
+// frontend/src/features/auth/components/shared/password-strength-meter.jsx
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";

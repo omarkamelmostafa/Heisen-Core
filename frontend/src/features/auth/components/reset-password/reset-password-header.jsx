@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/reset-password-header.jsx
+// frontend/src/features/auth/components/reset-password/reset-password-header.jsx
 import { Logo } from "@/components/ui/logo";
 import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";
 

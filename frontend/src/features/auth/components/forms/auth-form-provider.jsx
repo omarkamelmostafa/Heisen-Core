@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forms/auth-form-provider.jsx
+// frontend/src/features/auth/components/forms/auth-form-provider.jsx
 "use client";
 
 import { FormProvider, useForm } from "react-hook-form";

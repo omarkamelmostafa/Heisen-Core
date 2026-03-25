@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/scroll/scroll-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

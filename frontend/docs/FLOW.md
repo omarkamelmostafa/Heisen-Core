@@ -1,3 +1,4 @@
+// frontend/docs/FLOW.md
 # Frontend Architectural Flow Documentation
 
 This document describes the core architectural patterns and data flows within the frontend application.

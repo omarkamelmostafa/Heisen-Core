@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/success-state.jsx
+// frontend/src/features/auth/components/verify-email/success-state.jsx
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { VerifyEmailHeader } from "./verify-email-header";

@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/errors/errors-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

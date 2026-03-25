@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forms/auth-submit-button.jsx
+// frontend/src/features/auth/components/forms/auth-submit-button.jsx
 
 "use client";
 

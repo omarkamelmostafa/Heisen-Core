@@ -1,3 +1,4 @@
+// frontend/src/features/auth/components/forms/auth-error-alert.jsx
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 

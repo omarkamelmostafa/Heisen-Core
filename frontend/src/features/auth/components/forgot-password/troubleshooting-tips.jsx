@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forgot-password/troubleshooting-tips.jsx
+// frontend/src/features/auth/components/forgot-password/troubleshooting-tips.jsx
 import { forgotPasswordContent as content } from "@/lib/config/auth/forgot-password";
 
 export function TroubleshootingTips() {

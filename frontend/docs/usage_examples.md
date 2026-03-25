@@ -1,3 +1,4 @@
+// frontend/docs/usage_examples.md
 # Frontend Usage Examples
 
 This guide provides practical examples on how to use the core services and configurations within the application.

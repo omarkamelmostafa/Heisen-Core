@@ -1,3 +1,4 @@
+// frontend/src/features/user/hooks/useProfilePhoto.js
 import { useState, useCallback } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { uploadAvatar } from "@/store/slices/user/user-thunks";

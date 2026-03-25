@@ -1,3 +1,4 @@
+// frontend/src/features/user/components/settings-mobile-nav.jsx
 "use client"
 
 import * as React from "react"

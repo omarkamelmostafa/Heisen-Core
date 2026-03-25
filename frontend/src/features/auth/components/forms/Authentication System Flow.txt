@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forms/Authentication System Flow.txt
+// frontend/src/features/auth/components/forms/Authentication System Flow.txt
 # Authentication System Flow: React Hook Form + Zod Architecture
 
 ## Role

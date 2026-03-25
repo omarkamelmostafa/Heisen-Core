@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forgot-password/success-actions.jsx
+// frontend/src/features/auth/components/forgot-password/success-actions.jsx
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

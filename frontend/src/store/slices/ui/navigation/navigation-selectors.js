@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/navigation/navigation-selectors.js
 export const selectNavigationState = (state) => state.ui.navigation;
 
 export const selectLayout = (state) => state.ui.navigation.layout;

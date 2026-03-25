@@ -1,4 +1,4 @@
-// frontend/src/components/auth/signup/signup-options.jsx
+// frontend/src/features/auth/components/signup/signup-options.jsx
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";

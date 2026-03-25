@@ -1,3 +1,4 @@
+// frontend/src/lib/config/auth/login.js
 export const loginContent = {
   appName: "Fantasy Coach",
   header: {

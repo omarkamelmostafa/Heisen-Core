@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/loading/loading-selectors.js
 export const selectLoadingState = (state) => state.ui.loading;
 
 export const selectGlobalLoading = (state) => state.ui.loading.global;

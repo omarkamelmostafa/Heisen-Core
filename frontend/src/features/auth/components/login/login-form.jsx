@@ -1,4 +1,4 @@
-// frontend/src/components/auth/login/login-form.jsx
+// frontend/src/features/auth/components/login/login-form.jsx
 
 import { motion } from "framer-motion";
 import { FormField } from "@/features/auth/components/forms/form-field";

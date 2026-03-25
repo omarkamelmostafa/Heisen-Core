@@ -1,3 +1,4 @@
+// frontend/src/lib/config/auth/verify-email.js
 export const verifyEmailContent = {
   appName: "Fantasy Coach",
   header: {

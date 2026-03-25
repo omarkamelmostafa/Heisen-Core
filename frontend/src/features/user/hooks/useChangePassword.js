@@ -1,3 +1,4 @@
+// frontend/src/features/user/hooks/useChangePassword.js
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changePassword } from "@/store/slices/user/user-thunks";

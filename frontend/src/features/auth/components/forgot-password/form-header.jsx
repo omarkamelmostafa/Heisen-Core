@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forgot-password/form-header.jsx
+// frontend/src/features/auth/components/forgot-password/form-header.jsx
 import { motion } from "framer-motion";
 import { forgotPasswordContent as content } from "@/lib/config/auth/forgot-password";
 

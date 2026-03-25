@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forgot-password/form-state.jsx
+// frontend/src/features/auth/components/forgot-password/form-state.jsx
 import { motion } from "framer-motion";
 import { containerVariants } from "@/lib/animations/auth/authAnimations";
 import { FormHeader } from "./form-header";

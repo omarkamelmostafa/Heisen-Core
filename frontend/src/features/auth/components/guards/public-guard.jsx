@@ -1,3 +1,4 @@
+// frontend/src/features/auth/components/guards/public-guard.jsx
 "use client";
 
 import { useEffect } from "react";

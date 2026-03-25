@@ -1,3 +1,4 @@
+// frontend/src/features/user/components/security-content.jsx
 "use client"
 
 import * as React from "react"

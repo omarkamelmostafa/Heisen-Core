@@ -1,3 +1,4 @@
+// frontend/docs/legacy_tasks.md
 # Legacy Task Notes (headache.txt Archive)
 
 > [!NOTE]

@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/navigation/navigation-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

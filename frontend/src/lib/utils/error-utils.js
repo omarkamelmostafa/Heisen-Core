@@ -1,3 +1,4 @@
+// frontend/src/lib/utils/error-utils.js
 /**
  * Normalizes API and JavaScript errors into a consistent structure.
  * @param {Error|Object} error The error object to normalize.

@@ -1,3 +1,4 @@
+// frontend/src/middleware.js
 import { NextResponse } from "next/server";
 
 const REFRESH_TOKEN_COOKIE_KEY = "refresh_token";

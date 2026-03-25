@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/index.js
 import { combineReducers } from "@reduxjs/toolkit";
 
 // ─── Import Reducers ────────────────────────────────────────────────

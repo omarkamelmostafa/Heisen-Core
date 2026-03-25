@@ -1,3 +1,4 @@
+// frontend/src/lib/notifications/notify.js
 /**
  * NotificationService — Static Facade over Sonner toast library.
  *

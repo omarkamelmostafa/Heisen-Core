@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/success-message.jsx
+// frontend/src/features/auth/components/reset-password/success-message.jsx
 import { motion } from "framer-motion";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
 import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";

@@ -1,3 +1,4 @@
+// frontend/src/features/auth/hooks/useForgotPassword.js
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { forgotPassword } from "@/store/slices/auth/auth-thunks";
