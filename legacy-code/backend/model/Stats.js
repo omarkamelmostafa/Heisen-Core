@@ -34,21 +34,3 @@ const StatsSchema = new mongoose.Schema(
 
 const Stats = mongoose.model("Stats", StatsSchema);
 export default Stats;
-
-// "Expected Goals": [String],
-// "Ball Possession": [String],
-// "Goal Attempts": [String],
-// "Shots on Goal": [String],
-// "Shots off Goal": [String],
-// "Free Kicks": [String],
-// "Corner Kicks": [String],
-// "Offsides": [String],
-// "Throw-ins": [String],
-// "Goalkeeper Saves": [String],
-// "Fouls": [String],
-// "Yellow Cards": [String],
-// "Total Passes": [String],
-// "Tackles": [String],
-// "Attacks": [String],
-// "Dangerous Attacks": [String],
-// "Clearances Completed": [String],

@@ -5,7 +5,7 @@ const originalContent = content;
 
 // Fix 1
 content = content.replace(
-  /passwordRules\("newPassword"\)\s*\.custom\(\(password, \{ req \}\) => \{[\s\S]*?return true;\s*\}\),/,
+  /passwordRules\("newPassword"\)\s*\.custom\(\(password, \{ req \}\) => \{\[\s\S\]*?return true;\s*\}\),/,
   'passwordRules("newPassword"),'
 );
 console.log('Fix 1 replaces:', content !== originalContent);

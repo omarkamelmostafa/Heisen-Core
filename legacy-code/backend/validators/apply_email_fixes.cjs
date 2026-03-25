@@ -47,13 +47,13 @@ code = code.replace('const passwordRules', emailRulesCode);
 
 // 4. Replace in register
 code = code.replace(
-  /body\("email"\)\s*\.notEmpty\(\)\s*\.withMessage\("Email is required"\)\.bail\(\)\s*\.isEmail\(\)\s*\.withMessage\("Please provide a valid email address"\)\s*\.normalizeEmail\(\)\s*\.isLength\(\{ max: 254 \}\)\s*\.withMessage\("Email must be no more than 254 characters long"\)\s*\.custom\(\(email\) => \{[\s\S]*?return true;\s*\}\),/,
+  /body\("email"\)\s*\.notEmpty\(\)\s*\.withMessage\("Email is required"\)\.bail\(\)\s*\.isEmail\(\)\s*\.withMessage\("Please provide a valid email address"\)\s*\.normalizeEmail\(\)\s*\.isLength\(\{ max: 254 \}\)\s*\.withMessage\("Email must be no more than 254 characters long"\)\s*\.custom\(\(email\) => \{\[\s\S\]*?return true;\s*\}\),/,
   'emailRules({ checkDisposable: true }),'
 );
 
 // 5. Replace in updateProfile (essentially identical block to register)
 code = code.replace(
-  /body\("email"\)\s*\.notEmpty\(\)\s*\.withMessage\("Email is required"\)\.bail\(\)\s*\.isEmail\(\)\s*\.withMessage\("Please provide a valid email address"\)\s*\.normalizeEmail\(\)\s*\.isLength\(\{ max: 254 \}\)\s*\.withMessage\("Email must be no more than 254 characters long"\)\s*\.custom\(\(email\) => \{[\s\S]*?return true;\s*\}\),/,
+  /body\("email"\)\s*\.notEmpty\(\)\s*\.withMessage\("Email is required"\)\.bail\(\)\s*\.isEmail\(\)\s*\.withMessage\("Please provide a valid email address"\)\s*\.normalizeEmail\(\)\s*\.isLength\(\{ max: 254 \}\)\s*\.withMessage\("Email must be no more than 254 characters long"\)\s*\.custom\(\(email\) => \{\[\s\S\]*?return true;\s*\}\),/,
   'emailRules({ checkDisposable: true }),'
 );
 

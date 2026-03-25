@@ -3,7 +3,7 @@ let code = fs.readFileSync('validationRules.js', 'utf8');
 
 // Fix 1: Remove Personal Info Check from updatePasswordValidationRules
 code = code.replace(
-  /passwordRules\("newPassword"\)\s*\.custom\(\(password, \{ req \}\) => \{[\s\S]*?return true;\s*\}\),/,
+  /passwordRules\("newPassword"\)\s*\.custom\(\(password, \{ req \}\) => \{\[\s\S\]*?return true;\s*\}\),/,
   'passwordRules("newPassword"),'
 );
 

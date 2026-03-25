@@ -3,7 +3,6 @@ import { combineReducers } from "@reduxjs/toolkit";
 // ─── Import Reducers ────────────────────────────────────────────────
 import layoutReducer from "./layout/layout-slice";
 import modalReducer from "./modal/modal-slice";
-import notificationReducer from "./notification/notification-slice";
 import loadingReducer from "./loading/loading-slice";
 import confirmationReducer from "./confirmation/confirmation-slice";
 import navigationReducer from "./navigation/navigation-slice";
@@ -17,7 +16,6 @@ import performanceReducer from "./performance/performance-slice";
 // ─── Export Actions ─────────────────────────────────────────────────
 export * from "./layout/layout-slice";
 export * from "./modal/modal-slice";
-export * from "./notification/notification-slice";
 export * from "./loading/loading-slice";
 export * from "./confirmation/confirmation-slice";
 export * from "./navigation/navigation-slice";
@@ -31,7 +29,6 @@ export * from "./performance/performance-slice";
 // ─── Export Selectors ───────────────────────────────────────────────
 export * from "./layout/layout-selectors";
 export * from "./modal/modal-selectors";
-export * from "./notification/notification-selectors";
 export * from "./loading/loading-selectors";
 export * from "./confirmation/confirmation-selectors";
 export * from "./navigation/navigation-selectors";
@@ -43,14 +40,11 @@ export * from "./errors/errors-selectors";
 export * from "./performance/performance-selectors";
 
 // ─── Export Thunks ──────────────────────────────────────────────────
-export * from "./ui-thunks";
-
 // ─── Combine under 'ui' namespace ───────────────────────────────────
 // State shape: state.ui.theme, state.ui.layout, state.ui.modal, etc.
 export const uiReducer = combineReducers({
   layout: layoutReducer,
   modal: modalReducer,
-  notification: notificationReducer,
   loading: loadingReducer,
   confirmation: confirmationReducer,
   navigation: navigationReducer,
