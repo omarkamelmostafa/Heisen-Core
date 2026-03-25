@@ -156,3 +156,13 @@ export const verify2fa = createAppThunk(
   },
   "2FA verification failed"
 );
+
+/** Resend 2FA code */
+export const resend2fa = createAppThunk(
+  "auth/resend2fa",
+  async (data, { signal }) => {
+    const response = await authService.resend2fa(data, { signal });
+    return response.data;
+  },
+  "Failed to resend verification code"
+);

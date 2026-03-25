@@ -200,6 +200,19 @@ export const verify2faLimiter = createRateLimiterMiddleware({
 });
 
 /**
+ * Resend 2FA: 3 requests per 15 minutes per IP
+ */
+export const resend2faLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 3,
+  message: {
+    text: "Too many resend attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:resend-2fa:",
+});
+
+/**
  * Avatar Upload: 10 requests per 15 minutes per IP
  */
 export const avatarUploadLimiter = createRateLimiterMiddleware({

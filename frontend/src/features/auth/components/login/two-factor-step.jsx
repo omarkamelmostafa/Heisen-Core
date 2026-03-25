@@ -9,7 +9,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { ShieldCheck, ArrowLeft } from "lucide-react";
 
-export function TwoFactorStep({ onVerify, onCancel, isVerifying }) {
+export function TwoFactorStep({
+  onVerify,
+  onCancel,
+  onResend,
+  isVerifying,
+  isResending,
+}) {
   const [otpValue, setOtpValue] = useState("");
 
   const handleSubmit = (e) => {
@@ -59,6 +65,17 @@ export function TwoFactorStep({ onVerify, onCancel, isVerifying }) {
           {isVerifying ? "Verifying..." : "Verify Code"}
         </Button>
       </form>
+
+      <div className="text-center">
+        <button
+          type="button"
+          onClick={onResend}
+          disabled={isResending || isVerifying}
+          className="text-sm text-muted-foreground hover:text-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isResending ? "Sending new code..." : "Resend code"}
+        </button>
+      </div>
 
       <div className="text-center">
         <button

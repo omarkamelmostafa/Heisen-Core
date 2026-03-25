@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { loginUser, verify2fa } from "@/store/slices/auth/auth-thunks";
+import { loginUser, verify2fa, resend2fa } from "@/store/slices/auth/auth-thunks";
 import { clearError } from "@/store/slices/auth/auth-slice";
 import { notify } from "@/lib/notify";
 import {
@@ -24,6 +24,7 @@ export function useLogin() {
   const [requiresTwoFactor, setRequiresTwoFactor] = useState(false);
   const [tempToken, setTempToken] = useState(null);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
   const returnTo = searchParams.get("returnTo") || "/";
   const isVerified = searchParams.get("verified") === "true";
@@ -108,6 +109,20 @@ export function useLogin() {
     setTempToken(null);
   };
 
+  const handleResendCode = async () => {
+    setIsResending(true);
+    try {
+      await dispatch(resend2fa({ tempToken })).unwrap();
+      notify.success("A new verification code has been sent to your email");
+    } catch (error) {
+      if (!error?.isGlobalError) {
+        notify.error(error?.message || "Failed to resend code");
+      }
+    } finally {
+      setIsResending(false);
+    }
+  };
+
   return {
     user,
     isAuthenticated,
@@ -125,5 +140,7 @@ export function useLogin() {
     isVerifying,
     handleVerify2fa,
     handleCancel2fa,
+    isResending,
+    handleResendCode,
   };
 }

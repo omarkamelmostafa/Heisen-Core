@@ -14,16 +14,16 @@ export async function verify2faUseCase({ token, tempToken, userAgent, ipAddress 
       if (jwtError.name === "TokenExpiredError") {
         return {
           success: false,
-          statusCode: 401,
-          message: "Verification session expired. Please login again.",
-          errorCode: "TOKEN_EXPIRED",
+          statusCode: 400,
+          message: "Verification session has expired. Please log in again to receive a new code.",
+          errorCode: "TWO_FACTOR_SESSION_EXPIRED",
         };
       }
       return {
         success: false,
-        statusCode: 401,
-        message: "Invalid verification session. Please login again.",
-        errorCode: "TOKEN_INVALID",
+        statusCode: 400,
+        message: "Invalid verification session. Please log in again.",
+        errorCode: "TWO_FACTOR_SESSION_INVALID",
       };
     }
 
@@ -31,9 +31,9 @@ export async function verify2faUseCase({ token, tempToken, userAgent, ipAddress 
     if (!decoded.UserInfo || decoded.UserInfo.type !== "2fa") {
       return {
         success: false,
-        statusCode: 401,
-        message: "Invalid verification session. Please login again.",
-        errorCode: "TOKEN_INVALID",
+        statusCode: 400,
+        message: "Invalid verification session. Please log in again.",
+        errorCode: "TWO_FACTOR_SESSION_INVALID",
       };
     }
 
@@ -47,9 +47,9 @@ export async function verify2faUseCase({ token, tempToken, userAgent, ipAddress 
     if (!user) {
       return {
         success: false,
-        statusCode: 401,
-        message: "Invalid credentials",
-        errorCode: "INVALID_CREDENTIALS",
+        statusCode: 400,
+        message: "Verification failed. Please log in again.",
+        errorCode: "TWO_FACTOR_SESSION_INVALID",
       };
     }
 

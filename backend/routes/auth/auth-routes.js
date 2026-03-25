@@ -1,3 +1,4 @@
+import { body } from "express-validator";
 import express from "express";
 import { handleRegister } from "../../controllers/auth/register.controller.js";
 import { handleLogin } from "../../controllers/auth/login.controller.js";
@@ -11,6 +12,7 @@ import {
 } from "../../controllers/auth/password-reset.controller.js";
 import { handleResendVerification } from "../../controllers/auth/resend-verification.controller.js";
 import { handleVerify2fa } from "../../controllers/auth/verify-2fa.controller.js";
+import { handleResend2fa } from "../../controllers/auth/resend-2fa.controller.js";
 import { handleValidationErrors } from "../../middleware/validation/index.js";
 import {
   emailVerificationValidationRules,
@@ -31,6 +33,7 @@ import {
   resendVerificationLimiter,
   logoutLimiter,
   verify2faLimiter,
+  resend2faLimiter,
 } from "../../middleware/security/rate-limiters.js";
 import { authTokenMiddleware } from "../../middleware/auth/authTokenMiddleware.js";
 
@@ -47,6 +50,22 @@ router.post(
   verify2faValidationRules,
   handleValidationErrors,
   handleVerify2fa
+);
+
+// POST /api/v1/auth/resend-2fa
+router.post(
+  "/resend-2fa",
+  resend2faLimiter,
+  [
+    body("tempToken")
+      .notEmpty()
+      .withMessage("Verification session token is required")
+      .bail()
+      .isString()
+      .withMessage("Invalid token format"),
+  ],
+  handleValidationErrors,
+  handleResend2fa
 );
 
 router
