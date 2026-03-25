@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials, clearCredentials, setLoading, setBootstrapComplete } from "@/store/slices/auth/auth-slice";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 
 // API configs - hardcoded directly to bypass any existing axios intercepts
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";

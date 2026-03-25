@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateProfile } from "@/store/slices/user/user-thunks";
-import { NotificationService } from "@/lib/notify";
+import { NotificationService } from "@/lib/notifications/notify";
 
 /**
  * Hook for managing profile name editing.
