@@ -56,6 +56,10 @@ class AuthEndpoints {
   get VERIFY_2FA() {
     return `${this.PREFIX}/verify-2fa`;
   }
+
+  get RESEND_2FA() {
+    return `${this.PREFIX}/resend-2fa`;
+  }
 }
 
 // Singleton instance

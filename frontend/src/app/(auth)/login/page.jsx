@@ -38,6 +38,8 @@ export default function LoginPage() {
     isVerifying,
     handleVerify2fa,
     handleCancel2fa,
+    isResending,
+    handleResendCode,
   } = useLogin();
 
   const isLoadingPage = useSimulatedLoading(0);
@@ -66,7 +68,9 @@ export default function LoginPage() {
               <TwoFactorStep
                 onVerify={handleVerify2fa}
                 onCancel={handleCancel2fa}
+                onResend={handleResendCode}
                 isVerifying={isVerifying}
+                isResending={isResending}
               />
             ) : (
               <>

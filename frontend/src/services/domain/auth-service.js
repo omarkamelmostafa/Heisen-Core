@@ -140,6 +140,15 @@ class AuthService {
     return normalizeResponse(response);
   }
 
+  async resend2fa(data, config = {}) {
+    const response = await publicClient.post(
+      authEndpoints.RESEND_2FA,
+      data,
+      config
+    );
+    return normalizeResponse(response);
+  }
+
   async verifyEmail(verificationData, config = {}) {
     try {
       const response = await publicClient.post(
