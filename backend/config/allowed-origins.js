@@ -19,9 +19,3 @@ export const isOriginAllowed = (origin) => {
   return allowedOrigins.includes(origin);
 };
 
-// export const allowedOrigins = [
-//   "https://www.yoursite.com",
-//   "http://localhost:3000", // client port
-//   "http://localhost:4000", // server port
-//   "http://localhost:5000", // scraper server port
-// ];
