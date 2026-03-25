@@ -1,4 +1,4 @@
-// frontend/src/components/auth/signup/welcome-section.jsx
+// frontend/src/features/auth/components/signup/welcome-section.jsx
 import { motion } from "framer-motion";
 import { signupContent as content } from "@/lib/config/auth/signup";
 

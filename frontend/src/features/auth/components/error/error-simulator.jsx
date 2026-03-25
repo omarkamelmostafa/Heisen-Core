@@ -1,4 +1,4 @@
-// frontend/src/components/auth/error/error-simulator.jsx
+// frontend/src/features/auth/components/error/error-simulator.jsx
 "use client";
 
 import { Button } from "@/components/ui/button";

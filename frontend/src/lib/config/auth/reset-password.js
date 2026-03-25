@@ -1,3 +1,4 @@
+// frontend/src/lib/config/auth/reset-password.js
 export const resetPasswordContent = {
   appName: "Fantasy Coach",
   header: {

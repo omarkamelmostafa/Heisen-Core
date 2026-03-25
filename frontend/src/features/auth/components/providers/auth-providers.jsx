@@ -1,4 +1,4 @@
-// frontend/src/components/auth/providers/auth-providers.jsx
+// frontend/src/features/auth/components/providers/auth-providers.jsx
 "use client";
 
 import { Button } from "@/components/ui/button";

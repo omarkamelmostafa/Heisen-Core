@@ -1,4 +1,4 @@
-// frontend/src/components/auth/panels/background-decoration.jsx
+// frontend/src/features/auth/components/panels/background-decoration.jsx
 "use client";
 
 import { motion } from "framer-motion";

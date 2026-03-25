@@ -1,3 +1,4 @@
+// frontend/src/components/providers/theme-provider.jsx
 "use client"
 
 import * as React from "react"

@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/modal/modal-selectors.js
 export const selectModalState = (state) => state.ui.modal;
 
 export const selectActiveModals = (state) => state.ui.modal.active;

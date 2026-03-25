@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/performance/performance-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

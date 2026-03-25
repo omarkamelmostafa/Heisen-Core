@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forms/form-field.jsx
+// frontend/src/features/auth/components/forms/form-field.jsx
 
 "use client";
 

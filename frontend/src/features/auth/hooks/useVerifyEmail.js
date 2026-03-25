@@ -1,3 +1,4 @@
+// frontend/src/features/auth/hooks/useVerifyEmail.js
 import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";

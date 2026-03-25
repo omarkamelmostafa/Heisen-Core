@@ -1,3 +1,4 @@
+// frontend/src/lib/config/auth/forgot-password.js
 export const forgotPasswordContent = {
   appName: "Fantasy Coach",
   header: {

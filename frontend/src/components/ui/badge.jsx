@@ -1,3 +1,4 @@
+// frontend/src/components/ui/badge.jsx
 import * as React from "react"
 import { cva } from "class-variance-authority";
 import { Slot } from "radix-ui"

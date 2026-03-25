@@ -1,3 +1,4 @@
+// frontend/src/features/user/components/settings-sidebar.jsx
 "use client"
 
 import * as React from "react"

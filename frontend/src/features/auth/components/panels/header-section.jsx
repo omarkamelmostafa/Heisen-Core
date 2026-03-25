@@ -1,4 +1,4 @@
-// frontend/src/components/auth/panels/header-section.jsx
+// frontend/src/features/auth/components/panels/header-section.jsx
 "use client";
 
 import { motion } from "framer-motion";

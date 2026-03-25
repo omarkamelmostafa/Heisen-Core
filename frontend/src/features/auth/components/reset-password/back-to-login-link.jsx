@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/back-to-login-link.jsx
+// frontend/src/features/auth/components/reset-password/back-to-login-link.jsx
 import Link from "next/link";
 import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";
 

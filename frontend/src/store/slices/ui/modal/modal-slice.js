@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/modal/modal-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

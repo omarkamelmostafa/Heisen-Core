@@ -1,3 +1,4 @@
+// frontend/src/store/slices/auth/auth-thunks.js
 import { authService } from "@/services/domain/auth-service";
 import { tokenManager } from "@/services/auth/token-manager";
 import { refreshQueue } from "@/services/api/refresh-queue";

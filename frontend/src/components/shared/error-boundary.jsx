@@ -1,3 +1,4 @@
+// frontend/src/components/shared/error-boundary.jsx
 "use client";
 
 import React from "react";

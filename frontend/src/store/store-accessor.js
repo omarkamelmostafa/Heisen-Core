@@ -1,3 +1,4 @@
+// frontend/src/store/store-accessor.js
 /**
  * Store Accessor Utility
  * Helps decouple domain services and API clients from the Redux store singleton.

@@ -1,4 +1,4 @@
-// Performance selectors
+// frontend/src/store/slices/ui/performance/performance-selectors.js
 export const selectPerformance = (state) => state.ui.performance;
 export const selectPerformanceMetrics = (state) => state.ui.performance.metrics;
 export const selectDebugSettings = (state) => state.ui.performance.debug;

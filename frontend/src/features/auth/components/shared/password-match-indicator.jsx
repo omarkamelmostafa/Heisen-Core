@@ -1,4 +1,4 @@
-// frontend/src/components/auth/shared/password-match-indicator.jsx
+// frontend/src/features/auth/components/shared/password-match-indicator.jsx
 "use client";
 
 import { motion } from "framer-motion";

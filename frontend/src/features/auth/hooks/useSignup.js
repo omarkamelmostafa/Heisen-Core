@@ -1,3 +1,4 @@
+// frontend/src/features/auth/hooks/useSignup.js
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";

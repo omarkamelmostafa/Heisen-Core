@@ -1,3 +1,4 @@
+// frontend/src/app/global-error.jsx
 "use client";
 
 import { useEffect } from "react";

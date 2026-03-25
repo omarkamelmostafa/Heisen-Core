@@ -1,4 +1,4 @@
-// Layout selectors
+// frontend/src/store/slices/ui/layout/layout-selectors.js
 export const selectLayout = (state) => state.ui.layout;
 export const selectSidebar = (state) => state.ui.layout.sidebar;
 export const selectSidebarCollapsed = (state) => state.ui.layout.sidebar.collapsed;

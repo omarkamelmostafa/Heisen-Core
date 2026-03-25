@@ -1,4 +1,4 @@
-// frontend/src/components/auth/panels/auth-right-panel.jsx
+// frontend/src/features/auth/components/panels/auth-right-panel.jsx
 "use client";
 
 import { motion } from "framer-motion";

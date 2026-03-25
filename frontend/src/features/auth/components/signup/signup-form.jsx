@@ -1,4 +1,4 @@
-// frontend/src/components/auth/signup/signup-form.jsx
+// frontend/src/features/auth/components/signup/signup-form.jsx
 import { motion } from "framer-motion";
 import { FormField } from "@/features/auth/components/forms/form-field";
 import { AuthSubmitButtons } from "@/features/auth/components/forms/auth-submit-button";

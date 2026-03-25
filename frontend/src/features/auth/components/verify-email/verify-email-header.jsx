@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/verify-email-header.jsx
+// frontend/src/features/auth/components/verify-email/verify-email-header.jsx
 import { Logo } from "@/components/ui/logo";
 import { motion } from "framer-motion";
 import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";

@@ -1,3 +1,4 @@
+// frontend/src/lib/config/auth/signup.js
 export const signupContent = {
   appName: "Fantasy Coach",
   header: {

@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/help-text.jsx
+// frontend/src/features/auth/components/verify-email/help-text.jsx
 import { motion } from "framer-motion";
 import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
 

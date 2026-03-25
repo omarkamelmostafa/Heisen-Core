@@ -1,4 +1,4 @@
-// Error selectors
+// frontend/src/store/slices/ui/errors/errors-selectors.js
 export const selectErrors = (state) => state.ui.errors;
 export const selectBoundaryErrors = (state) => state.ui.errors.boundaryErrors;
 export const selectGlobalError = (state) => state.ui.errors.globalError;

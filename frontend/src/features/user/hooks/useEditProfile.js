@@ -1,3 +1,4 @@
+// frontend/src/features/user/hooks/useEditProfile.js
 import { useState } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateProfile } from "@/store/slices/user/user-thunks";

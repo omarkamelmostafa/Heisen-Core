@@ -1,4 +1,4 @@
-// frontend/src/components/auth/login/divider.jsx
+// frontend/src/features/auth/components/login/divider.jsx
 import { motion } from "framer-motion";
 import { loginContent } from "@/lib/config/auth/login";
 import { signupContent } from "@/lib/config/auth/signup";

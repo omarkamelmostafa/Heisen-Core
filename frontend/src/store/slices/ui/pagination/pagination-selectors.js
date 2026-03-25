@@ -1,3 +1,4 @@
+// frontend/src/store/slices/ui/pagination/pagination-selectors.js
 export const selectPaginationState = (state) => state.ui.pagination;
 
 export const selectPaginationPages = (state) => state.ui.pagination.pages;

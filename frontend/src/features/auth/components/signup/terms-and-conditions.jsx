@@ -1,4 +1,4 @@
-// frontend/src/components/auth/signup/terms-and-conditions.jsx
+// frontend/src/features/auth/components/signup/terms-and-conditions.jsx
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";

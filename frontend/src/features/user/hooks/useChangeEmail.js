@@ -1,3 +1,4 @@
+// frontend/src/features/user/hooks/useChangeEmail.js
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { requestEmailChange } from "@/store/slices/user/user-thunks";

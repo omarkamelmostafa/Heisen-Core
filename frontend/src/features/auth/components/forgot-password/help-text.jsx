@@ -1,4 +1,4 @@
-// frontend/src/components/auth/forgot-password/help-text.jsx
+// frontend/src/features/auth/components/forgot-password/help-text.jsx
 import { motion } from "framer-motion";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
 import { forgotPasswordContent as content } from "@/lib/config/auth/forgot-password";

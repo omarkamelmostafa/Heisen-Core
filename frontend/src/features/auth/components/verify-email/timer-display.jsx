@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/timer-display.jsx
+// frontend/src/features/auth/components/verify-email/timer-display.jsx
 import { Clock } from "lucide-react";
 import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
 

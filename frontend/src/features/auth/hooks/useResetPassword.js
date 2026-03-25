@@ -1,3 +1,4 @@
+// frontend/src/features/auth/hooks/useResetPassword.js
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";

@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/password-requirements.jsx
+// frontend/src/features/auth/components/reset-password/password-requirements.jsx
 import { motion } from "framer-motion";
 import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";
 

@@ -1,3 +1,4 @@
+// frontend/src/features/auth/components/auth-bootstrap.jsx
 "use client";
 
 import { useEffect, useRef } from "react";

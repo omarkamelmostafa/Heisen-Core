@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/security-tips.jsx
+// frontend/src/features/auth/components/reset-password/security-tips.jsx
 import { motion } from "framer-motion";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
 import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";

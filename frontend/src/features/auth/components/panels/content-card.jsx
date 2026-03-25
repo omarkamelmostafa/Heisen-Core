@@ -1,4 +1,4 @@
-// frontend/src/components/auth/panels/content-card.jsx
+// frontend/src/features/auth/components/panels/content-card.jsx
 "use client";
 
 import { motion } from "framer-motion";

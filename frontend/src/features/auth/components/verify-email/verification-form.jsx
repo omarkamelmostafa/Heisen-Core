@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/verification-form.jsx
+// frontend/src/features/auth/components/verify-email/verification-form.jsx
 
 import { motion } from "framer-motion";
 import { VerificationInput } from "./verification-input";

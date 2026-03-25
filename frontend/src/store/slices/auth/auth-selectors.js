@@ -1,3 +1,4 @@
+// frontend/src/store/slices/auth/auth-selectors.js
 import { createSelector } from "@reduxjs/toolkit";
 import { cookieService } from "@/services/storage/cookie-service";
 

@@ -1,4 +1,4 @@
-// frontend/src/components/auth/error/production-error-trigger.jsx
+// frontend/src/features/auth/components/error/production-error-trigger.jsx
 
 "use client";
 

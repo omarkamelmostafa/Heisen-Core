@@ -1,4 +1,4 @@
-// frontend/src/components/auth/error/dev-wrapper.jsx
+// frontend/src/features/auth/components/error/dev-wrapper.jsx
 "use client";
 
 import { useErrorToggle } from "@/hooks/use-error-toggle";

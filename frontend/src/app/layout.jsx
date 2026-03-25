@@ -1,3 +1,4 @@
+// frontend/src/app/layout.jsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import { ExtensionErrorHandler } from "@/components/utils/error-handler";

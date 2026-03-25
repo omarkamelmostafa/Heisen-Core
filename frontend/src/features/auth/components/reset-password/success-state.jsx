@@ -1,4 +1,4 @@
-// frontend/src/components/auth/reset-password/success-state.jsx
+// frontend/src/features/auth/components/reset-password/success-state.jsx
 import { motion } from "framer-motion";
 import { successVariants } from "@/lib/animations/auth/authAnimations";
 import { SuccessIcon } from "./success-icon";

@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/back-to-login-link.jsx
+// frontend/src/features/auth/components/verify-email/back-to-login-link.jsx
 import Link from "next/link";
 import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
 

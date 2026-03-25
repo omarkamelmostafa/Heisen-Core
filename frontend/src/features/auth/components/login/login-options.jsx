@@ -1,4 +1,4 @@
-// frontend/src/components/auth/login/login-options.jsx
+// frontend/src/features/auth/components/login/login-options.jsx
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";

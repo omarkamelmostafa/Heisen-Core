@@ -1,4 +1,4 @@
-// frontend/src/components/auth/verify-email/resend-code-section.jsx
+// frontend/src/features/auth/components/verify-email/resend-code-section.jsx
 import { Button } from "@/components/ui/button";
 import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
 

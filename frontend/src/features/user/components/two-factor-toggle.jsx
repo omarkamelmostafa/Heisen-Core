@@ -1,3 +1,4 @@
+// frontend/src/features/user/components/two-factor-toggle.jsx
 "use client";
 
 import { ShieldCheck, ShieldOff, Smartphone } from "lucide-react";
