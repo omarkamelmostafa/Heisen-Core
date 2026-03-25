@@ -1,8 +1,3 @@
-import League from "../../model/League.js";
-import Album from "../../model/Album.js";
-import Favorite from "../../model/Favorite.js";
-import Photo from "../../model/Photo.js";
-
 export const processUserData = async (user, excludedFields = []) => {
   const userObject = user.toObject ? user.toObject() : user;
 

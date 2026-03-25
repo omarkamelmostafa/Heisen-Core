@@ -1,3 +1,5 @@
+// frontend/src/store/slices/ui/ui-thunks.js
+
 import {
   showNotification,
   setGlobalLoading,
