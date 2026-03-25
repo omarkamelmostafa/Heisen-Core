@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { loginUser, verify2fa, resend2fa } from "@/store/slices/auth/auth-thunks";
 import { clearError } from "@/store/slices/auth/auth-slice";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 import {
   selectAuthLoading,
   selectIsAuthenticated,
@@ -62,7 +62,7 @@ export function useLogin() {
         return;
       }
 
-      notify.success(
+      NotificationService.success(
         `Welcome back${result?.user?.firstName ? ', ' + result.user.firstName : ''}!`
       );
 
@@ -72,7 +72,7 @@ export function useLogin() {
       channel.close();
     } catch (err) {
       if (err.errorCode === "ACCOUNT_NOT_VERIFIED") {
-        notify.warning("Please verify your email before logging in.");
+        NotificationService.warn("Please verify your email before logging in.");
         dispatch(clearError());
         router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
         return;
@@ -90,14 +90,14 @@ export function useLogin() {
     setIsVerifying(true);
     try {
       await dispatch(verify2fa({ token: otpCode, tempToken })).unwrap();
-      notify.success("Login successful");
+      NotificationService.success("Login successful");
       sessionStorage.setItem("login_source", "true");
       const channel = new BroadcastChannel("auth_channel");
       channel.postMessage("LOGIN");
       channel.close();
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Verification failed");
+        NotificationService.error(error?.message || "Verification failed");
       }
     } finally {
       setIsVerifying(false);
@@ -113,10 +113,10 @@ export function useLogin() {
     setIsResending(true);
     try {
       await dispatch(resend2fa({ tempToken })).unwrap();
-      notify.success("A new verification code has been sent to your email");
+      NotificationService.success("A new verification code has been sent to your email");
     } catch (error) {
       if (!error?.isGlobalError) {
-        notify.error(error?.message || "Failed to resend code");
+        NotificationService.error(error?.message || "Failed to resend code");
       }
     } finally {
       setIsResending(false);

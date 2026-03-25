@@ -57,16 +57,7 @@ export default function RootLayout({ children }) {
               </ErrorBoundary>
             </AuthBootstrap>
           </StoreProvider>
-          <Toaster
-            position="top-center"
-            richColors
-            closeButton
-            duration={4000}
-            visibleToasts={3}
-            toastOptions={{
-              className: "font-sans text-sm",
-            }}
-          />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials, clearCredentials, setLoading, setBootstrapComplete } from "@/store/slices/auth/auth-slice";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 
 // API configs - hardcoded directly to bypass any existing axios intercepts
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -33,7 +33,7 @@ export function AuthBootstrap({ children }) {
         }
 
         dispatch(clearCredentials());
-        notify.info("You were signed out from another tab", {
+        NotificationService.info("You were signed out from another tab", {
           id: "cross-tab-logout",
         });
         setTimeout(() => {

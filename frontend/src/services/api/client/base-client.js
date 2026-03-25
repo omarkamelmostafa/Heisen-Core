@@ -8,7 +8,7 @@ import {
 } from "@/lib/config/api-config";
 import storeAccessor from "@/store/store-accessor";
 import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
-import { notify } from "@/lib/notify";
+import { NotificationService } from "@/lib/notify";
 import { normalizeError } from "@/lib/utils/error-utils";
 
 let isRefreshing = false;
@@ -130,7 +130,7 @@ class BaseClient {
         storeAccessor.dispatch(clearCredentials());
         storeAccessor.dispatch(setSessionExpired(true));
 
-        notify.warning("Your session has expired. Please log in again.", {
+        NotificationService.warn("Your session has expired. Please log in again.", {
           id: "session-expired",
         });
 
@@ -174,7 +174,7 @@ class BaseClient {
             isRefreshing = false;
             processQueue(err, null);
 
-            notify.warning("Your session has expired. Please log in again.", {
+            NotificationService.warn("Your session has expired. Please log in again.", {
               id: "session-expired",
             });
 
@@ -185,7 +185,7 @@ class BaseClient {
 
     if (!error.response) {
       error.isGlobalError = true;
-      notify.error("Unable to connect. Check your internet connection.", {
+      NotificationService.error("Unable to connect. Check your internet connection.", {
         id: "global-network",
       });
     } else {
@@ -193,7 +193,7 @@ class BaseClient {
         const errorCode = error.response?.data?.errorCode;
         if (errorCode !== "ACCOUNT_NOT_VERIFIED") {
           error.isGlobalError = true;
-          notify.error("You don't have permission to perform this action.", {
+          NotificationService.error("You don't have permission to perform this action.", {
             id: "global-403",
           });
         }
@@ -213,17 +213,17 @@ class BaseClient {
           }
         }
 
-        notify.warning(waitMessage, { id: "global-429" });
+        NotificationService.warn(waitMessage, { id: "global-429" });
       }
       if (error.response.status === 500) {
         error.isGlobalError = true;
-        notify.error("Something went wrong on our end. Please try again.", {
+        NotificationService.error("Something went wrong on our end. Please try again.", {
           id: "global-500",
         });
       }
       if ([502, 503, 504].includes(error.response.status)) {
         error.isGlobalError = true;
-        notify.error("Service temporarily unavailable. Please try again.", {
+        NotificationService.error("Service temporarily unavailable. Please try again.", {
           id: "global-5xx",
         });
       }
