@@ -31,7 +31,7 @@ export const sanitizeUserForResponse = (user) => {
     email: user.email,
     // roles: user.roles,
     // permissions: user.permissions,
-    profilePicture: user.profilePicture,
+    avatar: user.avatar || null,
     isVerified: user.isVerified,
     twoFactorEnabled: user.twoFactorEnabled || false,
     lastLogin: user.lastLogin,

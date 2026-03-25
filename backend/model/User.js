@@ -33,16 +33,15 @@ const UserSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    avatar: {
+      url: { type: String, default: null },
+      publicId: { type: String, default: null },
+    },
     password: {
       type: String,
       required: [true, "Password is required."],
       minlength: [8, "Password must be at least 8 characters long."],
       select: false, // Never return password in queries by default
-    },
-    profilePicture: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Photo",
-      default: null,
     },
     albums: [
       {

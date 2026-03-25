@@ -119,7 +119,7 @@ const authSlice = createSlice({
       logoutAllDevices,
       verify2fa,
     } = require("./auth-thunks");
-    const { updateProfile, toggle2fa } = require("../user/user-thunks");
+    const { updateProfile, toggle2fa, uploadAvatar } = require("../user/user-thunks");
 
     // Helper to handle loading state
     const handlePending = (state) => {
@@ -140,6 +140,14 @@ const authSlice = createSlice({
       .addCase(updateProfile.fulfilled, (state, action) => {
         if (action.payload?.data?.user) {
           state.user = action.payload.data.user;
+        }
+      });
+
+    // Upload Avatar — merges updated user (with avatar) into auth state
+    builder
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        if (action.payload?.data?.user) {
+          state.user = { ...state.user, ...action.payload.data.user };
         }
       });
 

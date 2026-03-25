@@ -10,7 +10,7 @@ import {
   Settings,
   CreditCard
 } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -24,14 +24,20 @@ import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "./theme-toggle"
 
-export function TopNav({ initials, displayName, onLogout }) {
+export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
   return (
     <header className="sticky top-0 z-50 w-full bg-card border-b border-border">
       <div className="mx-auto flex h-[60px] max-w-[1200px] items-center px-4 md:px-7 gap-3 md:gap-5">
         {/* Logo area */}
         <div className="flex items-center gap-3 shrink-0">
           <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center">
-            <span className="text-white font-bold text-sm">C</span>
+            {/* <span className="text-white font-bold text-sm">C</span> */}
+            <span
+              className="hidden md:inline text-sm font-bold tracking-wider uppercase text-primary-foreground"
+            >
+              C
+            </span>
+            {/* <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">C</span> */}
           </div>
           <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">
             Heisen Core
@@ -51,21 +57,22 @@ export function TopNav({ initials, displayName, onLogout }) {
 
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-1 md:gap-1.5 shrink-0">
-          <ThemeToggle />
 
-          <Button variant="ghost" size="icon" className="relative h-9 w-9">
+          <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled>
             <Bell className="h-[18px] w-[18px]" />
             <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
-              4
+              +10
             </span>
           </Button>
 
-          <Button variant="ghost" size="icon" className="relative h-9 w-9">
+          <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled>
             <MessageSquare className="h-[18px] w-[18px]" />
             <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
-              1
+              +10
             </span>
           </Button>
+
+          <ThemeToggle />
 
           <Separator orientation="vertical" className="h-6 mx-1 hidden md:block" />
 
@@ -73,6 +80,7 @@ export function TopNav({ initials, displayName, onLogout }) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-1.5 md:gap-2 px-1.5 md:px-2.5 py-1.5 h-auto">
                 <Avatar className="h-[30px] w-[30px]">
+                  {avatarUrl && <AvatarImage src={avatarUrl} alt={displayName || "User"} />}
                   <AvatarFallback className="text-xs font-semibold">
                     {initials}
                   </AvatarFallback>

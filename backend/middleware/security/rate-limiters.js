@@ -198,3 +198,16 @@ export const verify2faLimiter = createRateLimiterMiddleware({
   },
   prefix: "rl:verify2fa:",
 });
+
+/**
+ * Avatar Upload: 10 requests per 15 minutes per IP
+ */
+export const avatarUploadLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    text: "Too many upload attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:avatar-upload:",
+});

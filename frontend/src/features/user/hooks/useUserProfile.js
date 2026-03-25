@@ -46,6 +46,7 @@ export function useUserProfile() {
   const initials = firstName || lastName ? (firstName.charAt(0) + (lastName.charAt(0) || "")).toUpperCase() : "";
   const displayName = [firstName, lastName].filter(Boolean).join(" ") || user?.email?.split("@")[0] || "";
   const email = user?.email || "";
+  const avatar = user?.avatar || null;
   const isVerified = user?.isVerified ?? false;
   const lastLogin = user?.lastLogin ? format(new Date(user.lastLogin), "MMMM d, yyyy 'at' h:mm a") : "—";
   const memberSince = user?.createdAt ? format(new Date(user.createdAt), "MMMM d, yyyy") : "Unknown";
@@ -56,6 +57,7 @@ export function useUserProfile() {
     lastName,
     displayName,
     email,
+    avatar,
     isVerified,
     lastLogin,
     isAuthenticated,
