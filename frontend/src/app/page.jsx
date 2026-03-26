@@ -1,171 +1,35 @@
 // frontend/src/app/page.jsx
 "use client";
 
-import { useState } from "react";
-import { useUserProfile } from "@/features/user/hooks/useUserProfile";
 import { ProtectedGuard } from "@/features/auth/components/guards/protected-guard";
 import { TopNav } from "@/components/layout/top-nav";
-import { SettingsSidebar } from "@/features/user/components/settings-sidebar";
-import { ProfileContent } from "@/features/user/components/profile-content";
-import { SettingsMobileNav } from "@/features/user/components/settings-mobile-nav";
-import { SecurityContent } from "@/features/user/components/security-content";
-import { useChangePassword } from "@/features/user/hooks/useChangePassword";
-import { useChangeEmail } from "@/features/user/hooks/useChangeEmail";
-import { useSignOutAll } from "@/features/user/hooks/useSignOutAll";
-import { useToggle2fa } from "@/features/user/hooks/useToggle2fa";
+import { useUserProfile } from "@/features/user/hooks/useUserProfile";
+import { DashboardContent } from "@/features/user/components/dashboard-content";
 
-import { useEditProfile } from "@/features/user/hooks/useEditProfile";
-import { useProfilePhoto } from "@/features/user/hooks/useProfilePhoto";
-import { useTransitionReady } from "@/hooks/use-transition-ready";
-import { ProfileSkeleton } from "@/features/user/components/skeletons/profile-skeleton";
-import { SecuritySkeleton } from "@/features/user/components/skeletons/security-skeleton";
-
-export default function ProfilePage() {
+export default function DashboardPage() {
   const {
-    handleLogout,
+    firstName,
+    email,
     initials,
     displayName,
-    firstName,
-    lastName,
-    email,
-    isVerified,
-    memberSince,
-    lastLogin,
+    handleLogout,
     avatar,
   } = useUserProfile();
 
-  const [activeSection, setActiveSection] = useState("profile");
-
-  const {
-    isEditing,
-    isSubmitting: isProfileSubmitting,
-    startEditing,
-    cancelEditing,
-    handleSave,
-    defaultValues: editDefaultValues,
-  } = useEditProfile({ firstname: firstName, lastname: lastName });
-
-  const {
-    previewUrl,
-    isUploading,
-    hasSelectedFile,
-    handleFileSelect,
-    handleUpload: onUploadPhoto,
-    handleCancel: onCancelPhoto,
-  } = useProfilePhoto();
-
-  const {
-    isSubmitting: isPasswordSubmitting,
-    handleSave: onPasswordSave
-  } = useChangePassword();
-
-  const {
-    isSubmitting: isEmailSubmitting,
-    emailSent,
-    sentToEmail,
-    handleSave: handleEmailSave,
-    resetEmailChange,
-  } = useChangeEmail({ currentEmail: email });
-
-  const { isSigningOutAll, handleSignOutAll } = useSignOutAll();
-
-  const {
-    twoFactorEnabled,
-    isToggling2fa,
-    showEnableDialog,
-    showDisableDialog,
-    password,
-    setPassword,
-    handleOpenEnable,
-    handleOpenDisable,
-    handleCloseDialogs,
-    handleToggle2fa,
-  } = useToggle2fa();
-
-  const { isReady } = useTransitionReady({ delay: 0 });
-
-  const handleSectionChange = (sectionId) => {
-    setActiveSection(sectionId);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <ProtectedGuard>
-      <div className="min-h-screen bg-muted">
+      <div className="min-h-screen bg-background">
         <TopNav
           initials={initials}
           displayName={displayName}
           onLogout={handleLogout}
           avatarUrl={avatar?.url}
         />
-        <div className="w-full max-w-[1200px] mx-auto p-4 md:p-7">
-          <SettingsMobileNav
-            activeId={activeSection}
-            onItemClick={handleSectionChange}
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <DashboardContent
+            firstName={firstName}
+            email={email}
           />
-          <div className="flex items-start gap-5">
-            <SettingsSidebar
-              activeId={activeSection}
-              onItemClick={handleSectionChange}
-            />
-            {activeSection === "profile" ? (
-              !isReady ? (
-                <ProfileSkeleton />
-              ) : (
-                <ProfileContent
-                  initials={initials}
-                  displayName={displayName}
-                  firstName={firstName}
-                  lastName={lastName}
-                  email={email}
-                  isVerified={isVerified}
-                  memberSince={memberSince}
-                  lastLogin={lastLogin}
-                  isEditing={isEditing}
-                  isSubmitting={isProfileSubmitting}
-                  onEdit={startEditing}
-                  onCancel={cancelEditing}
-                  onSave={handleSave}
-                  editDefaultValues={editDefaultValues}
-                  avatarUrl={avatar?.url}
-                  previewUrl={previewUrl}
-                  isUploading={isUploading}
-                  hasSelectedFile={hasSelectedFile}
-                  onFileSelect={handleFileSelect}
-                  onUploadPhoto={onUploadPhoto}
-                  onCancelPhoto={onCancelPhoto}
-                />
-              )
-            ) : activeSection === "security" ? (
-              !isReady ? (
-                <SecuritySkeleton />
-              ) : (
-                <SecurityContent
-                  currentEmail={email}
-                  isEmailVerified={isVerified}
-                  isEmailSubmitting={isEmailSubmitting}
-                  emailSent={emailSent}
-                  sentToEmail={sentToEmail}
-                  onEmailSave={handleEmailSave}
-                  onEmailReset={resetEmailChange}
-                  isPasswordSubmitting={isPasswordSubmitting}
-                  onPasswordSave={onPasswordSave}
-                  isSigningOutAll={isSigningOutAll}
-                  onSignOutAll={handleSignOutAll}
-                  twoFactorEnabled={twoFactorEnabled}
-                  isToggling2fa={isToggling2fa}
-                  showEnableDialog={showEnableDialog}
-                  showDisableDialog={showDisableDialog}
-                  password={password}
-                  setPassword={setPassword}
-                  onOpenEnable2fa={handleOpenEnable}
-                  onOpenDisable2fa={handleOpenDisable}
-                  onClose2faDialogs={handleCloseDialogs}
-                  onConfirmToggle2fa={handleToggle2fa}
-                />
-              )
-            ) : null}
-          </div>
         </div>
       </div>
     </ProtectedGuard>

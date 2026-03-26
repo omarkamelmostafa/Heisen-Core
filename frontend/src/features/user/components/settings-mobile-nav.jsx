@@ -2,9 +2,10 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { SETTINGS_NAV_ITEMS } from "../config/settings-nav-items"
 
-export function SettingsMobileNav({ activeId = "profile", onItemClick }) {
+export function SettingsMobileNav({ activeId = "profile" }) {
   return (
     <div className="lg:hidden mb-4 bg-card rounded-xl border border-border shadow-sm">
       <div className="flex overflow-x-auto p-1.5 gap-1 no-scrollbar">
@@ -39,14 +40,14 @@ export function SettingsMobileNav({ activeId = "profile", onItemClick }) {
           }
 
           return (
-            <button
+            <Link
               key={item.id}
-              onClick={() => onItemClick(item.id)}
+              href={item.href}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground text-[13px] font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer"
             >
               <Icon className="h-3.5 w-3.5 shrink-0" />
               <span>{item.label}</span>
-            </button>
+            </Link>
           );
         })}
       </div>
