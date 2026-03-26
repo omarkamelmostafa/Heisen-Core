@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SecuritySkeleton() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 rounded-lg border border-border bg-card p-6">
       {/* Email Change Section */}
       <div className="space-y-4">
         <Skeleton className="h-6 w-32" />

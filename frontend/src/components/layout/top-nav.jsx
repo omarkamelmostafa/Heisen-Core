@@ -2,6 +2,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import {
   Search,
   Bell,
@@ -9,7 +10,9 @@ import {
   ChevronDown,
   LogOut,
   Settings,
-  CreditCard
+  CreditCard,
+  Shield,
+  User
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -30,11 +33,11 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
     <header className="sticky top-0 z-50 w-full bg-card border-b border-border">
       <div className="mx-auto flex h-[60px] max-w-[1200px] items-center px-4 md:px-7 gap-3 md:gap-5">
         {/* Logo area */}
-        <div className="flex items-center gap-3 shrink-0">
+        <Link href="/" className="flex items-center gap-3 shrink-0">
           <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center">
             {/* <span className="text-white font-bold text-sm">C</span> */}
             <span
-              className="hidden md:inline text-sm font-bold tracking-wider uppercase text-primary-foreground"
+              className="md:inline text-sm font-bold tracking-wider uppercase text-primary-foreground"
             >
               C
             </span>
@@ -43,7 +46,7 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
           <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">
             Heisen Core
           </span>
-        </div>
+        </Link>
 
         <Separator orientation="vertical" className="!h-[35%] hidden md:block" />
 
@@ -93,11 +96,20 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem className="cursor-pointer">
-                My Profile
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/settings/profile" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  My Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link href="/settings/security" className="flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Security Settings
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem disabled className="cursor-not-allowed opacity-60">
+              <DropdownMenuItem disabled className="cursor-not-allowed opacity-60" >
                 <Settings className="h-4 w-4 mr-2" />
                 Account Settings
                 <Badge variant="secondary" className="ml-auto text-[10px] px-1.5 py-0 font-normal">Soon</Badge>
