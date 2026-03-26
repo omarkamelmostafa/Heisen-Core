@@ -16,6 +16,9 @@ import { useToggle2fa } from "@/features/user/hooks/useToggle2fa";
 
 import { useEditProfile } from "@/features/user/hooks/useEditProfile";
 import { useProfilePhoto } from "@/features/user/hooks/useProfilePhoto";
+import { useTransitionReady } from "@/hooks/use-transition-ready";
+import { ProfileSkeleton } from "@/features/user/components/skeletons/profile-skeleton";
+import { SecuritySkeleton } from "@/features/user/components/skeletons/security-skeleton";
 
 export default function ProfilePage() {
   const {
@@ -79,6 +82,8 @@ export default function ProfilePage() {
     handleToggle2fa,
   } = useToggle2fa();
 
+  const { isReady } = useTransitionReady({ delay: 0 });
+
   const handleSectionChange = (sectionId) => {
     setActiveSection(sectionId);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -104,53 +109,61 @@ export default function ProfilePage() {
               onItemClick={handleSectionChange}
             />
             {activeSection === "profile" ? (
-              <ProfileContent
-                initials={initials}
-                displayName={displayName}
-                firstName={firstName}
-                lastName={lastName}
-                email={email}
-                isVerified={isVerified}
-                memberSince={memberSince}
-                lastLogin={lastLogin}
-                isEditing={isEditing}
-                isSubmitting={isProfileSubmitting}
-                onEdit={startEditing}
-                onCancel={cancelEditing}
-                onSave={handleSave}
-                editDefaultValues={editDefaultValues}
-                avatarUrl={avatar?.url}
-                previewUrl={previewUrl}
-                isUploading={isUploading}
-                hasSelectedFile={hasSelectedFile}
-                onFileSelect={handleFileSelect}
-                onUploadPhoto={onUploadPhoto}
-                onCancelPhoto={onCancelPhoto}
-              />
+              !isReady ? (
+                <ProfileSkeleton />
+              ) : (
+                <ProfileContent
+                  initials={initials}
+                  displayName={displayName}
+                  firstName={firstName}
+                  lastName={lastName}
+                  email={email}
+                  isVerified={isVerified}
+                  memberSince={memberSince}
+                  lastLogin={lastLogin}
+                  isEditing={isEditing}
+                  isSubmitting={isProfileSubmitting}
+                  onEdit={startEditing}
+                  onCancel={cancelEditing}
+                  onSave={handleSave}
+                  editDefaultValues={editDefaultValues}
+                  avatarUrl={avatar?.url}
+                  previewUrl={previewUrl}
+                  isUploading={isUploading}
+                  hasSelectedFile={hasSelectedFile}
+                  onFileSelect={handleFileSelect}
+                  onUploadPhoto={onUploadPhoto}
+                  onCancelPhoto={onCancelPhoto}
+                />
+              )
             ) : activeSection === "security" ? (
-              <SecurityContent
-                currentEmail={email}
-                isEmailVerified={isVerified}
-                isEmailSubmitting={isEmailSubmitting}
-                emailSent={emailSent}
-                sentToEmail={sentToEmail}
-                onEmailSave={handleEmailSave}
-                onEmailReset={resetEmailChange}
-                isPasswordSubmitting={isPasswordSubmitting}
-                onPasswordSave={onPasswordSave}
-                isSigningOutAll={isSigningOutAll}
-                onSignOutAll={handleSignOutAll}
-                twoFactorEnabled={twoFactorEnabled}
-                isToggling2fa={isToggling2fa}
-                showEnableDialog={showEnableDialog}
-                showDisableDialog={showDisableDialog}
-                password={password}
-                setPassword={setPassword}
-                onOpenEnable2fa={handleOpenEnable}
-                onOpenDisable2fa={handleOpenDisable}
-                onClose2faDialogs={handleCloseDialogs}
-                onConfirmToggle2fa={handleToggle2fa}
-              />
+              !isReady ? (
+                <SecuritySkeleton />
+              ) : (
+                <SecurityContent
+                  currentEmail={email}
+                  isEmailVerified={isVerified}
+                  isEmailSubmitting={isEmailSubmitting}
+                  emailSent={emailSent}
+                  sentToEmail={sentToEmail}
+                  onEmailSave={handleEmailSave}
+                  onEmailReset={resetEmailChange}
+                  isPasswordSubmitting={isPasswordSubmitting}
+                  onPasswordSave={onPasswordSave}
+                  isSigningOutAll={isSigningOutAll}
+                  onSignOutAll={handleSignOutAll}
+                  twoFactorEnabled={twoFactorEnabled}
+                  isToggling2fa={isToggling2fa}
+                  showEnableDialog={showEnableDialog}
+                  showDisableDialog={showDisableDialog}
+                  password={password}
+                  setPassword={setPassword}
+                  onOpenEnable2fa={handleOpenEnable}
+                  onOpenDisable2fa={handleOpenDisable}
+                  onClose2faDialogs={handleCloseDialogs}
+                  onConfirmToggle2fa={handleToggle2fa}
+                />
+              )
             ) : null}
           </div>
         </div>

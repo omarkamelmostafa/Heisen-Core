@@ -12,10 +12,10 @@ import {
   motionProps,
   containerVariants,
 } from "@/lib/animations/auth/authAnimations";
-import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
-import ForgotPasswordLoading from "./loading";
-import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
+import { useTransitionReady } from "@/hooks/use-transition-ready";
+import { ForgotPasswordSkeleton } from "@/features/auth/components/skeletons/forgot-password-skeleton";
 import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
+import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 
 export default function ForgotPasswordPage() {
   const {
@@ -27,10 +27,10 @@ export default function ForgotPasswordPage() {
     handleTryAnotherEmail,
   } = useForgotPassword();
 
-  const isLoadingPage = useSimulatedLoading(0);
+  const { isReady } = useTransitionReady({ delay: 300 });
 
-  if (isLoadingPage) {
-    return <ForgotPasswordLoading />;
+  if (!isReady) {
+    return <ForgotPasswordSkeleton />;
   }
 
   return (

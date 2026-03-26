@@ -2,7 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
+import { useTransitionReady } from "@/hooks/use-transition-ready";
+import { SignupSkeleton } from "@/features/auth/components/skeletons/signup-skeleton";
 import { useSignup } from "@/features/auth/hooks/useSignup";
 import { SignupHeader } from "@/features/auth/components/signup/signup-header";
 import { WelcomeSection } from "@/features/auth/components/signup/welcome-section";
@@ -16,7 +17,6 @@ import {
   itemVariants,
 } from "@/lib/animations/auth/authAnimations";
 import { motion } from "framer-motion";
-import SignupLoading from "./loading";
 import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
@@ -32,7 +32,11 @@ export default function SignupPage() {
     handleSignup,
   } = useSignup();
 
-  const isLoadingPage = useSimulatedLoading(0);
+  const { isReady } = useTransitionReady({ delay: 300 });
+
+  if (!isReady) {
+    return <SignupSkeleton />;
+  }
 
   // Stable toggle functions
   const togglePasswordVisibility = (field) => {
@@ -41,10 +45,6 @@ export default function SignupPage() {
       [field]: !prev[field],
     }));
   };
-
-  if (isLoadingPage) {
-    return <SignupLoading />;
-  }
 
   return (
     <PublicGuard>

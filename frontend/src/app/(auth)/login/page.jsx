@@ -2,7 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
+import { useTransitionReady } from "@/hooks/use-transition-ready";
+import { LoginSkeleton } from "@/features/auth/components/skeletons/login-skeleton";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 import { TwoFactorStep } from "@/features/auth/components/login/two-factor-step";
 import { LoginHeader } from "@/features/auth/components/login/login-header";
@@ -18,7 +19,6 @@ import {
   itemVariants,
 } from "@/lib/animations/auth/authAnimations";
 import { motion } from "framer-motion";
-import LoginLoading from "./loading";
 import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 
@@ -42,10 +42,10 @@ export default function LoginPage() {
     handleResendCode,
   } = useLogin();
 
-  const isLoadingPage = useSimulatedLoading(0);
+  const { isReady } = useTransitionReady({ delay: 300 });
 
-  if (isLoadingPage) {
-    return <LoginLoading />;
+  if (!isReady) {
+    return <LoginSkeleton />;
   }
 
   return (
@@ -141,85 +141,3 @@ export default function LoginPage() {
     </PublicGuard>
   );
 }
-
-// // app/(auth)/login/page.jsx
-// "use client";
-
-// import { useLoginForm } from "@/hooks/auth/login/use-login-form";
-// import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
-// import { LoginHeader } from "@/features/auth/components/login/login-header";
-// import { WelcomeSection } from "@/features/auth/components/login/welcome-section";
-// import { LoginForm } from "@/features/auth/components/login/login-form";
-// import { AuthProviders } from "@/features/auth/components/providers/auth-providers";
-// import { Divider } from "@/features/auth/components/login/divider";
-// import {
-//   motionProps,
-//   containerVariants,
-//   itemVariants,
-// } from "@/lib/animations/auth/authAnimations";
-// import { motion } from "framer-motion";
-// import LoginLoading from "./loading";
-// import { Suspense } from "react";
-// import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
-// import { AuthLayoutWrapper } from "../auth-layout-wrapper";
-
-// export default function LoginPage() {
-//   const {
-//     showPassword,
-//     isLoading,
-//     formData,
-//     setShowPassword,
-//     handleChange,
-//     handleSubmit,
-//   } = useLoginForm();
-
-//   const isLoadingPage = useSimulatedLoading(0);
-
-//   if (isLoadingPage) {
-//     return <LoginLoading />;
-//   }
-
-//   return (
-//     <>
-//       <div className="flex min-h-[100vh] items-center justify-center overflow-hidden">
-//         <motion.div
-//           {...motionProps.page}
-//           className="flex h-full items-center justify-center space-y-6 sm:px-6 md:px-8"
-//         >
-//           <motion.div
-//             initial="hidden"
-//             animate="visible"
-//             variants={containerVariants}
-//             className="flex h-full w-full flex-col gap-6 sm:max-w-lg"
-//           >
-//             <LoginHeader variants={itemVariants} />
-
-//             <WelcomeSection variants={itemVariants} />
-
-//             <AuthProviders
-//               providers={["google", "facebook"]}
-//               disabledProviders={["google", "facebook"]}
-//               context="login"
-//               layout="horizontal"
-//               variants={itemVariants}
-//             />
-
-//             <Divider variants={itemVariants} />
-
-//             <LoginForm
-//               variants={itemVariants}
-//               showPassword={showPassword}
-//               isLoading={isLoading}
-//               formData={formData}
-//               onTogglePassword={() => setShowPassword(!showPassword)}
-//               onChange={handleChange}
-//               onSubmit={handleSubmit}
-//             />
-//           </motion.div>
-//         </motion.div>
-//       </div>
-//       {/* Show production error trigger only in production */}
-//       <ProductionErrorTrigger />
-//     </>
-//   );
-// }

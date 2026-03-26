@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { BackgroundDecoration } from "./background-decoration";
 import { ContentCard } from "./content-card";
 import { HeaderSection } from "./header-section";
+import { AppSplashScreen } from "@/components/shared/app-splash-screen";
 
 export function AuthRightPanel({
-  title = "Welcome Back Coach!",
-  description = "Ready to lead your fantasy team to championship glory? Sign in to access your full coaching dashboard, track your team's performance, and make those game-winning decisions that separate champions from the rest.",
-  cardTitle = "Access Your Coaching Hub",
-  cardDescription = "Secure entry to your complete fantasy management toolkit - track stats, manage rosters, and dominate your league with precision.",
+  title = "Welcome!",
+  description = "Sign in to access your dashboard and manage your projects with precision and efficiency.",
+  cardTitle = "Secure Access",
+  cardDescription = "Enter your credentials to access your workspace and continue where you left off.",
+  isLoading = false,
 }) {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -22,6 +24,17 @@ export function AuthRightPanel({
       },
     },
   };
+
+  // Show splash screen during loading transitions
+  if (isLoading) {
+    return (
+      <div className="bg-muted h-full p-5 max-lg:hidden">
+        <div className="flex h-full items-center justify-center rounded-xl bg-primary">
+          <AppSplashScreen message="Loading..." showProgress={true} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-muted h-full p-5 max-lg:hidden">

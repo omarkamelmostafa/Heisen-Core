@@ -7,8 +7,8 @@ import { store, persistor } from "@/store";
 import dynamic from "next/dynamic";
 import { injectStore } from "@/store/store-accessor";
 
-const AnimatedLogoLoader = dynamic(
-  () => import("@/components/ui/animated-logo").then((mod) => mod.AnimatedLogoLoader),
+const AppSplashScreen = dynamic(
+  () => import("@/components/shared/app-splash-screen").then((mod) => mod.AppSplashScreen),
   { ssr: false }
 );
 
@@ -25,8 +25,8 @@ export function StoreProvider({ children }) {
     <Provider store={storeRef.current}>
       <PersistGate
         loading={
-          <AnimatedLogoLoader
-            message="Preparing your fantasy dashboard..."
+          <AppSplashScreen
+            message="Initializing..."
             showProgress={true}
           />
         }

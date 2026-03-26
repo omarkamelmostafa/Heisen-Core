@@ -1,11 +1,6 @@
 // frontend/src/app/(auth)/loading.jsx
-import { AnimatedLogoLoader } from "@/components/ui/animated-logo";
+import { AppSplashScreen } from "@/components/shared/app-splash-screen";
 
 export default function AuthLoading() {
-  return (
-    <AnimatedLogoLoader
-      message="Securing your session..."
-      showProgress={true}
-    />
-  );
+  return <AppSplashScreen message="Preparing your session..." />;
 }
