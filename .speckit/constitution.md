@@ -83,6 +83,43 @@ Every new `error.jsx` must strictly adhere to this contract:
 ### Rule F10: Simulated Loading for UX Consistency
 Every interactive page (Login, Dashboard, etc.) uses the custom `useSimulatedLoading` hook with a minimum delay (e.g., 0ms-500ms) to ensure smooth transitions and prevent layout shifts during fast API responses or client-side mounting. This is a mandatory UX standard.
 
+### Rule F11: Route Structure
+Protected routes live under the root or /settings/* path.
+Public auth routes live under the (auth) route group.
+
+Route map:
+- / — Dashboard (protected, ProtectedGuard)
+- /settings/profile — Profile settings (protected, settings layout)
+- /settings/security — Security settings (protected, settings layout)
+- /login, /signup, /forgot-password, /reset-password, /verify-email — Auth (public, PublicGuard)
+- /settings — Redirects to /settings/profile (server redirect)
+
+Every protected page or layout rendering TopNav must call useUserProfile()
+and pass all 4 required props: initials, displayName, onLogout, avatarUrl.
+
+Settings routes share a layout (settings/layout.jsx) that provides
+TopNav, SettingsSidebar, and SettingsMobileNav. Individual settings
+pages are thin connectors (hooks + content component + props).
+
+### Rule F12: Loading Infrastructure
+Three-layer loading model:
+
+Layer 1 — Route transition: loading.jsx renders AppSplashScreen
+(src/components/shared/app-splash-screen.jsx). Uses design tokens only.
+Displays "Heisen Core" branding with pulsing dots.
+
+Layer 2 — Guard resolution: ProtectedGuard and PublicGuard render
+AppSplashScreen during isBootstrapComplete === false.
+Messages: "Verifying your session..." (protected), "Preparing..." (public).
+
+Layer 3 — Page mount: useTransitionReady hook (src/hooks/use-transition-ready.js)
+controls skeleton-to-content transition. Returns { isReady }.
+Skeleton components live in features/[feature]/components/skeletons/.
+
+Skeleton naming: [page]-skeleton.jsx (e.g., login-skeleton.jsx, profile-skeleton.jsx).
+Skeletons use the Skeleton primitive from @/components/ui/skeleton.
+Settings skeletons use bg-card wrapper for contrast on bg-muted backgrounds.
+
 
 ## SECTION 3: Backend Architecture Rules
 
@@ -264,6 +301,8 @@ These behaviors are implemented in the codebase but NOT explicitly tested. They 
 10. Storing access tokens in localStorage
 11. Same JWT secret for access and refresh tokens
 12. Different error messages for wrong password vs missing email on login
+13. Rendering TopNav without passing initials, displayName, onLogout, and avatarUrl props
+
 
 ## SECTION 10: Phase Tracking
 
@@ -287,11 +326,12 @@ Total: 125 tests passing
 🚀 2.5 CI/CD pipeline
 
 🎨 Phase 3: UI/UX Polish
-🌗 3.1 Theme system (dark/light)
-🎨 3.2 Design tokens
-✨ 3.3 Clean layout
+🌗 3.1 Theme system (dark/light) ✅
+🎨 3.2 Design tokens ✅
+✨ 3.3 Clean layout 📍 [ You are HERE ]
 🍞 3.4 Toast UX polish ✅
-🦴 3.5 Loading skeletons
+🦴 3.5 Loading skeletons ✅
+🛣️ 3.6 Route restructuring ✅
 
 🔐 Phase 4: Authorization
 🛡️ 4.1 RBAC with @casl/ability
