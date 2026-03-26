@@ -4,7 +4,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
+import { useTransitionReady } from "@/hooks/use-transition-ready";
+import { VerifyEmailSkeleton } from "@/features/auth/components/skeletons/verify-email-skeleton";
 import { useVerifyEmail } from "@/features/auth/hooks/useVerifyEmail";
 import { VerifyEmailHeader } from "@/features/auth/components/verify-email/verify-email-header";
 import { WelcomeSection } from "@/features/auth/components/verify-email/welcome-section";
@@ -38,17 +39,17 @@ function VerifyEmailPage() {
   } = useVerifyEmail();
 
   const router = useRouter();
-  const isLoadingPage = useSimulatedLoading(0);
+  const { isReady } = useTransitionReady({ delay: 300 });
 
   // Guard: If no email context, redirect to login
   useEffect(() => {
-    if (!hasEmail && !isLoadingPage) {
+    if (!hasEmail && isReady) {
       router.push("/login");
     }
-  }, [hasEmail, isLoadingPage, router]);
+  }, [hasEmail, isReady, router]);
 
-  if (isLoadingPage || !hasEmail) {
-    return <VerifyEmailLoading />;
+  if (!isReady || !hasEmail) {
+    return <VerifyEmailSkeleton />;
   }
 
   return (

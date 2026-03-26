@@ -14,8 +14,8 @@ import {
   motionProps,
   containerVariants,
 } from "@/lib/animations/auth/authAnimations";
-import { useSimulatedLoading } from "@/hooks/use-loading-simulator";
-import ResetPasswordLoading from "./loading";
+import { useTransitionReady } from "@/hooks/use-transition-ready";
+import { ResetPasswordSkeleton } from "@/features/auth/components/skeletons/reset-password-skeleton";
 import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
 import { PublicGuard } from "@/features/auth/components/guards/public-guard";
@@ -33,7 +33,11 @@ export default function ResetPasswordPage() {
     handleSubmit,
   } = useResetPassword();
 
-  const isLoadingPage = useSimulatedLoading(0);
+  const { isReady } = useTransitionReady({ delay: 300 });
+
+  if (!isReady) {
+    return <ResetPasswordSkeleton />;
+  }
 
   // Stable toggle functions
   const togglePasswordVisibility = (field) => {
@@ -42,10 +46,6 @@ export default function ResetPasswordPage() {
       [field]: !prev[field],
     }));
   };
-
-  if (isLoadingPage) {
-    return <ResetPasswordLoading />;
-  }
 
   return (
     <PublicGuard>

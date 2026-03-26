@@ -6,7 +6,7 @@ export function Logo({ className = "size-8.5" }) {
   return (
     <Image
       src="/images/logo.svg"
-      alt="Fantasy Coach Logo"
+      alt="Heisen Core Logo"
       width={34} // 8.5 * 4 = 34 (since 1rem = 4px in Tailwind)
       height={34}
       className={className}

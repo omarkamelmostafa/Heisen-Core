@@ -1,5 +1,7 @@
 ---
 description: Create or update the feature specification from a natural language feature description.
+agent: speckit.requirements-analyst
+role: entry-point for Requirements Analyst
 handoffs: 
   - label: Build Technical Plan
     agent: speckit.plan
@@ -8,6 +10,12 @@ handoffs:
     agent: speckit.clarify
     prompt: Clarify specification requirements
     send: true
+---
+
+> **Agent**: This workflow is executed by the **Requirements Analyst**.  
+> **Full agent definition** (Role, Objective, Constraints, Memory Contract, Handoff Record):  
+> → [`.agent/workflows/speckit.requirements-analyst.md`](.agent/workflows/speckit.requirements-analyst.md)
+
 ---
 
 ## User Input
@@ -47,7 +55,7 @@ Given that feature description, do this:
    - You must only ever run this script once per feature
    - The JSON is provided in the terminal as output - always refer to it to get the actual content you're looking for
    - The JSON output will contain BRANCH_NAME and SPEC_FILE paths
-   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot")
+   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''"m Groot' (or double-quote if possible: "I'm Groot")
 
 3. Load `.specify/templates/spec-template.md` to understand required sections.
 
@@ -126,7 +134,7 @@ Given that feature description, do this:
 
    c. **Handle Validation Results**:
 
-      - **If all items pass**: Mark checklist complete and proceed to step 7
+      - **If all items pass**: Mark checklist complete and proceed to step 6
 
       - **If items fail (excluding [NEEDS CLARIFICATION])**:
         1. List the failing items and specific issues
@@ -174,6 +182,8 @@ Given that feature description, do this:
 7. Report completion with branch name, spec file path, checklist results, and readiness for the next phase (`/speckit.clarify` or `/speckit.plan`).
 
 **NOTE:** The script creates and checks out the new branch and initializes the spec file before writing.
+
+## General Guidelines
 
 ## Quick Guidelines
 

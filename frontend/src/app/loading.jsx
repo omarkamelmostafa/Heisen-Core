@@ -1,11 +1,6 @@
 // frontend/src/app/loading.jsx
-import { AnimatedLogoLoader } from "@/components/ui/animated-logo";
+import { AppSplashScreen } from "@/components/shared/app-splash-screen";
 
 export default function RootLoading() {
-  return (
-    <AnimatedLogoLoader
-      message="Streaming your fantasy experience..."
-      showProgress={true}
-    />
-  );
+  return <AppSplashScreen />;
 }

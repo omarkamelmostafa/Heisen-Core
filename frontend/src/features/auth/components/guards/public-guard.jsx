@@ -4,6 +4,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { AppSplashScreen } from "@/components/shared/app-splash-screen";
 
 export function PublicGuard({ children }) {
   const { isAuthenticated, isBootstrapComplete } = useSelector((state) => state.auth);
@@ -16,7 +17,7 @@ export function PublicGuard({ children }) {
   }, [isBootstrapComplete, isAuthenticated, router]);
 
   if (!isBootstrapComplete) {
-    return null;
+    return <AppSplashScreen message="Preparing..." />;
   }
 
   if (!isAuthenticated) {

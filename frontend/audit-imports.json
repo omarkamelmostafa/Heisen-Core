@@ -1,4 +1,3 @@
-// frontend/audit-imports.json
 [
   {
     "file": "src/app/(auth)/auth-layout-wrapper.jsx",

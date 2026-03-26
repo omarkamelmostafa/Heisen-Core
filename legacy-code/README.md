@@ -34,3 +34,14 @@ Phase 3.4+ cleanup — dead code audit
 ## Safe to delete
 These files exist in git history. This directory can be safely deleted
 after one sprint review cycle.
+
+### Phase 3.5 — Loading Infrastructure Replacement
+- src/hooks/use-loading-simulator.js — Replaced by useTransitionReady
+  hook in src/hooks/use-transition-ready.js. Old hook had dev-only delay
+  (0ms in production), new hook provides consistent delay across environments
+  with async data composition support.
+- src/components/ui/animated-logo.jsx — Replaced by AppSplashScreen
+  component in src/components/shared/app-splash-screen.jsx. Old component
+  used hardcoded slate colors and "Fantasy Coach" branding. New component
+  uses design tokens and "Heisen Core" branding. AnimatedLogo (non-loader
+  variant) was dead code with zero importers.
