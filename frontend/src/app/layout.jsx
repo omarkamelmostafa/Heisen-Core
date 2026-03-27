@@ -21,11 +21,11 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: {
-    template: "%s | Fantasy Coach",
-    default: "Fantasy Coach | Professional Sports Strategy",
+    template: "%s | Heisen Core",
+    default: "Heisen Core",
   },
-  description: "Master sports strategy with Fantasy Coach. Advanced analytics and team management tools for professional fantasy leagues.",
-  keywords: ["fantasy sports", "sports analytics", "team management", "sports strategy", "fantasy coach"],
+  description: "Heisen Core — Your secure application platform.",
+  keywords: ["heisen core", "dashboard", "settings", "security"],
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   manifest: "/manifest.json",
   icons: {
