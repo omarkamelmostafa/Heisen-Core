@@ -20,6 +20,7 @@ export function AuthSubmitButton({
   isLoading = false,
   loadingText,
   defaultText,
+  buttonText, // fallback alias for defaultText
 
   // Display states
   showSuccess = false,
@@ -98,16 +99,17 @@ export function AuthSubmitButton({
   };
 
   // Get button text based on state
+  const resolvedDefaultText = defaultText || buttonText;
   const getButtonText = () => {
     if (showSuccess && !isLoading) {
-      return successText || defaultText;
+      return successText || resolvedDefaultText;
     }
 
     if (isLoading || isSubmitting) {
       return loadingText;
     }
 
-    return defaultText;
+    return resolvedDefaultText;
   };
 
   // Get variant based on state
