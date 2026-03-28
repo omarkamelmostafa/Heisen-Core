@@ -1,5 +1,6 @@
 // frontend/src/features/auth/hooks/useLogin.js
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { loginUser, verify2fa, resend2fa } from "@/store/slices/auth/auth-thunks";
@@ -16,6 +17,7 @@ export function useLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
+  const t = useTranslations("toasts");
 
   const user = useAppSelector(selectAuthUser);
   const isLoading = useAppSelector(selectAuthLoading);
@@ -64,7 +66,7 @@ export function useLogin() {
       }
 
       NotificationService.success(
-        `Welcome back${result?.user?.firstName ? ', ' + result.user.firstName : ''}!`
+        t("welcomeBack", { name: result?.user?.firstName || "" })
       );
 
       sessionStorage.setItem('login_source', 'local');
@@ -73,7 +75,7 @@ export function useLogin() {
       channel.close();
     } catch (err) {
       if (err.errorCode === "ACCOUNT_NOT_VERIFIED") {
-        NotificationService.warn("Please verify your email before logging in.");
+        NotificationService.warn(t("verifyEmailBeforeLogin"));
         dispatch(clearError());
         router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
         return;
@@ -91,14 +93,14 @@ export function useLogin() {
     setIsVerifying(true);
     try {
       await dispatch(verify2fa({ token: otpCode, tempToken })).unwrap();
-      NotificationService.success("Login successful");
+      NotificationService.success(t("loginSuccessful"));
       sessionStorage.setItem("login_source", "true");
       const channel = new BroadcastChannel("auth_channel");
       channel.postMessage("LOGIN");
       channel.close();
     } catch (error) {
       if (!error?.isGlobalError) {
-        NotificationService.error(error?.message || "Verification failed");
+        NotificationService.error(error?.message || t("verificationFailed"));
       }
     } finally {
       setIsVerifying(false);
@@ -114,10 +116,10 @@ export function useLogin() {
     setIsResending(true);
     try {
       await dispatch(resend2fa({ tempToken })).unwrap();
-      NotificationService.success("A new verification code has been sent to your email");
+      NotificationService.success(t("newVerificationCodeSent"));
     } catch (error) {
       if (!error?.isGlobalError) {
-        NotificationService.error(error?.message || "Failed to resend code");
+        NotificationService.error(error?.message || t("failedToResendCode"));
       }
     } finally {
       setIsResending(false);

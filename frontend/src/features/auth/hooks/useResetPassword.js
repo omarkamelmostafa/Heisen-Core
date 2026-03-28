@@ -1,5 +1,6 @@
 // frontend/src/features/auth/hooks/useResetPassword.js
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { resetPassword } from "@/store/slices/auth/auth-thunks";
@@ -10,6 +11,7 @@ export function useResetPassword() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const dispatch = useAppDispatch();
+  const t = useTranslations("toasts");
   const isLoading = useAppSelector(selectAuthLoading);
   const error = useAppSelector(selectAuthError);
 
@@ -28,11 +30,11 @@ export function useResetPassword() {
     if (!token) {
       dispatch(
         setAuthError(
-          "Password reset link is invalid or missing. Please request a new reset email."
+          t("resetLinkInvalid")
         )
       );
     }
-  }, [token, dispatch]);
+  }, [token, dispatch, t]);
 
   const handleSubmit = async (data) => {
     if (!token) {

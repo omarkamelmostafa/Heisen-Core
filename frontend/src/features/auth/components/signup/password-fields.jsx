@@ -1,6 +1,8 @@
 // frontend/src/features/auth/components/signup/password-fields.jsx
+"use client";
+
 import { FormField } from "@/features/auth/components/forms/form-field";
-import { signupContent as content } from "@/lib/config/auth/signup";
+import { useTranslations } from "next-intl";
 
 export function PasswordFields({
   showPassword,
@@ -9,14 +11,15 @@ export function PasswordFields({
   onTogglePassword,
   onToggleConfirmPassword,
 }) {
+  const t = useTranslations("auth.signup");
 
   return (
     <>
       <FormField
         name="password"
         type={showPassword ? "text" : "password"}
-        label={content.form.password.label}
-        placeholder={content.form.password.placeholder}
+        label={t("passwordLabel")}
+        placeholder={t("passwordPlaceholder")}
         required
         disabled={isLoading}
         showPasswordToggle={true}
@@ -26,8 +29,8 @@ export function PasswordFields({
       <FormField
         name="confirmPassword"
         type={showConfirmPassword ? "text" : "password"}
-        label={content.form.confirmPassword.label}
-        placeholder={content.form.confirmPassword.placeholder}
+        label={t("confirmPasswordLabel")}
+        placeholder={t("confirmPasswordPlaceholder")}
         required
         disabled={isLoading}
         showPasswordToggle={true}

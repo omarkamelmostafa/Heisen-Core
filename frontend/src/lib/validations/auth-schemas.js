@@ -1,6 +1,12 @@
 // frontend/src/lib/validations/auth-schemas.js
 import { z } from "zod";
 
+// Password rules constant for reuse across schemas
+const PASSWORD_RULES = {
+  minLength: 8,
+  maxLength: 128,
+};
+
 // Shared email validation with proper required and email validation
 const emailSchema = z
   .string()
@@ -116,3 +122,140 @@ export const changePasswordSchema = z.object({
   message: "Passwords don't match",
   path: ["confirmPassword"],
 });
+
+// ============================================
+// i18n Schema Factories
+// These accept a translator function t() from useTranslations("validation")
+// and return schemas with translated validation messages.
+// ============================================
+
+function createEmailSchema(t) {
+  return z.string().min(1, t("email.required")).email(t("email.invalid"));
+}
+
+function createPasswordSchema(t) {
+  return z
+    .string()
+    .min(1, t("password.required"))
+    .min(PASSWORD_RULES.minLength, t("password.minLength"))
+    .max(PASSWORD_RULES.maxLength, t("password.maxLength"))
+    .regex(/[A-Z]/, t("password.uppercase"))
+    .regex(/[a-z]/, t("password.lowercase"))
+    .regex(/[0-9]/, t("password.number"))
+    .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, t("password.special"));
+}
+
+function createLoginPasswordSchema(t) {
+  return z
+    .string()
+    .min(1, t("password.required"))
+    .min(PASSWORD_RULES.minLength, t("password.minLength"));
+}
+
+function createNameSchema(t) {
+  return z
+    .string()
+    .min(1, t("name.required"))
+    .min(3, t("name.minLength"))
+    .max(16, t("name.maxLength"))
+    .regex(/^[a-zA-Z\s]+$/, t("name.lettersOnly"));
+}
+
+export function createLoginSchema(t) {
+  return z.object({
+    email: createEmailSchema(t),
+    password: createLoginPasswordSchema(t),
+    rememberMe: z.boolean().optional(),
+  });
+}
+
+export function createSignupSchema(t) {
+  return z
+    .object({
+      firstname: createNameSchema(t),
+      lastname: createNameSchema(t),
+      email: createEmailSchema(t),
+      password: createPasswordSchema(t),
+      confirmPassword: z.string().min(1, t("confirmPassword.required")),
+      terms: z.boolean(),
+    })
+    .refine((data) => data.terms === true, {
+      message: t("terms.required"),
+      path: ["terms"],
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("confirmPassword.match"),
+      path: ["confirmPassword"],
+    });
+}
+
+export function createForgotPasswordSchema(t) {
+  return z.object({
+    userEmail: createEmailSchema(t),
+  });
+}
+
+export function createResetPasswordSchema(t) {
+  return z
+    .object({
+      password: createPasswordSchema(t),
+      confirmPassword: z.string().min(1, t("confirmPassword.required")),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("confirmPassword.match"),
+      path: ["confirmPassword"],
+    });
+}
+
+export function createVerifyEmailSchema(t) {
+  return z.object({
+    verificationCode: z
+      .array(z.string().min(1, t("verificationCode.digitRequired")))
+      .length(6, t("verificationCode.length")),
+  });
+}
+
+export function createUpdateProfileSchema(t) {
+  return z.object({
+    firstname: createNameSchema(t),
+    lastname: createNameSchema(t),
+  });
+}
+
+export function createChangeEmailSchema(t) {
+  return z
+    .object({
+      newEmail: z
+        .string()
+        .min(1, t("newEmail.required"))
+        .email(t("newEmail.invalid"))
+        .max(254, t("newEmail.maxLength")),
+      confirmNewEmail: z
+        .string()
+        .min(1, t("confirmNewEmail.required")),
+      currentPassword: z
+        .string()
+        .min(1, t("currentPassword.required")),
+    })
+    .refine((data) => data.newEmail === data.confirmNewEmail, {
+      message: t("confirmNewEmail.match"),
+      path: ["confirmNewEmail"],
+    });
+}
+
+export function createChangePasswordSchema(t) {
+  return z
+    .object({
+      oldPassword: z.string().min(1, t("currentPassword.required")),
+      newPassword: createPasswordSchema(t),
+      confirmPassword: z.string().min(1, t("newPassword.confirmRequired")),
+    })
+    .refine((data) => data.oldPassword !== data.newPassword, {
+      message: t("newPassword.different"),
+      path: ["newPassword"],
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+      message: t("newPassword.match"),
+      path: ["confirmPassword"],
+    });
+}

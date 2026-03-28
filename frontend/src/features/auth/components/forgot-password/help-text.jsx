@@ -1,9 +1,10 @@
 // frontend/src/features/auth/components/forgot-password/help-text.jsx
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
-import { forgotPasswordContent as content } from "@/lib/config/auth/forgot-password";
 
 export function HelpText() {
+  const t = useTranslations("auth.forgotPassword");
 
   return (
     <motion.div
@@ -12,7 +13,7 @@ export function HelpText() {
       variants={quickFadeInVariants}
       className="bg-muted rounded-lg p-3 text-sm"
     >
-      <p className="text-muted-foreground">{content.helpText.content}</p>
+      <p className="text-muted-foreground">{t("helpText")}</p>
     </motion.div>
   );
 }

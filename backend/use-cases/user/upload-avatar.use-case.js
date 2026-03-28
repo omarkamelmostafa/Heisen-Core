@@ -50,7 +50,7 @@ export async function uploadAvatarUseCase({ userId, fileBuffer, mimetype }) {
     if (error.message && error.message.includes("upload")) {
       return {
         success: false,
-        statusCode: 502,
+        statusCode: 500,
         message: "Failed to upload image. Please try again.",
         errorCode: "UPLOAD_FAILED",
       };

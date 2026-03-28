@@ -2,14 +2,15 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useResetPassword } from "@/features/auth/hooks/useResetPassword";
 import { ResetPasswordHeader } from "@/features/auth/components/reset-password/reset-password-header";
 import { FormState } from "@/features/auth/components/reset-password/form-state";
 import { SuccessState } from "@/features/auth/components/reset-password/success-state";
 import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
-import { resetPasswordSchema } from "@/lib/validations/auth-schemas";
+import { createResetPasswordSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
   containerVariants,
@@ -25,6 +26,9 @@ export default function ResetPasswordPage() {
     password: false,
     confirmPassword: false,
   });
+  const tVal = useTranslations("validation");
+
+  const resetPasswordSchema = useMemo(() => createResetPasswordSchema(tVal), [tVal]);
 
   const {
     isSuccess,
@@ -33,7 +37,7 @@ export default function ResetPasswordPage() {
     handleSubmit,
   } = useResetPassword();
 
-  const { isReady } = useTransitionReady({ delay: 300 });
+  const { isReady } = useTransitionReady({ delay: 0 });
 
   if (!isReady) {
     return <ResetPasswordSkeleton />;

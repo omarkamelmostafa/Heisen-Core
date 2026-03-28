@@ -1,11 +1,12 @@
 // frontend/src/features/auth/components/reset-password/help-text.jsx
-import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";
+import { useTranslations } from "next-intl";
 
 export function HelpText() {
+  const t = useTranslations("auth.resetPassword");
 
   return (
     <div className="text-center text-sm text-muted-foreground">
-      <p>{content.helpText.content}</p>
+      <p>{t("helpText")}</p>
     </div>
   );
 }

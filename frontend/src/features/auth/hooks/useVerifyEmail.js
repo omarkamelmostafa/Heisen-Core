@@ -1,5 +1,6 @@
 // frontend/src/features/auth/hooks/useVerifyEmail.js
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
@@ -19,6 +20,7 @@ export function useVerifyEmail() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
+  const t = useTranslations("toasts");
 
   const user = useAppSelector(selectAuthUser);
   const isLoading = useAppSelector(selectAuthLoading);
@@ -75,7 +77,7 @@ export function useVerifyEmail() {
     try {
       const code = data.verificationCode.join("");
       if (!code || code.length !== 6) {
-        dispatch(setAuthError("Please enter the 6-digit verification code."));
+        dispatch(setAuthError(t("enterVerificationCode")));
         return;
       }
 
@@ -94,15 +96,15 @@ export function useVerifyEmail() {
 
   const handleResendCode = async () => {
     if (!email) {
-      NotificationService.error("No email address found. Please go back and try again.");
+      NotificationService.error(t("noEmailFound"));
       return;
     }
 
     try {
       await dispatch(resendVerification(email)).unwrap();
 
-      NotificationService.success("Verification code sent!", {
-        description: `A new 6-digit code has been sent to ${email}.`,
+      NotificationService.success(t("verificationCodeSent"), {
+        description: t("verificationCodeSentTo", { email }),
       });
 
       setTimeLeft(300);
@@ -111,9 +113,9 @@ export function useVerifyEmail() {
       console.error("Resend error:", err);
       // Error notification is usually handled by thunk/middleware or locally
       if (err.errorCode === "RATE_LIMITED") {
-        NotificationService.error("Too many attempts. Please wait a few minutes.");
+        NotificationService.error(t("tooManyAttempts"));
       } else {
-        NotificationService.error("Failed to resend verification code. Please try again.");
+        NotificationService.error(t("failedToResendVerification"));
       }
     }
   };

@@ -1,5 +1,6 @@
 // frontend/src/features/auth/components/signup/signup-form.jsx
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { FormField } from "@/features/auth/components/forms/form-field";
 import { AuthSubmitButtons } from "@/features/auth/components/forms/auth-submit-button";
 import { NameFields } from "./name-fields";
@@ -8,7 +9,6 @@ import { PasswordStrengthMeter } from "@/features/auth/components/shared/passwor
 import { PasswordMatchIndicator } from "@/features/auth/components/shared/password-match-indicator";
 import { TermsAndConditions } from "./terms-and-conditions";
 import { SignupOptions } from "./signup-options";
-import { signupContent as content } from "@/lib/config/auth/signup";
 import { useFormContext } from "react-hook-form";
 
 export function SignupForm({
@@ -19,6 +19,7 @@ export function SignupForm({
   onTogglePassword,
   onToggleConfirmPassword,
 }) {
+  const t = useTranslations("auth.signup");
   const { watch } = useFormContext();
 
   const password = watch("password");
@@ -32,8 +33,8 @@ export function SignupForm({
         <FormField
           name="email"
           type="email"
-          label={content.form.email.label}
-          placeholder={content.form.email.placeholder}
+          label={t("emailLabel")}
+          placeholder={t("emailPlaceholder")}
           required
           disabled={isLoading}
         />
@@ -58,8 +59,8 @@ export function SignupForm({
 
         <AuthSubmitButtons.Signup
           isLoading={isLoading}
-          buttonText={content.buttons.signup}
-          loadingText={content.buttons.signingUp}
+          buttonText={t("submitButton")}
+          loadingText={t("submitting")}
         />
       </div>
 

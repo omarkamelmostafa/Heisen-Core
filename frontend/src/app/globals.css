@@ -233,3 +233,8 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* RTL font override — Arabic-optimized font in RTL mode */
+[dir="rtl"] body {
+  --font-sans: var(--font-arabic);
+}

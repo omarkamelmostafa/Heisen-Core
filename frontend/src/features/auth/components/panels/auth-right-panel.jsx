@@ -30,7 +30,7 @@ export function AuthRightPanel({
     return (
       <div className="bg-muted h-full p-5 max-lg:hidden">
         <div className="flex h-full items-center justify-center rounded-xl bg-primary">
-          <AppSplashScreen message="Loading..." showProgress={true} />
+          <AppSplashScreen showProgress={true} />
         </div>
       </div>
     );

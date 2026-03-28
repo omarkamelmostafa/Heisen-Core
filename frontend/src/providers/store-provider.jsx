@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@/store";
 import dynamic from "next/dynamic";
 import { injectStore } from "@/store/store-accessor";
+import { useTranslations } from "next-intl";
 
 const AppSplashScreen = dynamic(
   () => import("@/components/shared/app-splash-screen").then((mod) => mod.AppSplashScreen),
@@ -13,6 +14,8 @@ const AppSplashScreen = dynamic(
 );
 
 export function StoreProvider({ children }) {
+  const t = useTranslations("infrastructure");
+
   // Use ref to prevent re-creation on re-renders
   const storeRef = useRef();
   if (!storeRef.current) {
@@ -26,7 +29,7 @@ export function StoreProvider({ children }) {
       <PersistGate
         loading={
           <AppSplashScreen
-            message="Initializing..."
+            message={t("initializing")}
             showProgress={true}
           />
         }

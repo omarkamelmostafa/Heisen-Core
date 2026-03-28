@@ -3,6 +3,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, X, AlertCircle, Shield, Lock, Unlock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // Password validation rules (exported for use in forms)
 export const PASSWORD_RULES = {
@@ -43,28 +44,23 @@ export const validatePassword = (password) => {
   // Determine strength level - VERY STRONG only when ALL conditions are met
   let strengthLevel = "very-weak";
   let strengthColor = "bg-red-500";
-  let strengthText = "Very Weak";
   let strengthIcon = <Unlock className="h-4 w-4" />;
 
   if (passedRules === totalRules) {
     strengthLevel = "very-strong";
     strengthColor = "bg-emerald-500";
-    strengthText = "Very Strong";
     strengthIcon = <Shield className="h-4 w-4" />;
   } else if (passedRules >= 4) {
     strengthLevel = "strong";
     strengthColor = "bg-green-500";
-    strengthText = "Strong";
     strengthIcon = <Lock className="h-4 w-4" />;
   } else if (passedRules >= 3) {
     strengthLevel = "medium";
     strengthColor = "bg-yellow-500";
-    strengthText = "Medium";
     strengthIcon = <Lock className="h-4 w-4" />;
   } else if (passedRules >= 1) {
     strengthLevel = "weak";
     strengthColor = "bg-orange-500";
-    strengthText = "Weak";
     strengthIcon = <Unlock className="h-4 w-4" />;
   }
 
@@ -72,7 +68,6 @@ export const validatePassword = (password) => {
     strength,
     strengthLevel,
     strengthColor,
-    strengthText,
     strengthIcon,
     validations,
     passedRules,
@@ -90,42 +85,52 @@ export function PasswordStrengthMeter({
   showRequirements = true,
   showStrengthBar = true,
 }) {
+  const t = useTranslations("auth.passwordStrength");
   if (!password) return null;
 
   const {
     strength,
     strengthLevel,
     strengthColor,
-    strengthText,
     strengthIcon,
     validations,
     passedRules,
     totalRules,
   } = validatePassword(password);
 
+  // Map strength level to translated text
+  const strengthTextMap = {
+    "very-weak": t("veryWeak"),
+    "weak": t("weak"),
+    "medium": t("medium"),
+    "strong": t("strong"),
+    "very-strong": t("veryStrong"),
+  };
+  const strengthText = strengthTextMap[strengthLevel] || t("veryWeak");
+
   const validationItems = [
     {
-      label: `Length between ${PASSWORD_RULES.minLength}-${PASSWORD_RULES.maxLength} characters`,
+      label: t("lengthRequirement", { min: PASSWORD_RULES.minLength, max: PASSWORD_RULES.maxLength }),
       isValid: validations.length,
       key: "length",
     },
     {
-      label: "At least one uppercase letter (A-Z)",
+      label: t("uppercaseRequirement"),
       isValid: validations.uppercase,
       key: "uppercase",
     },
     {
-      label: "At least one lowercase letter (a-z)",
+      label: t("lowercaseRequirement"),
       isValid: validations.lowercase,
       key: "lowercase",
     },
     {
-      label: "At least one number (0-9)",
+      label: t("numberRequirement"),
       isValid: validations.numbers,
       key: "numbers",
     },
     {
-      label: "At least one special character (!@#$% etc.)",
+      label: t("specialRequirement"),
       isValid: validations.specialChars,
       key: "specialChars",
     },
@@ -145,21 +150,20 @@ export function PasswordStrengthMeter({
             <div className="flex items-center gap-2">
               {strengthIcon}
               <span className="text-muted-foreground font-medium">
-                Password Strength:
+                {t("label")}
               </span>
             </div>
             <span
-              className={`font-semibold ${
-                strengthLevel === "very-strong"
-                  ? "text-emerald-600"
-                  : strengthLevel === "strong"
+              className={`font-semibold ${strengthLevel === "very-strong"
+                ? "text-emerald-600"
+                : strengthLevel === "strong"
                   ? "text-green-600"
                   : strengthLevel === "medium"
-                  ? "text-yellow-600"
-                  : strengthLevel === "weak"
-                  ? "text-orange-600"
-                  : "text-red-600"
-              }`}
+                    ? "text-yellow-600"
+                    : strengthLevel === "weak"
+                      ? "text-orange-600"
+                      : "text-red-600"
+                }`}
             >
               {strengthText} ({passedRules}/{totalRules})
             </span>
@@ -186,7 +190,7 @@ export function PasswordStrengthMeter({
           className="space-y-2"
         >
           <p className="text-xs font-medium text-muted-foreground">
-            Password Requirements ({passedRules}/{totalRules} met):
+            {t("requirements", { passedRules, totalRules })}
           </p>
           <div className="space-y-1.5">
             <AnimatePresence>
@@ -204,11 +208,10 @@ export function PasswordStrengthMeter({
                     <X className="h-3 w-3 text-red-500 flex-shrink-0" />
                   )}
                   <span
-                    className={`text-xs ${
-                      item.isValid
-                        ? "text-emerald-700 dark:text-emerald-400 font-medium"
-                        : "text-muted-foreground"
-                    }`}
+                    className={`text-xs ${item.isValid
+                      ? "text-emerald-700 dark:text-emerald-400 font-medium"
+                      : "text-muted-foreground"
+                      }`}
                   >
                     {item.label}
                   </span>
@@ -228,7 +231,7 @@ export function PasswordStrengthMeter({
         >
           <Shield className="h-4 w-4 text-emerald-600 flex-shrink-0" />
           <span className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">
-            Excellent! Your password meets all security requirements.
+            {t("excellent")}
           </span>
         </motion.div>
       )}
@@ -243,10 +246,8 @@ export function PasswordStrengthMeter({
           <AlertCircle className="h-4 w-4 text-amber-600 flex-shrink-0" />
           <span className="text-xs text-amber-700 dark:text-amber-300 font-medium">
             {passedRules === totalRules - 1
-              ? "Almost there! Just one more requirement to meet."
-              : `Keep going! ${
-                  totalRules - passedRules
-                } more requirements needed.`}
+              ? t("almostThere")
+              : t("keepGoing", { remaining: totalRules - passedRules })}
           </span>
         </motion.div>
       )}
@@ -260,7 +261,7 @@ export function PasswordStrengthMeter({
         >
           <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
           <span className="text-xs text-red-700 dark:text-red-300 font-medium">
-            Your password is very weak. Please follow the requirements above.
+            {t("veryWeakAdvice")}
           </span>
         </motion.div>
       )}

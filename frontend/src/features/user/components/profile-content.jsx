@@ -1,6 +1,7 @@
 // frontend/src/features/user/components/profile-content.jsx
 import * as React from "react"
-import { useRef } from "react"
+import { useTranslations } from "next-intl";
+import { useRef, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Pencil, X, Camera } from "lucide-react"
@@ -9,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
-import { updateProfileSchema } from "@/lib/validations/auth-schemas"
+import { createUpdateProfileSchema } from "@/lib/validations/auth-schemas"
 
 export function ProfileContent({
   initials,
@@ -34,6 +35,12 @@ export function ProfileContent({
   onUploadPhoto,
   onCancelPhoto,
 }) {
+  const t = useTranslations("profile");
+  const tc = useTranslations("common");
+  const tVal = useTranslations("validation");
+
+  const updateProfileSchema = useMemo(() => createUpdateProfileSchema(tVal), [tVal]);
+
   const form = useForm({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: editDefaultValues || { firstname: "", lastname: "" },
@@ -54,11 +61,11 @@ export function ProfileContent({
       {/* Section A: Profile Information */}
       <section>
         <div className="flex items-center justify-between pb-4 border-b border-border">
-          <h2 className="text-base font-semibold text-foreground tracking-tight">Profile Information</h2>
+          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("profileInformation")}</h2>
           {!isEditing ? (
             <Button variant="default" size="sm" className="gap-1.5 cursor-pointer" onClick={onEdit}>
               <Pencil className="h-3.5 w-3.5" />
-              <span>Edit</span>
+              <span>{tc("edit")}</span>
             </Button>
           ) : (
             <div className="flex items-center gap-2">
@@ -70,7 +77,7 @@ export function ProfileContent({
                 className="cursor-pointer"
               >
                 <X className="h-3.5 w-3.5 mr-1" />
-                <span>Cancel</span>
+                <span>{tc("cancel")}</span>
               </Button>
               <Button
                 variant="default"
@@ -79,7 +86,7 @@ export function ProfileContent({
                 onClick={form.handleSubmit(onSave)}
                 disabled={isSubmitting || !form.formState.isDirty}
               >
-                <span>{isSubmitting ? "Saving..." : "Save"}</span>
+                <span>{isSubmitting ? tc("saving") : tc("save")}</span>
               </Button>
             </div>
           )}
@@ -99,7 +106,7 @@ export function ProfileContent({
               {previewUrl && (
                 <img
                   src={previewUrl}
-                  alt="Preview"
+                  alt={t("preview")}
                   className="absolute inset-0 h-full w-full rounded-full object-cover"
                 />
               )}
@@ -108,7 +115,7 @@ export function ProfileContent({
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isUploading}
                 className="absolute -bottom-0.5 -right-0.5 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center ring-2 ring-background hover:bg-primary/90 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                aria-label="Change profile photo"
+                aria-label={t("changePhoto")}
               >
                 <Camera className="h-3 w-3" />
               </button>
@@ -128,7 +135,7 @@ export function ProfileContent({
                   disabled={isUploading}
                   className="h-7 px-2.5 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
-                  {isUploading ? "Uploading..." : "Update"}
+                  {isUploading ? tc("uploading") : tc("update")}
                 </button>
                 <button
                   type="button"
@@ -136,7 +143,7 @@ export function ProfileContent({
                   disabled={isUploading}
                   className="h-7 px-2.5 text-xs font-medium rounded-md text-muted-foreground hover:bg-muted transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
-                  Cancel
+                  {tc("cancel")}
                 </button>
               </div>
             )}
@@ -147,17 +154,17 @@ export function ProfileContent({
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
               {isVerified ? (
                 <Badge variant="outline" className="w-fit text-emerald-600 border-emerald-200 bg-emerald-50 dark:text-emerald-400 dark:border-emerald-800 dark:bg-emerald-950">
-                  Verified
+                  {tc("verified")}
                 </Badge>
               ) : (
                 <Badge variant="outline" className="w-fit text-amber-600 border-amber-200 bg-amber-50 dark:text-amber-400 dark:border-amber-800 dark:bg-amber-950">
-                  Unverified
+                  {tc("unverified")}
                 </Badge>
               )}
               <span className="text-muted-foreground/40 text-xs select-none">·</span>
-              <span className="text-xs text-muted-foreground">Joined {memberSince}</span>
+              <span className="text-xs text-muted-foreground">{t("joined", { date: memberSince })}</span>
               <span className="text-muted-foreground/40 text-xs select-none">·</span>
-              <span className="text-xs text-muted-foreground">Last active {lastLogin}</span>
+              <span className="text-xs text-muted-foreground">{t("lastActive", { date: lastLogin })}</span>
             </div>
           </div>
         </div>
@@ -167,10 +174,10 @@ export function ProfileContent({
 
       {/* Section B: Personal Information */}
       <section>
-        <h3 className="text-sm font-semibold text-foreground tracking-tight mb-4">Personal Information</h3>
+        <h3 className="text-sm font-semibold text-foreground tracking-tight mb-4">{t("personalInformation")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-muted-foreground">First Name</label>
+            <label className="text-xs font-medium text-muted-foreground">{t("firstName")}</label>
             {!isEditing ? (
               <div className="h-10 flex items-center px-3 bg-muted border border-border rounded-md text-[13.5px] text-foreground">
                 {firstName || "—"}
@@ -179,7 +186,7 @@ export function ProfileContent({
               <div className="flex flex-col gap-1.5">
                 <Input
                   {...form.register("firstname")}
-                  placeholder="Enter first name"
+                  placeholder={t("firstNamePlaceholder")}
                   disabled={isSubmitting}
                   className={form.formState.errors.firstname ? "border-destructive focus-visible:ring-destructive" : ""}
                 />
@@ -192,7 +199,7 @@ export function ProfileContent({
             )}
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Last Name</label>
+            <label className="text-xs font-medium text-muted-foreground">{t("lastName")}</label>
             {!isEditing ? (
               <div className="h-10 flex items-center px-3 bg-muted border border-border rounded-md text-[13.5px] text-foreground">
                 {lastName || "—"}
@@ -201,7 +208,7 @@ export function ProfileContent({
               <div className="flex flex-col gap-1.5">
                 <Input
                   {...form.register("lastname")}
-                  placeholder="Enter last name"
+                  placeholder={t("lastNamePlaceholder")}
                   disabled={isSubmitting}
                   className={form.formState.errors.lastname ? "border-destructive focus-visible:ring-destructive" : ""}
                 />

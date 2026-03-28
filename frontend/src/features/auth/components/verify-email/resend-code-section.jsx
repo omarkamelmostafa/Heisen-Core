@@ -1,17 +1,18 @@
 // frontend/src/features/auth/components/verify-email/resend-code-section.jsx
 import { Button } from "@/components/ui/button";
-import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
+import { useTranslations } from "next-intl";
 
 export function ResendCodeSection({ timeLeft, formatTime, onResendCode }) {
+  const t = useTranslations("auth.verifyEmail");
 
   const buttonText =
     timeLeft > 0
-      ? content.resend.countdown.replace("{time}", formatTime(timeLeft))
-      : content.resend.button;
+      ? t("resend.countdown", { time: formatTime(timeLeft) })
+      : t("resend.button");
 
   return (
     <div className="text-center space-y-3">
-      <p className="text-sm text-muted-foreground">{content.resend.prompt}</p>
+      <p className="text-sm text-muted-foreground">{t("resend.prompt")}</p>
       <Button
         variant="outline"
         onClick={onResendCode}

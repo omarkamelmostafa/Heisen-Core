@@ -2,6 +2,7 @@
 import { privateClient } from "@/services/api/client";
 import { userEndpoints } from "@/services/api/endpoints";
 import { normalizeError, normalizeResponse } from "@/lib/utils/error-utils";
+import { translateApiError } from "@/lib/i18n/api-error-translator";
 
 /**
  * User Service
@@ -66,7 +67,7 @@ class UserService {
    */
   async uploadAvatar(file, onProgress = null, config = {}) {
     if (!file || !(file instanceof File)) {
-      throw new Error("Invalid file provided");
+      throw new Error(translateApiError("INVALID_FILE", "Invalid file provided"));
     }
 
     const formData = new FormData();
@@ -273,7 +274,7 @@ class UserService {
     );
 
     if (missingFields.length > 0) {
-      throw new Error(`Missing required fields: ${missingFields.join(", ")}`);
+      throw new Error(translateApiError("MISSING_FIELDS", `Missing required fields: ${missingFields.join(", ")}`));
     }
 
     return true;

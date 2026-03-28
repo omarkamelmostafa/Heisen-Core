@@ -1,6 +1,7 @@
 // frontend/src/store/utils/thunk-utils.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { normalizeError } from "@/lib/utils/error-utils";
+import { translateApiError } from "@/lib/i18n/api-error-translator";
 
 /**
  * Standardized wrapper for createAsyncThunk with automatic error normalization.
@@ -16,12 +17,24 @@ export const createAppThunk = (type, payloadCreator, defaultErrorMessage = "Acti
       return await payloadCreator(arg, thunkAPI);
     } catch (error) {
       const normalized = normalizeError(error, defaultErrorMessage);
-      
+
+      // Extract errorCode and raw message for translation
+      let errorCode = normalized.errorCode || "UNKNOWN";
+      const rawMessage = normalized.message;
+
+      // Detect Axios network error (no response at all)
+      if (!error?.response && error?.message === "Network Error") {
+        errorCode = "NETWORK_ERROR";
+      }
+
+      // Translate the error message using errorCode
+      const translatedMessage = translateApiError(errorCode, rawMessage);
+
       // If it's a cancellation, we can let the thunk be aborted naturally or reject
       // Conventional RTK thunks return the error for rejection
       return thunkAPI.rejectWithValue({
-        message: normalized.message,
-        errorCode: normalized.errorCode,
+        message: translatedMessage,
+        errorCode: errorCode,
         status: normalized.status,
         isGlobalError: normalized.originalError?.isGlobalError || false,
       });

@@ -1,12 +1,14 @@
 // frontend/src/features/auth/components/guards/protected-guard.jsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AppSplashScreen } from "@/components/shared/app-splash-screen";
 
 export function ProtectedGuard({ children }) {
+  const t = useTranslations("infrastructure");
   const { isAuthenticated, isBootstrapComplete } = useSelector((state) => state.auth);
   const router = useRouter();
 
@@ -17,7 +19,7 @@ export function ProtectedGuard({ children }) {
   }, [isBootstrapComplete, isAuthenticated, router]);
 
   if (!isBootstrapComplete) {
-    return <AppSplashScreen message="Verifying your session..." />;
+    return <AppSplashScreen message={t("verifyingSession")} />;
   }
 
   if (isAuthenticated) {

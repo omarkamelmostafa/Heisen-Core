@@ -1,9 +1,11 @@
 // frontend/src/features/auth/components/reset-password/security-tips.jsx
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
-import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";
 
 export function SecurityTips() {
+  const t = useTranslations("auth.resetPassword");
+  const items = t.raw("securityTips.items");
 
   return (
     <motion.div
@@ -13,10 +15,10 @@ export function SecurityTips() {
       className="bg-muted rounded-lg p-4 text-sm text-left"
     >
       <p className="font-medium text-foreground mb-2">
-        {content.securityTips.title}
+        {t("securityTips.title")}
       </p>
       <ul className="space-y-1 text-muted-foreground">
-        {content.securityTips.items.map((item, index) => (
+        {items.map((item, index) => (
           <li key={index}>• {item}</li>
         ))}
       </ul>

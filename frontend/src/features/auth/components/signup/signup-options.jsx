@@ -1,10 +1,13 @@
 // frontend/src/features/auth/components/signup/signup-options.jsx
+"use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
-import { signupContent as content } from "@/lib/config/auth/signup";
+import { useTranslations } from "next-intl";
 
 export function SignupOptions() {
+  const t = useTranslations("auth.signup");
 
   return (
     <motion.p
@@ -13,12 +16,12 @@ export function SignupOptions() {
       variants={quickFadeInVariants}
       className="text-muted-foreground text-center text-sm"
     >
-      {content.options.existingAccount}{" "}
+      {t("hasAccount")}{" "}
       <Link
         href="/login"
         className="text-foreground hover:underline font-medium"
       >
-        {content.options.signInLink}
+        {t("signInLink")}
       </Link>
     </motion.p>
   );

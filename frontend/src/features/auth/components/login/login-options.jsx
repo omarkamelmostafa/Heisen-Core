@@ -1,13 +1,16 @@
 // frontend/src/features/auth/components/login/login-options.jsx
+"use client";
+
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
-import { loginContent as content } from "@/lib/config/auth/login";
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 
 export function LoginOptions({ isLoading }) {
+  const t = useTranslations("auth.login");
   const { setValue, watch } = useFormContext();
 
   const rememberMe = watch("rememberMe") || false;
@@ -39,14 +42,14 @@ export function LoginOptions({ isLoading }) {
             htmlFor="rememberMe"
             className="text-sm font-normal text-muted-foreground cursor-pointer"
           >
-            {content.options.rememberMe}
+            {t("rememberMe")}
           </Label>
         </div>
         <Link
           href="/forgot-password"
           className="text-sm text-primary hover:underline"
         >
-          {content.options.forgotPassword}
+          {t("forgotPassword")}
         </Link>
       </motion.div>
 
@@ -56,12 +59,12 @@ export function LoginOptions({ isLoading }) {
         variants={quickFadeInVariants}
         className="text-muted-foreground text-center text-sm"
       >
-        {content.options.signupPrompt}{" "}
+        {t("noAccount")}{" "}
         <Link
           href="/signup"
           className="text-foreground hover:underline font-medium"
         >
-          {content.options.signupLink}
+          {t("signupLink")}
         </Link>
       </motion.p>
     </>

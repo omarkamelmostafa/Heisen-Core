@@ -6,13 +6,14 @@ import { sendUseCaseResponse } from "../auth/auth-shared.js";
  */
 export const handleChangePassword = async (req, res, next) => {
   try {
-    const { oldPassword, newPassword } = req.body;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
     const userId = req.user.userId;
 
     const result = await changePasswordUseCase({
       userId,
       oldPassword,
       newPassword,
+      confirmPassword,
     });
 
     return sendUseCaseResponse(req, res, result);

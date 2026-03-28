@@ -2,10 +2,13 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl";
 import Link from "next/link"
 import { SETTINGS_NAV_ITEMS } from "../config/settings-nav-items"
 
 export function SettingsMobileNav({ activeId = "profile" }) {
+  const t = useTranslations("settings");
+  const tc = useTranslations("common");
   return (
     <div className="lg:hidden mb-4 bg-card rounded-xl border border-border shadow-sm">
       <div className="flex overflow-x-auto p-1.5 gap-1 no-scrollbar">
@@ -21,8 +24,8 @@ export function SettingsMobileNav({ activeId = "profile" }) {
                 disabled
               >
                 <Icon className="h-3.5 w-3.5 shrink-0" />
-                <span>{item.label}</span>
-                <span className="text-[9px] ml-0.5 opacity-70">(Soon)</span>
+                <span>{t(`nav.${item.id}`)}</span>
+                <span className="text-[9px] ms-0.5 opacity-70">({tc("soon")})</span>
               </button>
             );
           }
@@ -34,7 +37,7 @@ export function SettingsMobileNav({ activeId = "profile" }) {
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-medium whitespace-nowrap shrink-0 transition-colors bg-primary text-primary-foreground"
               >
                 <Icon className="h-3.5 w-3.5 shrink-0" />
-                <span>{item.label}</span>
+                <span>{t(`nav.${item.id}`)}</span>
               </button>
             );
           }
@@ -46,7 +49,7 @@ export function SettingsMobileNav({ activeId = "profile" }) {
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground text-[13px] font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer"
             >
               <Icon className="h-3.5 w-3.5 shrink-0" />
-              <span>{item.label}</span>
+              <span>{t(`nav.${item.id}`)}</span>
             </Link>
           );
         })}

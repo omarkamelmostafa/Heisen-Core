@@ -1,13 +1,16 @@
 // frontend/src/features/auth/components/signup/terms-and-conditions.jsx
+"use client";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { signupContent as content } from "@/lib/config/auth/signup";
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export function TermsAndConditions({ isLoading }) {
+  const t = useTranslations("auth.signup");
   const {
     setValue,
     watch,
@@ -59,23 +62,23 @@ export function TermsAndConditions({ isLoading }) {
           htmlFor="terms"
           className="text-sm font-normal text-muted-foreground leading-relaxed cursor-pointer"
         >
-          {content.terms.agreement}{" "}
+          {t("termsAgree")}{" "}
           <Link
             href="/terms"
             className="text-primary hover:underline font-medium"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {content.terms.termsOfService}
+            {t("termsOfService")}
           </Link>{" "}
-          {content.terms.and}{" "}
+          {t("and")}{" "}
           <Link
             href="/privacy"
             className="text-primary hover:underline font-medium"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {content.terms.privacyPolicy}
+            {t("privacyPolicy")}
           </Link>
         </Label>
       </div>
@@ -88,7 +91,7 @@ export function TermsAndConditions({ isLoading }) {
         >
           <div className="flex-shrink-0 w-2 h-2 bg-red-500 rounded-full"></div>
           <p className="text-sm text-red-700 font-medium">
-            You must accept the terms and conditions to continue
+            {t("termsRequired")}
           </p>
         </motion.div>
       )}

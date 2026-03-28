@@ -1,13 +1,15 @@
 // frontend/src/app/(auth)/forgot-password/page.jsx
 "use client";
 
+import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useForgotPassword } from "@/features/auth/hooks/useForgotPassword";
 import { ForgotPasswordHeader } from "@/features/auth/components/forgot-password/forgot-password-header";
 import { FormState } from "@/features/auth/components/forgot-password/form-state";
 import { SuccessState } from "@/features/auth/components/forgot-password/success-state";
 import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
-import { forgotPasswordSchema } from "@/lib/validations/auth-schemas";
+import { createForgotPasswordSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
   containerVariants,
@@ -18,6 +20,9 @@ import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-aler
 import { ProductionErrorTrigger } from "@/features/auth/components/error/production-error-trigger";
 
 export default function ForgotPasswordPage() {
+  const tVal = useTranslations("validation");
+  const forgotPasswordSchema = useMemo(() => createForgotPasswordSchema(tVal), [tVal]);
+
   const {
     isSuccess,
     submittedEmail,
@@ -27,7 +32,7 @@ export default function ForgotPasswordPage() {
     handleTryAnotherEmail,
   } = useForgotPassword();
 
-  const { isReady } = useTransitionReady({ delay: 300 });
+  const { isReady } = useTransitionReady({ delay: 0 });
 
   if (!isReady) {
     return <ForgotPasswordSkeleton />;

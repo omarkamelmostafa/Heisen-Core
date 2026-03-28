@@ -9,9 +9,10 @@ import logger from "../../utilities/general/logger.js";
  * @param {string} dto.userId      - The user's ID
  * @param {string} dto.oldPassword - The user's current password
  * @param {string} dto.newPassword - The user's new password
+ * @param {string} dto.confirmPassword - Confirmation of the new password (already validated by middleware)
  * @returns {Object} { success, statusCode, errorCode?, message }
  */
-export async function changePasswordUseCase({ userId, oldPassword, newPassword }) {
+export async function changePasswordUseCase({ userId, oldPassword, newPassword, confirmPassword }) {
   try {
     const user = await User.findById(userId).select("+password +tokenVersion");
 

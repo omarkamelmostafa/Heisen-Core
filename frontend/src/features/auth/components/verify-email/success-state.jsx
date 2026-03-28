@@ -1,14 +1,15 @@
 // frontend/src/features/auth/components/verify-email/success-state.jsx
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { VerifyEmailHeader } from "./verify-email-header";
 import {
   containerVariants,
   itemVariants,
 } from "@/lib/animations/auth/authAnimations";
-import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
 
 export function SuccessState() {
+  const t = useTranslations("auth.verifyEmail");
 
   return (
     <motion.div
@@ -26,14 +27,14 @@ export function SuccessState() {
 
       {/* Success Message */}
       <motion.div variants={itemVariants} className="space-y-3">
-        <h2 className="text-2xl font-semibold">{content.success.title}</h2>
-        <p className="text-muted-foreground">{content.success.message}</p>
+        <h2 className="text-2xl font-semibold">{t("success.title")}</h2>
+        <p className="text-muted-foreground">{t("success.message")}</p>
       </motion.div>
 
       {/* Redirect Notice */}
       <motion.div variants={itemVariants}>
         <p className="text-sm text-muted-foreground">
-          {content.success.redirect}
+          {t("success.redirect")}
         </p>
       </motion.div>
     </motion.div>

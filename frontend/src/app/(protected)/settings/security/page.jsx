@@ -52,7 +52,7 @@ export default function SecurityPage() {
     handleToggle2fa,
   } = useToggle2fa();
 
-  const { isReady } = useTransitionReady({ delay: 300 });
+  const { isReady } = useTransitionReady({ delay: 0 });
 
   if (!isReady) return <SecuritySkeleton />;
 

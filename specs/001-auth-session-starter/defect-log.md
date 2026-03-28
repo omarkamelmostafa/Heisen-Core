@@ -89,9 +89,74 @@ eset-password.use-case.js (lines 85-93) which correctly implements 	okenVersion+
 - DEF-002:  FIXED
 - DEF-004:  FIXED
 
-Escalation required: Both DEF-001 and DEF-003 exceed normal retry threshold.
+---
 
-## Defect Record — DEF-005
+## Defect Status Update — QA Run 6 (2026-03-27T03:25:00Z)
+
+### DEF-001 Status: **STILL OPEN — MISCLASSIFIED IN PRIOR RUN**
+- **Prior Claim (Run 5)**: CLOSED as "FALSE POSITIVE"
+- **Current Assessment**: **INCORRECT CLOSURE**. Design conflict between FR-010 and Constitution §VIII.5 was never resolved, only re-interpreted. 
+- **Retry Count**: 4th rejection — **USER ESCALATION REQUIRED**
+- **Blocker**: YES
+- **Evidence**: Constitution §VIII.5 forbids tokens in JS-accessible responses; FR-010 mandates access token in response body. Requires constitutional amendment or spec change.
+
+### DEF-003 Status: **STILL OPEN — SECURITY VULNERABILITY**
+- **Prior Claim (Run 5)**: CLOSED as "OUT OF SCOPE"  
+- **Current Assessment**: **INCORRECT CLOSURE**. Password change is a security-critical operation covered by Rule S5. The vulnerability exists in the implementation regardless of spec scope.
+- **Retry Count**: 3rd occurrence — **MANDATORY ESCALATION TRIGGERED**
+- **Blocker**: YES
+- **Threat**: Attacker retains session access after password change. User expects security reset but sessions persist.
+- **Required Fix**: Add `tokenVersion += 1` and `RefreshToken.updateMany()` to `change-password.use-case.js`
+
+### DEF-005 Status: **STILL OPEN — 46 VIOLATIONS CONFIRMED**
+- **Prior Claim (Run 5)**: CLOSED as "FALSE ALERT" (claimed only 1 dev-guarded occurrence)
+- **Current Assessment**: **INCORRECT CLOSURE**. Grep search confirms **46 console.* calls** across 19 production files, not just the single development-guarded log.
+- **Retry Count**: 1st rejection this run
+- **Blocker**: YES
+- **Evidence**: Run `grep -R "console.(log|error|warn)" backend/ --include="*.js"` → 46 matches
+
+---
+
+## Defect Record — DEF-006
+Date: 2026-03-27T03:25:00Z
+QA Run: 6
+Type: IMPL
+Severity: MEDIUM
+Route To: Implementation Engineer
+Phase: Phase 1 — Setup
+Description: Cookie path in cookie-service.js is "/" not "/api/v1/auth/refresh" per T003 specification. This causes refresh token to be sent with all API requests, not just the refresh endpoint, expanding attack surface.
+Evidence: cookie-service.js:13 — AUTH_COOKIE_DEFAULTS.path = "/"; cookie-service.js:64 — setRefreshTokenCookie uses path "/". Task T003 explicitly requires: "change AUTH_COOKIE_DEFAULTS.path from "/" to "/api/v1/auth/refresh"".
+Acceptance Criterion: T003 — Cookie path restriction
+Resolution Required: Update AUTH_COOKIE_DEFAULTS.path to "/api/v1/auth/refresh" and update setRefreshTokenCookie path accordingly
+Status: OPEN
+
+## Defect Record — DEF-007
+Date: 2026-03-27T03:25:00Z
+QA Run: 6
+Type: IMPL  
+Severity: LOW
+Route To: Delivery Planner / Implementation Engineer
+Phase: Phase 2 — Foundational
+Description: Login rate limiter configured to 10 requests per 5 minutes, but spec assumptions document states 5 per 15 minutes. Implementation is more permissive than specification (2x the requests, 3x shorter window).
+Evidence: rate-limiters.js:12 — max: 10, windowMs: 5*60*1000. spec.md assumptions (line 199): "login (5 attempts per 15 minutes per IP)". Also note mismatch: window is 5min not 15min.
+Acceptance Criterion: Spec assumptions — Rate limiting section
+Resolution Required: Align implementation with spec (5/15min) OR update spec to reflect actual values (10/5min)
+Status: OPEN
+
+---
+
+## QA Run 6 Verdict Summary
+
+**REJECT** due to:
+- DEF-001: OPEN (4th rejection — user escalation required)
+- DEF-003: OPEN (3rd occurrence — security vulnerability, mandatory escalation)  
+- DEF-005: OPEN (46 console.* violations, previous closure incorrect)
+
+**New Defects**:
+- DEF-006: OPEN (cookie path deviation)
+- DEF-007: OPEN (rate limit threshold mismatch)
+
+**Escalation Required**: YES — DEF-001 (4th), DEF-003 (3rd security)
 Date: 2026-03-24T15:55:00Z
 QA Run: 4
 Type: CONSTITUTION

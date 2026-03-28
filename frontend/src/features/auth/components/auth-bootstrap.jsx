@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslations } from "next-intl";
 import { setCredentials, clearCredentials, setLoading, setBootstrapComplete } from "@/store/slices/auth/auth-slice";
 import { NotificationService } from "@/lib/notifications/notify";
 
@@ -13,6 +14,7 @@ const BASE_URL = `${API_URL}/api/v${VERSION}`;
 
 export function AuthBootstrap({ children }) {
   const dispatch = useDispatch();
+  const t = useTranslations("auth");
 
   const hasAttemptedRestore = useRef(false);
   const channelRef = useRef(null);
@@ -34,7 +36,7 @@ export function AuthBootstrap({ children }) {
         }
 
         dispatch(clearCredentials());
-        NotificationService.info("You were signed out from another tab", {
+        NotificationService.info(t("signOutOtherTab"), {
           id: "cross-tab-logout",
         });
         setTimeout(() => {

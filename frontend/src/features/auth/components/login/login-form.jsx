@@ -1,11 +1,12 @@
 // frontend/src/features/auth/components/login/login-form.jsx
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { FormField } from "@/features/auth/components/forms/form-field";
 import { AuthSubmitButtons } from "@/features/auth/components/forms/auth-submit-button";
 import { LoginOptions } from "./login-options";
-import { loginContent as content } from "@/lib/config/auth/login";
 import { useFormContext } from "react-hook-form";
+import { BRAND } from "@/lib/config/brand-config";
 
 export function LoginForm({
   variants,
@@ -13,6 +14,7 @@ export function LoginForm({
   isLoading,
   onTogglePassword,
 }) {
+  const t = useTranslations("auth.login");
   const { watch } = useFormContext();
 
   const email = watch("email");
@@ -24,8 +26,8 @@ export function LoginForm({
         <FormField
           name="email"
           type="email"
-          label={content.form.email.label}
-          placeholder={content.form.email.placeholder}
+          label={t("emailLabel")}
+          placeholder={t("emailPlaceholder")}
           required
           disabled={isLoading}
         />
@@ -33,8 +35,8 @@ export function LoginForm({
         <FormField
           name="password"
           type={showPassword ? "text" : "password"}
-          label={content.form.password.label}
-          placeholder={content.form.password.placeholder}
+          label={t("passwordLabel")}
+          placeholder={t("passwordPlaceholder")}
           required
           disabled={isLoading}
           showPasswordToggle={true}
@@ -47,8 +49,8 @@ export function LoginForm({
           isLoading={isLoading}
           email={email}
           password={password}
-          buttonText={content.buttons.login}
-          loadingText={content.buttons.loading}
+          buttonText={t("submitButton", { appName: BRAND.APP_NAME })}
+          loadingText={t("submitting")}
         />
       </div>
     </motion.div>
