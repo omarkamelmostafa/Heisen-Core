@@ -1,7 +1,8 @@
 // frontend/src/app/(auth)/signup/page.jsx
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { useTransitionReady } from "@/hooks/use-transition-ready";
 import { SignupSkeleton } from "@/features/auth/components/skeletons/signup-skeleton";
 import { useSignup } from "@/features/auth/hooks/useSignup";
@@ -10,7 +11,7 @@ import { WelcomeSection } from "@/features/auth/components/signup/welcome-sectio
 import { SignupForm } from "@/features/auth/components/signup/signup-form";
 import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
 import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
-import { signupSchema } from "@/lib/validations/auth-schemas";
+import { createSignupSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
   containerVariants,
@@ -25,6 +26,9 @@ export default function SignupPage() {
     password: false,
     confirmPassword: false,
   });
+  const tVal = useTranslations("validation");
+
+  const signupSchema = useMemo(() => createSignupSchema(tVal), [tVal]);
 
   const {
     isLoading,
@@ -32,7 +36,7 @@ export default function SignupPage() {
     handleSignup,
   } = useSignup();
 
-  const { isReady } = useTransitionReady({ delay: 300 });
+  const { isReady } = useTransitionReady({ delay: 0 });
 
   if (!isReady) {
     return <SignupSkeleton />;

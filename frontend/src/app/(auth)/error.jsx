@@ -1,12 +1,14 @@
 // frontend/src/app/(auth)/error.jsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import Link from "next/link";
 import { AlertCircle, RefreshCw, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function AuthError({ error, reset }) {
+  const t = useTranslations("errors");
   useEffect(() => {
     console.error("Auth error:", error);
   }, [error]);
@@ -24,7 +26,7 @@ export default function AuthError({ error, reset }) {
 
         <div className="space-y-3">
           <h2 className="text-2xl font-semibold text-foreground">
-            Something went wrong
+            {t("somethingWentWrong")}
           </h2>
           {isDev && error?.message ? (
             <div className="mt-4 p-3 bg-muted/50 rounded-md text-left overflow-auto max-h-32">
@@ -34,7 +36,7 @@ export default function AuthError({ error, reset }) {
             </div>
           ) : (
             <p className="text-muted-foreground">
-              We encountered an issue during authentication. Please try again.
+              {t("authError")}
             </p>
           )}
         </div>
@@ -42,13 +44,13 @@ export default function AuthError({ error, reset }) {
         <div className="space-y-3 pt-4">
           <Button onClick={() => reset()} className="w-full" size="lg">
             <RefreshCw className="h-4 w-4 mr-2" />
-            Try Again
+            {t("tryAgain")}
           </Button>
 
           <Button variant="outline" asChild className="w-full">
             <Link href="/login">
               <LogIn className="h-4 w-4 mr-2" />
-              Back to Login
+              {t("backToLogin")}
             </Link>
           </Button>
         </div>

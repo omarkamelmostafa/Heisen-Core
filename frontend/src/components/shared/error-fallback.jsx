@@ -4,17 +4,19 @@
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Home, ArrowLeft, AlertCircle } from "lucide-react";
 import { isDevelopment } from "@/lib/environment";
+import { useTranslations } from "next-intl";
 
 /**
  * Shared Error Fallback UI
  * Used by both React ErrorBoundary and Next.js error segments.
  */
 export function ErrorFallback({ error, reset, title }) {
+  const t = useTranslations("errors");
   const errorMessage =
     error?.message ||
-    "Oops, something went wrong on our end. Please try again later.";
+    t("appError");
 
-  const errorTitle = title || error?.title || "Something Went Wrong";
+  const errorTitle = title || error?.title || t("somethingWentWrong");
 
   return (
     <div className="min-h-[400px] flex items-center justify-center bg-background p-6 rounded-xl border border-border/50">
@@ -64,7 +66,7 @@ export function ErrorFallback({ error, reset, title }) {
           {reset && (
             <Button onClick={reset} className="w-full" size="lg">
               <RefreshCw className="h-4 w-4 mr-2" />
-              {isDevelopment ? "Clear & Retry" : "Try Again"}
+              {isDevelopment ? "Clear & Retry" : t("tryAgain")}
             </Button>
           )}
 
@@ -75,7 +77,7 @@ export function ErrorFallback({ error, reset, title }) {
               className="flex-1"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Go Back
+              {t("goBack")}
             </Button>
             <Button
               variant="outline"
@@ -83,7 +85,7 @@ export function ErrorFallback({ error, reset, title }) {
               className="flex-1"
             >
               <Home className="h-4 w-4 mr-2" />
-              Go Home
+              {t("goHome")}
             </Button>
           </div>
         </div>

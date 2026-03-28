@@ -1,12 +1,12 @@
 // frontend/src/features/auth/components/verify-email/verification-form.jsx
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { VerificationInput } from "./verification-input";
 import { AuthSubmitButtons } from "@/features/auth/components/forms/auth-submit-button";
 import { TimerDisplay } from "./timer-display";
 import { ResendCodeSection } from "./resend-code-section";
 import { BackToLoginLink } from "./back-to-login-link";
-import { verifyEmailContent as content } from "@/lib/config/auth/verify-email";
 
 export function VerificationForm({
   variants,
@@ -15,13 +15,14 @@ export function VerificationForm({
   onResendCode,
   formatTime,
 }) {
+  const t = useTranslations("auth.verifyEmail");
 
   return (
     <motion.div variants={variants} className="space-y-4">
       <div className="space-y-6">
         <VerificationInput
-          label={content.form.verificationCode.label}
-          length={content.form.verificationCode.length}
+          label={t("form.verificationCodeLabel")}
+          length={6}
           required
           disabled={isLoading}
         />
@@ -30,8 +31,8 @@ export function VerificationForm({
 
         <AuthSubmitButtons.VerifyEmail
           isLoading={isLoading}
-          buttonText={content.actions.verify}
-          loadingText={content.actions.verifying}
+          buttonText={t("actions.verify")}
+          loadingText={t("actions.verifying")}
         />
       </div>
 

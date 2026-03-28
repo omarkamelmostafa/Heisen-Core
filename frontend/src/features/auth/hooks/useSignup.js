@@ -1,5 +1,6 @@
 // frontend/src/features/auth/hooks/useSignup.js
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { registerUser } from "@/store/slices/auth/auth-thunks";
@@ -15,6 +16,7 @@ import {
 export function useSignup() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const t = useTranslations("toasts");
 
   const user = useAppSelector(selectAuthUser);
   const isLoading = useAppSelector(selectAuthLoading);
@@ -33,8 +35,8 @@ export function useSignup() {
       const emailSent = result?.data?.emailSent !== false;
 
       if (emailSent) {
-        NotificationService.success("Account created successfully!", {
-          description: "Check your email to verify your account.",
+        NotificationService.success(t("accountCreated"), {
+          description: t("accountCreatedCheckEmail"),
         });
         // Redirect to check email page on success with timer enabled
         router.push(
@@ -42,7 +44,7 @@ export function useSignup() {
         );
       } else {
         NotificationService.warn(
-          "Account created, but we couldn't send the verification email. Please use Resend Code.",
+          t("accountCreatedEmailFailed"),
           { id: "email-dispatch-warning", duration: 6000 }
         );
         // Redirect to check email page on success WITHOUT timer

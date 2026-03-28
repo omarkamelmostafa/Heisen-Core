@@ -1,11 +1,13 @@
 // frontend/src/features/user/hooks/useProfilePhoto.js
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { useAppDispatch } from "@/hooks/redux";
 import { uploadAvatar } from "@/store/slices/user/user-thunks";
 import { NotificationService } from "@/lib/notifications/notify";
 
 export function useProfilePhoto() {
   const dispatch = useAppDispatch();
+  const t = useTranslations("toasts");
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -34,11 +36,11 @@ export function useProfilePhoto() {
     setIsUploading(true);
     try {
       await dispatch(uploadAvatar({ file: selectedFile })).unwrap();
-      NotificationService.success("Profile photo updated successfully");
+      NotificationService.success(t("photoUpdated"));
       clearSelection();
     } catch (error) {
       if (!error?.isGlobalError) {
-        NotificationService.error(error?.message || "Failed to upload photo");
+        NotificationService.error(error?.message || t("photoUploadFailed"));
       }
     } finally {
       setIsUploading(false);

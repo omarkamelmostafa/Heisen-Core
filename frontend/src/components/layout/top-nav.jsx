@@ -3,6 +3,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { BRAND } from "@/lib/config/brand-config"
 import {
   Search,
   Bell,
@@ -25,10 +26,14 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "./theme-toggle"
+import { LanguageToggle } from "@/components/shared/language-toggle"
 
 export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
+  const t = useTranslations("nav");
+  const tc = useTranslations("common");
   return (
     <header className="sticky top-0 z-50 w-full bg-card border-b border-border">
       <div className="mx-auto flex h-[60px] max-w-[1200px] items-center px-4 md:px-7 gap-3 md:gap-5">
@@ -44,7 +49,7 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
             {/* <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">C</span> */}
           </div>
           <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">
-            Heisen Core
+            {BRAND.APP_NAME}
           </span>
         </Link>
 
@@ -52,30 +57,31 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
 
         {/* Search area */}
         <div className="hidden lg:block flex-1 max-w-[480px] mx-auto relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+          <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
           <Input
-            placeholder="Search"
-            className="w-full pl-9 h-9 bg-muted border-border focus-visible:ring-1"
+            placeholder={t("search")}
+            className="w-full ps-9 h-9 bg-muted border-border focus-visible:ring-1"
           />
         </div>
 
         {/* Right actions */}
-        <div className="ml-auto flex items-center gap-1 md:gap-1.5 shrink-0">
+        <div className="ms-auto flex items-center gap-1 md:gap-1.5 shrink-0">
 
           <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled>
             <Bell className="h-[18px] w-[18px]" />
-            <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
+            <span className="absolute top-1 end-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
               +10
             </span>
           </Button>
 
           <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled>
             <MessageSquare className="h-[18px] w-[18px]" />
-            <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
+            <span className="absolute top-1 end-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
               +10
             </span>
           </Button>
 
+          <LanguageToggle />
           <ThemeToggle />
 
           <Separator orientation="vertical" className="h-6 mx-1 hidden md:block" />
@@ -99,33 +105,33 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href="/settings/profile" className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  My Profile
+                  {t("myProfile")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href="/settings/security" className="flex items-center gap-2">
                   <Shield className="h-4 w-4" />
-                  Security Settings
+                  {t("securitySettings")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem disabled className="cursor-not-allowed opacity-60" >
-                <Settings className="h-4 w-4 mr-2" />
-                Account Settings
-                <Badge variant="secondary" className="ml-auto text-[10px] px-1.5 py-0 font-normal">Soon</Badge>
+                <Settings className="h-4 w-4 me-2" />
+                {t("accountSettings")}
+                <Badge variant="secondary" className="ms-auto text-[10px] px-1.5 py-0 font-normal">{tc("soon")}</Badge>
               </DropdownMenuItem>
               <DropdownMenuItem disabled className="cursor-not-allowed opacity-60">
-                <CreditCard className="h-4 w-4 mr-2" />
-                Billing
-                <Badge variant="secondary" className="ml-auto text-[10px] px-1.5 py-0 font-normal">Soon</Badge>
+                <CreditCard className="h-4 w-4 me-2" />
+                {t("billing")}
+                <Badge variant="secondary" className="ms-auto text-[10px] px-1.5 py-0 font-normal">{tc("soon")}</Badge>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={onLogout}
                 className="text-destructive focus:text-destructive cursor-pointer"
               >
-                <LogOut className="h-4 w-4 mr-2" />
-                Sign Out
+                <LogOut className="h-4 w-4 me-2" />
+                {t("signOut")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -70,13 +70,8 @@
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/register",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "register"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "register"]
             },
             "description": "Create a new user account. On success (201), an email verification code is dispatched to\nthe provided address. The account cannot log in until the email is verified.\nResponse data includes: user (uuid, email, firstname, lastname, isVerified) and emailSent flag."
           },
@@ -93,15 +88,20 @@
                   "  pm.response.to.have.status(200);",
                   "});",
                   "",
+                  "const json = pm.response.json();",
+                  "",
                   "pm.test(\"Response has access token\", function () {",
-                  "  const json = pm.response.json();",
                   "  pm.expect(json.data).to.have.property(\"accessToken\");",
                   "  // Save access token to environment for subsequent requests",
                   "  pm.environment.set(\"access_token\", json.data.accessToken);",
                   "});",
                   "",
+                  "// Save temp token if 2FA is required",
+                  "if (json.data && json.data.twoFactorRequired && json.data.tempToken) {",
+                  "  pm.environment.set(\"temp_token\", json.data.tempToken);",
+                  "}",
+                  "",
                   "pm.test(\"Response has user profile\", function () {",
-                  "  const json = pm.response.json();",
                   "  pm.expect(json.data.user).to.have.property(\"email\");",
                   "  pm.expect(json.data.user).to.have.property(\"firstname\");",
                   "});",
@@ -134,13 +134,8 @@
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/login",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "login"]
             },
             "description": "Authenticate with email and password. On success:\n\nReturns an access token in the response body (saved automatically to {{access_token}})\nSets an HTTP-only refresh_token cookie (7-day or session TTL based on rememberMe)\n\nThe account must be email-verified before login is permitted."
           },
@@ -189,13 +184,8 @@
             ],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/logout",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "logout"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "logout"]
             },
             "description": "Invalidates the current session by revoking the active refresh token and clearing the\nHTTP-only cookie. Requires a valid Bearer access token.\nThe test script automatically clears {{access_token}} from the environment."
           },
@@ -244,13 +234,8 @@
             ],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/logout-all",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "logout-all"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "logout-all"]
             },
             "description": "Revokes ALL active refresh tokens for the authenticated user across every device and browser.\nUse this for security incidents or account takeover scenarios.\nThe test script automatically clears {{access_token}} from the environment."
           },
@@ -288,13 +273,8 @@
             ],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/refresh",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "refresh"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "refresh"]
             },
             "description": "Exchanges the current HTTP-only refresh_token cookie for a new access token.\nImplements refresh token rotation: the old token is immediately revoked and a new\ncookie is issued. Uses cookie-based auth — no Authorization header required.\nThe test script updates {{access_token}} automatically."
           },
@@ -303,7 +283,85 @@
       ]
     },
     {
-      "name": "📧 Email Verification",
+      "name": "� Two-Factor Authentication",
+      "description": "Two-factor authentication flow for additional account security.\nWhen a user with 2FA enabled logs in, they receive a temporary token and must verify\ntheir identity with a 6-digit OTP sent to their email.",
+      "item": [
+        {
+          "name": "Verify 2FA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.data && json.data.accessToken) {",
+                  "    pm.environment.set(\"access_token\", json.data.accessToken);",
+                  "  }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{2fa_code}}\",\n  \"tempToken\": \"{{temp_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/auth/verify-2fa",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "verify-2fa"]
+            },
+            "description": "Complete 2FA login verification. Requires the 6-digit OTP code from email and the temporary JWT from the login response. On success, returns access token and sets refresh_token cookie."
+          },
+          "response": []
+        },
+        {
+          "name": "Resend 2FA Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tempToken\": \"{{temp_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/auth/resend-2fa",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "resend-2fa"]
+            },
+            "description": "Resend a new 6-digit OTP code during the 2FA login flow. Requires the temporary JWT from the initial login response."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "� Email Verification",
       "description": "Email address verification flow using a one-time 6-digit code.\nThe verification code is sent on registration and can be resent if expired.\nSet the {{verification_token}} environment variable with the code from your inbox\nbefore running Verify Email.",
       "item": [
         {
@@ -345,13 +403,8 @@
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/verify-email",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "verify-email"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "verify-email"]
             },
             "description": "Submit the 6-digit OTP received by email to mark the account as verified.\nThe body field name is \"token\" (not \"code\" or \"otp\").\nPrerequisite: Set {{verification_token}} in the environment with the code from your email."
           },
@@ -396,13 +449,8 @@
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/resend-verification",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "resend-verification"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "resend-verification"]
             },
             "description": "Request a new verification code if the original expired or was not received.\nRate limited to prevent abuse. Always returns 200 — anti-enumeration by design."
           },
@@ -453,13 +501,8 @@
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/forgot-password",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "forgot-password"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "forgot-password"]
             },
             "description": "Initiates the password reset flow by sending a reset link to the specified email.\nSecurity note: Always returns 200 OK regardless of whether the email is registered.\nThis prevents user enumeration attacks. Check your inbox for the reset token."
           },
@@ -504,13 +547,8 @@
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/reset-password",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "auth",
-                "reset-password"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["auth", "reset-password"]
             },
             "description": "Completes the password reset using the token from the reset email.\nAll active sessions for the user are revoked on success (security wipe).\nPrerequisite: Set {{reset_token}} in the environment with the token from your reset email.\nPassword must meet complexity requirements (min 8 chars, uppercase, lowercase, number, special char)."
           },
@@ -560,15 +598,222 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/user/me",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "user",
-                "me"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "me"]
             },
             "description": "Returns the authenticated user's profile data: uuid, email, firstname, lastname,\nrole, isVerified, createdAt, and updatedAt.\nRequires: Bearer {{access_token}} in Authorization header."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"{{test_firstname}}\",\n  \"lastname\": \"{{test_lastname}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/user/me",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "me"]
+            },
+            "description": "Update the authenticated user's first name and last name. Both fields must be 3-16 characters, letters and spaces only."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Avatar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/user/profile/avatar",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "profile", "avatar"]
+            },
+            "description": "Upload a profile avatar image. Accepts JPEG, PNG, WebP, or GIF. File is uploaded to Cloudinary."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📧 Email Management",
+      "description": "Email address management for authenticated users.\nRequest an email change and confirm it via a verification link sent to the new address.",
+      "item": [
+        {
+          "name": "Request Email Change",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newEmail\": \"{{new_email}}\",\n  \"currentPassword\": \"{{test_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/user/email/request",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "email", "request"]
+            },
+            "description": "Request an email address change. Sends a verification link to the new email. Requires current password for security."
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm Email Change",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/user/email/confirm/{{email_change_token}}",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "email", "confirm", "{{email_change_token}}"]
+            },
+            "description": "Confirm an email address change via the token from the verification email. This is a browser-navigated endpoint that returns 302 redirects to the frontend. Normally accessed by clicking the link in the verification email."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔒 Account Security",
+      "description": "Account security management endpoints for authenticated users.\nChange password and toggle two-factor authentication.",
+      "item": [
+        {
+          "name": "Change Password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"{{test_password}}\",\n  \"newPassword\": \"NewSecureP@ss2!\",\n  \"confirmPassword\": \"NewSecureP@ss2!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/user/security/password",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "security", "password"]
+            },
+            "description": "Change the authenticated user's password. Requires current password and a new password meeting complexity requirements (8-128 chars, uppercase, lowercase, number, special character)."
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle 2FA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enable\": true,\n  \"currentPassword\": \"{{test_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/user/security/2fa",
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["user", "security", "2fa"]
+            },
+            "description": "Enable or disable two-factor authentication. Set 'enable' to true/false. Requires current password for security."
           },
           "response": []
         }
@@ -605,12 +850,8 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/health",
-              "host": [
-                "{{base_url}}{{api_prefix}}"
-              ],
-              "path": [
-                "health"
-              ]
+              "host": ["{{base_url}}{{api_prefix}}"],
+              "path": ["health"]
             },
             "description": "Returns the health status of all backing services: MongoDB and Redis.\nReturns 200 if all services are connected, 503 if any are degraded.\nResponse shape: { status: \"healthy\"|\"degraded\", services: { mongodb, redis }, uptime, timestamp }"
           },
@@ -660,13 +901,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/error",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "error"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "error"]
                 },
                 "description": "Triggers an unhandled generic server error to verify the global error handler\nreturns a 500 with the standard error envelope. Confirms no stack traces leak to the client."
               },
@@ -697,14 +933,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/error/validation",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "error",
-                    "validation"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "error", "validation"]
                 },
                 "description": "Triggers a simulated express-validator validation failure to confirm the validation\nmiddleware returns 400 with a structured error array in the response body."
               },
@@ -735,14 +965,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/error/database",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "error",
-                    "database"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "error", "database"]
                 },
                 "description": "Simulates a database connection or query failure to verify the error handler\nmaps DB errors to the correct HTTP status and does not expose connection strings\nor internal query details in the response."
               },
@@ -773,14 +997,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/error/authentication",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "error",
-                    "authentication"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "error", "authentication"]
                 },
                 "description": "Triggers a simulated 401 authentication error to verify the error handler returns\nthe correct status code and error envelope without leaking token internals."
               },
@@ -812,13 +1030,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/nonexistent/path",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "nonexistent",
-                    "path"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["nonexistent", "path"]
                 },
                 "description": "Hits a route that does not exist to verify the 404 not-found middleware fires\nand returns the standard error envelope with a 404 status — not an HTML page."
               },
@@ -857,13 +1070,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/sanitize?name=John<script>alert('xss')</script>&search=<img src=x onerror=stealData()>&comment=Hello<div onclick=malicious()>World</div>",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "sanitize"
-                  ],
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "sanitize"],
                   "query": [
                     {
                       "key": "name",
@@ -924,13 +1132,8 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/test/sanitize",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "sanitize"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "sanitize"]
                 },
                 "description": "Sends XSS payloads in a JSON request body across multiple field types.\nThe response should reflect sanitized field values — iframe tags, script tags,\nand javascript: href schemes must be stripped. Validates body sanitization."
               },
@@ -961,14 +1164,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/sanitize/123?test=<script>alert('id')</script>",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "sanitize",
-                    "123"
-                  ],
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "sanitize", "123"],
                   "query": [
                     {
                       "key": "test",
@@ -1029,13 +1226,8 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/test/dangerous-input",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "dangerous-input"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "dangerous-input"]
                 },
                 "description": "Submits a comprehensive set of advanced attack payloads targeting cookie theft,\ncredential phishing via form injection, API exfiltration via onerror handlers,\njavascript: URL scheme abuse, and iframe-based phishing.\nExpected: All payloads stripped/escaped. No dangerous HTML survives to the response."
               },
@@ -1066,13 +1258,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/dangerous-input?xss=<script>alert('get')</script>",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "dangerous-input"
-                  ],
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "dangerous-input"],
                   "query": [
                     {
                       "key": "xss",
@@ -1139,13 +1326,8 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/test/security?queryParam=normal&xssParam=<script>alert('query')</script>",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "security"
-                  ],
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "security"],
                   "query": [
                     {
                       "key": "queryParam",
@@ -1186,13 +1368,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/security?queryParam=normal&xssParam=<script>alert('query')</script>",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "security"
-                  ],
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "security"],
                   "query": [
                     {
                       "key": "queryParam",
@@ -1242,13 +1419,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/helmet",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "helmet"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "helmet"]
                 },
                 "description": "Verifies that the Helmet middleware is applying all required security headers.\nCheck the Response Headers tab for: Content-Security-Policy, X-Frame-Options,\nX-Content-Type-Options, Strict-Transport-Security, and Referrer-Policy."
               },
@@ -1279,13 +1451,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/test/stats",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "test",
-                    "stats"
-                  ]
+                  "host": ["{{base_url}}"],
+                  "path": ["test", "stats"]
                 },
                 "description": "Returns aggregated security diagnostic statistics: request counts, sanitization\nhit rates, rate limiter counters, and any flagged payloads from recent requests.\nUse this after running the other security tests to see aggregate sanitizer activity."
               },

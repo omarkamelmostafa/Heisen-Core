@@ -10,6 +10,7 @@ import storeAccessor from "@/store/store-accessor";
 import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
 import { NotificationService } from "@/lib/notifications/notify";
 import { normalizeError } from "@/lib/utils/error-utils";
+import { translateInterceptor } from "@/lib/i18n/api-error-translator";
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -130,7 +131,7 @@ class BaseClient {
         storeAccessor.dispatch(clearCredentials());
         storeAccessor.dispatch(setSessionExpired(true));
 
-        NotificationService.warn("Your session has expired. Please log in again.", {
+        NotificationService.warn(translateInterceptor("sessionExpired"), {
           id: "session-expired",
         });
 
@@ -174,7 +175,7 @@ class BaseClient {
             isRefreshing = false;
             processQueue(err, null);
 
-            NotificationService.warn("Your session has expired. Please log in again.", {
+            NotificationService.warn(translateInterceptor("sessionExpired"), {
               id: "session-expired",
             });
 
@@ -185,7 +186,7 @@ class BaseClient {
 
     if (!error.response) {
       error.isGlobalError = true;
-      NotificationService.error("Unable to connect. Check your internet connection.", {
+      NotificationService.error(translateInterceptor("networkError"), {
         id: "global-network",
       });
     } else {
@@ -193,7 +194,7 @@ class BaseClient {
         const errorCode = error.response?.data?.errorCode;
         if (errorCode !== "ACCOUNT_NOT_VERIFIED") {
           error.isGlobalError = true;
-          NotificationService.error("You don't have permission to perform this action.", {
+          NotificationService.error(translateInterceptor("forbidden"), {
             id: "global-403",
           });
         }
@@ -201,15 +202,15 @@ class BaseClient {
       if (error.response.status === 429) {
         error.isGlobalError = true;
         const retryAfter = error.response.headers["retry-after"];
-        let waitMessage = "Too many requests. Please wait a moment.";
+        let waitMessage = translateInterceptor("rateLimited");
 
         if (retryAfter) {
           const seconds = parseInt(retryAfter, 10);
           if (!isNaN(seconds)) {
             const minutes = Math.ceil(seconds / 60);
             waitMessage = minutes > 1
-              ? `Too many requests. Please wait ${minutes} minutes.`
-              : `Too many requests. Please wait ${seconds} seconds.`;
+              ? translateInterceptor("rateLimitedMinutes", { minutes })
+              : translateInterceptor("rateLimitedSeconds", { seconds });
           }
         }
 
@@ -217,13 +218,13 @@ class BaseClient {
       }
       if (error.response.status === 500) {
         error.isGlobalError = true;
-        NotificationService.error("Something went wrong on our end. Please try again.", {
+        NotificationService.error(translateInterceptor("serverError"), {
           id: "global-500",
         });
       }
       if ([502, 503, 504].includes(error.response.status)) {
         error.isGlobalError = true;
-        NotificationService.error("Service temporarily unavailable. Please try again.", {
+        NotificationService.error(translateInterceptor("serviceUnavailable"), {
           id: "global-5xx",
         });
       }

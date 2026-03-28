@@ -1,11 +1,11 @@
 // frontend/src/features/auth/components/forgot-password/success-message.jsx
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
-import { forgotPasswordContent as content } from "@/lib/config/auth/forgot-password";
 
 export function SuccessMessage({ email }) {
-
-  const message = content.success.message.replace("{email}", email);
+  const t = useTranslations("auth.forgotPassword");
+  const message = t("success.message", { email });
 
   return (
     <motion.div
@@ -14,7 +14,7 @@ export function SuccessMessage({ email }) {
       variants={quickFadeInVariants}
       className="space-y-3"
     >
-      <h2 className="text-2xl font-semibold">{content.success.title}</h2>
+      <h2 className="text-2xl font-semibold">{t("success.title")}</h2>
       <p
         className="text-muted-foreground"
         dangerouslySetInnerHTML={{ __html: message }}

@@ -1,6 +1,7 @@
 // frontend/src/features/user/components/two-factor-toggle.jsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ShieldCheck, ShieldOff, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,8 @@ export function TwoFactorToggle({
   onCloseDialogs,
   onConfirmToggle,
 }) {
+  const t = useTranslations("securityPage.twoFactor");
+  const tc = useTranslations("common");
   const isDialogOpen = showEnableDialog || showDisableDialog;
 
   return (
@@ -41,11 +44,11 @@ export function TwoFactorToggle({
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-medium">Two-Factor Authentication</h3>
+              <h3 className="font-medium">{t("heading")}</h3>
               <p className="text-sm text-muted-foreground">
                 {twoFactorEnabled
-                  ? "Your account is protected with 2FA via email."
-                  : "Add an extra layer of security to your account with two-factor authentication."}
+                  ? t("enabledDescription")
+                  : t("disabledDescription")}
               </p>
             </div>
             <Button
@@ -54,13 +57,13 @@ export function TwoFactorToggle({
               onClick={twoFactorEnabled ? onOpenDisable : onOpenEnable}
             >
               <Smartphone className="h-4 w-4 mr-2" />
-              {twoFactorEnabled ? "Disable 2FA" : "Enable 2FA"}
+              {twoFactorEnabled ? t("disableButton") : t("enableButton")}
             </Button>
           </div>
 
           {twoFactorEnabled && (
             <p className="text-xs text-green-600 mt-2">
-              ✓ Enabled — You will receive a verification code via email when logging in
+              {t("enabledStatus")}
             </p>
           )}
         </div>
@@ -70,22 +73,22 @@ export function TwoFactorToggle({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {showEnableDialog ? "Enable Two-Factor Authentication" : "Disable Two-Factor Authentication"}
+              {showEnableDialog ? t("enableDialogTitle") : t("disableDialogTitle")}
             </DialogTitle>
             <DialogDescription>
               {showEnableDialog
-                ? "Enter your current password to enable 2FA. You will receive a verification code via email each time you log in."
-                : "Enter your current password to disable 2FA. This reduces your account security."}
+                ? t("enableDialogDescription")
+                : t("disableDialogDescription")}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="2fa-password">Current Password</Label>
+              <Label htmlFor="2fa-password">{t("passwordLabel")}</Label>
               <Input
                 id="2fa-password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder={t("passwordPlaceholder")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -94,7 +97,7 @@ export function TwoFactorToggle({
 
           <DialogFooter>
             <Button variant="outline" onClick={onCloseDialogs}>
-              Cancel
+              {tc("cancel")}
             </Button>
             <Button
               onClick={onConfirmToggle}
@@ -102,10 +105,10 @@ export function TwoFactorToggle({
               variant={showEnableDialog ? "default" : "destructive"}
             >
               {isToggling2fa
-                ? "Processing..."
+                ? t("processing")
                 : showEnableDialog
-                ? "Enable 2FA"
-                : "Disable 2FA"}
+                  ? t("enableButton")
+                  : t("disableButton")}
             </Button>
           </DialogFooter>
         </DialogContent>

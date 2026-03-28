@@ -11,7 +11,7 @@ export function LoginSkeleton() {
         <div className="flex items-center gap-3">
           <Skeleton className="h-8 w-8 rounded" /> {/* Logo skeleton */}
           <Skeleton className="h-7 w-40" />{" "}
-          {/* "Fantasy Coach" text skeleton */}
+          {/* Brand name text skeleton */}
         </div>
 
         {/* Welcome Section */}

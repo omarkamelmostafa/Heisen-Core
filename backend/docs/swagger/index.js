@@ -25,9 +25,10 @@ const options = {
     ],
     tags: [
       { name: "Authentication", description: "Login, register, logout, and token refresh" },
+      { name: "Two-Factor Authentication", description: "2FA verification and code resend during login" },
       { name: "Email Verification", description: "Verify email and resend verification codes" },
       { name: "Password Recovery", description: "Forgot password and reset password flows" },
-      { name: "User", description: "User profile operations" },
+      { name: "User", description: "User account operations — profile, avatar, email, and security management" },
       { name: "Health", description: "System health check" },
     ],
     components: {

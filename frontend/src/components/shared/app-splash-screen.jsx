@@ -16,12 +16,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Logo } from "@/components/ui/logo";
+import { BRAND } from "@/lib/config/brand-config";
 
 export function AppSplashScreen({
-  message = "Loading...",
+  message,
   showProgress = true,
 }) {
+  const t = useTranslations("infrastructure");
+  const displayMessage = message || t("loading");
   return (
     <div className="flex h-full w-full flex-col items-center justify-center min-h-screen bg-background px-4">
       {/* Logo */}
@@ -45,7 +49,7 @@ export function AppSplashScreen({
         transition={{ delay: 0.3, duration: 0.5 }}
         className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4"
       >
-        Heisen Core
+        {BRAND.APP_NAME}
       </motion.h1>
 
       {/* Loading Message */}
@@ -55,7 +59,7 @@ export function AppSplashScreen({
         transition={{ delay: 0.5, duration: 0.5 }}
         className="text-muted-foreground text-base sm:text-lg text-center max-w-md mb-6 sm:mb-8"
       >
-        {message}
+        {displayMessage}
       </motion.p>
 
       {/* Pulsing Dots Progress Indicator */}

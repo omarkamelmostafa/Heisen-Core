@@ -1,9 +1,10 @@
 // frontend/src/features/auth/components/reset-password/success-message.jsx
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { quickFadeInVariants } from "@/lib/animations/auth/authAnimations";
-import { resetPasswordContent as content } from "@/lib/config/auth/reset-password";
 
 export function SuccessMessage() {
+  const t = useTranslations("auth.resetPassword");
 
   return (
     <motion.div
@@ -12,8 +13,8 @@ export function SuccessMessage() {
       variants={quickFadeInVariants}
       className="space-y-3"
     >
-      <h2 className="text-2xl font-semibold">{content.success.title}</h2>
-      <p className="text-muted-foreground">{content.success.message}</p>
+      <h2 className="text-2xl font-semibold">{t("success.title")}</h2>
+      <p className="text-muted-foreground">{t("success.message")}</p>
     </motion.div>
   );
 }

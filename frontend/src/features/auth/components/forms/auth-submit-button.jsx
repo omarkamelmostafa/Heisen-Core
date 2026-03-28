@@ -2,6 +2,7 @@
 
 "use client";
 
+import { BRAND } from "@/lib/config/brand-config";
 import { Button } from "@/components/ui/button";
 import {
   Loader2,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function AuthSubmitButton({
   // Loading states
@@ -53,6 +55,7 @@ export function AuthSubmitButton({
   // Button-specific props
   ...buttonProps
 }) {
+  const t = useTranslations("auth");
   const {
     formState: { errors, isValid, isSubmitting, isSubmitted },
   } = useFormContext();
@@ -99,14 +102,14 @@ export function AuthSubmitButton({
   };
 
   // Get button text based on state
-  const resolvedDefaultText = defaultText || buttonText;
+  const resolvedDefaultText = defaultText || buttonText || t("buttons.login");
   const getButtonText = () => {
     if (showSuccess && !isLoading) {
       return successText || resolvedDefaultText;
     }
 
     if (isLoading || isSubmitting) {
-      return loadingText;
+      return loadingText || t("buttons.loggingIn");
     }
 
     return resolvedDefaultText;
@@ -142,64 +145,79 @@ export function AuthSubmitButton({
 // Pre-configured buttons for common auth scenarios
 export const AuthSubmitButtons = {
   // Login button
-  Login: ({ isLoading, ...props }) => (
-    <AuthSubmitButton
-      isLoading={isLoading}
-      loadingText="Signing in..."
-      defaultText="Sign in to Fantasy Coach"
-      showDefaultIcon={true}
-      defaultIcon={<ArrowRight className="w-4 h-4 mr-2" />}
-      {...props}
-    />
-  ),
+  Login: ({ isLoading, ...props }) => {
+    const t = useTranslations("auth");
+    return (
+      <AuthSubmitButton
+        isLoading={isLoading}
+        loadingText={t("buttons.loggingIn")}
+        defaultText={t("buttons.signInToApp", { appName: BRAND.APP_NAME })}
+        showDefaultIcon={true}
+        defaultIcon={<ArrowRight className="w-4 h-4 mr-2" />}
+        {...props}
+      />
+    );
+  },
 
   // Signup button
-  Signup: ({ isLoading, ...props }) => (
-    <AuthSubmitButton
-      isLoading={isLoading}
-      loadingText="Creating Account..."
-      defaultText="Create Account"
-      showDefaultIcon={true}
-      defaultIcon={<User className="w-4 h-4 mr-2" />}
-      {...props}
-    />
-  ),
+  Signup: ({ isLoading, ...props }) => {
+    const t = useTranslations("auth");
+    return (
+      <AuthSubmitButton
+        isLoading={isLoading}
+        loadingText={t("buttons.creatingAccount")}
+        defaultText={t("buttons.signup")}
+        showDefaultIcon={true}
+        defaultIcon={<User className="w-4 h-4 mr-2" />}
+        {...props}
+      />
+    );
+  },
 
   // Forgot Password button
-  ForgotPassword: ({ isLoading, ...props }) => (
-    <AuthSubmitButton
-      isLoading={isLoading}
-      loadingText="Sending Reset Link..."
-      defaultText="Send Reset Link"
-      showDefaultIcon={true}
-      defaultIcon={<Mail className="w-4 h-4 mr-2" />}
-      {...props}
-    />
-  ),
+  ForgotPassword: ({ isLoading, ...props }) => {
+    const t = useTranslations("auth");
+    return (
+      <AuthSubmitButton
+        isLoading={isLoading}
+        loadingText={t("buttons.sendingResetLink")}
+        defaultText={t("buttons.forgotPassword")}
+        showDefaultIcon={true}
+        defaultIcon={<Mail className="w-4 h-4 mr-2" />}
+        {...props}
+      />
+    );
+  },
 
   // Verify Email button
-  VerifyEmail: ({ isLoading, ...props }) => (
-    <AuthSubmitButton
-      isLoading={isLoading}
-      loadingText="Verifying..."
-      defaultText="Verify Email"
-      showDefaultIcon={true}
-      defaultIcon={<Shield className="w-4 h-4 mr-2" />}
-      {...props}
-    />
-  ),
+  VerifyEmail: ({ isLoading, ...props }) => {
+    const t = useTranslations("auth");
+    return (
+      <AuthSubmitButton
+        isLoading={isLoading}
+        loadingText={t("buttons.verifying")}
+        defaultText={t("buttons.verifyEmail")}
+        showDefaultIcon={true}
+        defaultIcon={<Shield className="w-4 h-4 mr-2" />}
+        {...props}
+      />
+    );
+  },
 
   // Reset Password button
-  ResetPassword: ({ isLoading, ...props }) => (
-    <AuthSubmitButton
-      isLoading={isLoading}
-      loadingText="Updating Password..."
-      defaultText="Reset Password"
-      showDefaultIcon={true}
-      defaultIcon={<Lock className="w-4 h-4 mr-2" />}
-      {...props}
-    />
-  ),
+  ResetPassword: ({ isLoading, ...props }) => {
+    const t = useTranslations("auth");
+    return (
+      <AuthSubmitButton
+        isLoading={isLoading}
+        loadingText={t("buttons.updatingPassword")}
+        defaultText={t("buttons.resetPassword")}
+        showDefaultIcon={true}
+        defaultIcon={<Lock className="w-4 h-4 mr-2" />}
+        {...props}
+      />
+    );
+  },
 
   // Generic success button
   Success: ({ successText, defaultText, ...props }) => (

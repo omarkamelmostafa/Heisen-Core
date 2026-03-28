@@ -5,6 +5,7 @@ import { publicClient, privateClient } from "@/services/api/client";
 import { normalizeError, normalizeResponse } from "@/lib/utils/error-utils";
 import StoreAccessor from "@/store/store-accessor";
 import { setAccessToken } from "@/store/slices/auth/auth-slice";
+import { translateApiError } from "@/lib/i18n/api-error-translator";
 
 /**
  * Auth Service
@@ -27,7 +28,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Login failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Login failed"));
     }
   }
 
@@ -40,7 +41,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Registration failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Registration failed"));
     }
   }
 
@@ -49,7 +50,7 @@ class AuthService {
       const response = await privateClient.get(authEndpoints.LOGOUT, config);
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Logout failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Logout failed"));
     }
   }
 
@@ -66,7 +67,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Logout from all devices failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Logout from all devices failed"));
     }
   }
 
@@ -99,7 +100,7 @@ class AuthService {
 
       return normalized;
     } catch (error) {
-      throw normalizeError(error, "Token refresh failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Token refresh failed"));
     }
   }
 
@@ -114,7 +115,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Password reset request failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Password reset request failed"));
     }
   }
 
@@ -127,7 +128,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Password reset failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Password reset failed"));
     }
   }
 
@@ -158,7 +159,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Email verification failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Email verification failed"));
     }
   }
 
@@ -174,7 +175,7 @@ class AuthService {
       );
       return normalizeResponse(response);
     } catch (error) {
-      throw normalizeError(error, "Resend verification failed");
+      throw normalizeError(error, translateApiError(error?.errorCode, "Resend verification failed"));
     }
   }
 }

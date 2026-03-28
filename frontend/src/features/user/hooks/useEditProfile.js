@@ -1,5 +1,6 @@
 // frontend/src/features/user/hooks/useEditProfile.js
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateProfile } from "@/store/slices/user/user-thunks";
 import { NotificationService } from "@/lib/notifications/notify";
@@ -12,6 +13,7 @@ import { NotificationService } from "@/lib/notifications/notify";
  */
 export function useEditProfile({ firstname, lastname }) {
   const dispatch = useAppDispatch();
+  const t = useTranslations("toasts");
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,11 +34,11 @@ export function useEditProfile({ firstname, lastname }) {
         })
       ).unwrap();
 
-      NotificationService.success("Profile updated successfully");
+      NotificationService.success(t("profileUpdated"));
       setIsEditing(false);
     } catch (error) {
       if (!error?.isGlobalError) {
-        NotificationService.error(error?.message || "Failed to update profile");
+        NotificationService.error(error?.message || t("profileUpdateFailed"));
       }
     } finally {
       setIsSubmitting(false);

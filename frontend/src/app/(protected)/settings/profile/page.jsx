@@ -40,7 +40,7 @@ export default function ProfilePage() {
     handleCancel: onCancelPhoto,
   } = useProfilePhoto();
 
-  const { isReady } = useTransitionReady({ delay: 300 });
+  const { isReady } = useTransitionReady({ delay: 0 });
 
   if (!isReady) return <ProfileSkeleton />;
 

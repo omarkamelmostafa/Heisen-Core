@@ -1,0 +1,593 @@
+{
+  "nav": {
+    "search": "Search",
+    "myProfile": "My Profile",
+    "securitySettings": "Security Settings",
+    "accountSettings": "Account Settings",
+    "billing": "Billing",
+    "signOut": "Sign Out",
+    "soon": "Soon"
+  },
+  "dashboard": {
+    "welcomeWithName": "Welcome back, {firstName}!",
+    "welcomeGeneric": "Welcome back!",
+    "overview": "Here's an overview of your account.",
+    "profileSettings": "Profile Settings",
+    "profileSettingsDesc": "Update your personal information and avatar",
+    "security": "Security",
+    "securityDesc": "Manage your password, 2FA, and sessions",
+    "preferences": "Preferences",
+    "preferencesDesc": "Customize your experience",
+    "recentActivity": "Recent Activity",
+    "activityComingSoon": "Activity feed coming soon."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "You can find all settings here.",
+    "nav": {
+      "profile": "My Profile",
+      "security": "Security Options",
+      "chat": "Chat",
+      "preferences": "Preferences",
+      "notifications": "Notifications"
+    }
+  },
+  "infrastructure": {
+    "verifyingSession": "Verifying your session...",
+    "preparing": "Preparing your session...",
+    "initializing": "Initializing...",
+    "loading": "Loading..."
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "update": "Update",
+    "saving": "Saving...",
+    "uploading": "Uploading...",
+    "updating": "Updating...",
+    "requesting": "Requesting...",
+    "soon": "Soon",
+    "tryAgain": "Try Again",
+    "signingOut": "Signing out...",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "toggleTheme": "Toggle theme"
+  },
+  "auth": {
+    "signOutOtherTab": "You were signed out from another tab",
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Welcome back! Select method to login:",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email address",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••••••••••",
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password?",
+      "noAccount": "New on our platform?",
+      "signupLink": "Create an account",
+      "divider": "Or continue with Email",
+      "google": "Continue with Google",
+      "facebook": "Continue with Facebook",
+      "submitButton": "Login to {appName}",
+      "submitting": "Logging in..."
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Join {appName} and start building your dream team today!",
+      "firstNameLabel": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastNameLabel": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email address",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a strong password",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "termsAgree": "I agree to the",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy",
+      "termsRequired": "You must accept the terms and conditions to continue",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in here",
+      "divider": "Or continue with Email",
+      "google": "Continue with Google",
+      "facebook": "Continue with Facebook",
+      "submitButton": "Create Account",
+      "submitting": "Creating Account..."
+    },
+    "buttons": {
+      "login": "Login",
+      "loggingIn": "Logging in...",
+      "signup": "Create Account",
+      "creatingAccount": "Creating Account...",
+      "forgotPassword": "Send Reset Link",
+      "sendingResetLink": "Sending Reset Link...",
+      "verifyEmail": "Verify Email",
+      "verifying": "Verifying...",
+      "resetPassword": "Reset Password",
+      "updatingPassword": "Updating Password...",
+      "signInToApp": "Sign in to {appName}"
+    },
+    "passwordStrength": {
+      "label": "Password Strength:",
+      "veryWeak": "Very Weak",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong",
+      "veryStrong": "Very Strong",
+      "requirements": "Password Requirements ({passedRules}/{totalRules} met):",
+      "lengthRequirement": "Length between {min}-{max} characters",
+      "uppercaseRequirement": "At least one uppercase letter (A-Z)",
+      "lowercaseRequirement": "At least one lowercase letter (a-z)",
+      "numberRequirement": "At least one number (0-9)",
+      "specialRequirement": "At least one special character (!@#$% etc.)",
+      "excellent": "Excellent! Your password meets all security requirements.",
+      "almostThere": "Almost there! Just one more requirement to meet.",
+      "keepGoing": "Keep going! {remaining} more requirements needed.",
+      "veryWeakAdvice": "Your password is very weak. Please follow the requirements above."
+    },
+    "passwordMatch": {
+      "match": "Passwords match",
+      "noMatch": "Passwords do not match"
+    },
+    "layout": {
+      "login": {
+        "title": "Welcome Back Coach!",
+        "description": "Ready to lead your fantasy team to championship glory? Sign in to access your full coaching dashboard, track your team's performance, and make those game-winning decisions that separate champions from the rest.",
+        "cardTitle": "Access Your Coaching Hub",
+        "cardDescription": "Secure entry to your complete fantasy management toolkit - track stats, manage rosters, and dominate your league with precision."
+      },
+      "signup": {
+        "title": "Join The Champions Circle",
+        "description": "Begin your journey to fantasy greatness today! Create your account to build your ultimate dream team, compete against friends and rivals, and establish your legacy as a master strategist in the world of fantasy sports.",
+        "cardTitle": "Build Your Legacy",
+        "cardDescription": "Start your coaching career with full access to premium features, advanced analytics, and everything you need to craft a championship-winning team from day one."
+      },
+      "forgotPassword": {
+        "title": "Regain Your Access!",
+        "description": "Every champion faces obstacles - let's get you back in the game swiftly! Enter your email below and we'll send a secure password reset link that will have you back coaching your team in moments, not minutes.",
+        "cardTitle": "Swift Account Recovery",
+        "cardDescription": "If our email doesn't appear in your main inbox within a couple of minutes, please check your spam or promotions folder - we want you back in the action as quickly as possible."
+      },
+      "resetPassword": {
+        "title": "Fortify Your Account!",
+        "description": "Create a strong new password to keep your account secure. A strong password protects your data, settings, and access from unauthorized use.",
+        "cardTitle": "Secure Your Coaching Legacy",
+        "cardDescription": "Choose a robust, memorable password that will safeguard your account, protect your fantasy investments, and keep your winning strategies secure from season to season."
+      },
+      "verifyEmail": {
+        "title": "Almost Game Time!",
+        "description": "The final step before you enter the arena! We've sent a verification link to your inbox - click it to activate your account and unlock the door to unlimited fantasy coaching possibilities and competitive glory.",
+        "cardTitle": "Verify & Enter The Game",
+        "cardDescription": "Complete your verification to gain full access to our fantasy coaching ecosystem, including real-time updates, player insights, and strategic tools designed for winners."
+      }
+    },
+    "alerts": {
+      "emailVerified": "Your email has been verified. You can now log in.",
+      "passwordReset": "Your password has been successfully reset. Please log in.",
+      "emailChanged": "Email updated successfully. Please log in with your new address.",
+      "emailTokenInvalid": "This confirmation link is invalid or has expired. Please request a new one from your account settings.",
+      "emailTaken": "Your new email was already taken by another account by the time you confirmed. Please try a different address."
+    },
+    "forgotPassword": {
+      "form": {
+        "emailLabel": "Email address",
+        "emailPlaceholder": "Enter your email address"
+      },
+      "helpText": "We'll send a secure reset link to your email. The link will expire in 1 hour for security.",
+      "success": {
+        "title": "Check Your Email!",
+        "message": "We've sent a password reset link to {email}. Click the link in the email to create a new password.",
+        "tipsTitle": "Didn't receive the email?",
+        "tips": [
+          "Check your spam or junk folder",
+          "Make sure you entered the correct email address",
+          "Wait a few minutes and try again"
+        ]
+      },
+      "actions": {
+        "sendResetLink": "Send Reset Link",
+        "sending": "Sending...",
+        "tryAnotherEmail": "Try another email",
+        "backToLogin": "Back to Login"
+      },
+      "links": {
+        "backToLogin": "Back to Login"
+      }
+    },
+    "resetPassword": {
+      "form": {
+        "passwordLabel": "New Password",
+        "passwordPlaceholder": "Create a strong password",
+        "confirmPasswordLabel": "Confirm New Password",
+        "confirmPasswordPlaceholder": "Re-enter your new password"
+      },
+      "helpText": "Make sure your new password is different from previous passwords.",
+      "success": {
+        "title": "Password Updated!",
+        "message": "Your password has been successfully reset. You can now sign in with your new password."
+      },
+      "actions": {
+        "resetPassword": "Reset Password",
+        "resetting": "Resetting...",
+        "signIn": "Sign In Now"
+      },
+      "links": {
+        "backToLogin": "Remember your password? Sign in here"
+      },
+      "requirements": {
+        "title": "Password Requirements:",
+        "items": [
+          "At least 8 characters long",
+          "Include uppercase and lowercase letters",
+          "Include numbers and special characters",
+          "Not used previously with this account"
+        ]
+      },
+      "securityTips": {
+        "title": "Security Tips:",
+        "items": [
+          "Use a unique password for each service",
+          "Enable two-factor authentication if available",
+          "Regularly update your passwords",
+          "Never share your password with anyone"
+        ]
+      }
+    },
+    "verifyEmail": {
+      "header": {
+        "title": "Verify Your Email",
+        "subtitle": "We've sent a 6-digit verification code to your email address."
+      },
+      "form": {
+        "verificationCodeLabel": "Verification Code"
+      },
+      "help": {
+        "title": "Need help?",
+        "items": [
+          "Check your spam or junk folder",
+          "Make sure you entered the correct email address",
+          "The code will expire in 5 minutes",
+          "Contact support if you continue having issues"
+        ]
+      },
+      "timer": {
+        "expiresIn": "Code expires in:",
+        "resendAvailable": "Resend Code",
+        "resendCountdown": "Resend Code ({time})",
+        "resendAvailableIn": "Resend available in"
+      },
+      "resend": {
+        "prompt": "Didn't receive the code?",
+        "button": "Resend Code",
+        "countdown": "Resend Code ({time})"
+      },
+      "success": {
+        "title": "Email Verified!",
+        "message": "Your email has been successfully verified. Your account is now active and ready to use.",
+        "redirect": "Redirecting you to the dashboard..."
+      },
+      "actions": {
+        "verify": "Verify Email",
+        "verifying": "Verifying..."
+      },
+      "links": {
+        "backToLogin": "Back to Login"
+      }
+    }
+  },
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Please enter a valid email address"
+    },
+    "password": {
+      "required": "Password is required",
+      "minLength": "Password must be at least 8 characters",
+      "maxLength": "Password must be at most 128 characters",
+      "uppercase": "Password must contain at least one uppercase letter",
+      "lowercase": "Password must contain at least one lowercase letter",
+      "number": "Password must contain at least one number",
+      "special": "Password must contain at least one special character"
+    },
+    "name": {
+      "required": "This field is required",
+      "minLength": "Must be at least 3 characters",
+      "maxLength": "Must be at most 16 characters",
+      "lettersOnly": "Name can only contain letters and spaces"
+    },
+    "confirmPassword": {
+      "required": "Please confirm your password",
+      "match": "Passwords don't match"
+    },
+    "terms": {
+      "required": "You must accept the terms and conditions"
+    },
+    "verificationCode": {
+      "digitRequired": "Digit is required",
+      "length": "Verification code must be 6 digits"
+    },
+    "newEmail": {
+      "required": "New email is required",
+      "invalid": "Please enter a valid email address",
+      "maxLength": "Email must be at most 254 characters"
+    },
+    "confirmNewEmail": {
+      "required": "Please confirm your new email",
+      "match": "Emails do not match"
+    },
+    "currentPassword": {
+      "required": "Current password is required"
+    },
+    "newPassword": {
+      "confirmRequired": "Please confirm your new password",
+      "different": "New password must be different from your current password",
+      "match": "Passwords don't match"
+    }
+  },
+  "profile": {
+    "profileInformation": "Profile Information",
+    "personalInformation": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "firstNamePlaceholder": "Enter first name",
+    "lastNamePlaceholder": "Enter last name",
+    "joined": "Joined {date}",
+    "lastActive": "Last active {date}",
+    "changePhoto": "Change profile photo",
+    "preview": "Preview"
+  },
+  "notFound": {
+    "title": "Whoops!",
+    "subtitle": "Something went wrong",
+    "description": "The page you're looking for isn't found, we suggest you back to home.",
+    "backHome": "Back to home page"
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong",
+    "authError": "We encountered an issue during authentication. Please try again.",
+    "appError": "We encountered an issue loading the page. Please try again.",
+    "tryAgain": "Try Again",
+    "backToLogin": "Back to Login",
+    "goToDashboard": "Go to Dashboard",
+    "systemError": "System Error",
+    "goBack": "Go Back",
+    "goHome": "Go Home"
+  },
+  "securityPage": {
+    "changeEmail": {
+      "title": "Change Email",
+      "description": "Update the email address associated with your account.",
+      "newEmailLabel": "New Email Address",
+      "newEmailPlaceholder": "Enter new email address",
+      "confirmEmailLabel": "Confirm New Email",
+      "confirmEmailPlaceholder": "Confirm new email address",
+      "currentPasswordLabel": "Current Password",
+      "currentPasswordPlaceholder": "Enter your current password",
+      "requesting": "Requesting...",
+      "requestChange": "Request Email Change",
+      "emailSentTo": "We sent a verification link to {email}. Check your inbox to confirm the change.",
+      "changeDifferent": "Change to a different email"
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "description": "Update your password to keep your account secure.",
+      "currentPasswordLabel": "Current Password",
+      "currentPasswordPlaceholder": "Enter current password",
+      "newPasswordLabel": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPasswordLabel": "Confirm New Password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "updating": "Updating...",
+      "updatePassword": "Update Password"
+    },
+    "twoFactor": {
+      "title": "Two-Factor Authentication",
+      "heading": "Two-Factor Authentication",
+      "enabledDescription": "Your account is protected with 2FA via email.",
+      "disabledDescription": "Add an extra layer of security to your account with two-factor authentication.",
+      "enableButton": "Enable 2FA",
+      "disableButton": "Disable 2FA",
+      "enabledStatus": "Enabled — You will receive a verification code via email when logging in",
+      "enableDialogTitle": "Enable Two-Factor Authentication",
+      "disableDialogTitle": "Disable Two-Factor Authentication",
+      "enableDialogDescription": "Enter your current password to enable 2FA. You will receive a verification code via email each time you log in.",
+      "disableDialogDescription": "Enter your current password to disable 2FA. This reduces your account security.",
+      "passwordLabel": "Current Password",
+      "passwordPlaceholder": "Enter your password",
+      "processing": "Processing..."
+    },
+    "activeSessions": {
+      "title": "Active Sessions",
+      "description": "Manage your active sessions and sign out from other devices.",
+      "signOutAll": "Sign Out All Devices",
+      "signingOut": "Signing out...",
+      "confirmTitle": "Sign out all devices?",
+      "confirmDescription": "This will sign you out from all devices including this one. You will need to log in again on every device."
+    }
+  },
+  "toasts": {
+    "welcomeBack": "Welcome back, {name}!",
+    "loginSuccessful": "Login successful",
+    "loginFailed": "Login failed",
+    "verifyEmailBeforeLogin": "Please verify your email before logging in.",
+    "verificationFailed": "Verification failed",
+    "newVerificationCodeSent": "A new verification code has been sent to your email",
+    "failedToResendCode": "Failed to resend code",
+    "accountCreated": "Account created successfully!",
+    "accountCreatedCheckEmail": "Check your email to verify your account.",
+    "accountCreatedEmailFailed": "Account created, but we couldn't send the verification email. Please use Resend Code.",
+    "resetLinkInvalid": "Password reset link is invalid or missing. Please request a new reset email.",
+    "enterVerificationCode": "Please enter the 6-digit verification code.",
+    "noEmailFound": "No email address found. Please go back and try again.",
+    "verificationCodeSent": "Verification code sent!",
+    "verificationCodeSentTo": "A new 6-digit code has been sent to {email}.",
+    "tooManyAttempts": "Too many attempts. Please wait a few minutes.",
+    "failedToResendVerification": "Failed to resend verification code. Please try again.",
+    "emailMustBeDifferent": "New email must be different from your current email",
+    "emailChangeFailed": "Failed to request email change",
+    "passwordUpdated": "Password updated successfully",
+    "passwordChangeFailed": "Failed to change password",
+    "profileUpdated": "Profile updated successfully",
+    "profileUpdateFailed": "Failed to update profile",
+    "photoUpdated": "Profile photo updated successfully",
+    "photoUploadFailed": "Failed to upload photo",
+    "allDevicesSignedOut": "All devices have been signed out",
+    "signOutAllFailed": "Failed to sign out all devices",
+    "twoFactorEnabled": "Two-factor authentication enabled",
+    "twoFactorDisabled": "Two-factor authentication disabled",
+    "twoFactorUpdateFailed": "Failed to update 2FA",
+    "enterPassword": "Please enter your password",
+    "signedOut": "Signed out successfully"
+  },
+  "apiErrors": {
+    "ACCOUNT_DEACTIVATED": "Account is deactivated. Please contact support.",
+    "ACCOUNT_LOCKED": "Account is locked. Please contact support.",
+    "ACCOUNT_NOT_VERIFIED": "Please verify your email address before logging in.",
+    "INVALID_CREDENTIALS": "Invalid email or password.",
+    "INVALID_VERIFICATION_TOKEN": "Invalid or already used verification token.",
+    "LOGIN_FAILED": "Login failed.",
+    "MISSING_CREDENTIALS": "Email and password are required.",
+    "MISSING_VERIFICATION_TOKEN": "Verification token is required.",
+    "USER_NOT_FOUND": "User not found.",
+    "USER_EXISTS": "User with this email already exists.",
+    "PASSWORDS_MISMATCH": "Passwords do not match.",
+    "MISSING_PASSWORD": "Password is required.",
+    "PASSWORD_SAME_AS_CURRENT": "New password must be different from your current password.",
+    "INVALID_PASSWORD": "Current password is incorrect.",
+    "SAME_PASSWORD": "New password must be different from your current password.",
+    "SAME_EMAIL": "New email is the same as your current email.",
+    "EMAIL_TAKEN": "This email is already in use.",
+    "EMAIL_CHANGE_PENDING": "A verification email was already sent. Please check your inbox.",
+    "INVALID_EMAIL": "Valid email is required.",
+    "MISSING_VERIFICATION_CODE": "Verification code is required.",
+    "INVALID_VERIFICATION_CODE": "Invalid or expired verification code.",
+    "ALREADY_VERIFIED": "Email has already been verified.",
+    "VERIFICATION_TOKEN_EXPIRED": "Verification token has expired. Please request a new one.",
+    "INVALID_RESET_TOKEN": "Invalid, expired, or already used reset token.",
+    "MISSING_REFRESH_TOKEN": "Refresh token required.",
+    "REFRESH_TOKEN_EXPIRED": "Session expired. Please log in again.",
+    "INVALID_TOKEN": "Invalid token.",
+    "TOKEN_NOT_ACTIVE": "Token is not active.",
+    "TOKEN_VERSION_MISMATCH": "Session invalid. Please log in again.",
+    "TOKEN_REUSE_DETECTED": "Session invalid. Please log in again.",
+    "SESSION_INVALID": "Session invalid. Please log in again.",
+    "NO_ACCESS_TOKEN": "Authentication required.",
+    "TOKEN_EXPIRED": "Session expired. Please log in again.",
+    "NOT_AUTHENTICATED": "Authentication required.",
+    "NOT_FOUND": "Resource not found.",
+    "CONFLICT": "Conflict. Please try again.",
+    "BAD_REQUEST": "Invalid request.",
+    "MISSING_FIELDS": "Required fields are missing.",
+    "TOO_MANY_REQUESTS": "Too many requests. Please try again later.",
+    "RATE_LIMITED": "Too many attempts. Please try again later.",
+    "REGISTRATION_RATE_LIMITED": "Too many registration attempts. Please try again later.",
+    "PASSWORD_RESET_RATE_LIMITED": "Too many password reset attempts. Please try again later.",
+    "INTERNAL_ERROR": "Internal server error. Please try again.",
+    "DATABASE_ERROR": "Service temporarily unavailable. Please try again later.",
+    "VERIFICATION_FAILED": "Verification failed. Please try again.",
+    "RESET_FAILED": "Password reset failed. Please try again.",
+    "CHANGE_FAILED": "Change failed. Please try again.",
+    "UPLOAD_FAILED": "Upload failed. Please try again.",
+    "AVATAR_UPDATE_FAILED": "Failed to update profile photo.",
+    "TWO_FACTOR_SESSION_EXPIRED": "Verification session expired. Please log in again.",
+    "TWO_FACTOR_SESSION_INVALID": "Invalid verification session. Please log in again.",
+    "TWO_FACTOR_EXPIRED": "Verification code has expired. Please log in again.",
+    "TWO_FACTOR_INVALID": "Invalid verification code.",
+    "TWO_FACTOR_NOT_ENABLED": "Two-factor authentication is not enabled.",
+    "TWO_FACTOR_NO_CHANGE": "No change needed.",
+    "TWO_FACTOR_VERIFICATION_FAILED": "Verification failed.",
+    "TWO_FACTOR_TOGGLE_FAILED": "Failed to update two-factor authentication.",
+    "RESEND_2FA_FAILED": "Failed to resend verification code.",
+    "EMAIL_DISPATCH_FAILED": "Failed to send email. Please try again later.",
+    "TOKEN_REVOKED": "Session invalid. Please log in again.",
+    "INVALID_FILE": "Invalid file provided.",
+    "VALIDATION_ERROR": "Validation failed.",
+    "BadRequest": "Validation failed.",
+    "FILE_TOO_LARGE": "File size exceeds the 5MB limit.",
+    "NETWORK_ERROR": "Unable to connect. Check your internet connection."
+  },
+  "interceptor": {
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "networkError": "Unable to connect. Check your internet connection.",
+    "forbidden": "You don't have permission to perform this action.",
+    "rateLimited": "Too many requests. Please wait a moment.",
+    "rateLimitedMinutes": "Too many requests. Please wait {minutes} minutes.",
+    "rateLimitedSeconds": "Too many requests. Please wait {seconds} seconds.",
+    "serverError": "Something went wrong on our end. Please try again.",
+    "serviceUnavailable": "Service temporarily unavailable. Please try again."
+  },
+  "service": {
+    "loginFailed": "Login failed.",
+    "registrationFailed": "Registration failed.",
+    "logoutFailed": "Logout failed.",
+    "logoutAllFailed": "Logout from all devices failed.",
+    "tokenRefreshFailed": "Token refresh failed.",
+    "passwordResetRequestFailed": "Password reset request failed.",
+    "passwordResetFailed": "Password reset failed.",
+    "emailVerificationFailed": "Email verification failed.",
+    "resendVerificationFailed": "Resend verification failed.",
+    "invalidFile": "Invalid file provided.",
+    "missingFields": "Missing required fields: {fields}",
+    "actionFailed": "Action failed."
+  },
+  "validationExtended": {
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Please provide a valid email address.",
+    "emailTooLong": "Email must be no more than 254 characters long.",
+    "disposableEmail": "Disposable email addresses are not allowed.",
+    "passwordRequired": "Password is required.",
+    "passwordLength": "Password must be between 8 and 128 characters.",
+    "passwordLowercase": "Must contain at least one lowercase letter.",
+    "passwordUppercase": "Must contain at least one uppercase letter.",
+    "passwordNumber": "Must contain at least one number.",
+    "passwordSpecial": "Must contain at least one special character.",
+    "passwordCommon": "This password is too common and easily guessable.",
+    "passwordSequential": "Password contains sequential characters that are easy to guess.",
+    "passwordRepeated": "Password contains too many repeated characters.",
+    "firstNameRequired": "First name is required.",
+    "firstNameLength": "First name must be between 3 and 16 characters long.",
+    "firstNameLetters": "First name can only contain letters and spaces.",
+    "lastNameRequired": "Last name is required.",
+    "lastNameLength": "Last name must be between 3 and 16 characters long.",
+    "lastNameLetters": "Last name can only contain letters and spaces.",
+    "passwordNoEmail": "Password must not contain your email.",
+    "passwordNoFirstName": "Password must not contain your first name.",
+    "passwordNoLastName": "Password must not contain your last name.",
+    "confirmPasswordRequired": "Please confirm your password.",
+    "passwordsMismatch": "Passwords do not match.",
+    "termsRequired": "You must accept the terms and conditions.",
+    "rememberMeBoolean": "rememberMe must be a boolean.",
+    "verificationCodeRequired": "Verification code is required.",
+    "verificationCodeLength": "Enter your 6-digit verification code.",
+    "resetTokenMissing": "Reset link token is missing.",
+    "resetTokenInvalid": "Invalid or corrupted reset token link.",
+    "oldPasswordRequired": "Old password is required.",
+    "oldPasswordLength": "Old password length exceeded limit.",
+    "confirmPasswordMismatch": "New passwords must match.",
+    "enableFlagRequired": "Enable flag is required.",
+    "enableBoolean": "Enable must be a boolean.",
+    "currentPasswordRequired": "Current password is required.",
+    "currentPasswordLength": "Password length exceeded limit.",
+    "tempTokenRequired": "Temporary token is required.",
+    "newEmailRequired": "New email is required.",
+    "fieldRequired": "{field} is required.",
+    "fieldEmpty": "{field} cannot be empty.",
+    "fieldMinLength": "{field} must be at least {min} characters.",
+    "fieldMaxLength": "{field} cannot exceed {max} characters.",
+    "fieldUuid": "{field} must be a valid UUID.",
+    "fieldNumeric": "{field} must be a valid number.",
+    "fieldMinValue": "{field} must be at least {min}.",
+    "fieldMaxValue": "{field} must be no more than {max}.",
+    "fieldUrl": "{field} must be a valid URL.",
+    "fieldArray": "{field} must be an array.",
+    "fieldArrayMin": "{field} must contain at least {min} item(s)."
+  }
+}

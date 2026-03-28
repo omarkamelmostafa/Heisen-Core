@@ -1,4 +1,5 @@
 // frontend/src/features/user/hooks/useUserProfile.js
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -9,6 +10,7 @@ import { NotificationService } from "@/lib/notifications/notify";
 export function useUserProfile() {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const t = useTranslations("toasts");
 
   const user = useAppSelector(selectAuthUser);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -37,7 +39,7 @@ export function useUserProfile() {
       channel.postMessage('LOGOUT');
       channel.close();
 
-      NotificationService.info("Signed out successfully");
+      NotificationService.info(t("signedOut"));
       router.push("/login");
     }
   };

@@ -1,7 +1,8 @@
 // frontend/src/app/(auth)/verify-email/page.jsx
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useTransitionReady } from "@/hooks/use-transition-ready";
@@ -14,7 +15,7 @@ import { VerificationForm } from "@/features/auth/components/verify-email/verifi
 import { HelpText } from "@/features/auth/components/verify-email/help-text";
 import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
 import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
-import { verifyEmailSchema } from "@/lib/validations/auth-schemas";
+import { createVerifyEmailSchema } from "@/lib/validations/auth-schemas";
 import {
   motionProps,
   containerVariants,
@@ -27,6 +28,9 @@ import { PublicGuard } from "@/features/auth/components/guards/public-guard";
 import { Suspense } from "react";
 
 function VerifyEmailPage() {
+  const tVal = useTranslations("validation");
+  const verifyEmailSchema = useMemo(() => createVerifyEmailSchema(tVal), [tVal]);
+
   const {
     email,
     hasEmail,
@@ -39,7 +43,7 @@ function VerifyEmailPage() {
   } = useVerifyEmail();
 
   const router = useRouter();
-  const { isReady } = useTransitionReady({ delay: 300 });
+  const { isReady } = useTransitionReady({ delay: 0 });
 
   // Guard: If no email context, redirect to login
   useEffect(() => {

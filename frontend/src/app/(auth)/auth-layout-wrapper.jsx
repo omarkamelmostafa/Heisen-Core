@@ -2,27 +2,30 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { AuthRightPanel } from "@/features/auth/components/panels/auth-right-panel";
-import { loginLayoutContent } from "@/lib/config/auth/login";
-import { signupLayoutContent } from "@/lib/config/auth/signup";
-import { verifyEmailLayoutContent } from "@/lib/config/auth/verify-email";
-import { forgotPasswordLayoutContent } from "@/lib/config/auth/forgot-password";
-import { resetPasswordLayoutContent } from "@/lib/config/auth/reset-password";
 import { motion } from "framer-motion";
 
 export function AuthLayoutWrapper({ children }) {
   const pathname = usePathname();
+  const t = useTranslations("auth.layout");
 
-  // Map pathnames to content
+  // Map pathnames to content keys
   const getConfig = (path) => {
     const routeMap = {
-      "/login": loginLayoutContent,
-      "/signup": signupLayoutContent,
-      "/verify-email": verifyEmailLayoutContent,
-      "/forgot-password": forgotPasswordLayoutContent,
-      "/reset-password": resetPasswordLayoutContent,
+      "/login": "login",
+      "/signup": "signup",
+      "/verify-email": "verifyEmail",
+      "/forgot-password": "forgotPassword",
+      "/reset-password": "resetPassword",
     };
-    return routeMap[path] || loginLayoutContent;
+    const key = routeMap[path] || "login";
+    return {
+      title: t(`${key}.title`),
+      description: t(`${key}.description`),
+      cardTitle: t(`${key}.cardTitle`),
+      cardDescription: t(`${key}.cardDescription`),
+    };
   };
 
   const config = getConfig(pathname);

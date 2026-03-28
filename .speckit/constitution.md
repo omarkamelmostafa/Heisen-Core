@@ -120,6 +120,15 @@ Skeleton naming: [page]-skeleton.jsx (e.g., login-skeleton.jsx, profile-skeleton
 Skeletons use the Skeleton primitive from @/components/ui/skeleton.
 Settings skeletons use bg-card wrapper for contrast on bg-muted backgrounds.
 
+### Rule F13: i18n String Ownership
+All user-visible strings live in translation files (frontend/messages/en.json, frontend/messages/ar.json). Components consume translations via useTranslations() from next-intl (client components) or getTranslations() from next-intl/server (server components). useTranslations is a presentation hook — it lives INSIDE components, NOT in custom hooks (exception: hooks that call NotificationService may use useTranslations("toasts") for toast message strings). Brand-independent values (APP_NAME, logo path) stay in frontend/src/lib/config/brand-config.js and are interpolated into translations via {appName} parameters. To rebrand the app: change brand-config.js + swap logo asset. To add a language: add a new JSON file in frontend/messages/.
+
+### Rule F14: Translation File Key Parity
+Every key in en.json MUST have a corresponding key in ar.json (and any future locale file). Interpolation parameters ({paramName}) must match exactly across all locale files. CI should enforce parity before merge.
+
+### Rule F15: Global Error i18n Exception
+global-error.jsx renders its own html/body tags and has NO access to NextIntlClientProvider. It MUST use inline fallback messages passed to NextIntlClientProvider or component props. This is the ONLY file exempt from the standard useTranslations pattern.
+
 
 ## SECTION 3: Backend Architecture Rules
 
@@ -302,6 +311,10 @@ These behaviors are implemented in the codebase but NOT explicitly tested. They 
 11. Same JWT secret for access and refresh tokens
 12. Different error messages for wrong password vs missing email on login
 13. Rendering TopNav without passing initials, displayName, onLogout, and avatarUrl props
+14. Hardcoded user-visible English strings in components (use useTranslations)
+15. useTranslations in server components (use getTranslations from next-intl/server)
+16. Translation keys in en.json without matching keys in ar.json (or vice versa)
+17. Importing from "@/lib/config/auth/" (deleted — all auth strings live in translation files)
 
 
 ## SECTION 10: Phase Tracking
@@ -328,10 +341,10 @@ Total: 125 tests passing
 🎨 Phase 3: UI/UX Polish
 🌗 3.1 Theme system (dark/light) ✅
 🎨 3.2 Design tokens ✅
-✨ 3.3 Clean layout 📍 [ You are HERE ]
+✨ 3.3 Clean layout 
 🍞 3.4 Toast UX polish ✅
 🦴 3.5 Loading skeletons ✅
-🛣️ 3.6 Route restructuring ✅
+🛣️ 3.6 Route restructuring ✅[ You are HERE ]
 
 🔐 Phase 4: Authorization
 🛡️ 4.1 RBAC with @casl/ability
@@ -340,6 +353,8 @@ Total: 125 tests passing
 🚧 4.4 Protected API routes by role
 👁️ 4.5 Frontend ability rendering
 🌱 4.6 Database seed script
+4.7 Configurable Variables ✅ (brand-config.js centralized, APP_NAME = "Fantasy Coach")
+4.8 Multilanguage (AR/EN) ✅ (next-intl, cookie-based locale, full string extraction, RTL support)
 
 🧪 Phase 5: Advanced Testing
 🚦 5.1 E2E auth flows

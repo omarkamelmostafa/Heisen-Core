@@ -1,13 +1,14 @@
 // frontend/src/features/auth/components/forgot-password/reset-password-form.jsx
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { FormField } from "@/features/auth/components/forms/form-field";
 import { AuthSubmitButtons } from "@/features/auth/components/forms/auth-submit-button";
 import { HelpText } from "./help-text";
 import { BackToLoginLink } from "./back-to-login-link";
-import { forgotPasswordContent as content } from "@/lib/config/auth/forgot-password";
 import { useFormContext } from "react-hook-form";
 
 export function ResetPasswordForm({ variants, isLoading }) {
+  const t = useTranslations("auth.forgotPassword");
   const { watch } = useFormContext();
 
   const email = watch("userEmail");
@@ -18,8 +19,8 @@ export function ResetPasswordForm({ variants, isLoading }) {
         <FormField
           name="userEmail"
           type="email"
-          label={content.form.email.label}
-          placeholder={content.form.email.placeholder}
+          label={t("form.emailLabel")}
+          placeholder={t("form.emailPlaceholder")}
           required
           disabled={isLoading}
         />
@@ -29,8 +30,8 @@ export function ResetPasswordForm({ variants, isLoading }) {
         <AuthSubmitButtons.ForgotPassword
           isLoading={isLoading}
           email={email}
-          buttonText={content.actions.sendResetLink}
-          loadingText={content.actions.sending}
+          buttonText={t("actions.sendResetLink")}
+          loadingText={t("actions.sending")}
         />
       </div>
 

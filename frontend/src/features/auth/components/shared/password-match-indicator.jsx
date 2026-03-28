@@ -3,12 +3,14 @@
 
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function PasswordMatchIndicator({
   password,
   confirmPassword,
   className = "",
 }) {
+  const t = useTranslations("auth.passwordMatch");
   if (!confirmPassword) return null;
 
   const isMatch = password === confirmPassword && password.length > 0;
@@ -28,7 +30,7 @@ export function PasswordMatchIndicator({
             <X className="h-4 w-4 text-red-500 flex-shrink-0" />
           )}
           <span className={isMatch ? "text-emerald-600" : "text-red-600"}>
-            {isMatch ? "Passwords match" : "Passwords do not match"}
+            {isMatch ? t("match") : t("noMatch")}
           </span>
         </>
       )}
