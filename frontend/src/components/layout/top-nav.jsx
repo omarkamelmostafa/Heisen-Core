@@ -44,7 +44,7 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
             <span
               className="md:inline text-sm font-bold tracking-wider uppercase text-primary-foreground"
             >
-              C
+              H
             </span>
             {/* <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">C</span> */}
           </div>

@@ -39,9 +39,9 @@ export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   manifest: "/manifest.json",
   icons: {
-    icon: "/football-svgrepo-com.svg", // Placeholder
-    shortcut: "/football-svgrepo-com.svg",
-    apple: "/football-svgrepo-com.svg",
+    icon: "/images/logo.svg",
+    shortcut: "/images/logo.svg",
+    apple: "/images/logo.svg",
   },
 };
 

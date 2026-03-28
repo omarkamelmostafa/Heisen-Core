@@ -10,7 +10,6 @@ import { TwoFactorStep } from "@/features/auth/components/login/two-factor-step"
 import { LoginHeader } from "@/features/auth/components/login/login-header";
 import { WelcomeSection } from "@/features/auth/components/login/welcome-section";
 import { LoginForm } from "@/features/auth/components/login/login-form";
-import { Divider } from "@/features/auth/components/login/divider";
 import { AuthFormProvider } from "@/features/auth/components/forms/auth-form-provider";
 import { AuthErrorAlert } from "@/features/auth/components/forms/auth-error-alert";
 import { createLoginSchema } from "@/lib/validations/auth-schemas";
@@ -89,8 +88,6 @@ export default function LoginPage() {
                   onSubmit={handleLogin}
                   className="space-y-6"
                 >
-                  <Divider variants={itemVariants} />
-
                   {isVerified && (
                     <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800 border border-green-200">
                       {t("emailVerified")}

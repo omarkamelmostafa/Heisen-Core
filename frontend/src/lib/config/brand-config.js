@@ -1,4 +1,4 @@
 export const BRAND = {
-  APP_NAME: "Fantasy Coach",
-  APP_DESCRIPTION: "Your fantasy sports management platform",
+  APP_NAME: "Heisen Core",
+  APP_DESCRIPTION: "Enterprise authentication and user management platform",
 };
