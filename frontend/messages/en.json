@@ -61,7 +61,7 @@
     "signOutOtherTab": "You were signed out from another tab",
     "login": {
       "title": "Welcome Back",
-      "subtitle": "Welcome back! Select method to login:",
+      "subtitle": "Ready to go? Just sign in below.",
       "emailLabel": "Email address",
       "emailPlaceholder": "Enter your email address",
       "passwordLabel": "Password",
@@ -96,9 +96,6 @@
       "termsRequired": "You must accept the terms and conditions to continue",
       "hasAccount": "Already have an account?",
       "signInLink": "Sign in here",
-      "divider": "Or continue with Email",
-      "google": "Continue with Google",
-      "facebook": "Continue with Facebook",
       "submitButton": "Create Account",
       "submitting": "Creating Account..."
     },
@@ -139,34 +136,34 @@
     },
     "layout": {
       "login": {
-        "title": "Welcome Back Coach!",
-        "description": "Ready to lead your fantasy team to championship glory? Sign in to access your full coaching dashboard, track your team's performance, and make those game-winning decisions that separate champions from the rest.",
-        "cardTitle": "Access Your Coaching Hub",
-        "cardDescription": "Secure entry to your complete fantasy management toolkit - track stats, manage rosters, and dominate your league with precision."
+        "title": "Welcome Back!",
+        "description": "Ready to manage your workspace? Sign in to access your dashboard.",
+        "cardTitle": "Access Your Dashboard",
+        "cardDescription": "Secure entry to your complete management toolkit and settings."
       },
       "signup": {
-        "title": "Join The Champions Circle",
-        "description": "Begin your journey to fantasy greatness today! Create your account to build your ultimate dream team, compete against friends and rivals, and establish your legacy as a master strategist in the world of fantasy sports.",
-        "cardTitle": "Build Your Legacy",
-        "cardDescription": "Start your coaching career with full access to premium features, advanced analytics, and everything you need to craft a championship-winning team from day one."
+        "title": "Join The Platform",
+        "description": "Begin your journey with Heisen Core today.",
+        "cardTitle": "Create Your Account",
+        "cardDescription": "Start with full access to premium features and security tools."
       },
       "forgotPassword": {
-        "title": "Regain Your Access!",
-        "description": "Every champion faces obstacles - let's get you back in the game swiftly! Enter your email below and we'll send a secure password reset link that will have you back coaching your team in moments, not minutes.",
+        "title": "Reset Your Password",
+        "description": "Every user faces obstacles. We'll get you back in.",
         "cardTitle": "Swift Account Recovery",
         "cardDescription": "If our email doesn't appear in your main inbox within a couple of minutes, please check your spam or promotions folder - we want you back in the action as quickly as possible."
       },
       "resetPassword": {
-        "title": "Fortify Your Account!",
+        "title": "Reset Your Password",
         "description": "Create a strong new password to keep your account secure. A strong password protects your data, settings, and access from unauthorized use.",
-        "cardTitle": "Secure Your Coaching Legacy",
-        "cardDescription": "Choose a robust, memorable password that will safeguard your account, protect your fantasy investments, and keep your winning strategies secure from season to season."
+        "cardTitle": "Secure Your Account",
+        "cardDescription": "Choose a robust password to protect your account and data."
       },
       "verifyEmail": {
-        "title": "Almost Game Time!",
-        "description": "The final step before you enter the arena! We've sent a verification link to your inbox - click it to activate your account and unlock the door to unlimited fantasy coaching possibilities and competitive glory.",
-        "cardTitle": "Verify & Enter The Game",
-        "cardDescription": "Complete your verification to gain full access to our fantasy coaching ecosystem, including real-time updates, player insights, and strategic tools designed for winners."
+        "title": "Verify Your Email",
+        "description": "The final step before you access the platform.",
+        "cardTitle": "Verify & Enter",
+        "cardDescription": "Complete verification to gain full access to your account."
       }
     },
     "alerts": {
@@ -178,6 +175,8 @@
     },
     "forgotPassword": {
       "form": {
+        "title": "Reset Your Password",
+        "subtitle": "Enter your email address and we'll send you a link to reset your password.",
         "emailLabel": "Email address",
         "emailPlaceholder": "Enter your email address"
       },
@@ -204,6 +203,8 @@
     },
     "resetPassword": {
       "form": {
+        "title": "Reset Your Password",
+        "subtitle": "Choose a new password to secure your account.",
         "passwordLabel": "New Password",
         "passwordPlaceholder": "Create a strong password",
         "confirmPasswordLabel": "Confirm New Password",

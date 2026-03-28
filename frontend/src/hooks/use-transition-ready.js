@@ -20,7 +20,7 @@
  */
 import { useState, useEffect } from "react";
 
-export function useTransitionReady({ delay = 300, isLoaded = true } = {}) {
+export function useTransitionReady({ delay = 0, isLoaded = true } = {}) {
   const [delayPassed, setDelayPassed] = useState(delay === 0);
 
   useEffect(() => {
