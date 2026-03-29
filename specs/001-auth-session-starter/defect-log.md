@@ -168,3 +168,93 @@ Evidence: occurrences in `backend/app.js` (console.log), `backend/config/redis.j
 Acceptance Criterion: Constitution §XI.1 compliance; remove all `console.*` from production code paths and replace with structured logging utility.
 Resolution Required: Replace `console.*` usages with `emitLogMessage()` or integrate `pino` structured logger; ensure no sensitive data is logged. Provide commit reference demonstrating replacements and run a code scan to confirm no remaining `console.*` occurrences.
 Status: OPEN
+
+---
+
+## Defect Record — DEF-008
+Date: 2026-03-29T14:11:00Z
+QA Run: 7 (Test Suite Audit)
+Type: INFRA
+Severity: CRITICAL
+Route To: Implementation Engineer
+Phase: Phase 1 — Setup
+Description: token-utils.test.js imports from "../../utilities/auth/token-utils.js" but this file does NOT exist. The test file expects functions (generateTokens, verifyRefreshToken, refreshAccessToken, etc.) that are actually implemented in services/auth/token-service.js. This causes 0 tests to run from this file and breaks coverage reporting.
+Evidence: @backend/__tests__/unit/token-utils.test.js:12 imports from "../../utilities/auth/token-utils.js"; @backend/utilities/auth/ directory contains only crypto-utils.js, hash-utils.js, user-data-utils.js — NO token-utils.js
+Acceptance Criterion: T2 (Test files must target existing modules)
+Resolution Required: Either: (1) Create backend/utilities/auth/token-utils.js with the expected exports, OR (2) Delete token-utils.test.js and remove the entry from vitest.config.js coverage include array
+Status: OPEN
+
+---
+
+## Defect Record — DEF-009
+Date: 2026-03-29T14:11:00Z
+QA Run: 7 (Test Suite Audit)
+Type: COVERAGE_GAP
+Severity: HIGH
+Route To: Delivery Planner
+Phase: Phase 2 — Foundational
+Description: Rule S4 (Token reuse detection) is explicitly noted in constitution §VI.4 as lacking a dedicated integration test. The refreshAccessToken() function in token-service.js:127-138 implements nuclear revocation when reuse is detected, but this behavior is NOT explicitly verified by any test.
+Evidence: @backend/services/auth/token-service.js:127-138 implements reuse detection; constitution.md §VI.4 notes "Note: Lacks a dedicated integration test. Add test before promoting to 'fully verified.'"
+Acceptance Criterion: Rule S4 — Token reuse detection
+Resolution Required: Add integration test that: (1) Logs in to get refresh token, (2) Refreshes to rotate token, (3) Attempts to use old (revoked) token, (4) Asserts 401 response AND queries DB to verify ALL user's RefreshToken documents are revoked
+Status: OPEN
+
+---
+
+## Defect Record — DEF-010
+Date: 2026-03-29T14:11:00Z
+QA Run: 7 (Test Suite Audit)
+Type: COVERAGE_GAP
+Severity: HIGH
+Route To: Delivery Planner
+Phase: Phase 7 — User Story 5
+Description: Rule S5 (Password reset session revocation) is partially tested in auth-reset-password.test.js but the test does NOT explicitly verify that all sessions are revoked. The test only verifies password change and that old password no longer works — it does not query RefreshToken collection or verify session invalidation.
+Evidence: @backend/__tests__/integration/auth-reset-password.test.js:63-94 tests reset flow but only asserts password hash change (line 81) and login failure with old password (line 87); constitution.md §VI.5 notes "Note: Lacks a dedicated integration test."
+Acceptance Criterion: Rule S5 — Password reset session revocation
+Resolution Required: Add assertion to reset password test: After successful reset, query RefreshToken collection and assert all tokens for that user have isRevoked: true
+Status: OPEN
+
+---
+
+## Defect Record — DEF-011
+Date: 2026-03-29T14:11:00Z
+QA Run: 7 (Test Suite Audit)
+Type: IMPL
+Severity: HIGH
+Route To: Implementation Engineer
+Phase: Phase 1 — Setup
+Description: cookie-service.test.js uses dynamic imports (vi.resetModules() + await import()) inside test functions (lines 49-59, 64). This violates Rule T2 which states "vi.mock() is hoisted. Never mock inside beforeEach with dynamic imports. Modules are already loaded by import time." The pattern can cause unreliable test behavior.
+Evidence: @backend/__tests__/unit/cookie-service.test.js:49-59 uses dynamic import inside test "D3: secure flag follows environment"; line 64 uses dynamic import inside test "D4: clearCookie uses matching path"
+Acceptance Criterion: Rule T2 (Vitest hoisting compliance)
+Resolution Required: Refactor tests to use static imports at top of file; use vi.spyOn() or mock pattern that respects hoisting; remove vi.resetModules() inside tests
+Status: OPEN
+
+---
+
+## Defect Record — DEF-012
+Date: 2026-03-29T14:11:00Z
+QA Run: 7 (Test Suite Audit)
+Type: COVERAGE_GAP
+Severity: MEDIUM
+Route To: Delivery Planner
+Phase: Phase 1.5
+Description: Health check endpoint (/api/v1/health) has NO test coverage despite Phase 1.5 marking it as complete. Constitution §IX.3 requires health check endpoint and §IX.5 requires it to verify database connectivity.
+Evidence: No test file exists for health endpoint in @backend/__tests__/integration/; checkpoint-log.md Phase 1.5 claims "Health check endpoint ✅"
+Acceptance Criterion: Constitution §IX.3, §IX.5 — Health check with DB verification
+Resolution Required: Create integration test for GET /api/v1/health asserting: (1) HTTP 200, (2) response body contains success: true, (3) database status is "connected" or equivalent
+Status: OPEN
+
+---
+
+## Defect Record — DEF-013
+Date: 2026-03-29T14:11:00Z
+QA Run: 7 (Test Suite Audit)
+Type: COVERAGE_GAP
+Severity: HIGH
+Route To: Delivery Planner
+Phase: Phase 2.x+
+Description: User management endpoints (change-password, email-change, toggle-2fa, update-profile, upload-avatar) have controllers implemented but NO integration tests. Rule B8 requires every new API endpoint to have integration tests covering happy path, validation failure, and authorization failure.
+Evidence: Controllers exist in @backend/controllers/user/ but no corresponding test files in @backend/__tests__/integration/; endpoints registered in routes but untested
+Acceptance Criterion: Rule B8 (Integration test requirements for new endpoints)
+Resolution Required: Create integration tests for: PUT /api/v1/user/change-password, PUT /api/v1/user/email-change, PUT /api/v1/user/toggle-2fa, PUT /api/v1/user/profile, POST /api/v1/user/avatar — each covering happy path, validation failure (400), and auth failure (401)
+Status: OPEN
