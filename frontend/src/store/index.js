@@ -47,8 +47,6 @@ const persistedRootReducer = {
   ...reducers,
   auth: persistReducer(authPersistConfig, reducers.auth),
   user: reducers.user,
-  // keep other slices (ui) as plain reducers
-  ui: reducers.ui,
 };
 
 // ==================== STORE CONFIGURATION ====================
