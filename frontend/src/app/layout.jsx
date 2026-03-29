@@ -62,6 +62,7 @@ export default async function RootLayout({ children }) {
       {/* Initialize in your root layout */}
       {ExtensionErrorHandler.init()}
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${cairo.variable} bg-background text-foreground antialiased`}
       >
         <NextIntlClientProvider messages={messages}>

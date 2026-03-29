@@ -29,26 +29,6 @@ export const API_CONFIG = {
   TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT, 10) || 30000, // Default: 30 seconds
   RETRY_ATTEMPTS: parseInt(process.env.NEXT_PUBLIC_API_RETRIES, 10) || 3,
   RETRY_DELAY: parseInt(process.env.NEXT_PUBLIC_API_RETRY_DELAY, 10) || 1000,
-  MAX_CONTENT_LENGTH: 50 * 1024 * 1024, // 50MB
-  MAX_BODY_LENGTH: 50 * 1024 * 1024, // 50MB
-
-  // Cache Configuration
-  CACHE_TTL: 5 * 60 * 1000, // 5 minutes
-  CACHE_ENABLED: true,
-
-  // Security Configuration
-  CSRF_ENABLED: true,
-  XSS_PROTECTION: true,
-  CONTENT_SECURITY_POLICY: true,
-
-  // Performance Configuration
-  REQUEST_DEBOUNCE: 300, // ms
-  CONCURRENT_REQUESTS: 5,
-  BATCH_REQUESTS: true,
-  BATCH_INTERVAL: 100, // ms
-
-
-
 
   // Environment Specific Settings
   ENV: process.env.NODE_ENV || 'development',
@@ -194,86 +174,5 @@ export const ERROR_MESSAGES = {
   }
 };
 
-
-
-// ======================== 🔧 Request Configuration ======================
-
-export const REQUEST_CONFIG = {
-  // Default headers
-  HEADERS: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-  },
-
-  // File upload headers
-  UPLOAD_HEADERS: {
-    'Content-Type': 'multipart/form-data',
-  },
-
-  // Cache strategies
-  CACHE_STRATEGIES: {
-    NETWORK_FIRST: 'network-first',
-    CACHE_FIRST: 'cache-first',
-    CACHE_ONLY: 'cache-only',
-    NETWORK_ONLY: 'network-only',
-  },
-};
-
-// ====================== 📡 Response Handling ======================
-
-export const RESPONSE_HANDLERS = {
-  // Success status codes
-  SUCCESS_CODES: [200, 201, 202, 204],
-
-  // Retryable status codes
-  RETRYABLE_CODES: [408, 429, 500, 502, 503, 504],
-
-  // Codes that should trigger auth refresh
-  AUTH_ERROR_CODES: [401, 403],
-
-  // Codes that indicate client error (no retry)
-  CLIENT_ERROR_CODES: [400, 402, 404, 405, 406, 407, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 421, 422, 423, 424, 425, 426, 428, 431, 451],
-};
-
-// ========================== 🛠️ Utilities ==========================
-
-
-// Helper to check if status is successful
-export const isSuccessStatus = (status) =>
-  RESPONSE_HANDLERS.SUCCESS_CODES.includes(status);
-
-// Helper to check if status should trigger retry
-export const isRetryableStatus = (status) =>
-  RESPONSE_HANDLERS.RETRYABLE_CODES.includes(status);
-
-// Helper to check if status is client error
-export const isClientError = (status) =>
-  RESPONSE_HANDLERS.CLIENT_ERROR_CODES.includes(status);
-
-// Helper to get full API endpoint
-export const getApiEndpoint = (path = "") => {
-  const base = API_CONFIG.FULL_BASE_URL.replace(/\/+$/, "");
-  const endpoint = path.replace(/^\/+/, "");
-  return `${base}/${endpoint}`;
-};
-
-
-// Helper to get appropriate error message
-export const getErrorMessage = (error, defaultMessage = null) => {
-  if (error?.response?.status) {
-    return ERROR_MESSAGES.getMessage(error.response.status, defaultMessage);
-  }
-  if (error?.message?.includes('Network Error')) {
-    return ERROR_MESSAGES.NETWORK_ERROR;
-  }
-  if (error?.message?.includes('timeout')) {
-    return ERROR_MESSAGES.NETWORK_TIMEOUT;
-  }
-  return defaultMessage || ERROR_MESSAGES.DEFAULT_ERROR;
-};
-
 // Export default configuration
 export default API_CONFIG;
-
-

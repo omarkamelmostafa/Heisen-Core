@@ -42,18 +42,11 @@ const authPersistConfig = {
   whitelist: ["isAuthenticated"], // Only persist auth status, tokens are in cookies
 };
 
-// Persist config for user (local storage - preferences)
-const userPersistConfig = {
-  key: "user",
-  storage: storage,
-  whitelist: ["preferences"], // Only persist these
-};
-
 // Create persisted reducers out of the plain reducers map
 const persistedRootReducer = {
   ...reducers,
   auth: persistReducer(authPersistConfig, reducers.auth),
-  user: persistReducer(userPersistConfig, reducers.user),
+  user: reducers.user,
   // keep other slices (ui) as plain reducers
   ui: reducers.ui,
 };

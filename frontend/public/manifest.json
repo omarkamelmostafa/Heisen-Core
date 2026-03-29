@@ -1,19 +1,19 @@
 {
-  "name": "Fantasy Coach",
-  "short_name": "FantasyCoach",
-  "description": "Professional Sports Strategy & Analytics",
+  "name": "Heisen Core",
+  "short_name": "Heisen Core",
+  "description": "Heisen Core - The most secure starter kit for your next project",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/football-svgrepo-com.svg",
+      "src": "/images/logo.svg",
       "sizes": "192x192",
       "type": "image/svg+xml"
     },
     {
-      "src": "/football-svgrepo-com.svg",
+      "src": "/images/logo.svg",
       "sizes": "512x512",
       "type": "image/svg+xml"
     }

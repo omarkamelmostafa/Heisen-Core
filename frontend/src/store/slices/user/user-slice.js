@@ -3,11 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   profile: null,
-  preferences: {
-    theme: "light",
-    language: "en",
-    notifications: true,
-  },
   isLoading: false,
   error: null,
 };
@@ -16,11 +11,6 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // Update user preferences
-    updatePreferences: (state, action) => {
-      state.preferences = { ...state.preferences, ...action.payload };
-    },
-
     // Update profile (manual sync update)
     updateProfile: (state, action) => {
       if (state.profile) {
@@ -36,7 +26,6 @@ const userSlice = createSlice({
     // Clear user data
     clearUser: (state) => {
       state.profile = null;
-      state.preferences = initialState.preferences;
     },
   },
   extraReducers: (builder) => {
@@ -64,7 +53,7 @@ const userSlice = createSlice({
       .addCase("user/updateProfile/pending", handlePending)
       .addCase("user/updateProfile/fulfilled", (state, action) => {
         state.isLoading = false;
-        state.profile = action.payload; // Assuming backend returns full profile
+        state.profile = action.payload;
         state.error = null;
       })
       .addCase("user/updateProfile/rejected", handleRejected)
@@ -105,7 +94,6 @@ const userSlice = createSlice({
 });
 
 export const {
-  updatePreferences,
   updateProfile,
   clearError,
   clearUser,
