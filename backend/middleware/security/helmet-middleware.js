@@ -100,3 +100,25 @@ const finalConfig = isProduction
 // Create and export the helmet middleware
 export const helmetMiddleware = helmet(finalConfig);
 
+// Export configurations for testing and transparency
+export const helmetConfig = {
+  production: productionConfig,
+  development: developmentConfig,
+  current: finalConfig,
+  environment: process.env.NODE_ENV || "development",
+};
+
+// Helper function to log helmet configuration
+export const logHelmetConfig = () => {
+  const configSummary = {
+    environment: helmetConfig.environment,
+    cspEnabled: !!finalConfig.contentSecurityPolicy,
+    hstsEnabled: !!finalConfig.hsts,
+    crossOriginPolicy: finalConfig.crossOriginResourcePolicy?.policy,
+  };
+
+  console.log("🛡️ Helmet Security Configuration:");
+  console.log(JSON.stringify(configSummary, null, 2));
+
+  return configSummary;
+};

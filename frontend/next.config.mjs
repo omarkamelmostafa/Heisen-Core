@@ -92,6 +92,9 @@ const nextConfig = {
       },
     ],
   },
+
+  // 4. TURBOPACK (faster builds)
+  turbopack: {},
 };
 
 export default withNextIntl(nextConfig);

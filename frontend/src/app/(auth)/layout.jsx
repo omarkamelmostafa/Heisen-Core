@@ -11,4 +11,3 @@ export default function AuthLayout({ children }) {
     </AuthLayoutWrapper>
   );
 }
-// export const dynamic = "force-dynamic";

@@ -40,11 +40,6 @@ class UserEndpoints {
     return `${this.PREFIX}/profile/avatar`;
   }
 
-  // Preferences endpoints (PLANNED - NOT IMPLEMENTED)
-  get PREFERENCES() {
-    return `${this.PREFIX}/preferences`;
-  }
-
   // Security endpoints (PLANNED - NOT IMPLEMENTED)
   get CHANGE_PASSWORD() {
     return `${this.PREFIX}/security/password`;
@@ -54,10 +49,6 @@ class UserEndpoints {
     return `${this.PREFIX}/security/2fa`;
   }
 
-  get DELETE_ACCOUNT() {
-    return `${this.PREFIX}/security/account`;
-  }
-
   // Session management (PLANNED - NOT IMPLEMENTED)
   get SESSIONS() {
     return `${this.PREFIX}/sessions`;
@@ -65,11 +56,6 @@ class UserEndpoints {
 
   get SESSION() {
     return (sessionId) => `${this.SESSIONS}/${sessionId}`;
-  }
-
-  // Security logs (PLANNED - NOT IMPLEMENTED)
-  get SECURITY_LOGS() {
-    return `${this.PREFIX}/security/logs`;
   }
 
   // ==================== QUERY PARAMETER BUILDERS ====================
@@ -107,12 +93,9 @@ class UserEndpoints {
   // const sessionsUrl = userEndpoints.withPagination(userEndpoints.SESSIONS, 1, 20);
   // Result: "/api/v1/users/sessions?page=1&limit=20"
 
-  // 2. Get security logs with filters
-  // const logsUrl = userEndpoints.withFilters(userEndpoints.SECURITY_LOGS, {
-  //   type: "login",
-  //   date: "2024-01-01"
-  // });
-  // Result: "/api/v1/users/security/logs?type=login&date=2024-01-01"
+  // 2. Update user profile
+  // const profileUrl = userEndpoints.PROFILE;
+  // Result: "/api/v1/user/profile"
 
   // 3. Combined pagination and filters
   // const sessionsWithFilters = userEndpoints.withFilters(
@@ -133,14 +116,9 @@ class UserEndpoints {
           UPDATE_PROFILE: this.UPDATE_PROFILE,
           UPLOAD_AVATAR: this.UPLOAD_AVATAR,
         },
-        PREFERENCES: {
-          PREFERENCES: this.PREFERENCES,
-        },
         SECURITY: {
           CHANGE_PASSWORD: this.CHANGE_PASSWORD,
-          DELETE_ACCOUNT: this.DELETE_ACCOUNT,
           SESSIONS: this.SESSIONS,
-          SECURITY_LOGS: this.SECURITY_LOGS,
         }
       }
     };

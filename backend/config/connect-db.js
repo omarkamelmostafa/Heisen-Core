@@ -121,10 +121,46 @@ export const getConnectionStatus = () => {
 // Connection event listeners for better monitoring
 mongoose.connection.on("disconnected", () => {
   emitLogMessage("📡 MongoDB disconnected", "info");
+
+  // Exponential backoff reconnection
+  let reconnectAttempts = 0;
+  const maxReconnectAttempts = 10;
+  const baseDelay = 1000;
+
+  const attemptReconnect = () => {
+    reconnectAttempts++;
+    emitLogMessage(`MongoDB reconnection attempt ${reconnectAttempts}/${maxReconnectAttempts}`, "info");
+
+    const connectionMode = getConnectionMode();
+    const connectionString = getConnectionString(connectionMode);
+    const options = getConnectionOptions();
+
+    mongoose.connect(connectionString, options)
+      .then(() => {
+        emitLogMessage("MongoDB reconnected successfully", "success");
+        reconnectAttempts = 0;
+      })
+      .catch((error) => {
+        if (reconnectAttempts >= maxReconnectAttempts) {
+          emitLogMessage(`Failed to reconnect after ${maxReconnectAttempts} attempts: ${error.message}`, "error");
+          return;
+        }
+        const nextDelay = Math.min(baseDelay * Math.pow(2, reconnectAttempts), 30000);
+        emitLogMessage(`Reconnection failed, retrying in ${nextDelay / 1000}s...`, "warn");
+        setTimeout(attemptReconnect, nextDelay);
+      });
+  };
+
+  const initialDelay = Math.min(baseDelay * Math.pow(2, reconnectAttempts), 30000);
+  setTimeout(attemptReconnect, initialDelay);
+});
+
+mongoose.connection.on("connected", () => {
+  emitLogMessage("MongoDB connected", "info");
 });
 
 mongoose.connection.on("error", (error) => {
-  emitLogMessage(`❌ MongoDB connection error: ${error.message}`, "error");
+  emitLogMessage(`MongoDB connection error: ${error.message}`, "error");
 });
 
 mongoose.connection.on("reconnected", () => {

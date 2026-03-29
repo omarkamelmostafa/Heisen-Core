@@ -22,15 +22,6 @@ class PublicClient extends BaseClient {
       (error) => Promise.reject(error)
     );
   }
-
-  // Public-specific methods
-  async healthCheck() {
-    return this.get("/health");
-  }
-
-  async getPublicData(endpoint) {
-    return this.get(`/public/${endpoint}`);
-  }
 }
 
 // Singleton instance for public routes

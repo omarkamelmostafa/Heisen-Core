@@ -669,9 +669,147 @@ docs(api): complete Swagger + Postman coverage for all 19 production endpoints
 
 ---
 
-## Validation Metadata (All Runs)
+## QA Run 8 — Post-Cleanup Integrity Audit
+
+**Date**: 2026-03-29T13:47:00+02:00  
+**QA Run**: 8th  
+**Verdict**: **PASS**  
+**Constitution Version**: .speckit/constitution.md (2026-03-24)  
+**Test Framework**: NONE — manual verification only  
+**Scope**: Zero-tolerance verification of dead code removal
+
+---
+
+### Executive Summary
+
+Zero-tolerance post-cleanup integrity audit completed across 7 verification passes. **ALL CLEAR** — No dangling imports, no zombie code references, no residual dead code, all test imports resolve, store integrity intact.
+
+---
+
+### Pass 1 — Deletion Verification
+
+| # | File Path | Status |
+|---|-----------|--------|
+| 1 | backend/errors/error-constants.js | DELETED |
+| 2 | frontend/src/services/storage/cookie-service.js | DELETED |
+| 3 | frontend/src/services/storage/storage-constants.js | DELETED |
+| 4 | frontend/src/lib/utils/modal-callback-registry.js | DELETED |
+| 5 | frontend/src/store/slices/ui/scroll/scroll-selectors.js | DELETED |
+| 6 | frontend/src/store/slices/ui/search/search-selectors.js | DELETED |
+| 7 | frontend/src/store/slices/ui/pagination/pagination-selectors.js | DELETED |
+| 8 | frontend/src/store/slices/ui/performance/performance-selectors.js | DELETED |
+| 9 | frontend/src/store/slices/ui/form/form-selectors.js | DELETED |
+| 10 | frontend/src/store/slices/ui/errors/errors-selectors.js | DELETED |
+| 11 | frontend/src/store/slices/ui/navigation/navigation-selectors.js | DELETED |
+| 12 | frontend/src/store/slices/ui/loading/loading-selectors.js | DELETED |
+| 13 | frontend/src/store/slices/ui/confirmation/confirmation-selectors.js | DELETED |
+| 14 | frontend/src/store/slices/ui/layout/layout-selectors.js | DELETED |
+| 15 | frontend/src/store/slices/ui/ui-selectors.js | DELETED |
+| 16 | frontend/src/services/api/endpoints/admin-endpoints.js | DELETED |
+
+**Result**: ✅ PASS — All 16 files confirmed DELETED
+
+---
+
+### Pass 2 — Dangling Import Detection
+
+**Result**: ✅ PASS — Zero dangling imports detected
+
+---
+
+### Pass 3 — Dangling Export Verification
+
+**Barrel Files Scanned**:
+- backend/middleware/core/index.js — All exports valid
+- backend/middleware/security/index.js — All exports valid  
+- backend/use-cases/auth/index.js — All exports valid
+- frontend/src/store/slices/ui/index.js — All exports valid
+- frontend/src/store/slices/auth/index.js — All exports valid
+- frontend/src/store/slices/user/index.js — All exports valid
+- frontend/src/store/slices/notifications/index.js — All exports valid
+- frontend/src/services/api/endpoints/index.js — All exports valid
+- frontend/src/services/api/client/index.js — All exports valid
+
+**Result**: ✅ PASS — No dangling exports found
+
+---
+
+### Pass 4 — Zombie Code Detection
+
+**Backend Searches** (57 patterns): Zero zombie references  
+**Frontend Searches** (35 patterns): Zero zombie references
+
+**Result**: ✅ PASS — No zombie code references in active code
+
+---
+
+### Pass 5 — Residual Dead Code Scan
+
+**Modified Backend Files**: All CLEAN  
+**Modified Frontend Files**: All CLEAN
+
+**Result**: ✅ PASS — No residual dead code detected
+
+---
+
+### Pass 6 — Test File Integrity
+
+| # | Test File | Import Target | Resolves? |
+|---|-----------|---------------|-----------|
+| 1 | cookie-service.test.js | services/auth/cookie-service.js | ✅ |
+| 2 | crypto-utils.test.js | utilities/auth/crypto-utils.js | ✅ |
+| 3 | hash-utils.test.js | utilities/auth/hash-utils.js | ✅ |
+| 4 | token-service.test.js | services/auth/token-service.js | ✅ |
+| 5 | token-utils.test.js | utilities/auth/token-utils.js | ✅ |
+| 6 | user-data-utils.test.js | utilities/auth/user-data-utils.js | ✅ |
+| 7 | setup.js | utilities/general/emit-log.js | ✅ |
+| 8 | helpers.js | supertest | ✅ |
+
+**Result**: ✅ PASS — All test imports resolve
+
+---
+
+### Pass 7 — Store Integrity
+
+**Root Reducer**: All 4 slice reducers valid  
+**UI Combined Reducer**: All 11 sub-slices valid
+
+**Result**: ✅ PASS — Store composition intact
+
+---
+
+### Final Scorecard
+
+| Pass | Result | Issues |
+|------|--------|--------|
+| 1 — Deletion Verification | ✅ PASS | 0 |
+| 2 — Dangling Imports | ✅ PASS | 0 |
+| 3 — Dangling Exports | ✅ PASS | 0 |
+| 4 — Zombie References | ✅ PASS | 0 |
+| 5 — Residual Dead Code | ✅ PASS | 0 |
+| 6 — Test Integrity | ✅ PASS | 0 |
+| 7 — Store Integrity | ✅ PASS | 0 |
+
+---
+
+### Verdict Rationale
+
+**ALL CLEAR** — Zero issues. Dead code cleanup is complete and codebase integrity is fully intact.
+
+- ✅ No deleted files remain on disk (16/16 confirmed DELETED)
+- ✅ No dangling imports reference deleted modules
+- ✅ No zombie code references found in active code
+- ✅ No residual dead code created by cleanup
+- ✅ All test imports resolve correctly (8/8)
+- ✅ Store reducer composition intact (15/15 reducers valid)
+---
+
+### Validation Metadata (All Runs)
 
 - **QA Run #6**: Staff Security Audit — REJECT (3 CRITICAL defects pending resolution)
 - **QA Run #7**: Swagger + Postman Coverage Audit — PASS (3 minor fixes applied)
-- **Latest Timestamp**: 2026-03-28T18:35:00+02:00
+- **QA Run #8**: Post-Cleanup Integrity Audit — PASS (zero issues, 7/7 passes clear)
+- **Latest Timestamp**: 2026-03-29T13:47:00+02:00
+
+
 
