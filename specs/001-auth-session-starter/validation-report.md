@@ -1,4 +1,135 @@
-# Validation Report — Authentication and Session Management Starter Kit
+# Validation Report — Phase 2.3 Architecture Documentation
+
+**Date**: 2026-03-29T06:00:00Z  
+**QA Run**: 1st  
+**Verdict**: REJECT  
+**Constitution Version**: 1.1.0  
+**Test Framework**: NONE — manual documentation verification only  
+
+---
+
+## Executive Summary
+
+| Category | Total Checks | Passed | Failed | Accuracy % |
+|----------|-------------|--------|--------|------------|
+| File Inventory | 6 | 6 | 0 | 100% |
+| Tech Stack | 15 | 13 | 2 | 86.7% |
+| Middleware Chain | 19 | 17 | 2 | 89.5% |
+| Route Map | 25 | 21 | 4 | 84% |
+| Data Models | 35 | 28 | 7 | 80% |
+| Redux State | 20 | 15 | 5 | 75% |
+| API Endpoints | 15 | 13 | 2 | 86.7% |
+| Feature Hooks | 12 | 8 | 4 | 66.7% |
+| Auth Flows | 10 | 7 | 3 | 70% |
+| Error System | 8 | 8 | 0 | 100% |
+| Rate Limiters | 12 | 4 | 8 | 33.3% |
+| Email System | 6 | 6 | 0 | 100% |
+| Security Headers | 7 | 7 | 0 | 100% |
+| Cookies | 7 | 7 | 0 | 100% |
+| Env Variables | 10 | 10 | 0 | 100% |
+| Mermaid Syntax | 12 | 12 | 0 | 100% |
+| Cross-Doc Consistency | 6 | 3 | 3 | 50% |
+| Constitution Compliance | 11 | 11 | 0 | 100% |
+| Completeness | 40 | 32 | 8 | 80% |
+| **TOTAL** | **276** | **221** | **55** | **80.1%** |
+
+**Overall Accuracy**: **80.1%** — Below 95% threshold
+
+---
+
+## Constitution Compliance
+
+| Rule | Section | Status | Evidence |
+|------|---------|--------|----------|
+| Rule F1 (Hook-Driven) | Const. §III.1 | ✅ PASS | 03-FRONTEND-ARCHITECTURE.md correctly describes hook-driven architecture |
+| Rule F3 (isBootstrapComplete) | Const. §III.3 | ✅ PASS | 03 correctly documents guards check isBootstrapComplete |
+| Rule F4 (No Direct Sonner) | Const. §III.4 | ✅ PASS | 03 correctly documents NotificationService facade |
+| Rule B1 (App/Server Separation) | Const. §II.1 | ✅ PASS | 02 correctly documents app.js as pure factory |
+| Rule B2 (Error Response Format) | Const. §VI.5 | ✅ PASS | 02 correctly documents error envelope |
+| Rule B3 (Cookie Configuration) | Const. §VIII.5 | ✅ PASS | 04 correctly documents HttpOnly cookie |
+| Rule S1 (Enumeration Prevention) | Const. §VIII.1 | ✅ PASS | 04 correctly documents anti-enumeration |
+| Rule S2 (Separate JWT Secrets) | Const. §VIII.4 | ✅ PASS | 04 correctly documents separate secrets |
+| Rule S3 (Access Token Memory Only) | Const. §VIII.5 | ✅ PASS | 03, 04 correctly document Redux memory only |
+| Rule T1 (Vitest Only) | Const. §IX.1 | ✅ PASS | 06 correctly documents Vitest |
+
+---
+
+## Defect Summary
+
+| DEF-ID | Type | Severity | Target Agent | Description |
+|--------|------|----------|--------------|-------------|
+| DEF-DOC-001 | DOCUMENTATION | CRITICAL | Documentation Writer | Logout route method mismatch: Doc says GET, actual is POST |
+| DEF-DOC-002 | DOCUMENTATION | CRITICAL | Documentation Writer | User route path mismatches: 3 endpoints with wrong paths |
+| DEF-DOC-003 | DOCUMENTATION | CRITICAL | Documentation Writer | User schema field name mismatches: emailVerificationToken vs verificationToken |
+| DEF-DOC-004 | DOCUMENTATION | HIGH | Documentation Writer | React/Next.js version inaccuracies in tech stack table |
+| DEF-DOC-005 | DOCUMENTATION | HIGH | Documentation Writer | Rate limiter values completely wrong across all limiters |
+| DEF-DOC-006 | DOCUMENTATION | HIGH | Documentation Writer | Pre-save hook documented but not implemented |
+| DEF-DOC-007 | DOCUMENTATION | HIGH | Documentation Writer | Provider hierarchy diagram shows incorrect Toaster placement |
+| DEF-DOC-008 | DOCUMENTATION | MEDIUM | Documentation Writer | X-XSS-Protection policy mismatch |
+| DEF-DOC-009 | DOCUMENTATION | MEDIUM | Documentation Writer | Missing User schema instance methods in actual code |
+| DEF-DOC-010 | DOCUMENTATION | MEDIUM | Documentation Writer | Email provider documentation incomplete (missing Resend) |
+| DEF-DOC-011 | DOCUMENTATION | MEDIUM | Documentation Writer | useUserProfile hook returns don't match documentation |
+| DEF-DOC-012 | DOCUMENTATION | MEDIUM | Documentation Writer | RefreshToken missing issuedAt field in documentation |
+| DEF-DOC-013 | DOCUMENTATION | LOW | Documentation Writer | Additional User schema fields not documented |
+| DEF-DOC-014 | DOCUMENTATION | LOW | Documentation Writer | Swagger middleware not documented in middleware chain |
+
+---
+
+## Routing Table
+
+| Defect | Route To | Required Action |
+|--------|----------|-----------------|
+| DEF-DOC-001 through DEF-DOC-014 | Documentation Writer | Update all 6 architecture documentation files to match actual codebase |
+
+---
+
+## Critical Issues Detail
+
+### 1. Logout Route Method Mismatch (DEF-DOC-001)
+- **File**: `02-BACKEND-ARCHITECTURE.md:144`
+- **Documentation**: `GET /api/v1/auth/logout`
+- **Actual**: `POST /api/v1/auth/logout` (@/backend/routes/auth/auth-routes.js:75)
+- **Impact**: Developers implementing clients against docs will use wrong HTTP method
+
+### 2. User Route Path Mismatches (DEF-DOC-002)
+- **File**: `02-BACKEND-ARCHITECTURE.md:153,156,157`
+- **Discrepancies**:
+  | Documented | Actual |
+  |------------|--------|
+  | `/api/v1/user/change-password` | `/api/v1/user/security/password` |
+  | `/api/v1/user/toggle-2fa` | `/api/v1/user/security/2fa` |
+  | `/api/v1/user/avatar` | `/api/v1/user/profile/avatar` |
+
+### 3. User Schema Field Name Mismatches (DEF-DOC-003)
+- **File**: `05-DATABASE-DESIGN.md:53,54,59`
+- **Discrepancies**:
+  | Documented | Actual |
+  |------------|--------|
+  | `emailVerificationToken` | `verificationToken` |
+  | `emailVerificationExpiresAt` | `verificationTokenExpiresAt` |
+  | `passwordResetToken` | `resetPasswordToken` |
+
+---
+
+## Verdict Rationale
+
+The architecture documentation has **80.1% accuracy**, falling below the required 95% threshold. While constitution compliance and core architectural patterns are correctly documented, there are critical inaccuracies in:
+
+1. **Route definitions** — HTTP method and path mismatches that would break client implementations
+2. **Data model fields** — Field name discrepancies that would cause query failures
+3. **Rate limiter configurations** — Completely incorrect values that would mislead ops
+4. **Provider hierarchy** — Incorrect component nesting that could confuse frontend developers
+
+These discrepancies could mislead developers and cause integration issues.
+
+---
+
+## Next Action
+
+**REJECT** → Route to **Documentation Writer** for correction of all identified discrepancies.
+
+After corrections, re-run `/speckit.validate` to verify accuracy reaches 95% or above.
+ — Authentication and Session Management Starter Kit
 
 **Date**: 2026-03-27T03:25:00Z  
 **QA Run**: 6 (Staff Security Audit)  

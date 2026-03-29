@@ -34,15 +34,15 @@ export function TwoFactorToggle({
   return (
     <div className="space-y-4">
       <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg ${twoFactorEnabled ? "bg-green-100" : "bg-muted"}`}>
+        <div className={`p-2 rounded-lg ${twoFactorEnabled ? "bg-primary/10" : "bg-muted"}`}>
           {twoFactorEnabled ? (
-            <ShieldCheck className="h-5 w-5 text-green-600" />
+            <ShieldCheck className="h-5 w-5 text-primary" />
           ) : (
             <ShieldOff className="h-5 w-5 text-muted-foreground" />
           )}
         </div>
         <div className="flex-1">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h3 className="font-medium">{t("heading")}</h3>
               <p className="text-sm text-muted-foreground">
@@ -55,6 +55,7 @@ export function TwoFactorToggle({
               variant={twoFactorEnabled ? "outline" : "default"}
               size="sm"
               onClick={twoFactorEnabled ? onOpenDisable : onOpenEnable}
+              className="w-full sm:w-auto"
             >
               <Smartphone className="h-4 w-4 mr-2" />
               {twoFactorEnabled ? t("disableButton") : t("enableButton")}
@@ -62,7 +63,7 @@ export function TwoFactorToggle({
           </div>
 
           {twoFactorEnabled && (
-            <p className="text-xs text-green-600 mt-2">
+            <p className="text-xs text-primary mt-2">
               {t("enabledStatus")}
             </p>
           )}

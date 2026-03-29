@@ -1,21 +1,22 @@
 // backend/services/email/providers/mailtrap.provider.js
+// Provider: Ethereal Email (https://ethereal.email) — SMTP sandbox for development
 
 import nodemailer from "nodemailer";
 import { EMAIL_CONFIG } from "../config/email.config.js";
 import logger from "../../../utilities/general/logger.js";
 
-export class MailtrapProvider {
+export class EtherealProvider {
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: EMAIL_CONFIG.mailtrap.host,
-      port: EMAIL_CONFIG.mailtrap.port,
+      host: EMAIL_CONFIG.ethereal.host,
+      port: EMAIL_CONFIG.ethereal.port,
       auth: {
-        user: EMAIL_CONFIG.mailtrap.auth.user,
-        pass: EMAIL_CONFIG.mailtrap.auth.pass,
+        user: EMAIL_CONFIG.ethereal.auth.user,
+        pass: EMAIL_CONFIG.ethereal.auth.pass,
       },
     });
 
-    this.sender = EMAIL_CONFIG.mailtrap.sender;
+    this.sender = EMAIL_CONFIG.ethereal.sender;
   }
 
   async send(emailData) {
@@ -28,14 +29,17 @@ export class MailtrapProvider {
         subject,
         html,
         headers: {
-          "X-MT-Category": category,
+          "X-Category": category,
         },
       });
 
-      logger.info({ messageId: info.messageId, to }, "Sandbox Email sent successfully via SMTP");
+      logger.info(
+        { messageId: info.messageId, to, preview: nodemailer.getTestMessageUrl(info) },
+        "Email sent via Ethereal SMTP"
+      );
       return { success: true, messageId: info.messageId };
     } catch (error) {
-      logger.error({ err: error, to }, `Error sending sandbox email via SMTP`);
+      logger.error({ err: error, to }, "Error sending email via Ethereal SMTP");
       throw error;
     }
   }
@@ -45,20 +49,20 @@ export class MailtrapProvider {
       const info = await this.transporter.sendMail({
         from: `"${this.sender.name}" <${this.sender.email}>`,
         to,
-        // Mailtrap SMTP supports templates via custom headers
-        headers: {
-          "X-MT-Template-ID": template_uuid,
-          "X-MT-Variables": JSON.stringify(template_variables),
-        },
+        subject: template_variables?.subject || "Notification",
+        html: `<p>Template: ${template_uuid}</p><pre>${JSON.stringify(template_variables, null, 2)}</pre>`,
       });
 
-      logger.info({ messageId: info.messageId, to }, "Template Email sent successfully via SMTP");
+      logger.info(
+        { messageId: info.messageId, to },
+        "Template email sent via Ethereal SMTP"
+      );
       return { success: true, messageId: info.messageId };
     } catch (error) {
-      logger.error({ err: error, to }, `Error sending template email via SMTP`);
+      logger.error({ err: error, to }, "Error sending template email via Ethereal SMTP");
       throw error;
     }
   }
 }
 
-export default MailtrapProvider;
+export default EtherealProvider;

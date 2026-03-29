@@ -13,19 +13,19 @@ const REQUIRED = [
 
 const RECOMMENDED = [
   {
-    name: "MAILTRAP_HOST",
+    name: "ETHEREAL_HOST",
     message: "Email sending will fail. Registration and password reset affected.",
   },
   {
-    name: "MAILTRAP_PORT",
+    name: "ETHEREAL_PORT",
     message: "Email sending will fail. Registration and password reset affected.",
   },
   {
-    name: "MAILTRAP_USER",
+    name: "ETHEREAL_USER",
     message: "Email sending will fail. Registration and password reset affected.",
   },
   {
-    name: "MAILTRAP_PASS",
+    name: "ETHEREAL_PASS",
     message: "Email sending will fail. Registration and password reset affected.",
   },
   {

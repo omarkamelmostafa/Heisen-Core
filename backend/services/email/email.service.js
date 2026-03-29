@@ -1,11 +1,11 @@
-import { MailtrapProvider } from "./providers/mailtrap.provider.js";
+import { EtherealProvider } from "./providers/mailtrap.provider.js";
 import { EmailQueue } from "./email.queue.js";
 import { TemplateEngine } from "./templates/template.engine.js";
 import logger from "../../utilities/general/logger.js";
 
 export class EmailService {
   constructor() {
-    this.provider = new MailtrapProvider();
+    this.provider = new EtherealProvider();
     this.queue = new EmailQueue();
     this.templateEngine = new TemplateEngine();
   }
@@ -59,7 +59,7 @@ export class EmailService {
   }
 
   async sendWelcomeEmail(user) {
-    // Using Mailtrap template system
+    // Using Ethereal SMTP for development email delivery
     return await this.provider.sendWithTemplate({
       to: user.email,
       template_uuid: "e65925d1-a9d1-4a40-ae7c-d92b37d593df",

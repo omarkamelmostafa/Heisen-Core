@@ -36,7 +36,10 @@ export const metadata = {
   },
   description: `${BRAND.APP_NAME} — ${BRAND.APP_DESCRIPTION}`,
   keywords: [BRAND.APP_NAME.toLowerCase(), "starter kit", "secure", "full-stack"],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ||
+    `http://localhost:${process.env.NEXT_PUBLIC_PORT || 3000}`
+  ),
   manifest: "/manifest.json",
   icons: {
     icon: "/images/logo.svg",

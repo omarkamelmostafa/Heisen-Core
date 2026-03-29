@@ -23,6 +23,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 import { TwoFactorToggle } from "./two-factor-toggle"
 
 function PasswordField({ label, registration, show, onToggleShow, error, placeholder }) {
@@ -135,34 +136,38 @@ export function SecurityContent({
       {/* Section: Change Email */}
       <section>
         <div className="pb-4 border-b border-border">
-          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("changeEmail.title")}</h2>
+          <h2 className="text-base font-semibold text-foreground tracking-tight">
+            <span className="mr-2" aria-hidden="true">✉️</span>
+            {t("changeEmail.title")}
+          </h2>
         </div>
-        <p className="text-sm text-muted-foreground mt-3">
+        <p className="mt-2 mb-0 text-sm text-muted-foreground">
           {t("changeEmail.description")}
         </p>
-        <div className="mt-4 max-w-md">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-sm text-foreground">{currentEmail}</span>
-            {isEmailVerified && (
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0 font-normal text-green-600 border-green-600">
-                {tc("verified")}
-              </Badge>
-            )}
-          </div>
+        <div className="mt-3 flex items-center gap-2">
+          <span className="text-sm font-medium text-foreground">{currentEmail}</span>
+          {isEmailVerified && (
+            <Badge variant="outline" className="text-[10px] px-1.5 py-0 font-normal text-green-600 border-green-600">
+              {tc("verified")}
+            </Badge>
+          )}
+        </div>
 
-          {emailSent ? (
-            <div className="space-y-3">
-              <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-                <p className="text-sm text-green-800">
-                  {t("changeEmail.emailSentTo", { email: sentToEmail })}
-                </p>
-              </div>
-              <Button variant="outline" size="sm" onClick={onEmailReset}>
-                {t("changeEmail.changeDifferent")}
-              </Button>
+        {emailSent ? (
+          <div className="mt-5 flex items-center justify-between rounded-lg border border-border bg-muted/50 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+              <p className="text-sm text-muted-foreground">
+                {t("changeEmail.emailSentTo", { email: sentToEmail })}
+              </p>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit(onEmailSave)} className="space-y-4">
+            <Button variant="ghost" size="sm" onClick={onEmailReset} className="text-xs text-muted-foreground hover:text-foreground shrink-0">
+              {t("changeEmail.changeDifferent")}
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit(onEmailSave)} className="mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-medium text-muted-foreground">{t("changeEmail.newEmailLabel")}</label>
                 <Input
@@ -172,7 +177,7 @@ export function SecurityContent({
                   className={emailErrors.newEmail ? "border-destructive" : ""}
                 />
                 {emailErrors.newEmail && (
-                  <p className="text-xs text-destructive mt-0.5">{emailErrors.newEmail.message}</p>
+                  <p className="text-xs text-destructive">{emailErrors.newEmail.message}</p>
                 )}
               </div>
 
@@ -185,7 +190,7 @@ export function SecurityContent({
                   className={emailErrors.confirmNewEmail ? "border-destructive" : ""}
                 />
                 {emailErrors.confirmNewEmail && (
-                  <p className="text-xs text-destructive mt-0.5">{emailErrors.confirmNewEmail.message}</p>
+                  <p className="text-xs text-destructive">{emailErrors.confirmNewEmail.message}</p>
                 )}
               </div>
 
@@ -208,16 +213,18 @@ export function SecurityContent({
                   </button>
                 </div>
                 {emailErrors.currentPassword && (
-                  <p className="text-xs text-destructive mt-0.5">{emailErrors.currentPassword.message}</p>
+                  <p className="text-xs text-destructive">{emailErrors.currentPassword.message}</p>
                 )}
               </div>
 
-              <Button type="submit" disabled={isEmailSubmitting} className="w-full sm:w-auto">
-                {isEmailSubmitting ? t("changeEmail.requesting") : t("changeEmail.requestChange")}
-              </Button>
-            </form>
-          )}
-        </div>
+              <div className="flex items-end md:justify-end">
+                <Button type="submit" size="sm" disabled={isEmailSubmitting} className="w-full md:w-auto">
+                  {isEmailSubmitting ? t("changeEmail.requesting") : t("changeEmail.requestChange")}
+                </Button>
+              </div>
+            </div>
+          </form>
+        )}
       </section>
 
       <Separator />
@@ -225,37 +232,44 @@ export function SecurityContent({
       {/* Section A: Change Password */}
       <section>
         <div className="pb-4 border-b border-border">
-          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("changePassword.title")}</h2>
+          <h2 className="text-base font-semibold text-foreground tracking-tight">
+            <span className="mr-2" aria-hidden="true">🔑</span>
+            {t("changePassword.title")}
+          </h2>
         </div>
-        <p className="text-sm text-muted-foreground mt-3">{t("changePassword.description")}</p>
-        <form onSubmit={pwHandleSubmit((data) => onPasswordSave(data, pwReset))} className="mt-4 max-w-md space-y-4">
-          <PasswordField
-            label={t("changePassword.currentPasswordLabel")}
-            registration={pwRegister("oldPassword")}
-            show={showPasswords.old}
-            onToggleShow={() => togglePassword("old")}
-            error={pwErrors.oldPassword?.message}
-            placeholder={t("changePassword.currentPasswordPlaceholder")}
-          />
-          <PasswordField
-            label={t("changePassword.newPasswordLabel")}
-            registration={pwRegister("newPassword")}
-            show={showPasswords.new}
-            onToggleShow={() => togglePassword("new")}
-            error={pwErrors.newPassword?.message}
-            placeholder={t("changePassword.newPasswordPlaceholder")}
-          />
-          <PasswordField
-            label={t("changePassword.confirmPasswordLabel")}
-            registration={pwRegister("confirmPassword")}
-            show={showPasswords.confirm}
-            onToggleShow={() => togglePassword("confirm")}
-            error={pwErrors.confirmPassword?.message}
-            placeholder={t("changePassword.confirmPasswordPlaceholder")}
-          />
-          <Button type="submit" disabled={isPasswordSubmitting} className="w-full sm:w-auto">
-            {isPasswordSubmitting ? t("changePassword.updating") : t("changePassword.updatePassword")}
-          </Button>
+        <p className="mt-2 mb-0 text-sm text-muted-foreground">{t("changePassword.description")}</p>
+        <form onSubmit={pwHandleSubmit((data) => onPasswordSave(data, pwReset))} className="mt-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+            <PasswordField
+              label={t("changePassword.currentPasswordLabel")}
+              registration={pwRegister("oldPassword")}
+              show={showPasswords.old}
+              onToggleShow={() => togglePassword("old")}
+              error={pwErrors.oldPassword?.message}
+              placeholder={t("changePassword.currentPasswordPlaceholder")}
+            />
+            <PasswordField
+              label={t("changePassword.newPasswordLabel")}
+              registration={pwRegister("newPassword")}
+              show={showPasswords.new}
+              onToggleShow={() => togglePassword("new")}
+              error={pwErrors.newPassword?.message}
+              placeholder={t("changePassword.newPasswordPlaceholder")}
+            />
+            <PasswordField
+              label={t("changePassword.confirmPasswordLabel")}
+              registration={pwRegister("confirmPassword")}
+              show={showPasswords.confirm}
+              onToggleShow={() => togglePassword("confirm")}
+              error={pwErrors.confirmPassword?.message}
+              placeholder={t("changePassword.confirmPasswordPlaceholder")}
+            />
+            <div className="flex items-end md:justify-end">
+              <Button type="submit" size="sm" disabled={isPasswordSubmitting} className="w-full md:w-auto">
+                {isPasswordSubmitting ? t("changePassword.updating") : t("changePassword.updatePassword")}
+              </Button>
+            </div>
+          </div>
         </form>
       </section>
 
@@ -264,9 +278,12 @@ export function SecurityContent({
       {/* Section B: Two-Factor Authentication */}
       <section>
         <div className="pb-4 border-b border-border">
-          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("twoFactor.title")}</h2>
+          <h2 className="text-base font-semibold text-foreground tracking-tight">
+            <span className="mr-2" aria-hidden="true">🛡️</span>
+            {t("twoFactor.title")}
+          </h2>
         </div>
-        <div className="mt-4">
+        <div className="mt-5 w-full">
           <TwoFactorToggle
             twoFactorEnabled={twoFactorEnabled}
             isToggling2fa={isToggling2fa}
@@ -287,45 +304,56 @@ export function SecurityContent({
       {/* Section C: Active Sessions */}
       <section>
         <div className="flex items-center justify-between pb-4 border-b border-border">
-          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("activeSessions.title")}</h2>
+          <h2 className="text-base font-semibold text-foreground tracking-tight">
+            <span className="mr-2" aria-hidden="true">🖥️</span>
+            {t("activeSessions.title")}
+          </h2>
         </div>
-        <p className="text-sm text-muted-foreground mt-3">{t("activeSessions.description")}</p>
-        <AlertDialog open={signOutDialogOpen} onOpenChange={setSignOutDialogOpen}>
-          <AlertDialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="mt-4 text-destructive border-destructive/30 hover:bg-destructive/10"
-              disabled={isSigningOutAll}
-              onClick={() => setSignOutDialogOpen(true)}
-            >
-              <Monitor className="h-4 w-4 mr-2" />
-              {isSigningOutAll ? t("activeSessions.signingOut") : t("activeSessions.signOutAll")}
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>{t("activeSessions.confirmTitle")}</AlertDialogTitle>
-              <AlertDialogDescription>
-                {t("activeSessions.confirmDescription")}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => setSignOutDialogOpen(false)}>
-                {tc("cancel")}
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  onSignOutAll();
-                  setSignOutDialogOpen(false);
-                }}
-                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              >
-                {t("activeSessions.signOutAll")}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-x-8">
+          <div className="flex flex-col gap-1.5">
+            <p className="text-sm text-muted-foreground">
+              {t("activeSessions.description")}
+            </p>
+          </div>
+          <div className="flex items-end md:justify-end">
+            <AlertDialog open={signOutDialogOpen} onOpenChange={setSignOutDialogOpen}>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-destructive border-destructive/30 hover:bg-destructive/10 w-full md:w-auto"
+                  disabled={isSigningOutAll}
+                  onClick={() => setSignOutDialogOpen(true)}
+                >
+                  <Monitor className="h-3.5 w-3.5 mr-1.5" />
+                  {isSigningOutAll ? t("activeSessions.signingOut") : t("activeSessions.signOutAll")}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t("activeSessions.confirmTitle")}</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {t("activeSessions.confirmDescription")}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={() => setSignOutDialogOpen(false)}>
+                    {tc("cancel")}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      onSignOutAll();
+                      setSignOutDialogOpen(false);
+                    }}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    {t("activeSessions.signOutAll")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </div>
       </section>
     </main>
   );

@@ -1,5 +1,5 @@
 import Queue from "bull";
-import { MailtrapProvider } from "./providers/mailtrap.provider.js";
+import { EtherealProvider } from "./providers/mailtrap.provider.js";
 
 export class EmailQueue {
   constructor() {
@@ -9,7 +9,7 @@ export class EmailQueue {
         port: parseInt(process.env.REDIS_PORT, 10) || 6379,
       },
     });
-    this.provider = new MailtrapProvider();
+    this.provider = new EtherealProvider();
 
     this.setupProcessor();
   }
