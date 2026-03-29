@@ -1,5 +1,7 @@
+// backend/controllers/health/health.controller.js
 import { getConnectionStatus } from "../../config/connect-db.js";
 import redis from "../../config/redis.js";
+import { apiResponseManager } from "../../utilities/general/response-manager.js";
 
 /**
  * Production-grade health check controller.
@@ -38,7 +40,7 @@ export const healthCheck = async (req, res) => {
   const isHealthy = mongoStatus === "connected" && redisStatus === "connected";
   const responseTimeMs = Date.now() - startTime;
 
-  const payload = {
+  const data = {
     status: isHealthy ? "healthy" : "degraded",
     timestamp: new Date().toISOString(),
     uptime: Math.floor(process.uptime()),
@@ -56,5 +58,10 @@ export const healthCheck = async (req, res) => {
     },
   };
 
-  res.status(isHealthy ? 200 : 503).json(payload);
+  return apiResponseManager(req, res, {
+    statusCode: isHealthy ? 200 : 503,
+    success: isHealthy,
+    message: isHealthy ? "Service is healthy" : "Service is degraded",
+    data,
+  });
 };

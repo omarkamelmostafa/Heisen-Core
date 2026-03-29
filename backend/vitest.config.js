@@ -9,7 +9,6 @@ export default defineConfig({
       include: [
         "utilities/auth/hash-utils.js",
         "utilities/auth/crypto-utils.js",
-        "utilities/auth/token-utils.js",
         "utilities/auth/user-data-utils.js",
         "services/auth/token-service.js",
         "services/auth/cookie-service.js",
