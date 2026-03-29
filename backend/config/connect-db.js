@@ -52,9 +52,8 @@ const getConnectionString = (mode) => {
       if (config.user && config.password) {
         return `mongodb://${encodeURIComponent(
           config.user
-        )}:${encodeURIComponent(config.password)}@${config.host}:${
-          config.port
-        }/${config.database}`;
+        )}:${encodeURIComponent(config.password)}@${config.host}:${config.port
+          }/${config.database}`;
       }
       return `mongodb://${config.host}:${config.port}/${config.database}`;
   }
@@ -117,10 +116,6 @@ export const disconnectFromMongo = async () => {
 
 export const getConnectionStatus = () => {
   return mongoose.connection.readyState;
-};
-
-export const getCurrentConnectionMode = () => {
-  return getConnectionMode();
 };
 
 // Connection event listeners for better monitoring

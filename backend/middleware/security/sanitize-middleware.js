@@ -280,8 +280,8 @@ export const createSanitizeMiddleware = (req, res, next) => {
       maxRiskLevel === "HIGH"
         ? "error"
         : maxRiskLevel === "MEDIUM"
-        ? "warn"
-        : "info";
+          ? "warn"
+          : "info";
 
     logger[logLevel](
       { riskLevel: maxRiskLevel, totalSanitizations, requestId },
@@ -320,17 +320,17 @@ export const getSanitizationStats = () => ({
   sanitizationRate:
     sanitizationStats.totalRequests > 0
       ? (
-          (sanitizationStats.sanitizedRequests /
-            sanitizationStats.totalRequests) *
-          100
-        ).toFixed(2) + "%"
+        (sanitizationStats.sanitizedRequests /
+          sanitizationStats.totalRequests) *
+        100
+      ).toFixed(2) + "%"
       : "0%",
   averageSanitizationsPerRequest:
     sanitizationStats.sanitizedRequests > 0
       ? (
-          sanitizationStats.totalSanitizations /
-          sanitizationStats.sanitizedRequests
-        ).toFixed(2)
+        sanitizationStats.totalSanitizations /
+        sanitizationStats.sanitizedRequests
+      ).toFixed(2)
       : "0",
 });
 

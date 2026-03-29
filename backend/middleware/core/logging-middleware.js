@@ -58,7 +58,7 @@ export const createLoggingMiddleware = (req, res, next) => {
     }, "Request finished");
 
     // Also call legacy logMessage for errors to maintain existing file logs during transition
-    
+
   });
   next();
 };
