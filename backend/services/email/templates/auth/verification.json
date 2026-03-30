@@ -1,0 +1,7 @@
+{
+  "user": {
+    "firstName": "Example Value"
+  },
+  "verificationCode": "Example Value",
+  "expiryMinutes": "Example Value"
+}

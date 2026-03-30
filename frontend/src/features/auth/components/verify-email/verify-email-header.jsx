@@ -1,0 +1,17 @@
+// frontend/src/features/auth/components/verify-email/verify-email-header.jsx
+import { Logo } from "@/components/ui/logo";
+import { motion } from "framer-motion";
+import { BRAND } from "@/lib/config/brand-config";
+
+export function VerifyEmailHeader({ variants, centered = false }) {
+
+  return (
+    <motion.div
+      variants={variants}
+      className={`flex items-center gap-3 ${centered ? "justify-center" : ""}`}
+    >
+      <Logo />
+      <span className="text-xl font-semibold">{BRAND.APP_NAME}</span>
+    </motion.div>
+  );
+}

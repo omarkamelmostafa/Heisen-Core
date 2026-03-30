@@ -1,0 +1,18 @@
+{
+  "HomePage": {
+    "title": "Fantasy Coach | Professional Sports Strategy",
+    "description": "Master sports strategy with Fantasy Coach. Advanced analytics and team management tools for professional fantasy leagues.",
+    "getStarted": "Get Started"
+  },
+  "Auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password"
+  },
+  "Loading": {
+    "streaming": "Streaming your fantasy experience...",
+    "securing": "Securing your session..."
+  }
+}

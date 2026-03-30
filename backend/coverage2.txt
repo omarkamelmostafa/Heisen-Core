@@ -1,0 +1,173 @@
+
+> server@1.0.0 test:coverage
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.1.0 [39m[90mD:/DEV CLOUD/PROJECTS/myProjects/LEARNING_APPS/NEW-STARTER/backend[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m __tests__/unit/cookie-service.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+[90mstderr[2m | __tests__/unit/token-utils.test.js[2m > [22m[2mToken Utilities (utilities/auth/token-utils.js)[2m > [22m[2mRedis functionalities[2m > [22m[2mrevokeByJti handles fallback warning natively
+[22m[39mRedis blacklisting unavailable: redis-fail
+
+[90mstderr[2m | __tests__/unit/token-utils.test.js[2m > [22m[2mToken Utilities (utilities/auth/token-utils.js)[2m > [22m[2mRedis functionalities[2m > [22m[2misTokenRevoked gracefully handles redis failure
+[22m[39mRedis blacklist check unavailable: fail
+
+[90mstderr[2m | __tests__/unit/token-utils.test.js[2m > [22m[2mToken Utilities (utilities/auth/token-utils.js)[2m > [22m[2mRedis functionalities[2m > [22m[2mgetBlacklistStats handles errors
+[22m[39mRedis error in getBlacklistStats: ping fails
+
+ [32m✓[39m __tests__/unit/token-utils.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 50[2mms[22m[39m
+ [31m❯[39m __tests__/unit/token-service.test.js [2m([22m[2m26 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[32m 100[2mms[22m[39m
+     [32m✓[39m generateTokens returns access and refresh tokens[32m 13[2mms[22m[39m
+     [32m✓[39m Access token contains correct payload[32m 3[2mms[22m[39m
+     [32m✓[39m Refresh token uses different secret than access token[32m 7[2mms[22m[39m
+     [32m✓[39m safeVerifyOrDecode returns payload for valid token[32m 2[2mms[22m[39m
+     [32m✓[39m safeVerifyOrDecode rejects tampered token gracefully[32m 2[2mms[22m[39m
+     [32m✓[39m Access token expiration (time travel)[32m 7[2mms[22m[39m
+     [32m✓[39m isTokenExpiringSoon returns correct boolean[32m 2[2mms[22m[39m
+     [32m✓[39m Token with missing secret throws[32m 3[2mms[22m[39m
+     [32m✓[39m Algorithm 'none' attack is rejected[32m 1[2mms[22m[39m
+     [32m✓[39m safeVerifyOrDecode returns null if fully malformed and decode fails[32m 0[2mms[22m[39m
+     [32m✓[39m safeVerifyOrDecode falls back to decode if verify fails but is valid shape[32m 1[2mms[22m[39m
+[31m       [31m×[31m throws if invalid refresh token value[39m[32m 26[2mms[22m[39m
+[31m       [31m×[31m throws and revokes all tokens if reuse detected[39m[32m 4[2mms[22m[39m
+[31m       [31m×[31m throws if token already revoked but not replaced[39m[32m 4[2mms[22m[39m
+[31m       [31m×[31m throws if refresh token is expired[39m[32m 4[2mms[22m[39m
+[31m       [31m×[31m throws if user not found[39m[32m 3[2mms[22m[39m
+[31m       [31m×[31m throws if token version mismatch[39m[32m 3[2mms[22m[39m
+[31m       [31m×[31m rotates token successfully on happy path[39m[32m 5[2mms[22m[39m
+       [32m✓[39m returns early if no jti[32m 1[2mms[22m[39m
+       [32m✓[39m only sets redis if ttl > 0[32m 0[2mms[22m[39m
+       [32m✓[39m sets redis with proper ttl[32m 3[2mms[22m[39m
+       [32m✓[39m returns true if redis returns 1[32m 1[2mms[22m[39m
+       [32m✓[39m returns false if redis fails[32m 1[2mms[22m[39m
+       [32m✓[39m returns zero counts if no keys[32m 1[2mms[22m[39m
+       [32m✓[39m calculates stats properly with pipeline[32m 1[2mms[22m[39m
+       [32m✓[39m handles redis failure gracefully[32m 1[2mms[22m[39m
+ [32m✓[39m __tests__/unit/user-data-utils.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m __tests__/unit/crypto-utils.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m __tests__/unit/hash-utils.test.js [2m([22m[2m6 tests[22m[2m)[22m[33m 3821[2mms[22m[39m
+     [33m[2m✓[22m[39m hashPassword returns a valid bcrypt hash [33m 361[2mms[22m[39m
+     [33m[2m✓[22m[39m comparePassword returns true for correct password [33m 693[2mms[22m[39m
+     [33m[2m✓[22m[39m Same password hashed twice yields different hashes [33m 670[2mms[22m[39m
+     [33m[2m✓[22m[39m comparePassword returns false for wrong password [33m 704[2mms[22m[39m
+     [33m[2m✓[22m[39m comparePassword returns false for empty string [33m 637[2mms[22m[39m
+     [33m[2m✓[22m[39m Long password is handled [33m 750[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 7 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mthrows if invalid refresh token value
+[31m[1mAssertionError[22m: expected [Function] to throw error including 'Invalid refresh token.' but got '__vite_ssr_import_3__.default.findOne…'[39m
+
+Expected: [32m"Invalid refresh token."[39m
+Received: [31m"__vite_ssr_import_3__.default.findOne(...).populate is not a function"[39m
+
+[36m [2m❯[22m __tests__/unit/token-service.test.js:[2m212:79[22m[39m
+    [90m210|[39m     [34mit[39m([32m"throws if invalid refresh token value"[39m[33m,[39m [35masync[39m () [33m=>[39m {
+    [90m211|[39m       [33mRefreshToken[39m[33m.[39mfindOne[33m.[39m[34mmockResolvedValueOnce[39m([35mnull[39m)[33m;[39m
+    [90m212|[39m       await expect(refreshAccessToken("raw-value", "user-agent", "127.…
+    [90m   |[39m                                                                               [31m^[39m
+    [90m213|[39m     })[33m;[39m
+    [90m214|[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mthrows and revokes all tokens if reuse detected
+[31m[1mAssertionError[22m: expected [Function] to throw error including 'Token reuse detected.' but got '__vite_ssr_import_3__.default.findOne…'[39m
+
+Expected: [32m"Token reuse detected."[39m
+Received: [31m"__vite_ssr_import_3__.default.findOne(...).populate is not a function"[39m
+
+[36m [2m❯[22m __tests__/unit/token-service.test.js:[2m221:79[22m[39m
+    [90m219|[39m         replacedBy[33m:[39m [32m"someId"[39m
+    [90m220|[39m       })[33m;[39m
+    [90m221|[39m       await expect(refreshAccessToken("raw-value", "user-agent", "127.…
+    [90m   |[39m                                                                               [31m^[39m
+    [90m222|[39m       [34mexpect[39m([33mRefreshToken[39m[33m.[39mupdateMany)[33m.[39m[34mtoHaveBeenCalledWith[39m(
+    [90m223|[39m         { user[33m:[39m [33mTEST_USER_ID[39m }[33m,[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mthrows if token already revoked but not replaced
+[31m[1mAssertionError[22m: expected [Function] to throw error including 'Refresh token has been revoked.' but got '__vite_ssr_import_3__.default.findOne…'[39m
+
+Expected: [32m"Refresh token has been revoked."[39m
+Received: [31m"__vite_ssr_import_3__.default.findOne(...).populate is not a function"[39m
+
+[36m [2m❯[22m __tests__/unit/token-service.test.js:[2m234:79[22m[39m
+    [90m232|[39m         replacedBy[33m:[39m [35mnull[39m
+    [90m233|[39m       })[33m;[39m
+    [90m234|[39m       await expect(refreshAccessToken("raw-value", "user-agent", "127.…
+    [90m   |[39m                                                                               [31m^[39m
+    [90m235|[39m     })[33m;[39m
+    [90m236|[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mthrows if refresh token is expired
+[31m[1mAssertionError[22m: expected [Function] to throw error including 'Refresh token expired.' but got '__vite_ssr_import_3__.default.findOne…'[39m
+
+Expected: [32m"Refresh token expired."[39m
+Received: [31m"__vite_ssr_import_3__.default.findOne(...).populate is not a function"[39m
+
+[36m [2m❯[22m __tests__/unit/token-service.test.js:[2m240:79[22m[39m
+    [90m238|[39m       const tokenDoc = { expiresAt: new Date(Date.now() - 10000), save…
+    [90m239|[39m       [33mRefreshToken[39m[33m.[39mfindOne[33m.[39m[34mmockResolvedValueOnce[39m(tokenDoc)[33m;[39m
+    [90m240|[39m       await expect(refreshAccessToken("raw-value", "user-agent", "127.…
+    [90m   |[39m                                                                               [31m^[39m
+    [90m241|[39m       [34mexpect[39m(tokenDoc[33m.[39misRevoked)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m242|[39m       [34mexpect[39m(tokenDoc[33m.[39msave)[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mthrows if user not found
+[31m[1mAssertionError[22m: expected [Function] to throw error including 'User not found.' but got '__vite_ssr_import_3__.default.findOne…'[39m
+
+Expected: [32m"User not found."[39m
+Received: [31m"__vite_ssr_import_3__.default.findOne(...).populate is not a function"[39m
+
+[36m [2m❯[22m __tests__/unit/token-service.test.js:[2m249:79[22m[39m
+    [90m247|[39m       [33mRefreshToken[39m[33m.[39mfindOne[33m.[39m[34mmockResolvedValueOnce[39m(tokenDoc)[33m;[39m
+    [90m248|[39m       User.findById.mockReturnValueOnce({ select: vi.fn().mockResolved…
+    [90m249|[39m       await expect(refreshAccessToken("raw-value", "user-agent", "127.…
+    [90m   |[39m                                                                               [31m^[39m
+    [90m250|[39m     })[33m;[39m
+    [90m251|[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mthrows if token version mismatch
+[31m[1mAssertionError[22m: expected [Function] to throw error including 'Session expired. Please login again.' but got '__vite_ssr_import_3__.default.findOne…'[39m
+
+Expected: [32m"Session expired. Please login again."[39m
+Received: [31m"__vite_ssr_import_3__.default.findOne(...).populate is not a function"[39m
+
+[36m [2m❯[22m __tests__/unit/token-service.test.js:[2m256:79[22m[39m
+    [90m254|[39m       [33mRefreshToken[39m[33m.[39mfindOne[33m.[39m[34mmockResolvedValueOnce[39m(tokenDoc)[33m;[39m
+    [90m255|[39m       User.findById.mockReturnValueOnce({ select: vi.fn().mockResolved…
+    [90m256|[39m       await expect(refreshAccessToken("raw-value", "user-agent", "127.…
+    [90m   |[39m                                                                               [31m^[39m
+    [90m257|[39m       [34mexpect[39m(tokenDoc[33m.[39misRevoked)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m258|[39m       [34mexpect[39m(tokenDoc[33m.[39msave)[33m.[39m[34mtoHaveBeenCalled[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m __tests__/unit/token-service.test.js[2m > [22mJWT Management (token-service.js)[2m > [22mrefreshAccessToken[2m > [22mrotates token successfully on happy path
+[31m[1mTypeError[22m: default.findOne(...).populate is not a function[39m
+[36m [2m❯[22m Module.refreshAccessToken services/auth/token-service.js:[2m124:71[22m[39m
+    [90m122|[39m
+    [90m123|[39m   [90m// Look up the RefreshToken document by hashed value[39m
+    [90m124|[39m   const tokenDoc = await RefreshToken.findOne({ token: hashedToken }).…
+    [90m   |[39m                                                                       [31m^[39m
+    [90m125|[39m
+    [90m126|[39m   [35mif[39m ([33m![39mtokenDoc) {
+[90m [2m❯[22m __tests__/unit/token-service.test.js:[2m271:28[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[31m7 failed[39m[22m[2m | [22m[1m[32m57 passed[39m[22m[90m (64)[39m
+[2m   Start at [22m 01:00:39
+[2m   Duration [22m 4.96s[2m (transform 675ms, setup 0ms, import 3.26s, tests 4.03s, environment 2ms)[22m
+

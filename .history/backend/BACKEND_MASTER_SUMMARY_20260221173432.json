@@ -1,0 +1,222 @@
+{
+  "architecture_overview": "Express.js/Node.js backend using ES Modules, MongoDB via Mongoose 8, JWT-based auth with access/refresh tokens, Redis for token blacklisting, Cloudinary for media storage. Layered architecture: config → middleware → routes → controllers → models → services → utilities. Currently focused on auth system (login, register, logout, refresh, verify-email, forgot/reset-password). RBAC system with Role and Permission models. Email service using Mailtrap with HTML templates and queue system.",
+
+  "critical_tasks": [
+    {
+      "id": "C1",
+      "title": "Remove Exposed Secrets from .env File and Rotate All Credentials",
+      "status": "Pending",
+      "priority": "Critical"
+    },
+    {
+      "id": "C2",
+      "title": "Fix Redis Package Mismatch (ioredis import vs redis in package.json)",
+      "status": "Pending",
+      "priority": "Critical"
+    },
+    {
+      "id": "C3",
+      "title": "Fix Error Handler Middleware Placement in index.js (Placed Before Routes)",
+      "status": "Pending",
+      "priority": "Critical"
+    },
+    {
+      "id": "C4",
+      "title": "Fix Login Controller Logging Credentials to Console",
+      "status": "Pending",
+      "priority": "Critical"
+    },
+    {
+      "id": "C5",
+      "title": "Fix getBlacklistStats() Auto-Execution at Module Import",
+      "status": "Pending",
+      "priority": "Critical"
+    },
+    {
+      "id": "C6",
+      "title": "Fix Broken Imports in logoutController.js (Non-Existent Paths)",
+      "status": "Pending",
+      "priority": "Critical"
+    },
+    {
+      "id": "C7",
+      "title": "Remove Duplicate Cloudinary Configuration (Already in config/cloudinary.js)",
+      "status": "Pending",
+      "priority": "Critical"
+    }
+  ],
+
+  "important_tasks": [
+    {
+      "id": "I1",
+      "title": "Remove Massive Commented-Out Legacy Code from All Files",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I2",
+      "title": "Consolidate Duplicate Controller Files (registerController.js, refreshTokenController.js, logoutController.js)",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I3",
+      "title": "Remove Unused Route Files (routes/auth/register.js, refresh.js, logout.js with stale imports)",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I4",
+      "title": "Add .env.example and Add .env to .gitignore",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I5",
+      "title": "Remove Temp/Debug Files (controllers/auth/temp.js, temp2.js, headache.txt, postman.txt, indicator.html)",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I6",
+      "title": "Fix Inconsistent Cookie Names Between Controllers (jwt_client vs refreshToken)",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I7",
+      "title": "Add Missing .gitignore for Backend",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I8",
+      "title": "Replace In-Memory Rate Limiting Maps with Redis-Backed Solution",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I9",
+      "title": "Fix Password Min-Length Inconsistency (6 in register validation vs 8 in login validation and User model)",
+      "status": "Pending",
+      "priority": "Important"
+    },
+    {
+      "id": "I10",
+      "title": "Fix Graceful Shutdown Bug — server Variable Scoping Issue",
+      "status": "Pending",
+      "priority": "Important"
+    }
+  ],
+
+  "enhancements": [
+    {
+      "id": "E1",
+      "title": "Split Monolithic auth-controller.js (1189 Lines) into Single-Responsibility Controllers",
+      "status": "Pending",
+      "priority": "Enhancement"
+    },
+    {
+      "id": "E2",
+      "title": "Add Centralized Error Classes and Error Constants",
+      "status": "Pending",
+      "priority": "Enhancement"
+    },
+    {
+      "id": "E3",
+      "title": "Add Health Check Endpoint for Production Readiness",
+      "status": "Pending",
+      "priority": "Enhancement"
+    },
+    {
+      "id": "E4",
+      "title": "Add API Versioning Strategy Documentation and Guard",
+      "status": "Pending",
+      "priority": "Enhancement"
+    },
+    {
+      "id": "E5",
+      "title": "Add Database Indexes Documentation and Audit for Performance",
+      "status": "Pending",
+      "priority": "Enhancement"
+    },
+    {
+      "id": "E6",
+      "title": "Replace console.log/console.error with Structured Logger (pino is already in package.json)",
+      "status": "Pending",
+      "priority": "Enhancement"
+    },
+    {
+      "id": "E7",
+      "title": "Add Comprehensive Request/Response DTOs and Type Safety",
+      "status": "Pending",
+      "priority": "Enhancement"
+    }
+  ],
+
+  "execution_order": [
+    "C1",
+    "C4",
+    "C2",
+    "C3",
+    "C5",
+    "C6",
+    "C7",
+    "I7",
+    "I4",
+    "I5",
+    "I1",
+    "I2",
+    "I3",
+    "I6",
+    "I9",
+    "I10",
+    "I8",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E7"
+  ],
+
+  "task_status": {
+    "C1": "Pending",
+    "C2": "Pending",
+    "C3": "Pending",
+    "C4": "Pending",
+    "C5": "Pending",
+    "C6": "Pending",
+    "C7": "Pending",
+    "I1": "Pending",
+    "I2": "Pending",
+    "I3": "Pending",
+    "I4": "Pending",
+    "I5": "Pending",
+    "I6": "Pending",
+    "I7": "Pending",
+    "I8": "Pending",
+    "I9": "Pending",
+    "I10": "Pending",
+    "E1": "Pending",
+    "E2": "Pending",
+    "E3": "Pending",
+    "E4": "Pending",
+    "E5": "Pending",
+    "E6": "Pending",
+    "E7": "Pending"
+  },
+
+  "validation_reports": [],
+
+  "stability_status": "Stable — Pre-Audit Baseline",
+
+  "notes": [
+    "Audit performed on 2026-02-21. No code changes made yet.",
+    "Backend uses ES Modules (type: module in package.json).",
+    "Registration does not assign roles (auth-controller.js version) unlike registerController.js which does — inconsistency.",
+    "corsOptions and corsConfig are both exported from cors-options.js but corsConfig is never used.",
+    "handleVerifyEmail references sendWelcomeEmail function that is not imported in auth-controller.js."
+  ]
+}
