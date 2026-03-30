@@ -1,4 +1,4 @@
-// frontend/src/components/layout/top-nav.jsx
+// frontend/src/components/layout/private-header.jsx
 "use client"
 
 import * as React from "react"
@@ -29,9 +29,9 @@ import { Separator } from "@/components/ui/separator"
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "./theme-toggle"
+import { Logo } from "@/components/ui/logo"
 import { LanguageToggle } from "@/components/shared/language-toggle"
-
-export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
+export function PrivateHeader({ initials, displayName, onLogout, avatarUrl }) {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   return (
@@ -39,15 +39,7 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
       <div className="mx-auto flex h-[60px] max-w-[1200px] items-center px-4 md:px-7 gap-3 md:gap-5">
         {/* Logo area */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center">
-            {/* <span className="text-white font-bold text-sm">C</span> */}
-            <span
-              className="md:inline text-sm font-bold tracking-wider uppercase text-primary-foreground"
-            >
-              H
-            </span>
-            {/* <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">C</span> */}
-          </div>
+          <Logo className="h-7 w-7" />
           <span className="hidden md:inline text-sm font-bold tracking-wider uppercase text-foreground">
             {BRAND.APP_NAME}
           </span>
@@ -67,19 +59,25 @@ export function TopNav({ initials, displayName, onLogout, avatarUrl }) {
         {/* Right actions */}
         <div className="ms-auto flex items-center gap-1 md:gap-1.5 shrink-0">
 
-          <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled>
-            <Bell className="h-[18px] w-[18px]" />
-            <span className="absolute top-1 end-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
-              +10
-            </span>
-          </Button>
+          <button
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50"
 
-          <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled>
-            <MessageSquare className="h-[18px] w-[18px]" />
-            <span className="absolute top-1 end-1 min-w-[16px] h-4 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full flex items-center justify-center px-0.5">
-              +10
+            aria-label="Notifications"
+          >
+            <Bell className="h-5 w-5" />
+            <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-background" />
+          </button>
+
+          <button
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50"
+
+            aria-label="Messages"
+          >
+            <MessageSquare className="h-5 w-5" />
+            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] bg-foreground text-background text-[10px] font-bold rounded-full flex items-center justify-center px-1">
+              2
             </span>
-          </Button>
+          </button>
 
           <LanguageToggle />
           <ThemeToggle />

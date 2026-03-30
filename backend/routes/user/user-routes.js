@@ -6,10 +6,9 @@ import {
   userMeLimiter,
   updateProfileLimiter
 } from "../../middleware/security/rate-limiters.js";
-import { updateProfileValidationRules } from "../../validators/validationRules.js";
+import { updateProfileValidationRules, updatePasswordValidationRules, toggle2faValidationRules, emailChangeValidationRules } from "../../validators/index.js";
 import { handleValidationErrors } from "../../middleware/validation/validation-middleware.js";
 import { emailChangeLimiter, changePasswordLimiter, toggle2faLimiter } from "../../middleware/security/rate-limiters.js";
-import { emailChangeValidationRules, updatePasswordValidationRules, toggle2faValidationRules } from "../../validators/validationRules.js";
 import { handleRequestEmailChange, handleConfirmEmailChange } from "../../controllers/user/email-change.controller.js";
 import { handleChangePassword } from "../../controllers/user/change-password.controller.js";
 import { handleToggle2fa } from "../../controllers/user/toggle-2fa.controller.js";

@@ -53,48 +53,46 @@ export default function ResetPasswordPage() {
 
   return (
     <PublicGuard>
-      <div className="flex min-h-[100vh] items-center justify-center overflow-hidden">
+      <motion.div
+        {...motionProps.page}
+        className="flex flex-col gap-6"
+      >
         <motion.div
-          {...motionProps.page}
-          className="flex h-full items-center justify-center space-y-6 sm:px-6 md:px-8"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="flex w-full flex-col gap-6"
         >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="flex w-full flex-col gap-6 sm:max-w-lg"
-          >
-            <ResetPasswordHeader />
+          <ResetPasswordHeader />
 
-            {!isSuccess ? (
-              <AuthFormProvider
-                schema={resetPasswordSchema}
-                defaultValues={{
-                  password: "",
-                  confirmPassword: "",
-                }}
-                onSubmit={handleSubmit}
-                mode="onTouched"
-                reValidateMode="onChange"
-              >
-                <AuthErrorAlert error={error} />
+          {!isSuccess ? (
+            <AuthFormProvider
+              schema={resetPasswordSchema}
+              defaultValues={{
+                password: "",
+                confirmPassword: "",
+              }}
+              onSubmit={handleSubmit}
+              mode="onTouched"
+              reValidateMode="onChange"
+            >
+              <AuthErrorAlert error={error} />
 
-                <FormState
-                  showPassword={passwordVisibility.password}
-                  showConfirmPassword={passwordVisibility.confirmPassword}
-                  isLoading={isLoading}
-                  onTogglePassword={() => togglePasswordVisibility("password")}
-                  onToggleConfirmPassword={() =>
-                    togglePasswordVisibility("confirmPassword")
-                  }
-                />
-              </AuthFormProvider>
-            ) : (
-              <SuccessState />
-            )}
-          </motion.div>
+              <FormState
+                showPassword={passwordVisibility.password}
+                showConfirmPassword={passwordVisibility.confirmPassword}
+                isLoading={isLoading}
+                onTogglePassword={() => togglePasswordVisibility("password")}
+                onToggleConfirmPassword={() =>
+                  togglePasswordVisibility("confirmPassword")
+                }
+              />
+            </AuthFormProvider>
+          ) : (
+            <SuccessState />
+          )}
         </motion.div>
-      </div>
+      </motion.div>
       <ProductionErrorTrigger />
     </PublicGuard>
   );

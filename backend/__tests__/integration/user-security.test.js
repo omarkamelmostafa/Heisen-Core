@@ -54,7 +54,7 @@ describe("User Security Endpoints", () => {
         .post("/api/v1/user/security/password")
         .set("Authorization", `Bearer ${accessToken}`)
         .send({
-          oldPassword: "SecurePassword123!",
+          oldPassword: user.password,
           newPassword: "NewSecure123!",
           confirmPassword: "NewSecure123!",
         });
@@ -119,7 +119,7 @@ describe("User Security Endpoints", () => {
       const res = await request(app)
         .patch("/api/v1/user/security/2fa")
         .set("Authorization", `Bearer ${accessToken}`)
-        .send({ enable: true, currentPassword: "SecurePassword123!" });
+        .send({ enable: true, currentPassword: user.password });
 
       // LAYER 1: HTTP
       expect(res.status).toBe(200);
@@ -150,7 +150,7 @@ describe("User Security Endpoints", () => {
       const res = await request(app)
         .patch("/api/v1/user/security/2fa")
         .set("Authorization", `Bearer ${accessToken}`)
-        .send({ enable: false, currentPassword: "SecurePassword123!" });
+        .send({ enable: false, currentPassword: user.password });
 
       expect(res.status).toBe(200);
       expect(res.body.data.twoFactorEnabled).toBe(false);

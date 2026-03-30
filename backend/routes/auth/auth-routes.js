@@ -22,7 +22,7 @@ import {
   resetPasswordValidationRules,
   resendVerificationValidationRules,
   verify2faValidationRules,
-} from "../../validators/validationRules.js";
+} from "../../validators/index.js";
 import {
   loginLimiter,
   registerLimiter,

@@ -64,7 +64,7 @@ export function TermsAndConditions({ isLoading }) {
         >
           {t("termsAgree")}{" "}
           <Link
-            href="/terms"
+            href="/terms-of-service"
             className="text-primary hover:underline font-medium"
             target="_blank"
             rel="noopener noreferrer"
@@ -73,7 +73,7 @@ export function TermsAndConditions({ isLoading }) {
           </Link>{" "}
           {t("and")}{" "}
           <Link
-            href="/privacy"
+            href="/privacy-policy"
             className="text-primary hover:underline font-medium"
             target="_blank"
             rel="noopener noreferrer"
