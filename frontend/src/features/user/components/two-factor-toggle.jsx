@@ -62,9 +62,13 @@ export function TwoFactorToggle({
             </Button>
           </div>
 
-          {twoFactorEnabled && (
+          {twoFactorEnabled ? (
             <p className="text-xs text-primary mt-2">
               {t("enabledStatus")}
+            </p>
+          ) : (
+            <p className="text-xs text-muted-foreground mt-2">
+              {t("disabledStatus")}
             </p>
           )}
         </div>

@@ -397,6 +397,7 @@
       "enableButton": "Enable 2FA",
       "disableButton": "Disable 2FA",
       "enabledStatus": "Enabled — You will receive a verification code via email when logging in",
+      "disabledStatus": "Disabled — You can log in by having an OTP code sent to your email before logging in",
       "enableDialogTitle": "Enable Two-Factor Authentication",
       "disableDialogTitle": "Disable Two-Factor Authentication",
       "enableDialogDescription": "Enter your current password to enable 2FA. You will receive a verification code via email each time you log in.",
