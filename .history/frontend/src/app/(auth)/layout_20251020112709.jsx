@@ -1,0 +1,16 @@
+// app/(auth)/layout.jsx
+import { EnvironmentDebug } from "@/hooks/environment-debug";
+import { AuthLayoutWrapper } from "./auth-layout-wrapper";
+
+export default function AuthLayout({ children }) {
+  return (
+    <AuthLayoutWrapper>
+      <EnvironmentDebug />
+            <DevWrapper>
+
+      {children}
+            </DevWrapper>
+    </AuthLayoutWrapper>
+  );
+}
+// export const dynamic = "force-dynamic";

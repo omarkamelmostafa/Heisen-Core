@@ -1,0 +1,1613 @@
+﻿
+backend\app.js:1:import express from "express";
+backend\app.js:2:import path from "path";
+backend\app.js:3:import { fileURLToPath } from 
+"url";
+backend\app.js:4:import cookieParser from 
+"cookie-parser";
+backend\app.js:6:// 🧩 Middleware Imports
+backend\app.js:8:import {
+backend\app.js:13:import {
+backend\app.js:19:import {
+backend\app.js:26:import {
+backend\app.js:32:import {
+backend\app.js:38:import authRoutes from 
+"./routes/auth/auth-routes.js";
+backend\app.js:39:import healthRoutes from 
+"./routes/health/health-routes.js";
+backend\app.js:40:import testRoutes from 
+"./routes/test/test-routes.js";
+backend\app.js:41:import userRoutes from 
+"./routes/user/user-routes.js";
+backend\app.js:42:import { mountSwagger } from 
+"./docs/swagger/index.js";
+backend\app.js:54:const __filename = 
+fileURLToPath(import.meta.url);
+backend\index.js:1:import dotenv from "dotenv";
+backend\index.js:2:import { validateEnv } from 
+"./config/validate-env.js";
+backend\index.js:3:import app from "./app.js";
+backend\index.js:4:import { initCloudinary } from 
+"./config/cloudinary.js";
+backend\index.js:17:import {
+backend\index.js:24:import { emitLogMessage } from 
+"./utilities/general/emit-log.js";
+backend\run-validation-tests.js:1:import { 
+emailVerificationValidationRules, 
+resetPasswordValidationRules } from 
+'./validators/validationRules.js';
+backend\verify-endpoints.js:1:import axios from 
+'axios';
+backend\verify-endpoints.js:2:import fs from 'fs';
+backend\vitest.config.js:1:import { defineConfig } 
+from "vitest/config";
+backend\config\cloudinary.js:2:import { v2 as 
+cloudinary } from "cloudinary";
+backend\config\cloudinary.js:3:import { 
+emitLogMessage } from 
+"../utilities/general/emit-log.js";
+backend\config\connect-db.js:5:import mongoose from 
+"mongoose";
+backend\config\connect-db.js:6:import { 
+emitLogMessage } from 
+"../utilities/general/emit-log.js";
+backend\config\connect-db.js:7:import dotenv from 
+"dotenv";
+backend\config\connect-db.js:44:          
+"DATABASE_URI environment variable is required for 
+Atlas connection"
+backend\config\cors-options.js:1:import { 
+allowedOrigins } from "./allowed-origins.js";
+backend\config\cors-options.js:11:  credentials: 
+true, // Required for HttpOnly cookie-based auth
+backend\config\redis.js:2:import Redis from 
+"ioredis";
+backend\config\validate-env.js:1:import logger from 
+"../utilities/general/logger.js";
+backend\config\validate-env.js:3:const REQUIRED = [
+backend\config\validate-env.js:46:  for (const 
+variable of REQUIRED) {
+backend\config\validate-env.js:66:      `\n━━━ 
+Missing Required Environment Variables 
+━━━\n${missing.join("\n")}\n`
+backend\config\validate-env.js:69:      "Server 
+cannot start: missing required environment 
+variables. See logs above."
+backend\controllers\auth\auth-shared.js:7:import { 
+apiResponseManager } from 
+"../../utilities/general/response-manager.js";
+backend\controllers\auth\login.controller.js:2:impor
+t { loginUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\login.controller.js:3:impor
+t { setRefreshTokenCookie } from 
+"../../services/auth/cookie-service.js";
+backend\controllers\auth\login.controller.js:4:impor
+t { REFRESH_TOKEN_COOKIE_NAME, sendUseCaseResponse 
+} from "./auth-shared.js";
+backend\controllers\auth\logout-all.controller.js:2:
+import { logoutAllUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\logout-all.controller.js:3:
+import { clearCookie } from 
+"../../services/auth/cookie-service.js";
+backend\controllers\auth\logout-all.controller.js:4:
+import { REFRESH_TOKEN_COOKIE_NAME, 
+sendUseCaseResponse } from "./auth-shared.js";
+backend\controllers\auth\logout-all.controller.js:7:
+ * Logout All Devices Controller — Requires 
+authenticated user (authTokenMiddleware).
+backend\controllers\auth\logout.controller.js:2:impo
+rt { logoutUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\logout.controller.js:3:impo
+rt { clearCookie } from 
+"../../services/auth/cookie-service.js";
+backend\controllers\auth\logout.controller.js:4:impo
+rt { REFRESH_TOKEN_COOKIE_NAME, sendUseCaseResponse 
+} from "./auth-shared.js";
+backend\controllers\auth\password-reset.controller.j
+s:2:import { forgotPasswordUseCase, 
+resetPasswordUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\password-reset.controller.j
+s:3:import { sendUseCaseResponse } from 
+"./auth-shared.js";
+backend\controllers\auth\refresh.controller.js:2:imp
+ort { refreshTokenUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\refresh.controller.js:3:imp
+ort { clearCookie, setRefreshTokenCookie } from 
+"../../services/auth/cookie-service.js";
+backend\controllers\auth\refresh.controller.js:4:imp
+ort { REFRESH_TOKEN_COOKIE_NAME, 
+sendUseCaseResponse } from "./auth-shared.js";
+backend\controllers\auth\register.controller.js:2:im
+port { registerUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\register.controller.js:3:im
+port { sendUseCaseResponse } from 
+"./auth-shared.js";
+backend\controllers\auth\resend-2fa.controller.js:1:
+import { resend2faUseCase } from 
+"../../use-cases/auth/resend-2fa.use-case.js";
+backend\controllers\auth\resend-2fa.controller.js:2:
+import { sendUseCaseResponse } from 
+"./auth-shared.js";
+backend\controllers\auth\resend-verification.control
+ler.js:2:import { resendVerificationUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\resend-verification.control
+ler.js:3:import { sendUseCaseResponse } from 
+"./auth-shared.js";
+backend\controllers\auth\verify-2fa.controller.js:1:
+import { verify2faUseCase } from 
+"../../use-cases/auth/verify-2fa.use-case.js";
+backend\controllers\auth\verify-2fa.controller.js:2:
+import { sendUseCaseResponse } from 
+"../auth/auth-shared.js";
+backend\controllers\auth\verify-2fa.controller.js:3:
+import { setRefreshTokenCookie } from 
+"../../services/auth/cookie-service.js";
+backend\controllers\auth\verify-email.controller.js:
+2:import { verifyEmailUseCase } from 
+"../../use-cases/auth/index.js";
+backend\controllers\auth\verify-email.controller.js:
+3:import { sendUseCaseResponse } from 
+"./auth-shared.js";
+backend\controllers\health\health.controller.js:1:im
+port { getConnectionStatus } from 
+"../../config/connect-db.js";
+backend\controllers\health\health.controller.js:2:im
+port redis from "../../config/redis.js";
+backend\controllers\test\test-controller.js:3:import
+ { getSanitizationStats } from 
+"../../middleware/security/sanitize-middleware.js";
+backend\controllers\test\test-controller.js:4:import
+ { logHelmetConfig } from 
+"../../middleware/security/helmet-middleware.js";
+backend\controllers\test\test-controller.js:34:     
+ const authError = new Error("Authentication 
+required");
+backend\controllers\user\change-password.controller.
+js:1:import { changePasswordUseCase } from 
+"../../use-cases/user/change-password.use-case.js";
+backend\controllers\user\change-password.controller.
+js:2:import { sendUseCaseResponse } from 
+"../auth/auth-shared.js";
+backend\controllers\user\email-change.controller.js:
+1:import { sendUseCaseResponse } from 
+"../auth/auth-shared.js";
+backend\controllers\user\email-change.controller.js:
+2:import { requestEmailChangeUseCase } from "../../u
+se-cases/user/request-email-change.use-case.js";
+backend\controllers\user\email-change.controller.js:
+3:import { confirmEmailChangeUseCase } from "../../u
+se-cases/user/confirm-email-change.use-case.js";
+backend\controllers\user\toggle-2fa.controller.js:1:
+import { toggle2faUseCase } from 
+"../../use-cases/user/toggle-2fa.use-case.js";
+backend\controllers\user\toggle-2fa.controller.js:2:
+import { sendUseCaseResponse } from 
+"../auth/auth-shared.js";
+backend\controllers\user\update-profile.controller.j
+s:1:import { updateProfileUseCase } from 
+"../../use-cases/user/update-profile.use-case.js";
+backend\controllers\user\update-profile.controller.j
+s:2:import { sendUseCaseResponse } from 
+"../auth/auth-shared.js";
+backend\controllers\user\upload-avatar.controller.js
+:1:import { uploadAvatarUseCase } from 
+"../../use-cases/user/upload-avatar.use-case.js";
+backend\controllers\user\upload-avatar.controller.js
+:2:import { sendUseCaseResponse } from 
+"../auth/auth-shared.js";
+backend\controllers\user\user.controller.js:1:import
+ User from "../../model/User.js";
+backend\controllers\user\user.controller.js:2:import
+ { sanitizeUserForResponse } from 
+"../../utilities/auth/user-data-utils.js";
+backend\controllers\user\user.controller.js:3:import
+ { apiResponseManager } from 
+"../../utilities/general/response-manager.js";
+backend\controllers\user\user.controller.js:4:import
+ logger from "../../utilities/general/logger.js";
+backend\coverage\prettify.js:2:window.PR_SHOULD_USE_
+CONTINUATION=true;(function(){var h=["break,continue
+,do,else,for,if,return,while"];var u=[h,"auto,case,c
+har,const,default,double,enum,extern,float,goto,int,
+long,register,short,signed,sizeof,static,struct,swit
+ch,typedef,union,unsigned,void,volatile"];var p=[u,"
+catch,class,delete,false,import,new,operator,private
+,protected,public,this,throw,true,try,typeof"];var l
+=[p,"alignof,align_union,asm,axiom,bool,concept,conc
+ept_map,const_cast,constexpr,decltype,dynamic_cast,e
+xplicit,export,friend,inline,late_check,mutable,name
+space,nullptr,reinterpret_cast,static_assert,static_
+cast,template,typeid,typename,using,virtual,where"];
+var x=[p,"abstract,boolean,byte,extends,final,finall
+y,implements,import,instanceof,null,native,package,s
+trictfp,super,synchronized,throws,transient"];var R=
+[x,"as,base,by,checked,decimal,delegate,descending,d
+ynamic,event,fixed,foreach,from,group,implicit,in,in
+terface,internal,into,is,lock,object,out,override,or
+derby,params,partial,readonly,ref,sbyte,sealed,stack
+alloc,string,select,uint,ulong,unchecked,unsafe,usho
+rt,var"];var r="all,and,by,catch,class,else,extends,
+false,finally,for,if,in,is,isnt,loop,new,no,not,null
+,of,off,on,or,return,super,then,true,try,unless,unti
+l,when,while,yes";var w=[p,"debugger,eval,export,fun
+ction,get,null,set,undefined,var,with,Infinity,NaN"]
+;var s="caller,delete,die,do,dump,elsif,eval,exit,fo
+reach,for,goto,if,import,last,local,my,next,no,our,p
+rint,package,redo,require,sub,undef,unless,until,use
+,wantarray,while,BEGIN,END";var I=[h,"and,as,assert,
+class,def,del,elif,except,exec,finally,from,global,i
+mport,in,is,lambda,nonlocal,not,or,pass,print,raise,
+try,with,yield,False,True,None"];var f=[h,"alias,and
+,begin,case,class,def,defined,elsif,end,ensure,false
+,in,module,next,nil,not,or,redo,rescue,retry,self,su
+per,then,true,undef,unless,until,when,yield,BEGIN,EN
+D"];var H=[h,"case,done,elif,esac,eval,fi,function,i
+n,local,set,then,until"];var A=[l,R,w,s+I,f,H];var e
+=/^(DIR|FILE|vector|(de|priority_)?queue|list|stack|
+(const_)?iterator|(multi)?(set|map)|bitset|u?(int|fl
+oat)\d*)/;var C="str";var z="kwd";var j="com";var 
+O="typ";var G="lit";var L="pun";var F="pln";var 
+m="tag";var E="dec";var J="src";var P="atn";var 
+n="atv";var N="nocode";var M="(?:^^\\.?|[+-]|\\!|\\!
+=|\\!==|\\#|\\%|\\%=|&|&&|&&=|&=|\\(|\\*|\\*=|\\+=|\
+\,|\\-=|\\->|\\/|\\/=|:|::|\\;|<|<<|<<=|<=|=|==|===|
+>|>=|>>|>>=|>>>|>>>=|\\?|\\@|\\[|\\^|\\^=|\\^\\^|\\^
+\\^=|\\{|\\||\\|=|\\|\\||\\|\\|=|\\~|break|case|cont
+inue|delete|do|else|finally|instanceof|return|throw|
+try|typeof)\\s*";function k(Z){var ad=0;var 
+S=false;var ac=false;for(var 
+V=0,U=Z.length;V<U;++V){var ae=Z[V];if(ae.ignoreCase
+){ac=true}else{if(/[a-z]/i.test(ae.source.replace(/\
+\u[0-9a-f]{4}|\\x[0-9a-f]{2}|\\[^ux]/gi,""))){S=true
+;ac=false;break}}}var 
+Y={b:8,t:9,n:10,v:11,f:12,r:13};function ab(ah){var 
+ag=ah.charCodeAt(0);if(ag!==92){return ag}var 
+af=ah.charAt(1);ag=Y[af];if(ag){return 
+ag}else{if("0"<=af&&af<="7"){return parseInt(ah.subs
+tring(1),8)}else{if(af==="u"||af==="x"){return 
+parseInt(ah.substring(2),16)}else{return 
+ah.charCodeAt(1)}}}}function T(af){if(af<32){return(
+af<16?"\\x0":"\\x")+af.toString(16)}var ag=String.fr
+omCharCode(af);if(ag==="\\"||ag==="-"||ag==="["||ag=
+=="]"){ag="\\"+ag}return ag}function X(am){var 
+aq=am.substring(1,am.length-1).match(new RegExp("\\\
+\u[0-9A-Fa-f]{4}|\\\\x[0-9A-Fa-f]{2}|\\\\[0-3][0-7]{
+0,2}|\\\\[0-7]{1,2}|\\\\[\\s\\S]|-|[^-\\\\]","g"));v
+ar ak=[];var af=[];var ao=aq[0]==="^";for(var 
+ar=ao?1:0,aj=aq.length;ar<aj;++ar){var ah=aq[ar];if(
+/\\[bdsw]/i.test(ah)){ak.push(ah)}else{var 
+ag=ab(ah);var al;if(ar+2<aj&&"-"===aq[ar+1]){al=ab(a
+q[ar+2]);ar+=2}else{al=ag}af.push([ag,al]);if(!(al<6
+5||ag>122)){if(!(al<65||ag>90)){af.push([Math.max(65
+,ag)|32,Math.min(al,90)|32])}if(!(al<97||ag>122)){af
+.push([Math.max(97,ag)&~32,Math.min(al,122)&~32])}}}
+}af.sort(function(av,au){return(av[0]-au[0])||(au[1]
+-av[1])});var ai=[];var ap=[NaN,NaN];for(var 
+ar=0;ar<af.length;++ar){var at=af[ar];if(at[0]<=ap[1
+]+1){ap[1]=Math.max(ap[1],at[1])}else{ai.push(ap=at)
+}}var an=["["];if(ao){an.push("^")}an.push.apply(an,
+ak);for(var ar=0;ar<ai.length;++ar){var at=ai[ar];an
+.push(T(at[0]));if(at[1]>at[0]){if(at[1]+1>at[0]){an
+.push("-")}an.push(T(at[1]))}}an.push("]");return 
+an.join("")}function W(al){var 
+aj=al.source.match(new RegExp("(?:\\[(?:[^\\x5C\\x5D
+]|\\\\[\\s\\S])*\\]|\\\\u[A-Fa-f0-9]{4}|\\\\x[A-Fa-f
+0-9]{2}|\\\\[0-9]+|\\\\[^ux0-9]|\\(\\?[:!=]|[\\(\\)\
+\^]|[^\\x5B\\x5C\\(\\)\\^]+)","g"));var 
+ah=aj.length;var an=[];for(var 
+ak=0,am=0;ak<ah;++ak){var ag=aj[ak];if(ag==="("){++a
+m}else{if("\\"===ag.charAt(0)){var af=+ag.substring(
+1);if(af&&af<=am){an[af]=-1}}}}for(var ak=1;ak<an.le
+ngth;++ak){if(-1===an[ak]){an[ak]=++ad}}for(var 
+ak=0,am=0;ak<ah;++ak){var ag=aj[ak];if(ag==="("){++a
+m;if(an[am]===undefined){aj[ak]="(?:"}}else{if("\\"=
+==ag.charAt(0)){var af=+ag.substring(1);if(af&&af<=a
+m){aj[ak]="\\"+an[am]}}}}for(var ak=0,am=0;ak<ah;++a
+k){if("^"===aj[ak]&&"^"!==aj[ak+1]){aj[ak]=""}}if(al
+.ignoreCase&&S){for(var ak=0;ak<ah;++ak){var 
+ag=aj[ak];var ai=ag.charAt(0);if(ag.length>=2&&ai===
+"["){aj[ak]=X(ag)}else{if(ai!=="\\"){aj[ak]=ag.repla
+ce(/[a-zA-Z]/g,function(ao){var ap=ao.charCodeAt(0);
+return"["+String.fromCharCode(ap&~32,ap|32)+"]"})}}}
+}return aj.join("")}var aa=[];for(var 
+V=0,U=Z.length;V<U;++V){var 
+ae=Z[V];if(ae.global||ae.multiline){throw new 
+Error(""+ae)}aa.push("(?:"+W(ae)+")")}return new 
+RegExp(aa.join("|"),ac?"gi":"g")}function a(V){var 
+U=/(?:^|\s)nocode(?:\s|$)/;var X=[];var T=0;var 
+Z=[];var W=0;var S;if(V.currentStyle){S=V.currentSty
+le.whiteSpace}else{if(window.getComputedStyle){S=doc
+ument.defaultView.getComputedStyle(V,null).getProper
+tyValue("white-space")}}var 
+Y=S&&"pre"===S.substring(0,3);function 
+aa(ab){switch(ab.nodeType){case 
+1:if(U.test(ab.className)){return}for(var 
+ae=ab.firstChild;ae;ae=ae.nextSibling){aa(ae)}var ad
+=ab.nodeName;if("BR"===ad||"LI"===ad){X[W]="\n";Z[W<
+<1]=T++;Z[(W++<<1)|1]=ab}break;case 3:case 4:var ac=
+ab.nodeValue;if(ac.length){if(!Y){ac=ac.replace(/[ 
+\t\r\n]+/g," ")}else{ac=ac.replace(/\r\n?/g,"\n")}X[
+W]=ac;Z[W<<1]=T;T+=ac.length;Z[(W++<<1)|1]=ab}break}
+}aa(V);return{sourceCode:X.join("").replace(/\n$/,""
+),spans:Z}}function B(S,U,W,T){if(!U){return}var V={
+sourceCode:U,basePos:S};W(V);T.push.apply(T,V.decora
+tions)}var v=/\S/;function o(S){var 
+V=undefined;for(var 
+U=S.firstChild;U;U=U.nextSibling){var T=U.nodeType;V
+=(T===1)?(V?S:U):(T===3)?(v.test(U.nodeValue)?S:V):V
+}return V===S?undefined:V}function g(U,T){var 
+S={};var V;(function(){var ad=U.concat(T);var 
+ah=[];var ag={};for(var 
+ab=0,Z=ad.length;ab<Z;++ab){var Y=ad[ab];var 
+ac=Y[3];if(ac){for(var 
+ae=ac.length;--ae>=0;){S[ac.charAt(ae)]=Y}}var 
+af=Y[1];var aa=""+af;if(!ag.hasOwnProperty(aa)){ah.p
+ush(af);ag[aa]=null}}ah.push(/[\0-\uffff]/);V=k(ah)}
+)();var X=T.length;var W=function(ah){var 
+Z=ah.sourceCode,Y=ah.basePos;var ad=[Y,F];var 
+af=0;var an=Z.match(V)||[];var aj={};for(var 
+ae=0,aq=an.length;ae<aq;++ae){var ag=an[ae];var 
+ap=aj[ag];var ai=void 0;var am;if(typeof 
+ap==="string"){am=false}else{var aa=S[ag.charAt(0)];
+if(aa){ai=ag.match(aa[1]);ap=aa[0]}else{for(var ao=0
+;ao<X;++ao){aa=T[ao];ai=ag.match(aa[1]);if(ai){ap=aa
+[0];break}}if(!ai){ap=F}}am=ap.length>=5&&"lang-"===
+ap.substring(0,5);if(am&&!(ai&&typeof ai[1]==="strin
+g")){am=false;ap=J}if(!am){aj[ag]=ap}}var ab=af;af+=
+ag.length;if(!am){ad.push(Y+ab,ap)}else{var 
+al=ai[1];var ak=ag.indexOf(al);var ac=ak+al.length;i
+f(ai[2]){ac=ag.length-ai[2].length;ak=ac-al.length}v
+ar ar=ap.substring(5);B(Y+ab,ag.substring(0,ak),W,ad
+);B(Y+ab+ak,al,q(ar,al),ad);B(Y+ab+ac,ag.substring(a
+c),W,ad)}}ah.decorations=ad};return W}function 
+i(T){var W=[],S=[];if(T.tripleQuotedStrings){W.push(
+[C,/^(?:\'\'\'(?:[^\'\\]|\\[\s\S]|\'{1,2}(?=[^\']))*
+(?:\'\'\'|$)|\"\"\"(?:[^\"\\]|\\[\s\S]|\"{1,2}(?=[^\
+"]))*(?:\"\"\"|$)|\'(?:[^\\\']|\\[\s\S])*(?:\'|$)|\"
+(?:[^\\\"]|\\[\s\S])*(?:\"|$))/,null,"'\""])}else{if
+(T.multiLineStrings){W.push([C,/^(?:\'(?:[^\\\']|\\[
+\s\S])*(?:\'|$)|\"(?:[^\\\"]|\\[\s\S])*(?:\"|$)|\`(?
+:[^\\\`]|\\[\s\S])*(?:\`|$))/,null,"'\"`"])}else{W.p
+ush([C,/^(?:\'(?:[^\\\'\r\n]|\\.)*(?:\'|$)|\"(?:[^\\
+\"\r\n]|\\.)*(?:\"|$))/,null,"\"'"])}}if(T.verbatimS
+trings){S.push([C,/^@\"(?:[^\"]|\"\")*(?:\"|$)/,null
+])}var Y=T.hashComments;if(Y){if(T.cStyleComments){i
+f(Y>1){W.push([j,/^#(?:##(?:[^#]|#(?!##))*(?:###|$)|
+.*)/,null,"#"])}else{W.push([j,/^#(?:(?:define|elif|
+else|endif|error|ifdef|include|ifndef|line|pragma|un
+def|warning)\b|[^\r\n]*)/,null,"#"])}S.push([C,/^<(?
+:(?:(?:\.\.\/)*|\/?)(?:[\w-]+(?:\/[\w-]+)+)?[\w-]+\.
+h|[a-z]\w*)>/,null])}else{W.push([j,/^#[^\r\n]*/,nul
+l,"#"])}}if(T.cStyleComments){S.push([j,/^\/\/[^\r\n
+]*/,null]);S.push([j,/^\/\*[\s\S]*?(?:\*\/|$)/,null]
+)}if(T.regexLiterals){var X=("/(?=[^/*])(?:[^/\\x5B\
+\x5C]|\\x5C[\\s\\S]|\\x5B(?:[^\\x5C\\x5D]|\\x5C[\\s\
+\S])*(?:\\x5D|$))+/");S.push(["lang-regex",new 
+RegExp("^"+M+"("+X+")")])}var 
+V=T.types;if(V){S.push([O,V])}var 
+U=(""+T.keywords).replace(/^ | 
+$/g,"");if(U.length){S.push([z,new RegExp("^(?:"+U.r
+eplace(/[\s,]+/g,"|")+")\\b"),null])}W.push([F,/^\s+
+/,null," \r\n\t\xA0"]);S.push([G,/^@[a-z_$][a-z_$@0-
+9]*/i,null],[O,/^(?:[@_]?[A-Z]+[a-z][A-Za-z_$@0-9]*|
+\w+_t\b)/,null],[F,/^[a-z_$][a-z_$@0-9]*/i,null],[G,
+new RegExp("^(?:0x[a-f0-9]+|(?:\\d(?:_\\d+)*\\d*(?:\
+\.\\d*)?|\\.\\d\\+)(?:e[+\\-]?\\d+)?)[a-z]*","i"),nu
+ll,"0123456789"],[F,/^\\[\s\S]?/,null],[L,/^.[^\s\w\
+.$@\'\"\`\/\#\\]*/,null]);return g(W,S)}var K=i({key
+words:A,hashComments:true,cStyleComments:true,multiL
+ineStrings:true,regexLiterals:true});function 
+Q(V,ag){var U=/(?:^|\s)nocode(?:\s|$)/;var 
+ab=/\r\n?|\n/;var ac=V.ownerDocument;var S;if(V.curr
+entStyle){S=V.currentStyle.whiteSpace}else{if(window
+.getComputedStyle){S=ac.defaultView.getComputedStyle
+(V,null).getPropertyValue("white-space")}}var 
+Z=S&&"pre"===S.substring(0,3);var af=ac.createElemen
+t("LI");while(V.firstChild){af.appendChild(V.firstCh
+ild)}var W=[af];function 
+ae(al){switch(al.nodeType){case 1:if(U.test(al.class
+Name)){break}if("BR"===al.nodeName){ad(al);if(al.par
+entNode){al.parentNode.removeChild(al)}}else{for(var
+ an=al.firstChild;an;an=an.nextSibling){ae(an)}}brea
+k;case 3:case 4:if(Z){var am=al.nodeValue;var 
+aj=am.match(ab);if(aj){var 
+ai=am.substring(0,aj.index);al.nodeValue=ai;var 
+ah=am.substring(aj.index+aj[0].length);if(ah){var ak
+=al.parentNode;ak.insertBefore(ac.createTextNode(ah)
+,al.nextSibling)}ad(al);if(!ai){al.parentNode.remove
+Child(al)}}}break}}function ad(ak){while(!ak.nextSib
+ling){ak=ak.parentNode;if(!ak){return}}function 
+ai(al,ar){var aq=ar?al.cloneNode(false):al;var 
+ao=al.parentNode;if(ao){var ap=ai(ao,1);var 
+an=al.nextSibling;ap.appendChild(aq);for(var am=an;a
+m;am=an){an=am.nextSibling;ap.appendChild(am)}}retur
+n aq}var ah=ai(ak.nextSibling,0);for(var aj;(aj=ah.p
+arentNode)&&aj.nodeType===1;){ah=aj}W.push(ah)}for(v
+ar Y=0;Y<W.length;++Y){ae(W[Y])}if(ag===(ag|0)){W[0]
+.setAttribute("value",ag)}var aa=ac.createElement("O
+L");aa.className="linenums";var 
+X=Math.max(0,((ag-1))|0)||0;for(var Y=0,T=W.length;Y
+<T;++Y){af=W[Y];af.className="L"+((Y+X)%10);if(!af.f
+irstChild){af.appendChild(ac.createTextNode("\xA0"))
+}aa.appendChild(af)}V.appendChild(aa)}function 
+D(ac){var 
+aj=/\bMSIE\b/.test(navigator.userAgent);var 
+am=/\n/g;var al=ac.sourceCode;var an=al.length;var 
+V=0;var aa=ac.spans;var T=aa.length;var ah=0;var 
+X=ac.decorations;var Y=X.length;var Z=0;X[Y]=an;var 
+ar,aq;for(aq=ar=0;aq<Y;){if(X[aq]!==X[aq+2]){X[ar++]
+=X[aq++];X[ar++]=X[aq++]}else{aq+=2}}Y=ar;for(aq=ar=
+0;aq<Y;){var at=X[aq];var ab=X[aq+1];var W=aq+2;whil
+e(W+2<=Y&&X[W+1]===ab){W+=2}X[ar++]=at;X[ar++]=ab;aq
+=W}Y=X.length=ar;var ae=null;while(ah<T){var 
+af=aa[ah];var S=aa[ah+2]||an;var ag=X[Z];var 
+ap=X[Z+2]||an;var W=Math.min(S,ap);var 
+ak=aa[ah+1];var U;if(ak.nodeType!==1&&(U=al.substrin
+g(V,W))){if(aj){U=U.replace(am,"\r")}ak.nodeValue=U;
+var ai=ak.ownerDocument;var 
+ao=ai.createElement("SPAN");ao.className=X[Z+1];var 
+ad=ak.parentNode;ad.replaceChild(ao,ak);ao.appendChi
+ld(ak);if(V<S){aa[ah+1]=ak=ai.createTextNode(al.subs
+tring(W,S));ad.insertBefore(ak,ao.nextSibling)}}V=W;
+if(V>=S){ah+=2}if(V>=ap){Z+=2}}}var t={};function 
+c(U,V){for(var S=V.length;--S>=0;){var T=V[S];if(!t.
+hasOwnProperty(T)){t[T]=U}else{if(window.console){co
+nsole.warn("cannot override language handler 
+%s",T)}}}}function q(T,S){if(!(T&&t.hasOwnProperty(T
+))){T=/^\s*</.test(S)?"default-markup":"default-code
+"}return t[T]}c(K,["default-code"]);c(g([],[[F,/^[^<
+?]+/],[E,/^<!\w[^>]*(?:>|$)/],[j,/^<\!--[\s\S]*?(?:-
+\->|$)/],["lang-",/^<\?([\s\S]+?)(?:\?>|$)/],["lang-
+",/^<%([\s\S]+?)(?:%>|$)/],[L,/^(?:<[%?]|[%?]>)/],["
+lang-",/^<xmp\b[^>]*>([\s\S]+?)<\/xmp\b[^>]*>/i],["l
+ang-js",/^<script\b[^>]*>([\s\S]*?)(<\/script\b[^>]*
+>)/i],["lang-css",/^<style\b[^>]*>([\s\S]*?)(<\/styl
+e\b[^>]*>)/i],["lang-in.tag",/^(<\/?[a-z][^<>]*>)/i]
+]),["default-markup","htm","html","mxml","xhtml","xm
+l","xsl"]);c(g([[F,/^[\s]+/,null," \t\r\n"],[n,/^(?:
+\"[^\"]*\"?|\'[^\']*\'?)/,null,"\"'"]],[[m,/^^<\/?[a
+-z](?:[\w.:-]*\w)?|\/?>$/i],[P,/^(?!style[\s=]|on)[a
+-z](?:[\w:-]*\w)?/i],["lang-uq.val",/^=\s*([^>\'\"\s
+]*(?:[^>\'\"\s\/]|\/(?=\s)))/],[L,/^[=<>\/]+/],["lan
+g-js",/^on\w+\s*=\s*\"([^\"]+)\"/i],["lang-js",/^on\
+w+\s*=\s*\'([^\']+)\'/i],["lang-js",/^on\w+\s*=\s*([
+^\"\'>\s]+)/i],["lang-css",/^style\s*=\s*\"([^\"]+)\
+"/i],["lang-css",/^style\s*=\s*\'([^\']+)\'/i],["lan
+g-css",/^style\s*=\s*([^\"\'>\s]+)/i]]),["in.tag"]);
+c(g([],[[n,/^[\s\S]+/]]),["uq.val"]);c(i({keywords:l
+,hashComments:true,cStyleComments:true,types:e}),["c
+","cc","cpp","cxx","cyc","m"]);c(i({keywords:"null,t
+rue,false"}),["json"]);c(i({keywords:R,hashComments:
+true,cStyleComments:true,verbatimStrings:true,types:
+e}),["cs"]);c(i({keywords:x,cStyleComments:true}),["
+java"]);c(i({keywords:H,hashComments:true,multiLineS
+trings:true}),["bsh","csh","sh"]);c(i({keywords:I,ha
+shComments:true,multiLineStrings:true,tripleQuotedSt
+rings:true}),["cv","py"]);c(i({keywords:s,hashCommen
+ts:true,multiLineStrings:true,regexLiterals:true}),[
+"perl","pl","pm"]);c(i({keywords:f,hashComments:true
+,multiLineStrings:true,regexLiterals:true}),["rb"]);
+c(i({keywords:w,cStyleComments:true,regexLiterals:tr
+ue}),["js"]);c(i({keywords:r,hashComments:3,cStyleCo
+mments:true,multilineStrings:true,tripleQuotedString
+s:true,regexLiterals:true}),["coffee"]);c(g([],[[C,/
+^[\s\S]+/]]),["regex"]);function d(V){var 
+U=V.langExtension;try{var S=a(V.sourceNode);var T=S.
+sourceCode;V.sourceCode=T;V.spans=S.spans;V.basePos=
+0;q(U,T)(V);D(V)}catch(W){if("console" in window){co
+nsole.log(W&&W.stack?W.stack:W)}}}function 
+y(W,V,U){var S=document.createElement("PRE");S.inner
+HTML=W;if(U){Q(S,U)}var T={langExtension:V,numberLin
+es:U,sourceNode:S};d(T);return S.innerHTML}function 
+b(ad){function Y(af){return 
+document.getElementsByTagName(af)}var 
+ac=[Y("pre"),Y("code"),Y("xmp")];var T=[];for(var 
+aa=0;aa<ac.length;++aa){for(var Z=0,V=ac[aa].length;
+Z<V;++Z){T.push(ac[aa][Z])}}ac=null;var 
+W=Date;if(!W.now){W={now:function(){return +(new 
+Date)}}}var X=0;var S;var 
+ab=/\blang(?:uage)?-([\w.]+)(?!\S)/;var 
+ae=/\bprettyprint\b/;function U(){var ag=(window.PR_
+SHOULD_USE_CONTINUATION?W.now()+250:Infinity);for(;X
+<T.length&&W.now()<ag;X++){var aj=T[X];var ai=aj.cla
+ssName;if(ai.indexOf("prettyprint")>=0){var 
+ah=ai.match(ab);var am;if(!ah&&(am=o(aj))&&"CODE"===
+am.tagName){ah=am.className.match(ab)}if(ah){ah=ah[1
+]}var al=false;for(var ak=aj.parentNode;ak;ak=ak.par
+entNode){if((ak.tagName==="pre"||ak.tagName==="code"
+||ak.tagName==="xmp")&&ak.className&&ak.className.in
+dexOf("prettyprint")>=0){al=true;break}}if(!al){var 
+af=aj.className.match(/\blinenums\b(?::(\d+))?/);af=
+af?af[1]&&af[1].length?+af[1]:true:false;if(af){Q(aj
+,af)}S={langExtension:ah,sourceNode:aj,numberLines:a
+f};d(S)}}}if(X<T.length){setTimeout(U,250)}else{if(a
+d){ad()}}}U()}window.prettyPrintOne=y;window.prettyP
+rint=b;window.PR={createSimpleLexer:g,registerLangHa
+ndler:c,sourceDecorator:i,PR_ATTRIB_NAME:P,PR_ATTRIB
+_VALUE:n,PR_COMMENT:j,PR_DECLARATION:E,PR_KEYWORD:z,
+PR_LITERAL:G,PR_NOCODE:N,PR_PLAIN:F,PR_PUNCTUATION:L
+,PR_SOURCE:J,PR_STRING:C,PR_TAG:m,PR_TYPE:O}})();PR.
+registerLangHandler(PR.createSimpleLexer([],[[PR.PR_
+DECLARATION,/^<!\w[^>]*(?:>|$)/],[PR.PR_COMMENT,/^<\
+!--[\s\S]*?(?:-\->|$)/],[PR.PR_PUNCTUATION,/^(?:<[%?
+]|[%?]>)/],["lang-",/^<\?([\s\S]+?)(?:\?>|$)/],["lan
+g-",/^<%([\s\S]+?)(?:%>|$)/],["lang-",/^<xmp\b[^>]*>
+([\s\S]+?)<\/xmp\b[^>]*>/i],["lang-handlebars",/^<sc
+ript\b[^>]*type\s*=\s*['"]?text\/x-handlebars-templa
+te['"]?\b[^>]*>([\s\S]*?)(<\/script\b[^>]*>)/i],["la
+ng-js",/^<script\b[^>]*>([\s\S]*?)(<\/script\b[^>]*>
+)/i],["lang-css",/^<style\b[^>]*>([\s\S]*?)(<\/style
+\b[^>]*>)/i],["lang-in.tag",/^(<\/?[a-z][^<>]*>)/i],
+[PR.PR_DECLARATION,/^{{[#^>/]?\s*[\w.][^}]*}}/],[PR.
+PR_DECLARATION,/^{{&?\s*[\w.][^}]*}}/],[PR.PR_DECLAR
+ATION,/^{{{>?\s*[\w.][^}]*}}}/],[PR.PR_COMMENT,/^{{!
+[^}]*}}/]]),["handlebars","hbs"]);PR.registerLangHan
+dler(PR.createSimpleLexer([[PR.PR_PLAIN,/^[ 
+\t\r\n\f]+/,null," \t\r\n\f"]],[[PR.PR_STRING,/^\"(?
+:[^\n\r\f\\\"]|\\(?:\r\n?|\n|\f)|\\[\s\S])*\"/,null]
+,[PR.PR_STRING,/^\'(?:[^\n\r\f\\\']|\\(?:\r\n?|\n|\f
+)|\\[\s\S])*\'/,null],["lang-css-str",/^url\(([^\)\"
+\']*)\)/i],[PR.PR_KEYWORD,/^(?:url|rgb|\!important|@
+import|@page|@media|@charset|inherit)(?=[^\-\w]|$)/i
+,null],["lang-css-kw",/^(-?(?:[_a-z]|(?:\\[0-9a-f]+ 
+?))(?:[_a-z0-9\-]|\\(?:\\[0-9a-f]+ ?))*)\s*:/i],[PR.
+PR_COMMENT,/^\/\*[^*]*\*+(?:[^\/*][^*]*\*+)*\//],[PR
+.PR_COMMENT,/^(?:<!--|-->)/],[PR.PR_LITERAL,/^(?:\d+
+|\d*\.\d+)(?:%|[a-z]+)?/i],[PR.PR_LITERAL,/^#(?:[0-9
+a-f]{3}){1,2}/i],[PR.PR_PLAIN,/^-?(?:[_a-z]|(?:\\[\d
+a-f]+ ?))(?:[_a-z\d\-]|\\(?:\\[\da-f]+ ?))*/i],[PR.P
+R_PUNCTUATION,/^[^\s\w\'\"]+/]]),["css"]);PR.registe
+rLangHandler(PR.createSimpleLexer([],[[PR.PR_KEYWORD
+,/^-?(?:[_a-z]|(?:\\[\da-f]+ 
+?))(?:[_a-z\d\-]|\\(?:\\[\da-f]+ ?))*/i]]),["css-kw"
+]);PR.registerLangHandler(PR.createSimpleLexer([],[[
+PR.PR_STRING,/^[^\)\"\']+/]]),["css-str"]);
+backend\docs\swagger\index.js:1:import swaggerJsdoc 
+from "swagger-jsdoc";
+backend\docs\swagger\index.js:2:import swaggerUi 
+from "swagger-ui-express";
+backend\docs\swagger\index.js:3:import { 
+commonSchemas } from 
+"./components/schemas/common.schemas.js";
+backend\docs\swagger\index.js:4:import { 
+authSchemas } from 
+"./components/schemas/auth.schemas.js";
+backend\docs\swagger\index.js:5:import { 
+userSchemas } from 
+"./components/schemas/user.schemas.js";
+backend\docs\swagger\index.js:6:import { 
+errorResponses } from 
+"./components/responses/error-responses.js";
+backend\docs\swagger\index.js:7:import { 
+securitySchemes } from 
+"./components/security/security-schemes.js";
+backend\docs\swagger\components\responses\error-resp
+onses.js:11:    description: "Authentication 
+required or token expired/invalid",
+backend\docs\swagger\components\responses\error-resp
+onses.js:36:              message: "Access token is 
+required.",
+backend\docs\swagger\components\schemas\auth.schemas
+.js:22:    required: ["email", "password"],
+backend\docs\swagger\components\schemas\auth.schemas
+.js:65:    required: ["firstname", "lastname", 
+"email", "password", "confirmPassword", "terms"],
+backend\docs\swagger\components\schemas\auth.schemas
+.js:79:    required: ["token"],
+backend\docs\swagger\components\schemas\auth.schemas
+.js:91:    required: ["email"],
+backend\docs\swagger\components\schemas\auth.schemas
+.js:103:    required: ["email"],
+backend\docs\swagger\components\schemas\auth.schemas
+.js:116:        description: "New password (must 
+meet strength requirements)",
+backend\docs\swagger\components\schemas\auth.schemas
+.js:125:    required: ["token", "password", 
+"confirmPassword"],
+backend\docs\swagger\components\schemas\common.schem
+as.js:27:    required: ["success", "message"],
+backend\docs\swagger\components\schemas\common.schem
+as.js:56:    required: ["success", "message", 
+"errorCode"],
+backend\docs\swagger\components\schemas\common.schem
+as.js:91:    required: ["success", "message", 
+"errors"],
+backend\docs\swagger\paths\auth\forgot-password.js:3
+1: *       required: true
+backend\docs\swagger\paths\auth\login.js:30: *      
+ required: true
+backend\docs\swagger\paths\auth\logout-all.js:16: * 
+      **Cookie Required**: The `refresh_token` 
+HTTP-only cookie must be present.
+backend\docs\swagger\paths\auth\logout.js:12: *     
+  **Cookie Required**: The `refresh_token` 
+HTTP-only cookie must be present.
+backend\docs\swagger\paths\auth\refresh.js:21: *    
+   **Cookie Required**: The `refresh_token` 
+HTTP-only cookie must be present.
+backend\docs\swagger\paths\auth\refresh.js:57: *    
+               message: "Refresh token is required."
+backend\docs\swagger\paths\auth\register.js:18: *   
+    **Password Requirements**: Minimum 8 
+characters, must contain uppercase,
+backend\docs\swagger\paths\auth\register.js:29: *   
+    required: true
+backend\docs\swagger\paths\auth\resend-2fa.js:10: * 
+      Requires the temporary JWT token from the 
+initial login response.
+backend\docs\swagger\paths\auth\resend-2fa.js:15: * 
+      required: true
+backend\docs\swagger\paths\auth\resend-2fa.js:20: * 
+            required:
+backend\docs\swagger\paths\auth\resend-2fa.js:25: * 
+                description: Temporary JWT from 
+login response when twoFactorRequired is true
+backend\docs\swagger\paths\auth\resend-verification.
+js:27: *       required: true
+backend\docs\swagger\paths\auth\reset-password.js:17
+: *       **Password Requirements**: Minimum 8 
+characters, must contain
+backend\docs\swagger\paths\auth\reset-password.js:31
+: *       required: true
+backend\docs\swagger\paths\auth\verify-2fa.js:10: * 
+      Requires the temporary JWT token returned 
+from the login endpoint
+backend\docs\swagger\paths\auth\verify-2fa.js:17: * 
+      required: true
+backend\docs\swagger\paths\auth\verify-2fa.js:22: * 
+            required:
+backend\docs\swagger\paths\auth\verify-2fa.js:35: * 
+                description: Temporary JWT from 
+login response when twoFactorRequired is true
+backend\docs\swagger\paths\auth\verify-email.js:28: 
+*       required: true
+backend\docs\swagger\paths\health\health.js:13: *   
+    **No Authentication Required**: This endpoint 
+is publicly accessible.
+backend\docs\swagger\paths\user\change-password.js:9
+: *       Changes the authenticated user's 
+password. Requires the current password
+backend\docs\swagger\paths\user\change-password.js:1
+0: *       for verification. The new password must 
+meet complexity requirements:
+backend\docs\swagger\paths\user\change-password.js:2
+4: *       required: true
+backend\docs\swagger\paths\user\change-password.js:2
+9: *             required:
+backend\docs\swagger\paths\user\change-password.js:9
+2: *                 summary: Password complexity 
+requirements not met
+backend\docs\swagger\paths\user\confirm-email-change
+.js:13: *       **No authentication required** — 
+the token in the URL serves as proof of
+backend\docs\swagger\paths\user\confirm-email-change
+.js:23: *         required: true
+backend\docs\swagger\paths\user\me.js:11: *       
+**Authentication Required**: A valid JWT access 
+token must be
+backend\docs\swagger\paths\user\request-email-change
+.js:12: *       Requires the current password for 
+security verification.
+backend\docs\swagger\paths\user\request-email-change
+.js:21: *       required: true
+backend\docs\swagger\paths\user\request-email-change
+.js:26: *             required:
+backend\docs\swagger\paths\user\toggle-2fa.js:10: * 
+      user's account. Requires the current password 
+for security verification.
+backend\docs\swagger\paths\user\toggle-2fa.js:12: * 
+      When enabled, future logins will require a 
+6-digit OTP code sent to
+backend\docs\swagger\paths\user\toggle-2fa.js:19: * 
+      required: true
+backend\docs\swagger\paths\user\toggle-2fa.js:24: * 
+            required:
+backend\docs\swagger\paths\user\update-profile.js:16
+: *       required: true
+backend\docs\swagger\paths\user\update-profile.js:21
+: *             required:
+backend\docs\swagger\paths\user\update-profile.js:77
+: *                   message: "Access token is 
+required."
+backend\docs\swagger\paths\user\upload-avatar.js:18:
+ *       required: true
+backend\docs\swagger\paths\user\upload-avatar.js:23:
+ *             required:
+backend\errors\error-constants.js:2:// Import these 
+constants instead of hard-coding error code strings.
+backend\middleware\auth\auth.js:1:import jwt from 
+"jsonwebtoken";
+backend\middleware\auth\authTokenMiddleware.js:5:imp
+ort jwt from "jsonwebtoken";
+backend\middleware\auth\authTokenMiddleware.js:6:imp
+ort { apiResponseManager } from 
+"../../utilities/general/response-manager.js";
+backend\middleware\auth\authTokenMiddleware.js:7:imp
+ort { isTokenRevoked } from 
+"../../services/auth/token-service.js";
+backend\middleware\auth\authTokenMiddleware.js:8:imp
+ort logger from "../../utilities/general/logger.js";
+backend\middleware\core\body-parser-middleware.js:2:
+import bodyParser from "body-parser";
+backend\middleware\core\content-type-negotiation-mid
+dleware.js:2:import accepts from "accepts";
+backend\middleware\core\content-type-negotiation-mid
+dleware.js:3:import logger from 
+"../../utilities/general/logger.js";
+backend\middleware\core\credentials-middleware.js:1:
+import { allowedOrigins } from 
+"../../config/allowed-origins.js";
+backend\middleware\core\credentials-middleware.js:2:
+import logger from 
+"../../utilities/general/logger.js";
+backend\middleware\core\credentials-middleware.js:92
+:// import { allowedOrigins } from 
+"../config/allowed-origins.js";
+backend\middleware\core\logging-middleware.js:1:impo
+rt { format } from "date-fns";
+backend\middleware\core\logging-middleware.js:2:impo
+rt fs from "fs/promises";
+backend\middleware\core\logging-middleware.js:3:impo
+rt path from "path";
+backend\middleware\core\logging-middleware.js:4:impo
+rt {
+backend\middleware\core\logging-middleware.js:8:impo
+rt logger from 
+"./../../utilities/general/logger.js";
+backend\middleware\core\logging-user-activity-middle
+ware.js:1:import { format } from "date-fns";
+backend\middleware\core\logging-user-activity-middle
+ware.js:2:import { v4 as uuid } from "uuid";
+backend\middleware\core\logging-user-activity-middle
+ware.js:3:import fs from "fs/promises";
+backend\middleware\core\logging-user-activity-middle
+ware.js:4:import path from "path";
+backend\middleware\core\logging-user-activity-middle
+ware.js:5:import {
+backend\middleware\core\logging-user-activity-middle
+ware.js:9:import logger from 
+"../../utilities/general/logger.js";
+backend\middleware\core\request-id-middleware.js:3:i
+mport { v4 as uuidv4 } from "uuid";
+backend\middleware\errors\error-handler-middleware.j
+s:1:import { AppError } from 
+"../../errors/AppError.js";
+backend\middleware\errors\error-handler-middleware.j
+s:2:import { apiResponseManager } from 
+"../../utilities/general/response-manager.js";
+backend\middleware\errors\error-handler-middleware.j
+s:3:import logger from 
+"../../utilities/general/logger.js";
+backend\middleware\security\helmet-middleware.js:3:i
+mport helmet from "helmet";
+backend\middleware\security\rate-limiter-middleware.
+js:1:import rateLimit from "express-rate-limit";
+backend\middleware\security\rate-limiter-middleware.
+js:2:import { RedisStore } from "rate-limit-redis";
+backend\middleware\security\rate-limiter-middleware.
+js:3:import redis from "../../config/redis.js";
+backend\middleware\security\rate-limiters.js:5:impor
+t { createRateLimiterMiddleware } from 
+"./rate-limiter-middleware.js";
+backend\middleware\security\sanitize-middleware.js:1
+:import xss from "xss";
+backend\middleware\security\sanitize-middleware.js:2
+:import logger from 
+"../../utilities/general/logger.js";
+backend\middleware\security\sanitize-middleware.js:3
+51:// import xss from "xss";
+backend\middleware\upload\multer-middleware.js:1:imp
+ort multer from "multer";
+backend\middleware\upload\multer-middleware.js:2:imp
+ort { apiResponseManager } from 
+"../../utilities/general/response-manager.js";
+backend\middleware\validation\validation-middleware.
+js:1:import { check, validationResult } from 
+"express-validator";
+backend\middleware\validation\validation-middleware.
+js:2:import { apiResponseManager } from 
+"../../utilities/general/response-manager.js";
+backend\middleware\validation\validation-middleware.
+js:10:        check(field.name).exists().withMessage
+(`${field.name} is required`)
+backend\model\RefreshToken.js:6:import mongoose, { 
+Schema } from "mongoose";
+backend\model\RefreshToken.js:14:      required: 
+[true, "Token hash is required."],
+backend\model\RefreshToken.js:22:      required: 
+[true, "User reference is required."],
+backend\model\RefreshToken.js:42:      required: 
+[true, "Expiration date is required."],
+backend\model\RefreshToken.js:65:      required: 
+true,
+backend\model\User.js:2:import mongoose, { Schema } 
+from "mongoose";
+backend\model\User.js:3:import { v4 as uuidv4 } 
+from "uuid";
+backend\model\User.js:15:      required: [true, 
+"First name is required."],
+backend\model\User.js:22:      required: [true, 
+"Last name is required."],
+backend\model\User.js:29:      required: [true, 
+"Email is required."],
+backend\model\User.js:42:      required: [true, 
+"Password is required."],
+backend\routes\auth\auth-routes.js:1:import { body 
+} from "express-validator";
+backend\routes\auth\auth-routes.js:2:import express 
+from "express";
+backend\routes\auth\auth-routes.js:3:import { 
+handleRegister } from 
+"../../controllers/auth/register.controller.js";
+backend\routes\auth\auth-routes.js:4:import { 
+handleLogin } from 
+"../../controllers/auth/login.controller.js";
+backend\routes\auth\auth-routes.js:5:import { 
+handleLogout } from 
+"../../controllers/auth/logout.controller.js";
+backend\routes\auth\auth-routes.js:6:import { 
+handleLogoutAll } from 
+"../../controllers/auth/logout-all.controller.js";
+backend\routes\auth\auth-routes.js:7:import { 
+handleRefreshToken } from 
+"../../controllers/auth/refresh.controller.js";
+backend\routes\auth\auth-routes.js:8:import { 
+handleVerifyEmail } from 
+"../../controllers/auth/verify-email.controller.js";
+backend\routes\auth\auth-routes.js:9:import {
+backend\routes\auth\auth-routes.js:13:import { 
+handleResendVerification } from "../../controllers/a
+uth/resend-verification.controller.js";
+backend\routes\auth\auth-routes.js:14:import { 
+handleVerify2fa } from 
+"../../controllers/auth/verify-2fa.controller.js";
+backend\routes\auth\auth-routes.js:15:import { 
+handleResend2fa } from 
+"../../controllers/auth/resend-2fa.controller.js";
+backend\routes\auth\auth-routes.js:16:import { 
+handleValidationErrors } from 
+"../../middleware/validation/index.js";
+backend\routes\auth\auth-routes.js:17:import {
+backend\routes\auth\auth-routes.js:26:import {
+backend\routes\auth\auth-routes.js:38:import { 
+authTokenMiddleware } from 
+"../../middleware/auth/authTokenMiddleware.js";
+backend\routes\auth\auth-routes.js:62:      
+.withMessage("Verification session token is 
+required")
+backend\routes\health\health-routes.js:1:import { 
+Router } from "express";
+backend\routes\health\health-routes.js:2:import { 
+healthCheck } from 
+"../../controllers/health/health.controller.js";
+backend\routes\health\health-routes.js:3:import { 
+healthLimiter } from 
+"../../middleware/security/rate-limiters.js";
+backend\routes\health\health-routes.js:7:// 
+Production health check — no authentication required
+backend\routes\test\test-routes.js:3:import { 
+Router } from "express";
+backend\routes\test\test-routes.js:5:import {
+backend\routes\test\test-routes.js:14:// import * 
+as testController from 
+"../../controllers/test/test-controller.js";
+backend\routes\user\user-routes.js:1:import express 
+from "express";
+backend\routes\user\user-routes.js:2:import { 
+getCurrentUser } from 
+"../../controllers/user/user.controller.js";
+backend\routes\user\user-routes.js:3:import { 
+updateProfile } from "../../controllers/user/update-
+profile.controller.js";
+backend\routes\user\user-routes.js:4:import { 
+authTokenMiddleware } from 
+"../../middleware/auth/authTokenMiddleware.js";
+backend\routes\user\user-routes.js:5:import {
+backend\routes\user\user-routes.js:9:import { 
+updateProfileValidationRules } from 
+"../../validators/validationRules.js";
+backend\routes\user\user-routes.js:10:import { 
+handleValidationErrors } from "../../middleware/vali
+dation/validation-middleware.js";
+backend\routes\user\user-routes.js:11:import { 
+emailChangeLimiter, changePasswordLimiter, 
+toggle2faLimiter } from 
+"../../middleware/security/rate-limiters.js";
+backend\routes\user\user-routes.js:12:import { 
+emailChangeValidationRules, 
+updatePasswordValidationRules, 
+toggle2faValidationRules } from 
+"../../validators/validationRules.js";
+backend\routes\user\user-routes.js:13:import { 
+handleRequestEmailChange, handleConfirmEmailChange 
+} from 
+"../../controllers/user/email-change.controller.js";
+backend\routes\user\user-routes.js:14:import { 
+handleChangePassword } from "../../controllers/user/
+change-password.controller.js";
+backend\routes\user\user-routes.js:15:import { 
+handleToggle2fa } from 
+"../../controllers/user/toggle-2fa.controller.js";
+backend\routes\user\user-routes.js:16:import { 
+handleAvatarUpload } from 
+"../../middleware/upload/multer-middleware.js";
+backend\routes\user\user-routes.js:17:import { 
+avatarUploadLimiter } from 
+"../../middleware/security/rate-limiters.js";
+backend\routes\user\user-routes.js:18:import { 
+handleUploadAvatar } from "../../controllers/user/up
+load-avatar.controller.js";
+backend\services\cloudinaryService.js:2:import 
+cloudinary from "../config/cloudinary.js";
+backend\services\cloudinaryService.js:3:import { 
+Readable } from "stream";
+backend\services\auth\cookie-service.js:20: * 
+@param {import('express').Response} res
+backend\services\auth\cookie-service.js:33: * 
+@param {import('express').Response} res
+backend\services\auth\cookie-service.js:52: * 
+@param {import('express').Response} res
+backend\services\auth\token-service.js:6:import jwt 
+from "jsonwebtoken";
+backend\services\auth\token-service.js:7:import 
+crypto from "crypto";
+backend\services\auth\token-service.js:8:import 
+redis from "../../config/redis.js";
+backend\services\auth\token-service.js:9:import 
+RefreshToken from "../../model/RefreshToken.js";
+backend\services\auth\token-service.js:10:import 
+logger from "../../utilities/general/logger.js";
+backend\services\auth\token-service.js:155:  const 
+userWithVersion = await (await 
+import("../../model/User.js")).default
+backend\services\email\email.queue.js:1:import 
+Queue from "bull";
+backend\services\email\email.queue.js:2:import { 
+EtherealProvider } from 
+"./providers/mailtrap.provider.js";
+backend\services\email\email.service.js:1:import { 
+EtherealProvider } from 
+"./providers/mailtrap.provider.js";
+backend\services\email\email.service.js:2:import { 
+EmailQueue } from "./email.queue.js";
+backend\services\email\email.service.js:3:import { 
+TemplateEngine } from 
+"./templates/template.engine.js";
+backend\services\email\email.service.js:4:import 
+logger from "../../utilities/general/logger.js";
+backend\services\email\config\email.config.js:2:impo
+rt dotenv from "dotenv";
+backend\services\email\providers\mail-test.js:1:impo
+rt nodemailer from "nodemailer";
+backend\services\email\providers\mail-test.js:2:impo
+rt dotenv from "dotenv";
+backend\services\email\providers\mail-test.js:3:impo
+rt path from "path";
+backend\services\email\providers\mail-test.js:4:impo
+rt { fileURLToPath } from "url";
+backend\services\email\providers\mail-test.js:6:cons
+t __dirname = 
+path.dirname(fileURLToPath(import.meta.url));
+backend\services\email\providers\mailtrap.provider.j
+s:4:import nodemailer from "nodemailer";
+backend\services\email\providers\mailtrap.provider.j
+s:5:import { EMAIL_CONFIG } from 
+"../config/email.config.js";
+backend\services\email\providers\mailtrap.provider.j
+s:6:import logger from 
+"../../../utilities/general/logger.js";
+backend\services\email\templates\template.engine.js:
+1:import fs from "fs/promises";
+backend\services\email\templates\template.engine.js:
+2:import path from "path";
+backend\services\email\templates\template.engine.js:
+3:import handlebars from "handlebars";
+backend\use-cases\auth\forgot-password.use-case.js:3
+:import crypto from "crypto";
+backend\use-cases\auth\forgot-password.use-case.js:4
+:import { generateResetToken } from 
+"../../utilities/auth/crypto-utils.js";
+backend\use-cases\auth\forgot-password.use-case.js:5
+:import User from "../../model/User.js";
+backend\use-cases\auth\forgot-password.use-case.js:6
+:import logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\auth\forgot-password.use-case.js:7
+:import { EmailService } from 
+"../../services/email/email.service.js";
+backend\use-cases\auth\forgot-password.use-case.js:3
+6:        message: "Valid email is required",
+backend\use-cases\auth\login.use-case.js:3:import 
+User from "../../model/User.js";
+backend\use-cases\auth\login.use-case.js:4:import { 
+comparePassword } from 
+"../../utilities/auth/hash-utils.js";
+backend\use-cases\auth\login.use-case.js:5:import { 
+generateTokens } from 
+"../../services/auth/token-service.js";
+backend\use-cases\auth\login.use-case.js:6:import { 
+sanitizeUserForResponse } from 
+"../../utilities/auth/user-data-utils.js";
+backend\use-cases\auth\login.use-case.js:7:import 
+logger from "../../utilities/general/logger.js";
+backend\use-cases\auth\login.use-case.js:8:import 
+crypto from "crypto";
+backend\use-cases\auth\login.use-case.js:9:import 
+emailService from 
+"../../services/email/email.service.js";
+backend\use-cases\auth\login.use-case.js:10:import 
+{ generate2faTempToken } from 
+"../../services/auth/token-service.js";
+backend\use-cases\auth\login.use-case.js:11:import 
+{ generateVerificationCode } from 
+"../../utilities/auth/crypto-utils.js";
+backend\use-cases\auth\login.use-case.js:30:      
+message: "Email and password are required.",
+backend\use-cases\auth\login.use-case.js:93:        
+message: "Two-factor authentication required",
+backend\use-cases\auth\login.use-case.js:95:        
+  requiresTwoFactor: true,
+backend\use-cases\auth\logout-all.use-case.js:3:impo
+rt User from "../../model/User.js";
+backend\use-cases\auth\logout-all.use-case.js:4:impo
+rt RefreshToken from "../../model/RefreshToken.js";
+backend\use-cases\auth\logout-all.use-case.js:5:impo
+rt logger from "../../utilities/general/logger.js";
+backend\use-cases\auth\logout-all.use-case.js:8: * 
+Logout All Devices Use Case — Requires 
+authenticated user.
+backend\use-cases\auth\logout-all.use-case.js:23:   
+     message: "Authentication required.",
+backend\use-cases\auth\logout.use-case.js:3:import 
+RefreshToken from "../../model/RefreshToken.js";
+backend\use-cases\auth\logout.use-case.js:4:import {
+backend\use-cases\auth\logout.use-case.js:9:import 
+logger from "../../utilities/general/logger.js";
+backend\use-cases\auth\refresh-token.use-case.js:3:i
+mport { refreshAccessToken } from 
+"../../services/auth/token-service.js";
+backend\use-cases\auth\refresh-token.use-case.js:4:i
+mport logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\auth\refresh-token.use-case.js:23:
+      message: "Refresh token required",
+backend\use-cases\auth\register.use-case.js:3:import
+ User from "../../model/User.js";
+backend\use-cases\auth\register.use-case.js:4:import
+ { hashPassword } from 
+"../../utilities/auth/hash-utils.js";
+backend\use-cases\auth\register.use-case.js:5:import
+ { CloudinaryService } from 
+"../../services/cloudinaryService.js";
+backend\use-cases\auth\register.use-case.js:6:import
+ logger from "../../utilities/general/logger.js";
+backend\use-cases\auth\register.use-case.js:7:import
+ { EmailService } from 
+"../../services/email/email.service.js";
+backend\use-cases\auth\register.use-case.js:8:import
+ crypto from "crypto";
+backend\use-cases\auth\register.use-case.js:9:import
+ { generateVerificationCode } from 
+"../../utilities/auth/crypto-utils.js";
+backend\use-cases\auth\register.use-case.js:39:     
+ message: "Validation Error: All required fields 
+are missing.",
+backend\use-cases\auth\resend-2fa.use-case.js:1:impo
+rt jwt from "jsonwebtoken";
+backend\use-cases\auth\resend-2fa.use-case.js:2:impo
+rt crypto from "crypto";
+backend\use-cases\auth\resend-2fa.use-case.js:3:impo
+rt User from "../../model/User.js";
+backend\use-cases\auth\resend-2fa.use-case.js:4:impo
+rt { generateVerificationCode } from 
+"../../utilities/auth/crypto-utils.js";
+backend\use-cases\auth\resend-2fa.use-case.js:5:impo
+rt emailService from 
+"../../services/email/email.service.js";
+backend\use-cases\auth\resend-2fa.use-case.js:6:impo
+rt logger from "../../utilities/general/logger.js";
+backend\use-cases\auth\resend-verification.use-case.
+js:3:import crypto from "crypto";
+backend\use-cases\auth\resend-verification.use-case.
+js:4:import { generateVerificationCode } from 
+"../../utilities/auth/crypto-utils.js";
+backend\use-cases\auth\resend-verification.use-case.
+js:5:import User from "../../model/User.js";
+backend\use-cases\auth\resend-verification.use-case.
+js:6:import logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\auth\resend-verification.use-case.
+js:7:import { EmailService } from 
+"../../services/email/email.service.js";
+backend\use-cases\auth\resend-verification.use-case.
+js:34:        message: "Valid email is required",
+backend\use-cases\auth\reset-password.use-case.js:3:
+import crypto from "crypto";
+backend\use-cases\auth\reset-password.use-case.js:4:
+import User from "../../model/User.js";
+backend\use-cases\auth\reset-password.use-case.js:5:
+import RefreshToken from 
+"../../model/RefreshToken.js";
+backend\use-cases\auth\reset-password.use-case.js:6:
+import { hashPassword, comparePassword } from 
+"../../utilities/auth/hash-utils.js";
+backend\use-cases\auth\reset-password.use-case.js:7:
+import logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\auth\reset-password.use-case.js:8:
+import { EmailService } from 
+"../../services/email/email.service.js";
+backend\use-cases\auth\reset-password.use-case.js:30
+:        message: "Valid reset token is required",
+backend\use-cases\auth\reset-password.use-case.js:39
+:        message: "New password is required",
+backend\use-cases\auth\verify-2fa.use-case.js:1:impo
+rt jwt from "jsonwebtoken";
+backend\use-cases\auth\verify-2fa.use-case.js:2:impo
+rt User from "../../model/User.js";
+backend\use-cases\auth\verify-2fa.use-case.js:3:impo
+rt { hashToken, generateTokens } from 
+"../../services/auth/token-service.js";
+backend\use-cases\auth\verify-2fa.use-case.js:4:impo
+rt { sanitizeUserForResponse } from 
+"../../utilities/auth/user-data-utils.js";
+backend\use-cases\auth\verify-2fa.use-case.js:5:impo
+rt logger from "../../utilities/general/logger.js";
+backend\use-cases\auth\verify-email.use-case.js:3:im
+port crypto from "crypto";
+backend\use-cases\auth\verify-email.use-case.js:4:im
+port User from "../../model/User.js";
+backend\use-cases\auth\verify-email.use-case.js:5:im
+port logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\auth\verify-email.use-case.js:24: 
+     message: "Verification token is required",
+backend\use-cases\user\change-password.use-case.js:1
+:import User from "../../model/User.js";
+backend\use-cases\user\change-password.use-case.js:2
+:import { hashPassword, comparePassword } from 
+"../../utilities/auth/hash-utils.js";
+backend\use-cases\user\change-password.use-case.js:3
+:import logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\user\confirm-email-change.use-case
+.js:1:import User from "../../model/User.js";
+backend\use-cases\user\confirm-email-change.use-case
+.js:2:import RefreshToken from 
+"../../model/RefreshToken.js";
+backend\use-cases\user\confirm-email-change.use-case
+.js:3:import crypto from "crypto";
+backend\use-cases\user\request-email-change.use-case
+.js:1:import User from "../../model/User.js";
+backend\use-cases\user\request-email-change.use-case
+.js:2:import bcrypt from "bcrypt";
+backend\use-cases\user\request-email-change.use-case
+.js:3:import crypto from "crypto";
+backend\use-cases\user\request-email-change.use-case
+.js:4:import { generateResetToken } from 
+"../../utilities/auth/crypto-utils.js";
+backend\use-cases\user\request-email-change.use-case
+.js:5:import emailService from 
+"../../services/email/email.service.js";
+backend\use-cases\user\request-email-change.use-case
+.js:6:import logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\user\toggle-2fa.use-case.js:1:impo
+rt User from "../../model/User.js";
+backend\use-cases\user\toggle-2fa.use-case.js:2:impo
+rt { comparePassword } from 
+"../../utilities/auth/hash-utils.js";
+backend\use-cases\user\toggle-2fa.use-case.js:3:impo
+rt logger from "../../utilities/general/logger.js";
+backend\use-cases\user\update-profile.use-case.js:1:
+import User from "../../model/User.js";
+backend\use-cases\user\update-profile.use-case.js:2:
+import { sanitizeUserForResponse } from 
+"../../utilities/auth/user-data-utils.js";
+backend\use-cases\user\update-profile.use-case.js:3:
+import logger from 
+"../../utilities/general/logger.js";
+backend\use-cases\user\upload-avatar.use-case.js:1:i
+mport User from "../../model/User.js";
+backend\use-cases\user\upload-avatar.use-case.js:2:i
+mport { CloudinaryService } from 
+"../../services/cloudinaryService.js";
+backend\use-cases\user\upload-avatar.use-case.js:3:i
+mport { sanitizeUserForResponse } from 
+"../../utilities/auth/user-data-utils.js";
+backend\use-cases\user\upload-avatar.use-case.js:4:i
+mport logger from 
+"../../utilities/general/logger.js";
+backend\utilities\utils.js:1:import fs from "fs";
+backend\utilities\utils.js:2:import crypto from 
+"crypto";
+backend\utilities\auth\crypto-utils.js:1:import 
+crypto from "crypto";
+backend\utilities\auth\hash-utils.js:1:import 
+bcrypt from "bcrypt";
+backend\utilities\auth\token-utils.js:3:import jwt 
+from "jsonwebtoken";
+backend\utilities\auth\token-utils.js:4:import 
+crypto from "crypto";
+backend\utilities\auth\token-utils.js:5:import 
+redis from "../../config/redis.js";
+backend\utilities\auth\token-utils.js:30:    
+tokenVersion: user.tokenVersion || 1, // Important 
+for token invalidation
+backend\utilities\general\emit-log.js:1:import 
+chalk from "chalk";
+backend\utilities\general\emit-log.js:2:import 
+logger from "./logger.js";
+backend\utilities\general\logger.js:1:import pino 
+from "pino";
+backend\utilities\general\logger.js:8: * import 
+logger from "./utilities/general/logger.js";
+backend\validators\validationRules.js:1:import { 
+body, param, query } from "express-validator";
+backend\validators\validationRules.js:2:import 
+disposableDomains from "disposable-email-domains" 
+with { type: "json" };
+backend\validators\validationRules.js:30:    
+.withMessage("Email is required").bail()
+backend\validators\validationRules.js:54:    
+.notEmpty().withMessage("Password is 
+required").bail()
+backend\validators\validationRules.js:107:    
+.withMessage("First name is required").bail()
+backend\validators\validationRules.js:116:    
+.withMessage("Last name is required").bail()
+backend\validators\validationRules.js:172:    
+.withMessage("Password is required"),
+backend\validators\validationRules.js:183:    
+.withMessage("Verification code is required").bail()
+backend\validators\validationRules.js:234:    
+.withMessage("First name is required")
+backend\validators\validationRules.js:247:    
+.withMessage("Last name is required")
+backend\validators\validationRules.js:262:    
+.withMessage("Old password is required").bail()
+backend\validators\validationRules.js:272:    
+.withMessage("Confirm password is required").bail()
+backend\validators\validationRules.js:284:    
+.withMessage("Enable flag is required").bail()
+backend\validators\validationRules.js:290:    
+.withMessage("Current password is required").bail()
+backend\validators\validationRules.js:300:    
+.withMessage("Verification code is required").bail()
+backend\validators\validationRules.js:311:    
+.withMessage("Temporary token is required").bail()
+backend\validators\validationRules.js:319:    
+.withMessage("New email is required.")
+backend\validators\validationRules.js:329:    
+.withMessage("Current password is required.")
+backend\validators\validationRules.js:342:    
+.withMessage("Album title is required").bail()
+backend\validators\validationRules.js:350:    
+.withMessage("Album description is required").bail()
+backend\validators\validationRules.js:361:    
+.withMessage("Album ID is required").bail()
+backend\validators\validationRules.js:366:    
+.withMessage("Album title is required").bail()
+backend\validators\validationRules.js:374:    
+.withMessage("Album description is required").bail()
+backend\validators\validationRules.js:385:    
+.withMessage("Album ID is required").bail()
+backend\validators\validationRules.js:393:    
+.withMessage("Photo ID is required").bail()
+backend\validators\validationRules.js:401:    
+.withMessage("Album ID is required").bail()
+backend\validators\validationRules.js:406:    
+.withMessage("Photo ID is required").bail()
+backend\validators\validationRules.js:414:    
+.withMessage("Album ID is required").bail()
+backend\validators\validationRules.js:431:    
+.withMessage("Name is required").bail()
+backend\validators\validationRules.js:439:    
+.withMessage("Description is required").bail()
+backend\validators\validationRules.js:447:    
+.withMessage("Permissions are required").bail()
+backend\validators\validationRules.js:456:    
+.withMessage("Name is required").bail()
+backend\validators\validationRules.js:464:    
+.withMessage("Key is required").bail()
+backend\validators\validationRules.js:472:    
+.withMessage("Description is required").bail()
+backend\validators\validationRules.js:483:    
+.withMessage("Name is required").bail()
+backend\validators\validationRules.js:491:    
+.withMessage("Description is required").bail()
+backend\validators\validationRules.js:503:    
+.withMessage("Team ID is required").bail()
+backend\validators\validationRules.js:508:    
+.withMessage("Team UUID is required").bail()
+backend\validators\validationRules.js:516:    
+.withMessage("Team ID is required").bail()
+backend\validators\validationRules.js:521:    
+.withMessage("Team UUID is required").bail()
+backend\validators\validationRules.js:541:    
+.withMessage("League name is required").bail()
+backend\validators\validationRules.js:549:    
+.withMessage("URL is required").bail()
+backend\validators\validationRules.js:557:    
+.withMessage("Country is required").bail()
+backend\validators\validationRules.js:565:    
+.withMessage("Sport is required").bail()
+backend\validators\validationRules.js:573:    
+.withMessage("Number of teams is required").bail()
+backend\validators\validationRules.js:578:    
+.withMessage("Season from is required").bail()
+backend\validators\validationRules.js:586:    
+.withMessage("Season to is required").bail()
+backend\validators\validationRules.js:598:    
+.withMessage("Matches fixture is required").bail()
+backend\validators\validationRules.js:610:    
+.withMessage("ID is required").bail()
+backend\validators\validationRules.js:615:    
+.withMessage("UUID is required").bail()
+backend\validators\validationRules.js:623:    
+.withMessage("ID is required").bail()
+backend\validators\validationRules.js:631:    
+.withMessage("League UUID is required").bail()
+backend\validators\validationRules.js:640:    
+.withMessage("Match UUID is required").bail()
+backend\validators\validationRules.js:648:    
+.withMessage("Team UUID is required").bail()
+backend\__tests__\integration\auth-forgot-password.t
+est.js:1:import { vi, beforeEach, describe, it, 
+expect } from "vitest";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:2:import request from "supertest";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:3:import app from "../../app.js";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:4:import emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:5:import * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:6:import User from "../../model/User.js";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:7:import { TEST_USER, registerAndVerify } 
+from "./helpers.js";
+backend\__tests__\integration\auth-forgot-password.t
+est.js:9:// vi.mock() is hoisted — runs before all 
+imports are bound
+backend\__tests__\integration\auth-login.test.js:1:i
+mport { vi, beforeEach, describe, it, expect } from 
+"vitest";
+backend\__tests__\integration\auth-login.test.js:2:i
+mport request from "supertest";
+backend\__tests__\integration\auth-login.test.js:3:i
+mport app from "../../app.js";
+backend\__tests__\integration\auth-login.test.js:4:i
+mport emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-login.test.js:5:i
+mport * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-login.test.js:6:i
+mport User from "../../model/User.js";
+backend\__tests__\integration\auth-login.test.js:7:i
+mport RefreshToken from 
+"../../model/RefreshToken.js";
+backend\__tests__\integration\auth-login.test.js:8:i
+mport { TEST_USER, registerAndVerify, registerUser 
+} from "./helpers.js";
+backend\__tests__\integration\auth-login.test.js:10:
+// vi.mock() is hoisted — runs before all imports 
+are bound
+backend\__tests__\integration\auth-logout.test.js:1:
+import { vi, beforeEach, describe, it, expect } 
+from "vitest";
+backend\__tests__\integration\auth-logout.test.js:2:
+import request from "supertest";
+backend\__tests__\integration\auth-logout.test.js:3:
+import app from "../../app.js";
+backend\__tests__\integration\auth-logout.test.js:4:
+import emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-logout.test.js:5:
+import * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-logout.test.js:6:
+import RefreshToken from 
+"../../model/RefreshToken.js";
+backend\__tests__\integration\auth-logout.test.js:7:
+import { registerVerifyAndLogin } from 
+"./helpers.js";
+backend\__tests__\integration\auth-logout.test.js:9:
+// vi.mock() is hoisted — runs before all imports 
+are bound
+backend\__tests__\integration\auth-refresh.test.js:1
+:import { vi, beforeEach, afterEach, describe, it, 
+expect } from "vitest";
+backend\__tests__\integration\auth-refresh.test.js:2
+:import request from "supertest";
+backend\__tests__\integration\auth-refresh.test.js:3
+:import app from "../../app.js";
+backend\__tests__\integration\auth-refresh.test.js:4
+:import emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-refresh.test.js:5
+:import * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-refresh.test.js:6
+:import { registerVerifyAndLogin } from 
+"./helpers.js";
+backend\__tests__\integration\auth-refresh.test.js:8
+:// vi.mock() is hoisted — runs before all imports 
+are bound
+backend\__tests__\integration\auth-register.test.js:
+1:import { vi, beforeEach, describe, it, expect } 
+from "vitest";
+backend\__tests__\integration\auth-register.test.js:
+2:import request from "supertest";
+backend\__tests__\integration\auth-register.test.js:
+3:import app from "../../app.js";
+backend\__tests__\integration\auth-register.test.js:
+4:import emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-register.test.js:
+5:import * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-register.test.js:
+6:import User from "../../model/User.js";
+backend\__tests__\integration\auth-register.test.js:
+7:import { TEST_USER, registerUser } from 
+"./helpers.js";
+backend\__tests__\integration\auth-register.test.js:
+8:// vi.mock() is hoisted — runs before all imports 
+are bound
+backend\__tests__\integration\auth-reset-password.te
+st.js:1:import { vi, beforeEach, describe, it, 
+expect } from "vitest";
+backend\__tests__\integration\auth-reset-password.te
+st.js:2:import request from "supertest";
+backend\__tests__\integration\auth-reset-password.te
+st.js:3:import app from "../../app.js";
+backend\__tests__\integration\auth-reset-password.te
+st.js:4:import emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-reset-password.te
+st.js:5:import * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-reset-password.te
+st.js:6:import User from "../../model/User.js";
+backend\__tests__\integration\auth-reset-password.te
+st.js:7:import { registerAndVerify } from 
+"./helpers.js";
+backend\__tests__\integration\auth-reset-password.te
+st.js:9:// vi.mock() is hoisted — runs before all 
+imports are bound
+backend\__tests__\integration\auth-verify-email.test
+.js:1:import { vi, beforeEach, afterEach, describe, 
+it, expect } from "vitest";
+backend\__tests__\integration\auth-verify-email.test
+.js:2:import request from "supertest";
+backend\__tests__\integration\auth-verify-email.test
+.js:3:import app from "../../app.js";
+backend\__tests__\integration\auth-verify-email.test
+.js:4:import emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\auth-verify-email.test
+.js:5:import * as cloudinaryModule from 
+"../../services/cloudinaryService.js";
+backend\__tests__\integration\auth-verify-email.test
+.js:6:import User from "../../model/User.js";
+backend\__tests__\integration\auth-verify-email.test
+.js:7:import { TEST_USER, registerUser } from 
+"./helpers.js";
+backend\__tests__\integration\auth-verify-email.test
+.js:9:// vi.mock() is hoisted — runs before all 
+imports are bound
+backend\__tests__\integration\helpers.js:1:import 
+request from "supertest";
+backend\__tests__\integration\rate-limiting.test.js:
+1:import { vi, describe, it, expect } from "vitest";
+backend\__tests__\integration\rate-limiting.test.js:
+2:import request from "supertest";
+backend\__tests__\integration\rate-limiting.test.js:
+6:    // Avoid double-running if global setup 
+already imported app
+backend\__tests__\integration\rate-limiting.test.js:
+14:      // Re-import app so middlewares are 
+created with NODE_ENV="production"
+backend\__tests__\integration\rate-limiting.test.js:
+15:      const { default: app } = await 
+import("../../app.js");
+backend\__tests__\integration\setup.js:2:import { 
+MongoMemoryServer } from "mongodb-memory-server";
+backend\__tests__\integration\setup.js:3:import 
+mongoose from "mongoose";
+backend\__tests__\integration\setup.js:4:import { 
+beforeAll, beforeEach, afterAll, vi } from "vitest";
+backend\__tests__\integration\user-me.test.js:1:impo
+rt { vi, beforeEach, describe, it, expect } from 
+"vitest";
+backend\__tests__\integration\user-me.test.js:2:impo
+rt request from "supertest";
+backend\__tests__\integration\user-me.test.js:3:impo
+rt app from "../../app.js";
+backend\__tests__\integration\user-me.test.js:4:impo
+rt emailService from 
+"../../services/email/email.service.js";
+backend\__tests__\integration\user-me.test.js:5:impo
+rt { registerVerifyAndLogin } from "./helpers.js";
+backend\__tests__\unit\cookie-service.test.js:1:impo
+rt { describe, it, expect, vi, beforeEach, 
+afterEach } from "vitest";
+backend\__tests__\unit\cookie-service.test.js:2:impo
+rt { setCookie, clearCookie } from 
+"../../services/auth/cookie-service.js";
+backend\__tests__\unit\cookie-service.test.js:51:   
+ const { setCookie: setCookieProd } = await 
+import("../../services/auth/cookie-service.js");
+backend\__tests__\unit\cookie-service.test.js:57:   
+ const { setCookie: setCookieDev } = await 
+import("../../services/auth/cookie-service.js");
+backend\__tests__\unit\cookie-service.test.js:65:   
+ const { clearCookie: clearCookieDyn } = await 
+import("../../services/auth/cookie-service.js");
+backend\__tests__\unit\cookie-service.test.js:83:   
+ const { setCookie, clearCookie } = await 
+import("../../services/auth/cookie-service.js");
+backend\__tests__\unit\crypto-utils.test.js:1:import
+ { describe, it, expect } from "vitest";
+backend\__tests__\unit\crypto-utils.test.js:2:import
+ { generateVerificationCode, generateResetToken } 
+from "../../utilities/auth/crypto-utils.js";
+backend\__tests__\unit\crypto-utils.test.js:3:import
+ { hashToken } from 
+"../../services/auth/token-service.js"; // from 
+token-service
+backend\__tests__\unit\hash-utils.test.js:1:import 
+{ describe, it, expect } from "vitest";
+backend\__tests__\unit\hash-utils.test.js:2:import 
+{ hashPassword, comparePassword } from 
+"../../utilities/auth/hash-utils.js";
+backend\__tests__\unit\token-service.test.js:1:impor
+t { describe, it, expect, beforeEach, afterEach, vi 
+} from "vitest";
+backend\__tests__\unit\token-service.test.js:2:impor
+t jwt, { JsonWebTokenError, TokenExpiredError } 
+from "jsonwebtoken";
+backend\__tests__\unit\token-service.test.js:3:impor
+t {
+backend\__tests__\unit\token-service.test.js:13:impo
+rt RefreshToken from "../../model/RefreshToken.js";
+backend\__tests__\unit\token-service.test.js:14:impo
+rt User from "../../model/User.js";
+backend\__tests__\unit\token-service.test.js:15:impo
+rt logger from "../../utilities/general/logger.js";
+backend\__tests__\unit\token-service.test.js:16:impo
+rt redis from "../../config/redis.js";
+backend\__tests__\unit\token-service.test.js:186:   
+ // However, verify with alg: none requires a 
+secret and normally throws.
+backend\__tests__\unit\token-service.test.js:428:   
+   const { default: redis } = await 
+import("../../config/redis.js");
+backend\__tests__\unit\token-utils.test.js:1:import 
+{ describe, it, expect, beforeEach, afterEach, vi } 
+from "vitest";
+backend\__tests__\unit\token-utils.test.js:2:import 
+jwt from "jsonwebtoken";
+backend\__tests__\unit\token-utils.test.js:3:import 
+{
+backend\__tests__\unit\token-utils.test.js:13:import
+ redis from "../../config/redis.js";
+backend\__tests__\unit\user-data-utils.test.js:1:imp
+ort { describe, it, expect } from "vitest";
+backend\__tests__\unit\user-data-utils.test.js:2:imp
+ort { processUserData, sanitizeUserForResponse } 
+from "../../utilities/auth/user-data-utils.js";
+
+

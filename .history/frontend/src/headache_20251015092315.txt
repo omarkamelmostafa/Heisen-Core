@@ -1,0 +1,2 @@
+// use simulated loading => use suspense 
+// use lazy loading

@@ -1,0 +1,3 @@
+// use simulated loading => use suspense 
+// use lazy loading
+// animations text for auth right panal => framer motion

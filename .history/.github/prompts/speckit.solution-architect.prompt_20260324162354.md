@@ -1,0 +1,3 @@
+---
+agent: speckit.solution-architect
+---
