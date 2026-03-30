@@ -1,6 +1,9 @@
 // frontend/src/features/auth/components/error/dev-error-toggle.jsx
 "use client";
 
+// import SHOW_ENV_DEBUG from dev-wrapper to avoid circular dependency
+// This prevents a circular dependency issue
+import { SHOW_ENV_DEBUG } from "@/hooks/environment-debug";
 import { Button } from "@/components/ui/button";
 import { Bug, X } from "lucide-react";
 
@@ -9,6 +12,12 @@ export function DevErrorToggle({
   onClearError,
   isErrorActive,
 }) {
+
+
+  if (!SHOW_ENV_DEBUG) {
+    return null;
+  }
+
   return (
     <div className="fixed bottom-4 right-4 bg-card border rounded-lg p-3 shadow-lg z-50">
       <div className="text-center space-y-2">

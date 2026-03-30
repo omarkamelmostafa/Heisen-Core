@@ -52,51 +52,49 @@ export default function SignupPage() {
 
   return (
     <PublicGuard>
-      <div className="flex min-h-[100vh] items-center justify-center overflow-hidden">
+      <motion.div
+        {...motionProps.page}
+        className="flex flex-col gap-6"
+      >
         <motion.div
-          {...motionProps.page}
-          className="flex h-full items-center justify-center space-y-6 sm:px-6 md:px-8"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="flex w-full flex-col gap-6"
         >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="flex w-full flex-col gap-6 sm:max-w-lg"
+          <SignupHeader variants={itemVariants} />
+
+          <WelcomeSection variants={itemVariants} />
+
+          <AuthFormProvider
+            schema={signupSchema}
+            defaultValues={{
+              firstname: "",
+              lastname: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+              terms: false,
+            }}
+            onSubmit={handleSignup}
+            className="space-y-6"
           >
-            <SignupHeader variants={itemVariants} />
+            <AuthErrorAlert error={error} />
 
-            <WelcomeSection variants={itemVariants} />
-
-            <AuthFormProvider
-              schema={signupSchema}
-              defaultValues={{
-                firstname: "",
-                lastname: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-                terms: false,
-              }}
-              onSubmit={handleSignup}
-              className="space-y-6"
-            >
-              <AuthErrorAlert error={error} />
-
-              <SignupForm
-                variants={itemVariants}
-                showPassword={passwordVisibility.password}
-                showConfirmPassword={passwordVisibility.confirmPassword}
-                isLoading={isLoading}
-                onTogglePassword={() => togglePasswordVisibility("password")}
-                onToggleConfirmPassword={() =>
-                  togglePasswordVisibility("confirmPassword")
-                }
-              />
-            </AuthFormProvider>
-          </motion.div>
+            <SignupForm
+              variants={itemVariants}
+              showPassword={passwordVisibility.password}
+              showConfirmPassword={passwordVisibility.confirmPassword}
+              isLoading={isLoading}
+              onTogglePassword={() => togglePasswordVisibility("password")}
+              onToggleConfirmPassword={() =>
+                togglePasswordVisibility("confirmPassword")
+              }
+            />
+          </AuthFormProvider>
         </motion.div>
-      </div>
-      <ProductionErrorTrigger />
+        <ProductionErrorTrigger />
+      </motion.div>
     </PublicGuard>
   );
 }

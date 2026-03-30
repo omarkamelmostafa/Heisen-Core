@@ -3,7 +3,13 @@
 
 import { isDevelopment, isProduction } from "@/lib/environment";
 
+export const SHOW_ENV_DEBUG = false;
+
 export function EnvironmentDebug() {
+  if (!SHOW_ENV_DEBUG) {
+    return null;
+  }
+
   // Remove the condition to always see the debug info
   return (
     <div className="fixed top-1 right-1 bg-red-500 text-white p-2 rounded text-xs z-50">

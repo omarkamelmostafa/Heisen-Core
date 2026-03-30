@@ -58,44 +58,42 @@ function VerifyEmailPage() {
 
   return (
     <PublicGuard>
-      <div className="flex min-h-[100vh] items-center justify-center overflow-hidden">
+      <motion.div
+        {...motionProps.page}
+        className="flex flex-col gap-6"
+      >
         <motion.div
-          {...motionProps.page}
-          className="flex h-full items-center justify-center space-y-6 sm:px-6 md:px-8"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="flex w-full flex-col gap-6"
         >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="flex w-full flex-col gap-6 sm:max-w-lg"
+          <VerifyEmailHeader variants={itemVariants} />
+
+          <WelcomeSection variants={itemVariants} email={email} />
+
+          <AuthFormProvider
+            schema={verifyEmailSchema}
+            defaultValues={{
+              verificationCode: Array(6).fill(""),
+            }}
+            onSubmit={handleVerifySubmit}
+            className="space-y-6"
           >
-            <VerifyEmailHeader variants={itemVariants} />
+            <AuthErrorAlert error={error} />
 
-            <WelcomeSection variants={itemVariants} email={email} />
+            <VerificationForm
+              variants={itemVariants}
+              isLoading={isLoading}
+              timeLeft={timeLeft}
+              onResendCode={handleResendCode}
+              formatTime={formatTime}
+            />
+          </AuthFormProvider>
 
-            <AuthFormProvider
-              schema={verifyEmailSchema}
-              defaultValues={{
-                verificationCode: Array(6).fill(""),
-              }}
-              onSubmit={handleVerifySubmit}
-              className="space-y-6"
-            >
-              <AuthErrorAlert error={error} />
-
-              <VerificationForm
-                variants={itemVariants}
-                isLoading={isLoading}
-                timeLeft={timeLeft}
-                onResendCode={handleResendCode}
-                formatTime={formatTime}
-              />
-            </AuthFormProvider>
-
-            <HelpText variants={itemVariants} />
-          </motion.div>
+          <HelpText variants={itemVariants} />
         </motion.div>
-      </div>
+      </motion.div>
       <ProductionErrorTrigger />
     </PublicGuard>
   );

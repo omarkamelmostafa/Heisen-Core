@@ -6,14 +6,20 @@ import { registerVerifyAndLogin } from "./helpers.js";
 
 // vi.mock() is hoisted
 vi.mock("../../services/email/email.service.js", () => {
+  const mockSendVerificationEmail = vi.fn().mockResolvedValue({ success: true });
+  const mockSendPasswordResetEmail = vi.fn().mockResolvedValue({ success: true });
+  const mockSendWelcomeEmail = vi.fn().mockResolvedValue({ success: true });
+  const mockSendResetSuccessEmail = vi.fn().mockResolvedValue({ success: true });
+
   const mockInstance = {
-    sendVerificationEmail: vi.fn().mockResolvedValue({ success: true }),
-    sendPasswordResetEmail: vi.fn().mockResolvedValue({ success: true }),
-    sendWelcomeEmail: vi.fn().mockResolvedValue({ success: true }),
-    sendResetSuccessEmail: vi.fn().mockResolvedValue({ success: true }),
+    sendVerificationEmail: mockSendVerificationEmail,
+    sendPasswordResetEmail: mockSendPasswordResetEmail,
+    sendWelcomeEmail: mockSendWelcomeEmail,
+    sendResetSuccessEmail: mockSendResetSuccessEmail,
   };
+
   return {
-    EmailService: vi.fn().mockImplementation(function() {
+    EmailService: vi.fn().mockImplementation(function () {
       return mockInstance;
     }),
     default: mockInstance,
@@ -35,8 +41,8 @@ describe("Suite H — User Profile Tests", () => {
     firstname: "Profile",
     lastname: "User",
     email: `profile-${id}@example.com`,
-    password: "Password123!",
-    confirmPassword: "Password123!",
+    password: "MySecureP@ssw0rd2025!",
+    confirmPassword: "MySecureP@ssw0rd2025!",
     terms: true,
   });
 
@@ -55,7 +61,7 @@ describe("Suite H — User Profile Tests", () => {
     expect(res.body.data.user).toBeDefined();
     expect(res.body.data.user.email).toBe(userData.email.toLowerCase());
     expect(res.body.data.user.firstname).toBe(userData.firstname);
-    
+
     // Security check: sensitive fields must be absent
     expect(res.body.data.user.password).toBeUndefined();
     expect(res.body.data.user.refreshToken).toBeUndefined();

@@ -1,4 +1,123 @@
 {
+  "publicNav": {
+    "login": "Login",
+    "signup": "Sign up"
+  },
+  "public": {
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last Updated",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptance of Terms",
+          "content": "By accessing or using our services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services."
+        },
+        "account": {
+          "title": "2. Account Registration",
+          "content": "To access certain features of our services, you may need to create an account. You are responsible for:",
+          "items": {
+            "accurate": "Providing accurate and complete information during registration",
+            "security": "Maintaining the security of your account credentials",
+            "responsibility": "All activities that occur under your account"
+          }
+        },
+        "serviceUsage": {
+          "title": "3. Acceptable Use",
+          "content": "You agree to use our services only for lawful purposes and in accordance with these terms. You agree not to:",
+          "items": {
+            "lawful": "Use the services in any way that violates applicable laws or regulations",
+            "noHarm": "Attempt to interfere with or disrupt the services or servers",
+            "noAbuse": "Engage in any conduct that restricts or inhibits others from using the services"
+          }
+        },
+        "intellectualProperty": {
+          "title": "4. Intellectual Property",
+          "content": "All content, features, and functionality of our services are owned by us and are protected by international copyright, trademark, and other intellectual property laws."
+        },
+        "termination": {
+          "title": "5. Termination",
+          "content": "We may terminate or suspend your account and access to our services immediately, without prior notice or liability, for any reason, including breach of these terms."
+        },
+        "liability": {
+          "title": "6. Limitation of Liability",
+          "content": "In no event shall we be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the services."
+        },
+        "changes": {
+          "title": "7. Changes to Terms",
+          "content": "We reserve the right to modify or replace these terms at any time. We will provide notice of any significant changes by posting the new terms on this page."
+        },
+        "contact": {
+          "title": "8. Contact Us",
+          "content": "If you have any questions about these Terms of Service, please contact us through our support channels."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last Updated",
+      "intro": "This Privacy Policy describes how we collect, use, and handle your personal information when you use our services. By using our services, you agree to the collection and use of information in accordance with this policy.",
+      "sections": {
+        "informationCollection": {
+          "title": "1. Information We Collect",
+          "content": "We collect several types of information for various purposes to provide and improve our services:",
+          "items": {
+            "personal": "Personal identification information (name, email address, etc.)",
+            "usage": "Usage data and analytics about how you interact with our services",
+            "cookies": "Cookies and similar tracking technologies"
+          }
+        },
+        "useOfInformation": {
+          "title": "2. How We Use Your Information",
+          "content": "We use the collected information for various purposes:",
+          "items": {
+            "provision": "To provide and maintain our services",
+            "improvement": "To improve and personalize your experience",
+            "communication": "To communicate with you about updates and support",
+            "security": "To ensure security and prevent fraud"
+          }
+        },
+        "dataSharing": {
+          "title": "3. Data Sharing and Disclosure",
+          "content": "We may share your information in the following situations:",
+          "items": {
+            "serviceProviders": "With trusted service providers who assist in operating our services",
+            "legal": "When required by law or to protect our rights",
+            "consent": "With your explicit consent"
+          }
+        },
+        "dataSecurity": {
+          "title": "4. Data Security",
+          "content": "We implement appropriate technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction."
+        },
+        "userRights": {
+          "title": "5. Your Rights",
+          "content": "Depending on your location, you may have the following rights regarding your personal data:",
+          "items": {
+            "access": "Right to access your personal data",
+            "rectification": "Right to correct inaccurate data",
+            "deletion": "Right to request deletion of your data",
+            "portability": "Right to data portability"
+          }
+        },
+        "cookies": {
+          "title": "6. Cookies and Tracking",
+          "content": "We use cookies and similar tracking technologies to track activity on our services and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent."
+        },
+        "childrenPrivacy": {
+          "title": "7. Children's Privacy",
+          "content": "Our services are not intended for use by children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us."
+        },
+        "changes": {
+          "title": "8. Changes to This Policy",
+          "content": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the 'Last Updated' date."
+        },
+        "contact": {
+          "title": "9. Contact Us",
+          "content": "If you have any questions about this Privacy Policy or our data practices, please contact us through our support channels."
+        }
+      }
+    }
+  },
   "nav": {
     "search": "Search",
     "myProfile": "My Profile",
@@ -55,7 +174,11 @@
     "unverified": "Unverified",
     "showPassword": "Show password",
     "hidePassword": "Hide password",
-    "toggleTheme": "Toggle theme"
+    "toggleTheme": "Toggle theme",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    }
   },
   "auth": {
     "signOutOtherTab": "You were signed out from another tab",

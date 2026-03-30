@@ -7,7 +7,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "compare-i18n": "node scripts/compare-i18n.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

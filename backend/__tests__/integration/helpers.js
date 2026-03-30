@@ -4,8 +4,8 @@ export const TEST_USER = {
   firstname: "Test",
   lastname: "User",
   email: "test@example.com",
-  password: "SecurePassword123!",
-  confirmPassword: "SecurePassword123!",
+  password: "MyT3stP@ssw0rd2025!#",
+  confirmPassword: "MyT3stP@ssw0rd2025!#",
   terms: true,
 };
 
@@ -13,8 +13,8 @@ export const TEST_USER_2 = {
   firstname: "Second",
   lastname: "User",
   email: "test2@example.com",
-  password: "SecurePassword123!",
-  confirmPassword: "SecurePassword123!",
+  password: "MyS3condP@ssw0rd2025!#",
+  confirmPassword: "MyS3condP@ssw0rd2025!#",
   terms: true,
 };
 
@@ -52,14 +52,19 @@ export async function registerVerifyAndLogin(app, emailServiceMock, overrides = 
   const userData = { ...TEST_USER, ...overrides };
 
   // Register user
-  await agent
+  const registerRes = await agent
     .post("/api/v1/auth/register")
     .send(userData);
 
   // Extract raw verification token from email mock
   // (NOT from DB — the stored token is SHA256 hashed)
+  if (emailServiceMock.sendVerificationEmail.mock.calls.length === 0) {
+    throw new Error("sendVerificationEmail was not called - mock calls array is empty");
+  }
+  // Use the last call to handle multiple registrations in the same test
+  const lastCallIndex = emailServiceMock.sendVerificationEmail.mock.calls.length - 1;
   const verificationToken =
-    emailServiceMock.sendVerificationEmail.mock.calls.at(-1)[1];
+    emailServiceMock.sendVerificationEmail.mock.calls[lastCallIndex][1];
 
   // Verify email
   await agent

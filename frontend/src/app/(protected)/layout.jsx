@@ -2,7 +2,7 @@
 "use client";
 
 import { ProtectedGuard } from "@/features/auth/components/guards/protected-guard";
-import { TopNav } from "@/components/layout/top-nav";
+import { PrivateHeader } from "@/components/layout/private-header";
 import { useUserProfile } from "@/features/user/hooks/useUserProfile";
 
 export default function AppLayout({ children }) {
@@ -12,7 +12,7 @@ export default function AppLayout({ children }) {
     <ProtectedGuard>
       <div className="min-h-screen bg-background">
         <header>
-          <TopNav
+          <PrivateHeader
             initials={initials}
             displayName={displayName}
             onLogout={handleLogout}
