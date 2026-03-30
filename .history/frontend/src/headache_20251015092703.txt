@@ -1,9 +1,0 @@
-
-
-[#01] #
-// use simulated loading => use suspense 
-// use lazy loading => use suspense
-// animations text for auth right panal => framer motion
-
-
- 

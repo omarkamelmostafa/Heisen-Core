@@ -1,4 +1,0 @@
-{
-  "subject": "Your Two-Factor Authentication Code",
-  "variables": ["user.name", "user.firstName", "user.email", "twoFactorCode", "expiryMinutes"]
-}
