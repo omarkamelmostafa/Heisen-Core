@@ -1,2 +1,0 @@
-// use simulated loading => use suspense 
-// 
