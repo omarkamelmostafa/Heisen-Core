@@ -35,3 +35,16 @@ coverage/
 # Misc
 *.tsbuildinfo
 next-env.d.ts
+
+# Local AI/Windsurf/Speckit tool artifacts (not for repo)
+.agent/
+.agents/
+.claude/
+.cursor/
+.opencode/
+.specify/
+.speckit/
+.windsurf/
+specs/
+.windsurfrules
+skills-lock.json
