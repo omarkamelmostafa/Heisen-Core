@@ -1,5 +1,9 @@
 import Queue from "bull";
+<<<<<<< HEAD
+import { MailtrapProvider } from "./providers/mailtrap.provider.js";
+=======
 import { EtherealProvider } from "./providers/mailtrap.provider.js";
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
 
 export class EmailQueue {
   constructor() {
@@ -9,7 +13,11 @@ export class EmailQueue {
         port: parseInt(process.env.REDIS_PORT, 10) || 6379,
       },
     });
+<<<<<<< HEAD
+    this.provider = new MailtrapProvider();
+=======
     this.provider = new EtherealProvider();
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
 
     this.setupProcessor();
   }

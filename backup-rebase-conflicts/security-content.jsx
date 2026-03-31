@@ -23,7 +23,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useTranslations } from "next-intl";
+<<<<<<< HEAD
+=======
 import { cn } from "@/lib/utils";
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
 import { TwoFactorToggle } from "./two-factor-toggle"
 
 function PasswordField({ label, registration, show, onToggleShow, error, placeholder }) {
@@ -136,6 +139,36 @@ export function SecurityContent({
       {/* Section: Change Email */}
       <section>
         <div className="pb-4 border-b border-border">
+<<<<<<< HEAD
+          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("changeEmail.title")}</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mt-3">
+          {t("changeEmail.description")}
+        </p>
+        <div className="mt-4 max-w-md">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-sm text-foreground">{currentEmail}</span>
+            {isEmailVerified && (
+              <Badge variant="outline" className="text-[10px] px-1.5 py-0 font-normal text-green-600 border-green-600">
+                {tc("verified")}
+              </Badge>
+            )}
+          </div>
+
+          {emailSent ? (
+            <div className="space-y-3">
+              <div className="p-3 bg-green-50 border border-green-200 rounded-md">
+                <p className="text-sm text-green-800">
+                  {t("changeEmail.emailSentTo", { email: sentToEmail })}
+                </p>
+              </div>
+              <Button variant="outline" size="sm" onClick={onEmailReset}>
+                {t("changeEmail.changeDifferent")}
+              </Button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit(onEmailSave)} className="space-y-4">
+=======
           <h2 className="text-base font-semibold text-foreground tracking-tight">
             <span className="mr-2" aria-hidden="true">✉️</span>
             {t("changeEmail.title")}
@@ -168,6 +201,7 @@ export function SecurityContent({
         ) : (
           <form onSubmit={handleSubmit(onEmailSave)} className="mt-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-medium text-muted-foreground">{t("changeEmail.newEmailLabel")}</label>
                 <Input
@@ -177,7 +211,11 @@ export function SecurityContent({
                   className={emailErrors.newEmail ? "border-destructive" : ""}
                 />
                 {emailErrors.newEmail && (
+<<<<<<< HEAD
+                  <p className="text-xs text-destructive mt-0.5">{emailErrors.newEmail.message}</p>
+=======
                   <p className="text-xs text-destructive">{emailErrors.newEmail.message}</p>
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
                 )}
               </div>
 
@@ -190,7 +228,11 @@ export function SecurityContent({
                   className={emailErrors.confirmNewEmail ? "border-destructive" : ""}
                 />
                 {emailErrors.confirmNewEmail && (
+<<<<<<< HEAD
+                  <p className="text-xs text-destructive mt-0.5">{emailErrors.confirmNewEmail.message}</p>
+=======
                   <p className="text-xs text-destructive">{emailErrors.confirmNewEmail.message}</p>
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
                 )}
               </div>
 
@@ -213,6 +255,18 @@ export function SecurityContent({
                   </button>
                 </div>
                 {emailErrors.currentPassword && (
+<<<<<<< HEAD
+                  <p className="text-xs text-destructive mt-0.5">{emailErrors.currentPassword.message}</p>
+                )}
+              </div>
+
+              <Button type="submit" disabled={isEmailSubmitting} className="w-full sm:w-auto">
+                {isEmailSubmitting ? t("changeEmail.requesting") : t("changeEmail.requestChange")}
+              </Button>
+            </form>
+          )}
+        </div>
+=======
                   <p className="text-xs text-destructive">{emailErrors.currentPassword.message}</p>
                 )}
               </div>
@@ -225,6 +279,7 @@ export function SecurityContent({
             </div>
           </form>
         )}
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
       </section>
 
       <Separator />
@@ -232,6 +287,39 @@ export function SecurityContent({
       {/* Section A: Change Password */}
       <section>
         <div className="pb-4 border-b border-border">
+<<<<<<< HEAD
+          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("changePassword.title")}</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mt-3">{t("changePassword.description")}</p>
+        <form onSubmit={pwHandleSubmit((data) => onPasswordSave(data, pwReset))} className="mt-4 max-w-md space-y-4">
+          <PasswordField
+            label={t("changePassword.currentPasswordLabel")}
+            registration={pwRegister("oldPassword")}
+            show={showPasswords.old}
+            onToggleShow={() => togglePassword("old")}
+            error={pwErrors.oldPassword?.message}
+            placeholder={t("changePassword.currentPasswordPlaceholder")}
+          />
+          <PasswordField
+            label={t("changePassword.newPasswordLabel")}
+            registration={pwRegister("newPassword")}
+            show={showPasswords.new}
+            onToggleShow={() => togglePassword("new")}
+            error={pwErrors.newPassword?.message}
+            placeholder={t("changePassword.newPasswordPlaceholder")}
+          />
+          <PasswordField
+            label={t("changePassword.confirmPasswordLabel")}
+            registration={pwRegister("confirmPassword")}
+            show={showPasswords.confirm}
+            onToggleShow={() => togglePassword("confirm")}
+            error={pwErrors.confirmPassword?.message}
+            placeholder={t("changePassword.confirmPasswordPlaceholder")}
+          />
+          <Button type="submit" disabled={isPasswordSubmitting} className="w-full sm:w-auto">
+            {isPasswordSubmitting ? t("changePassword.updating") : t("changePassword.updatePassword")}
+          </Button>
+=======
           <h2 className="text-base font-semibold text-foreground tracking-tight">
             <span className="mr-2" aria-hidden="true">🔑</span>
             {t("changePassword.title")}
@@ -270,6 +358,7 @@ export function SecurityContent({
               </Button>
             </div>
           </div>
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
         </form>
       </section>
 
@@ -278,12 +367,18 @@ export function SecurityContent({
       {/* Section B: Two-Factor Authentication */}
       <section>
         <div className="pb-4 border-b border-border">
+<<<<<<< HEAD
+          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("twoFactor.title")}</h2>
+        </div>
+        <div className="mt-4">
+=======
           <h2 className="text-base font-semibold text-foreground tracking-tight">
             <span className="mr-2" aria-hidden="true">🛡️</span>
             {t("twoFactor.title")}
           </h2>
         </div>
         <div className="mt-5 w-full">
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
           <TwoFactorToggle
             twoFactorEnabled={twoFactorEnabled}
             isToggling2fa={isToggling2fa}
@@ -304,6 +399,47 @@ export function SecurityContent({
       {/* Section C: Active Sessions */}
       <section>
         <div className="flex items-center justify-between pb-4 border-b border-border">
+<<<<<<< HEAD
+          <h2 className="text-base font-semibold text-foreground tracking-tight">{t("activeSessions.title")}</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mt-3">{t("activeSessions.description")}</p>
+        <AlertDialog open={signOutDialogOpen} onOpenChange={setSignOutDialogOpen}>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-4 text-destructive border-destructive/30 hover:bg-destructive/10"
+              disabled={isSigningOutAll}
+              onClick={() => setSignOutDialogOpen(true)}
+            >
+              <Monitor className="h-4 w-4 mr-2" />
+              {isSigningOutAll ? t("activeSessions.signingOut") : t("activeSessions.signOutAll")}
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("activeSessions.confirmTitle")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("activeSessions.confirmDescription")}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setSignOutDialogOpen(false)}>
+                {tc("cancel")}
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  onSignOutAll();
+                  setSignOutDialogOpen(false);
+                }}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {t("activeSessions.signOutAll")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+=======
           <h2 className="text-base font-semibold text-foreground tracking-tight">
             <span className="mr-2" aria-hidden="true">🖥️</span>
             {t("activeSessions.title")}
@@ -354,6 +490,7 @@ export function SecurityContent({
             </AlertDialog>
           </div>
         </div>
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
       </section>
     </main>
   );

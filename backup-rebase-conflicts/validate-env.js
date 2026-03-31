@@ -13,6 +13,21 @@ const REQUIRED = [
 
 const RECOMMENDED = [
   {
+<<<<<<< HEAD
+    name: "MAILTRAP_HOST",
+    message: "Email sending will fail. Registration and password reset affected.",
+  },
+  {
+    name: "MAILTRAP_PORT",
+    message: "Email sending will fail. Registration and password reset affected.",
+  },
+  {
+    name: "MAILTRAP_USER",
+    message: "Email sending will fail. Registration and password reset affected.",
+  },
+  {
+    name: "MAILTRAP_PASS",
+=======
     name: "ETHEREAL_HOST",
     message: "Email sending will fail. Registration and password reset affected.",
   },
@@ -26,6 +41,7 @@ const RECOMMENDED = [
   },
   {
     name: "ETHEREAL_PASS",
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
     message: "Email sending will fail. Registration and password reset affected.",
   },
   {

@@ -33,7 +33,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+<<<<<<< HEAD
+=======
 !.env.example
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
 
 # vercel
 .vercel

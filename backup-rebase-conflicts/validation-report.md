@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# Validation Report — Authentication and Session Management Starter Kit
+=======
 # Validation Report — Phase 2.3 Architecture Documentation
 
 **Date**: 2026-03-29T06:00:00Z  
@@ -130,6 +133,7 @@ These discrepancies could mislead developers and cause integration issues.
 
 After corrections, re-run `/speckit.validate` to verify accuracy reaches 95% or above.
  — Authentication and Session Management Starter Kit
+>>>>>>> 0f9bd8b (fix(tests): configure MongoDB Memory Server for offline binary usage)
 
 **Date**: 2026-03-27T03:25:00Z  
 **QA Run**: 6 (Staff Security Audit)  
