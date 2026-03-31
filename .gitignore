@@ -48,3 +48,11 @@ next-env.d.ts
 specs/
 .windsurfrules
 skills-lock.json
+# --- Local AI/Windsurf/Speckit/Ghost artifacts (not for repo) ---
+.github/agents/
+.github/prompts/
+.opencode/
+frontend/.env.local
+frontend/.env.production
+backend/.env
+backend/.env.test

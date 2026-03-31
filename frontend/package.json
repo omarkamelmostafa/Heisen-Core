@@ -8,7 +8,9 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "compare-i18n": "node scripts/compare-i18n.js"
+    "compare-i18n": "node scripts/compare-i18n.js",
+    "find-dead-exports": "node ./scripts/find_dead_exports.js",
+    "find-orphans": "node ./scripts/find_orphans.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
