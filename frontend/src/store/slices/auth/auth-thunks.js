@@ -6,8 +6,8 @@ import { createAppThunk } from "@/store/utils/thunk-utils";
 import {
   logout,
   setAccessToken,
-  setUser,
 } from "./auth-slice";
+import { setProfile } from "../user";
 
 // ==================== PRIMARY THUNKS ====================
 
@@ -96,7 +96,7 @@ export const bootstrapAuth = createAppThunk(
       dispatch(setAccessToken(accessToken));
     }
     if (user) {
-      dispatch(setUser(user));
+      dispatch(setProfile(user));
     }
 
     return response.data;

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { toggle2fa } from "@/store/slices/user/user-thunks";
+import { selectUser2FA } from "@/store/slices/user";
 import { NotificationService } from "@/lib/notifications/notify";
 
 export function useToggle2fa() {
@@ -13,9 +14,7 @@ export function useToggle2fa() {
   const [showDisableDialog, setShowDisableDialog] = useState(false);
   const [password, setPassword] = useState("");
 
-  const twoFactorEnabled = useSelector((state) =>
-    state.auth?.user?.twoFactorEnabled || false
-  );
+  const twoFactorEnabled = useSelector(selectUser2FA) || false;
 
   const handleOpenEnable = () => {
     setPassword("");

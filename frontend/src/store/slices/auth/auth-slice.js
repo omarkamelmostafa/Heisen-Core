@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   // ==================== PRIMARY STATE ====================
-  user: null,
   accessToken: null, // Held in memory only — never persisted to cookies/localStorage
   isAuthenticated: false,
   isLoading: false,
@@ -22,7 +21,6 @@ const authSlice = createSlice({
     // ==================== PRIMARY ACTIONS ====================
     // Logout — clears all auth state
     logout: (state) => {
-      state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
       state.isLoading = false;
@@ -33,11 +31,6 @@ const authSlice = createSlice({
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
       state.isAuthenticated = !!action.payload;
-    },
-
-    // Set user data (called by bootstrap after successful refresh)
-    setUser: (state, action) => {
-      state.user = action.payload;
     },
 
     // Set authentication status
@@ -60,7 +53,6 @@ const authSlice = createSlice({
 
     // ==================== NEW ACTIONS ====================
     setCredentials: (state, action) => {
-      state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
       state.isAuthenticated = true;
       state.isLoading = false;
@@ -73,7 +65,6 @@ const authSlice = createSlice({
     },
 
     clearCredentials: (state) => {
-      state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
       state.isLoading = false;
@@ -119,7 +110,6 @@ const authSlice = createSlice({
       logoutAllDevices,
       verify2fa,
     } = require("./auth-thunks");
-    const { updateProfile, toggle2fa, uploadAvatar } = require("../user/user-thunks");
 
     // Helper to handle loading state
     const handlePending = (state) => {
@@ -135,22 +125,6 @@ const authSlice = createSlice({
         : (action.payload?.message || action.error?.message || 'An unexpected error occurred');
     };
 
-    // Update Profile — stores updated user in Redux
-    builder
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        if (action.payload?.data?.user) {
-          state.user = action.payload.data.user;
-        }
-      });
-
-    // Upload Avatar — merges updated user (with avatar) into auth state
-    builder
-      .addCase(uploadAvatar.fulfilled, (state, action) => {
-        if (action.payload?.data?.user) {
-          state.user = { ...state.user, ...action.payload.data.user };
-        }
-      });
-
     // Login — stores access token in Redux memory
     builder
       .addCase(loginUser.pending, handlePending)
@@ -161,7 +135,6 @@ const authSlice = createSlice({
           return;
         }
         state.isAuthenticated = true;
-        state.user = action.payload.data?.user;
         state.accessToken = action.payload.data?.accessToken || null;
       })
       .addCase(loginUser.rejected, handleRejected);
@@ -172,7 +145,6 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = false; // Must verify email before authenticated
-        state.user = action.payload.data?.user || null;
         state.error = null;
       })
       .addCase(registerUser.rejected, handleRejected);
@@ -184,7 +156,7 @@ const authSlice = createSlice({
       })
       .addCase(bootstrapAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        // accessToken and user are set by the thunk via dispatch(setAccessToken/setUser)
+        // accessToken is set by the thunk via dispatch(setAccessToken)
         state.isAuthenticated = !!state.accessToken;
         state.error = null;
       })
@@ -193,13 +165,11 @@ const authSlice = createSlice({
         // No valid session — not an error, just not authenticated
         state.isAuthenticated = false;
         state.accessToken = null;
-        state.user = null;
       });
 
     // Logout All Devices
     builder
       .addCase(logoutAllDevices.fulfilled, (state) => {
-        state.user = null;
         state.accessToken = null;
         state.isAuthenticated = false;
         state.isLoading = false;
@@ -254,7 +224,6 @@ const authSlice = createSlice({
       .addCase(verify2fa.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = true;
-        state.user = action.payload.data?.user;
         state.accessToken = action.payload.data?.accessToken || null;
         state.error = null;
       })
@@ -262,13 +231,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload?.message || "2FA verification failed";
       });
-
-    // Toggle 2FA
-    builder.addCase(toggle2fa.fulfilled, (state, action) => {
-      if (state.user && action.payload.data?.twoFactorEnabled !== undefined) {
-        state.user.twoFactorEnabled = action.payload.data.twoFactorEnabled;
-      }
-    });
   },
 });
 
@@ -276,7 +238,6 @@ export const {
   // PRIMARY
   logout,
   setAccessToken,
-  setUser,
   setAuthenticated,
   clearError,
   setAuthError,

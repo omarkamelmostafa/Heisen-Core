@@ -2,8 +2,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 // ==================== PRIMARY SELECTORS ====================
-// Base selectors
-export const selectAuthUser = (state) => state.auth.user;
+// Auth status selector (keeps auth-related status together)
 export const selectAuthStatus = createSelector(
   [(state) => state.auth],
   (auth) => ({
@@ -16,12 +15,9 @@ export const selectAuthStatus = createSelector(
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectAuthLoading = (state) => state.auth.isLoading;
 export const selectAuthError = (state) => state.auth.error;
-
-// Memoized/computed selectors
-export const selectUserName = createSelector(
-  [selectAuthUser],
-  (user) => user?.name || user?.email?.split("@")[0]
-);
-export const selectUserEmail = (state) => state.auth.user?.email;
-
 export const selectIsVerifying = (state) => state.auth.isVerifying;
+export const selectSessionExpired = (state) => state.auth.sessionExpired;
+export const selectIsBootstrapComplete = (state) => state.auth.isBootstrapComplete;
+
+// Access token selector
+export const selectAccessToken = (state) => state.auth.accessToken;

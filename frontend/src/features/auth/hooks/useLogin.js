@@ -10,8 +10,8 @@ import {
   selectAuthLoading,
   selectIsAuthenticated,
   selectAuthError,
-  selectAuthUser,
 } from "@/store/slices/auth/auth-selectors";
+import { selectUserProfile } from "@/store/slices/user";
 
 export function useLogin() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export function useLogin() {
   const dispatch = useAppDispatch();
   const t = useTranslations("toasts");
 
-  const user = useAppSelector(selectAuthUser);
+  const user = useAppSelector(selectUserProfile);
   const isLoading = useAppSelector(selectAuthLoading);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const error = useAppSelector(selectAuthError);
