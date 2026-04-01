@@ -1,4 +1,4 @@
-// frontend/src/app/(app)/settings/security/page.jsx
+// frontend/src/app/(protected)/settings/security/page.jsx
 "use client";
 
 import { useUserProfile } from "@/features/user/hooks/useUserProfile";

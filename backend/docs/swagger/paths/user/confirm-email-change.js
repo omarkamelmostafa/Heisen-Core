@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/confirm-email-change.js
 /**
  * @openapi
  * /user/email/confirm/{token}:

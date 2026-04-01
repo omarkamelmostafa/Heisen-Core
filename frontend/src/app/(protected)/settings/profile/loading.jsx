@@ -1,3 +1,4 @@
+// frontend/src/app/(protected)/settings/profile/loading.jsx
 // frontend/src/app/(app)/settings/profile/loading.jsx
 import { ProfileSkeleton } from "@/features/user/components/skeletons/profile-skeleton";
 

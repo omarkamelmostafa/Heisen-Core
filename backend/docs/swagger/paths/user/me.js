@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/me.js
 /**
  * @openapi
  * /user/me:

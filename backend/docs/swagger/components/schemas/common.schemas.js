@@ -1,3 +1,4 @@
+// backend/docs/swagger/components/schemas/common.schemas.js
 export const commonSchemas = {
   BaseResponse: {
     type: "object",

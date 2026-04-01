@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/resend-2fa.js
 /**
  * @openapi
  * /auth/resend-2fa:

@@ -1,3 +1,4 @@
+// backend/docs/swagger/index.js
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { commonSchemas } from "./components/schemas/common.schemas.js";

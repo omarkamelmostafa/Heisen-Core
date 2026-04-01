@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/verify-email.js
 /**
  * @openapi
  * /auth/verify-email:

@@ -1,3 +1,4 @@
+// backend/controllers/auth/resend-2fa.controller.js
 import { resend2faUseCase } from "../../use-cases/auth/resend-2fa.use-case.js";
 import { sendUseCaseResponse } from "./auth-shared.js";
 

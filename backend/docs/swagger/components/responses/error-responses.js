@@ -1,3 +1,4 @@
+// backend/docs/swagger/components/responses/error-responses.js
 export const errorResponses = {
   BadRequest: {
     description: "Validation failed or malformed request",

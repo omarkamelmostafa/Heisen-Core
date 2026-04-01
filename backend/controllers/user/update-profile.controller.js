@@ -1,3 +1,4 @@
+// backend/controllers/user/update-profile.controller.js
 import { updateProfileUseCase } from "../../use-cases/user/update-profile.use-case.js";
 import { sendUseCaseResponse } from "../auth/auth-shared.js";
 

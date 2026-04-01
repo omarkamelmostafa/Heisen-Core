@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/toggle-2fa.js
 /**
  * @openapi
  * /user/security/2fa:

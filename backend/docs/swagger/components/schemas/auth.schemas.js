@@ -1,3 +1,4 @@
+// backend/docs/swagger/components/schemas/auth.schemas.js
 export const authSchemas = {
   LoginRequest: {
     type: "object",

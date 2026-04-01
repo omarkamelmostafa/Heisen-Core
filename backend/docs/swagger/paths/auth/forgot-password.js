@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/forgot-password.js
 /**
  * @openapi
  * /auth/forgot-password:

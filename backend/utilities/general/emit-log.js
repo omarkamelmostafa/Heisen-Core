@@ -1,3 +1,4 @@
+// backend/utilities/general/emit-log.js
 import chalk from "chalk";
 import logger from "./logger.js";
 

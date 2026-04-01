@@ -1,4 +1,4 @@
-// frontend/src/app/(app)/error.jsx
+// frontend/src/app/(protected)/error.jsx
 "use client";
 
 import { useTranslations } from "next-intl";

@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/change-password.js
 /**
  * @openapi
  * /user/security/password:

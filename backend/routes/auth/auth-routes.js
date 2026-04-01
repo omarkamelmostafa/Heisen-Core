@@ -1,3 +1,4 @@
+// backend/routes/auth/auth-routes.js
 import { body } from "express-validator";
 import express from "express";
 import { handleRegister } from "../../controllers/auth/register.controller.js";

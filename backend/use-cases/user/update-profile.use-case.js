@@ -1,3 +1,4 @@
+// backend/use-cases/user/update-profile.use-case.js
 import User from "../../model/User.js";
 import { sanitizeUserForResponse } from "../../utilities/auth/user-data-utils.js";
 import logger from "../../utilities/general/logger.js";

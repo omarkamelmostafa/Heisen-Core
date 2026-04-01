@@ -1,3 +1,4 @@
+// backend/index.js
 import dotenv from "dotenv";
 import { validateEnv } from "./config/validate-env.js";
 import app from "./app.js";

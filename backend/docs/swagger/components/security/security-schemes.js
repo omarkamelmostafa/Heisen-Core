@@ -1,3 +1,4 @@
+// backend/docs/swagger/components/security/security-schemes.js
 export const securitySchemes = {
   BearerAuth: {
     type: "http",

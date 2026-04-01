@@ -1,4 +1,4 @@
-// middleware/errors/not-found-middleware.js
+// backend/middleware/errors/not-found-middleware.js
 export const notFoundMiddleware = (req, res, next) => {
   const errorDetails = {
     success: false,

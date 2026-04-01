@@ -1,3 +1,4 @@
+// backend/services/email/providers/mail-test.js
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import path from "path";

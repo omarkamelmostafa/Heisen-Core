@@ -1,3 +1,4 @@
+// backend/services/email/email.queue.js
 import Queue from "bull";
 import { EtherealProvider } from "./providers/mailtrap.provider.js";
 

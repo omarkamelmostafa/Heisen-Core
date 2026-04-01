@@ -1,3 +1,4 @@
+// backend/__tests__/integration/helpers.js
 import request from "supertest";
 
 export const TEST_USER = {

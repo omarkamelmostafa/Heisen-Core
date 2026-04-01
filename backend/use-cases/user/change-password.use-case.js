@@ -1,3 +1,4 @@
+// backend/use-cases/user/change-password.use-case.js
 import User from "../../model/User.js";
 import { hashPassword, comparePassword } from "../../utilities/auth/hash-utils.js";
 import logger from "../../utilities/general/logger.js";

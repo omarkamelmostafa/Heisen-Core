@@ -1,4 +1,4 @@
-// middleware/core/index.js
+// backend/middleware/core/index.js
 export { createApiVersionMiddleware } from "./api-version-middleware.js";
 export { bodyParserMiddleware } from "./body-parser-middleware.js";
 export { contentTypeNegotiationMiddleware } from "./content-type-negotiation-middleware.js";

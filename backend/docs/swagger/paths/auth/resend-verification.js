@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/resend-verification.js
 /**
  * @openapi
  * /auth/resend-verification:

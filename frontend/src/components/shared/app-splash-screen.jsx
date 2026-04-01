@@ -1,3 +1,4 @@
+// frontend/src/components/shared/app-splash-screen.jsx
 /**
  * AppSplashScreen — Full-screen loading state for app initialization.
  *

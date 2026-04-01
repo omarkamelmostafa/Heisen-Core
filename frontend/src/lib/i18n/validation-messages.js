@@ -1,3 +1,4 @@
+// frontend/src/lib/i18n/validation-messages.js
 /**
  * Validation message translation maps.
  * 

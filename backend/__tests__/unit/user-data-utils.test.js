@@ -1,3 +1,4 @@
+// backend/__tests__/unit/user-data-utils.test.js
 import { describe, it, expect } from "vitest";
 import { sanitizeUserForResponse } from "../../utilities/auth/user-data-utils.js";
 

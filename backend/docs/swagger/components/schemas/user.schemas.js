@@ -1,3 +1,4 @@
+// backend/docs/swagger/components/schemas/user.schemas.js
 export const userSchemas = {
   UserProfile: {
     type: "object",

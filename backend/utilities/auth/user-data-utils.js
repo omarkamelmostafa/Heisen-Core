@@ -1,3 +1,4 @@
+// backend/utilities/auth/user-data-utils.js
 export const sanitizeUserForResponse = (user) => {
   return {
     id: user._id,

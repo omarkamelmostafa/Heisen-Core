@@ -1,4 +1,5 @@
 "use client";
+// frontend/src/features/user/components/dashboard-content.jsx
 
 import { useTranslations } from "next-intl";
 import Link from "next/link";

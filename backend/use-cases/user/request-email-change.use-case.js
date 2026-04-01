@@ -1,3 +1,4 @@
+// backend/use-cases/user/request-email-change.use-case.js
 import User from "../../model/User.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";

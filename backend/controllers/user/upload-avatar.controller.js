@@ -1,3 +1,4 @@
+// backend/controllers/user/upload-avatar.controller.js
 import { uploadAvatarUseCase } from "../../use-cases/user/upload-avatar.use-case.js";
 import { sendUseCaseResponse } from "../auth/auth-shared.js";
 

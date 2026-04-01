@@ -1,4 +1,4 @@
-// config/allowed-origins.js
+// backend/config/allowed-origins.js
 
 // Load allowed origins from environment variable with fallbacks
 export const allowedOrigins = process.env.ALLOWED_ORIGINS

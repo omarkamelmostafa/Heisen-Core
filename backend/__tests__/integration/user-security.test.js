@@ -1,3 +1,4 @@
+// backend/__tests__/integration/user-security.test.js
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import request from "supertest";
 import app from "../../app.js";

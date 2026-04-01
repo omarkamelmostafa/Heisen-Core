@@ -1,3 +1,4 @@
+// backend/__tests__/unit/crypto-utils.test.js
 import { describe, it, expect } from "vitest";
 import { generateVerificationCode, generateResetToken } from "../../utilities/auth/crypto-utils.js";
 import { hashToken } from "../../services/auth/token-service.js"; // from token-service

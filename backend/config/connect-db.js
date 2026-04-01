@@ -1,3 +1,4 @@
+// backend/config/connect-db.js
 /**
  * Configuration module for MongoDB database connection with environment switching
  */

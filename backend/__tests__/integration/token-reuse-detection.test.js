@@ -1,4 +1,4 @@
-// FILE: backend/__tests__/integration/token-reuse-detection.test.js
+// backend/__tests__/integration/token-reuse-detection.test.js
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import request from "supertest";
