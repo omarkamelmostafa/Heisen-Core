@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { clearCredentials } from "@/store/slices/auth/auth-slice";
-import { selectAuthUser, selectIsAuthenticated } from "@/store/slices/auth/auth-selectors";
+import { selectIsAuthenticated } from "@/store/slices/auth/auth-selectors";
+import { selectUserProfile } from "@/store/slices/user";
 import { NotificationService } from "@/lib/notifications/notify";
 
 export function useUserProfile() {
@@ -12,7 +13,7 @@ export function useUserProfile() {
   const router = useRouter();
   const t = useTranslations("toasts");
 
-  const user = useAppSelector(selectAuthUser);
+  const user = useAppSelector(selectUserProfile);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const handleLogout = async () => {

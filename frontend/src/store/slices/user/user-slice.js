@@ -1,6 +1,22 @@
 // frontend/src/store/slices/user/user-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
+// Import auth slice actions for extraReducers
+import {
+  setCredentials,
+  clearCredentials,
+  logout,
+} from "../auth/auth-slice";
+
+// Import auth thunks for extraReducers
+import {
+  loginUser,
+  registerUser,
+  verify2fa,
+  bootstrapAuth,
+  logoutAllDevices,
+} from "../auth/auth-thunks";
+
 const initialState = {
   profile: null,
   isLoading: false,
@@ -11,7 +27,12 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // Update profile (manual sync update)
+    // Set profile directly (manual sync update)
+    setProfile: (state, action) => {
+      state.profile = action.payload;
+    },
+
+    // Update profile (manual sync update - merges partial data)
     updateProfile: (state, action) => {
       if (state.profile) {
         state.profile = { ...state.profile, ...action.payload };
@@ -26,6 +47,7 @@ const userSlice = createSlice({
     // Clear user data
     clearUser: (state) => {
       state.profile = null;
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -39,6 +61,58 @@ const userSlice = createSlice({
       state.error = action.payload || "An error occurred";
     };
 
+    // ==================== AUTH SLICE SYNC ACTIONS ====================
+
+    // setCredentials: sets profile from payload.user
+    builder.addCase(setCredentials, (state, action) => {
+      state.profile = action.payload.user;
+    });
+
+    // clearCredentials: clears profile and error
+    builder.addCase(clearCredentials, (state) => {
+      state.profile = null;
+      state.error = null;
+    });
+
+    // logout: clears profile and error
+    builder.addCase(logout, (state) => {
+      state.profile = null;
+      state.error = null;
+    });
+
+    // ==================== AUTH THUNK ACTIONS ====================
+
+    // loginUser.fulfilled: set profile from action.payload.data?.user
+    // Note: No pending/rejected handlers - auth-slice owns loading/error for auth operations
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      if (action.payload.data?.requiresTwoFactor) {
+        return;
+      }
+      state.profile = action.payload.data?.user;
+    });
+
+    // registerUser.fulfilled: set profile from action.payload.data?.user
+    builder.addCase(registerUser.fulfilled, (state, action) => {
+      state.profile = action.payload.data?.user;
+    });
+
+    // verify2fa.fulfilled: set profile from action.payload.data?.user
+    builder.addCase(verify2fa.fulfilled, (state, action) => {
+      state.profile = action.payload.data?.user;
+    });
+
+    // bootstrapAuth.rejected: clear profile (no valid session)
+    builder.addCase(bootstrapAuth.rejected, (state) => {
+      state.profile = null;
+    });
+
+    // logoutAllDevices.fulfilled: clear profile and error
+    builder.addCase(logoutAllDevices.fulfilled, (state) => {
+      state.profile = null;
+      state.error = null;
+    });
+
+    // ==================== USER THUNK ACTIONS ====================
     builder
       // Fetch User Profile
       .addCase("user/fetchProfile/pending", handlePending)
@@ -53,7 +127,9 @@ const userSlice = createSlice({
       .addCase("user/updateProfile/pending", handlePending)
       .addCase("user/updateProfile/fulfilled", (state, action) => {
         state.isLoading = false;
-        state.profile = action.payload;
+        if (action.payload?.data?.user) {
+          state.profile = action.payload.data.user;
+        }
         state.error = null;
       })
       .addCase("user/updateProfile/rejected", handleRejected)
@@ -94,6 +170,7 @@ const userSlice = createSlice({
 });
 
 export const {
+  setProfile,
   updateProfile,
   clearError,
   clearUser,

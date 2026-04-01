@@ -13,8 +13,8 @@ import {
   selectAuthLoading,
   selectIsAuthenticated,
   selectAuthError,
-  selectAuthUser,
 } from "@/store/slices/auth/auth-selectors";
+import { selectUserEmail } from "@/store/slices/user";
 
 export function useVerifyEmail() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export function useVerifyEmail() {
   const dispatch = useAppDispatch();
   const t = useTranslations("toasts");
 
-  const user = useAppSelector(selectAuthUser);
+  const userEmail = useAppSelector(selectUserEmail);
   const isLoading = useAppSelector(selectAuthLoading);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const error = useAppSelector(selectAuthError);
@@ -31,7 +31,7 @@ export function useVerifyEmail() {
 
   // Email source: URL search params > Redux state
   const emailFromUrl = searchParams.get("email");
-  const email = emailFromUrl || user?.email;
+  const email = emailFromUrl || userEmail;
   const hasEmail = !!email;
 
   const [timeLeft, setTimeLeft] = useState(0);
