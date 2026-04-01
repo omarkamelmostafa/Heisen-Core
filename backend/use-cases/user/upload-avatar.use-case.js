@@ -1,3 +1,4 @@
+// backend/use-cases/user/upload-avatar.use-case.js
 import User from "../../model/User.js";
 import { CloudinaryService } from "../../services/cloudinaryService.js";
 import { sanitizeUserForResponse } from "../../utilities/auth/user-data-utils.js";

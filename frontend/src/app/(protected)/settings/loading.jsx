@@ -1,3 +1,4 @@
+// frontend/src/app/(protected)/settings/loading.jsx
 // frontend/src/app/(app)/settings/loading.jsx
 import { AppSplashScreen } from "@/components/shared/app-splash-screen";
 import { getTranslations } from "next-intl/server";

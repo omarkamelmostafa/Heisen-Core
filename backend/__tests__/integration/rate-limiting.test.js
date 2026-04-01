@@ -1,3 +1,4 @@
+// backend/__tests__/integration/rate-limiting.test.js
 import { vi, describe, it, expect } from "vitest";
 import request from "supertest";
 

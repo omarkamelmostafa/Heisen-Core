@@ -1,3 +1,4 @@
+// backend/__tests__/unit/hash-utils.test.js
 import { describe, it, expect } from "vitest";
 import { hashPassword, comparePassword } from "../../utilities/auth/hash-utils.js";
 

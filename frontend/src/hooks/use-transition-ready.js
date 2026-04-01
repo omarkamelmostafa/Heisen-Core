@@ -1,3 +1,4 @@
+// frontend/src/hooks/use-transition-ready.js
 /**
  * useTransitionReady — Controls skeleton-to-content transitions.
  *

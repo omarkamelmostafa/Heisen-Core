@@ -1,3 +1,4 @@
+// backend/middleware/core/credentials-middleware.js
 import { allowedOrigins } from "../../config/allowed-origins.js";
 import logger from "../../utilities/general/logger.js";
 

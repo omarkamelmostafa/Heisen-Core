@@ -1,3 +1,4 @@
+// backend/utilities/auth/hash-utils.js
 import bcrypt from "bcrypt";
 
 const SALT_ROUNDS = 12;

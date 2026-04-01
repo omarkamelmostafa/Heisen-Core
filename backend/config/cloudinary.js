@@ -1,4 +1,4 @@
-// config/cloudinary.js
+// backend/config/cloudinary.js
 import { v2 as cloudinary } from "cloudinary";
 import { emitLogMessage } from "../utilities/general/emit-log.js";
 

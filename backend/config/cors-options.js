@@ -1,3 +1,4 @@
+// backend/config/cors-options.js
 import { allowedOrigins } from "./allowed-origins.js";
 
 export const corsOptions = {

@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/refresh.js
 /**
  * @openapi
  * /auth/refresh:

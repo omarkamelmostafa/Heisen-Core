@@ -1,3 +1,4 @@
+// frontend/src/i18n/request.js
 import { getRequestConfig } from "next-intl/server";
 import { cookies } from "next/headers";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "./config";

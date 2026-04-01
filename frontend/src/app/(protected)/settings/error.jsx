@@ -1,4 +1,4 @@
-// frontend/src/app/(app)/settings/error.jsx
+// frontend/src/app/(protected)/settings/error.jsx
 "use client";
 
 import { useEffect } from "react";

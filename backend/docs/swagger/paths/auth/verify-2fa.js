@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/verify-2fa.js
 /**
  * @openapi
  * /auth/verify-2fa:

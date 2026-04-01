@@ -1,4 +1,5 @@
 "use client";
+// frontend/src/components/shared/language-toggle.jsx
 
 import * as React from "react";
 import { useLocale } from "next-intl";

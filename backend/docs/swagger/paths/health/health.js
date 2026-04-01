@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/health/health.js
 /**
  * @openapi
  * /health:

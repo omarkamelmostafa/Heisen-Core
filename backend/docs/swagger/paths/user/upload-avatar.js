@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/upload-avatar.js
 /**
  * @openapi
  * /user/profile/avatar:

@@ -1,3 +1,4 @@
+// backend/middleware/core/logging-user-activity-middleware.js
 import logger from "../../utilities/general/logger.js";
 export const createUserActivityLogger = ({ excludedRoutes = [] } = {}) => {
   return async (req, res, next) => {

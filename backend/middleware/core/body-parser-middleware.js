@@ -1,4 +1,4 @@
-// bodyParserMiddleware.js
+// backend/middleware/core/body-parser-middleware.js
 import bodyParser from "body-parser";
 
 // Define options for bodyParser middleware

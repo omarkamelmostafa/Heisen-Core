@@ -1,4 +1,4 @@
-// services/cloudinaryService.js
+// backend/services/cloudinaryService.js
 import cloudinary from "../config/cloudinary.js";
 import { Readable } from "stream";
 

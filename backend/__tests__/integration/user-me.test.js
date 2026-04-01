@@ -1,3 +1,4 @@
+// backend/__tests__/integration/user-me.test.js
 import { vi, beforeEach, describe, it, expect } from "vitest";
 import request from "supertest";
 import app from "../../app.js";

@@ -1,3 +1,4 @@
+// backend/middleware/errors/error-handler-middleware.js
 import { AppError } from "../../errors/AppError.js";
 import { apiResponseManager } from "../../utilities/general/response-manager.js";
 import logger from "../../utilities/general/logger.js";

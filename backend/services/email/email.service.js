@@ -1,3 +1,4 @@
+// backend/services/email/email.service.js
 import { EtherealProvider } from "./providers/mailtrap.provider.js";
 import { EmailQueue } from "./email.queue.js";
 import { TemplateEngine } from "./templates/template.engine.js";

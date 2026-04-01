@@ -1,3 +1,4 @@
+// backend/use-cases/user/confirm-email-change.use-case.js
 import User from "../../model/User.js";
 import RefreshToken from "../../model/RefreshToken.js";
 import crypto from "crypto";

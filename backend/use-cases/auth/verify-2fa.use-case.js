@@ -1,3 +1,4 @@
+// backend/use-cases/auth/verify-2fa.use-case.js
 import jwt from "jsonwebtoken";
 import User from "../../model/User.js";
 import { hashToken, generateTokens } from "../../services/auth/token-service.js";

@@ -1,4 +1,4 @@
-// frontend/src/app/(app)/settings/layout.jsx
+// frontend/src/app/(protected)/settings/layout.jsx
 "use client";
 
 import { usePathname } from "next/navigation";

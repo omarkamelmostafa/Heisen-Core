@@ -1,3 +1,4 @@
+// backend/routes/user/user-routes.js
 import express from "express";
 import { getCurrentUser } from "../../controllers/user/user.controller.js";
 import { updateProfile } from "../../controllers/user/update-profile.controller.js";

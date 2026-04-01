@@ -1,3 +1,4 @@
+// backend/config/validate-env.js
 import logger from "../utilities/general/logger.js";
 
 const REQUIRED = [

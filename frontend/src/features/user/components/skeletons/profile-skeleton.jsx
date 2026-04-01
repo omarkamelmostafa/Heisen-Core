@@ -1,4 +1,5 @@
 "use client";
+// frontend/src/features/user/components/skeletons/profile-skeleton.jsx
 
 import { Skeleton } from "@/components/ui/skeleton";
 

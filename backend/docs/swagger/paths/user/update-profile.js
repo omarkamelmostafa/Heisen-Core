@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/update-profile.js
 /**
  * @openapi
  * /user/me:

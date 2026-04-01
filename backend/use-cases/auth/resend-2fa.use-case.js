@@ -1,3 +1,4 @@
+// backend/use-cases/auth/resend-2fa.use-case.js
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import User from "../../model/User.js";

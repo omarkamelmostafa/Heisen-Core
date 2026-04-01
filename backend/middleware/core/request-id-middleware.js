@@ -1,4 +1,4 @@
-// middlewares/requestIdMiddleware.js
+// backend/middleware/core/request-id-middleware.js
 
 import { v4 as uuidv4 } from "uuid";
 

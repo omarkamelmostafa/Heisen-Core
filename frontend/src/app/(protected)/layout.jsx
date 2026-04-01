@@ -1,4 +1,4 @@
-// frontend/src/app/(app)/layout.jsx
+// frontend/src/app/(protected)/layout.jsx
 "use client";
 
 import { ProtectedGuard } from "@/features/auth/components/guards/protected-guard";

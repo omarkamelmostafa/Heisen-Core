@@ -1,3 +1,4 @@
+// backend/__tests__/integration/setup.js
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import { beforeAll, afterAll, beforeEach } from "vitest";

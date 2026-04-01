@@ -1,4 +1,4 @@
-// middleware/index.js
+// backend/middleware/index.js
 export * from "./core/index.js";
 export * from "./auth/index.js";
 export * from "./security/index.js";

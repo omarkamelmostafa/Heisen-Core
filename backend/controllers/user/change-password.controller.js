@@ -1,3 +1,4 @@
+// backend/controllers/user/change-password.controller.js
 import { changePasswordUseCase } from "../../use-cases/user/change-password.use-case.js";
 import { sendUseCaseResponse } from "../auth/auth-shared.js";
 

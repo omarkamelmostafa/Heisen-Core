@@ -1,3 +1,4 @@
+// backend/controllers/user/user.controller.js
 import User from "../../model/User.js";
 import { sanitizeUserForResponse } from "../../utilities/auth/user-data-utils.js";
 import { apiResponseManager } from "../../utilities/general/response-manager.js";

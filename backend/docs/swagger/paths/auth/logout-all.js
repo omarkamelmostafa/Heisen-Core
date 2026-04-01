@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/logout-all.js
 /**
  * @openapi
  * /auth/logout-all:

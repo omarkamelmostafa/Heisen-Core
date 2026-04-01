@@ -1,3 +1,4 @@
+// backend/controllers/user/email-change.controller.js
 import { sendUseCaseResponse } from "../auth/auth-shared.js";
 import { requestEmailChangeUseCase } from "../../use-cases/user/request-email-change.use-case.js";
 import { confirmEmailChangeUseCase } from "../../use-cases/user/confirm-email-change.use-case.js";

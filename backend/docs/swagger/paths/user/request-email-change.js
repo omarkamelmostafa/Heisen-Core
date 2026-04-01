@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/user/request-email-change.js
 /**
  * @openapi
  * /user/email/request:

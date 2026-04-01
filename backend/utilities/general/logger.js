@@ -1,3 +1,4 @@
+// backend/utilities/general/logger.js
 import pino from "pino";
 
 /**

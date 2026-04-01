@@ -1,3 +1,4 @@
+// backend/docs/swagger/paths/auth/login.js
 /**
  * @openapi
  * /auth/login:

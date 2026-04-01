@@ -1,4 +1,4 @@
-// controllers/test/test-controller.js
+// backend/controllers/test/test-controller.js
 
 import { getSanitizationStats } from "../../middleware/security/sanitize-middleware.js";
 import { logHelmetConfig } from "../../middleware/security/helmet-middleware.js";
