@@ -1,4 +1,5 @@
 // backend/utilities/general/response-manager.js
+import { emitLogMessage } from "./emit-log.js";
 
 /**
  * Handles API responses for both success and error conditions, with integrated logging.
@@ -32,7 +33,7 @@ export const apiResponseManager = (
   }
 ) => {
   if (res.headersSent) {
-    console.warn("Response already sent, skipping apiResponseManager");
+    emitLogMessage("Response already sent, skipping apiResponseManager", "error");
     return;
   }
 

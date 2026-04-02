@@ -1,75 +1,114 @@
 // backend/config/connect-db.js
-/**
- * Configuration module for MongoDB database connection with environment switching
- */
-
+// /**
+//  * Configuration module for MongoDB database connection with environment switching
+//  */
 import mongoose from "mongoose";
 import { emitLogMessage } from "../utilities/general/emit-log.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Database connection modes
 const DB_MODES = {
   LOCAL: "local",
   ATLAS: "atlas",
 };
 
-// Database configurations
 const databaseConfigs = {
   [DB_MODES.LOCAL]: {
     host: process.env.DB_LOCAL_HOST || "127.0.0.1",
     port: process.env.DB_LOCAL_PORT || 27017,
-    database: process.env.DB_LOCAL_NAME || "fantasy-coach",
+    database: process.env.DB_LOCAL_NAME || "HEISEN-CORE",
     user: process.env.DB_LOCAL_USER || "",
     password: process.env.DB_LOCAL_PASSWORD || "",
   },
   [DB_MODES.ATLAS]: {
     uri: process.env.DATABASE_URI,
-    database: process.env.DB_ATLAS_NAME || "fantasy-coach",
+    database: process.env.DB_ATLAS_NAME || "HEISEN-CORE",
   },
 };
 
-// Determine connection mode (default to local if not specified)
 const getConnectionMode = () => {
   return process.env.DB_CONNECTION_MODE?.toLowerCase() === DB_MODES.ATLAS
     ? DB_MODES.ATLAS
     : DB_MODES.LOCAL;
 };
 
-// Construct connection string based on mode
 const getConnectionString = (mode) => {
   switch (mode) {
     case DB_MODES.ATLAS:
-      if (!databaseConfigs.atlas.uri) {
+      if (!databaseConfigs[DB_MODES.ATLAS].uri) {
         throw new Error(
           "DATABASE_URI environment variable is required for Atlas connection"
         );
       }
-      return databaseConfigs.atlas.uri;
+      return databaseConfigs[DB_MODES.ATLAS].uri;
 
     case DB_MODES.LOCAL:
-    default:
-      const config = databaseConfigs.local;
+    default: {
+      const config = databaseConfigs[DB_MODES.LOCAL];
       if (config.user && config.password) {
-        return `mongodb://${encodeURIComponent(
-          config.user
-        )}:${encodeURIComponent(config.password)}@${config.host}:${config.port
-          }/${config.database}`;
+        return `mongodb://${encodeURIComponent(config.user)}:${encodeURIComponent(
+          config.password
+        )}@${config.host}:${config.port}/${config.database}`;
       }
       return `mongodb://${config.host}:${config.port}/${config.database}`;
+    }
   }
 };
 
-// Get connection options
-const getConnectionOptions = () => {
-  return {
-    retryWrites: true,
-    w: "majority",
-    appName: "fantasy-coach-app",
-  };
+const getConnectionOptions = () => ({
+  retryWrites: true,
+  w: "majority",
+  appName: "heisen-core-app",
+});
+
+// --- reconnect state ---
+let reconnectTimer = null;
+let reconnectAttempts = 0;
+let isReconnecting = false;
+
+const clearReconnectTimer = () => {
+  if (reconnectTimer) {
+    clearTimeout(reconnectTimer);
+    reconnectTimer = null;
+  }
 };
 
-// Export a function to connect to the MongoDB database
+const startReconnectLoop = () => {
+  if (isReconnecting) return; // prevent duplicate loops
+  isReconnecting = true;
+
+  const attemptReconnect = async () => {
+    reconnectAttempts += 1;
+
+    emitLogMessage(
+      `🔄 MongoDB reconnect attempt #${reconnectAttempts}...`,
+      "info"
+    );
+
+    try {
+      const connectionMode = getConnectionMode();
+      const connectionString = getConnectionString(connectionMode);
+      const options = getConnectionOptions();
+
+      await mongoose.connect(connectionString, options);
+
+      emitLogMessage("✅ MongoDB reconnected successfully", "success");
+      reconnectAttempts = 0;
+      isReconnecting = false;
+      clearReconnectTimer();
+    } catch (error) {
+      emitLogMessage(
+        `❌ Reconnect attempt #${reconnectAttempts} failed: ${error.message}`,
+        "error"
+      );
+
+      reconnectTimer = setTimeout(attemptReconnect, 1000);
+    }
+  };
+
+  reconnectTimer = setTimeout(attemptReconnect, 1000);
+};
+
 export const connectToMongo = async () => {
   try {
     const connectionMode = getConnectionMode();
@@ -97,13 +136,16 @@ export const connectToMongo = async () => {
       `❌ Error while connecting to database: ${error.message}`,
       "error"
     );
-    throw error; // Re-throw to handle in calling code
+    throw error;
   }
 };
 
-// Utility functions for connection management
 export const disconnectFromMongo = async () => {
   try {
+    clearReconnectTimer();
+    isReconnecting = false;
+    reconnectAttempts = 0;
+
     await mongoose.disconnect();
     emitLogMessage("✅ Disconnected from MongoDB", "success");
   } catch (error) {
@@ -115,49 +157,19 @@ export const disconnectFromMongo = async () => {
   }
 };
 
-export const getConnectionStatus = () => {
-  return mongoose.connection.readyState;
-};
+export const getConnectionStatus = () => mongoose.connection.readyState;
 
-// Connection event listeners for better monitoring
+// --- event listeners ---
 mongoose.connection.on("disconnected", () => {
   emitLogMessage("📡 MongoDB disconnected", "info");
-
-  // Exponential backoff reconnection
-  let reconnectAttempts = 0;
-  const maxReconnectAttempts = 10;
-  const baseDelay = 1000;
-
-  const attemptReconnect = () => {
-    reconnectAttempts++;
-    emitLogMessage(`MongoDB reconnection attempt ${reconnectAttempts}/${maxReconnectAttempts}`, "info");
-
-    const connectionMode = getConnectionMode();
-    const connectionString = getConnectionString(connectionMode);
-    const options = getConnectionOptions();
-
-    mongoose.connect(connectionString, options)
-      .then(() => {
-        emitLogMessage("MongoDB reconnected successfully", "success");
-        reconnectAttempts = 0;
-      })
-      .catch((error) => {
-        if (reconnectAttempts >= maxReconnectAttempts) {
-          emitLogMessage(`Failed to reconnect after ${maxReconnectAttempts} attempts: ${error.message}`, "error");
-          return;
-        }
-        const nextDelay = Math.min(baseDelay * Math.pow(2, reconnectAttempts), 30000);
-        emitLogMessage(`Reconnection failed, retrying in ${nextDelay / 1000}s...`, "warn");
-        setTimeout(attemptReconnect, nextDelay);
-      });
-  };
-
-  const initialDelay = Math.min(baseDelay * Math.pow(2, reconnectAttempts), 30000);
-  setTimeout(attemptReconnect, initialDelay);
+  startReconnectLoop();
 });
 
 mongoose.connection.on("connected", () => {
   emitLogMessage("MongoDB connected", "info");
+  clearReconnectTimer();
+  isReconnecting = false;
+  reconnectAttempts = 0;
 });
 
 mongoose.connection.on("error", (error) => {
@@ -166,4 +178,7 @@ mongoose.connection.on("error", (error) => {
 
 mongoose.connection.on("reconnected", () => {
   emitLogMessage("🔁 MongoDB reconnected", "success");
+  clearReconnectTimer();
+  isReconnecting = false;
+  reconnectAttempts = 0;
 });

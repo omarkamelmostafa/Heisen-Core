@@ -2,6 +2,7 @@
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
 import redis from "../../config/redis.js";
+import { apiResponseManager } from "../../utilities/general/response-manager.js";
 
 // Rate limiting middleware configuration
 export function createRateLimiterMiddleware(options = {}) {
@@ -18,14 +19,12 @@ export function createRateLimiterMiddleware(options = {}) {
       errorCode: "RATE_LIMITED",
     },
     handler: (req, res, next, options) => {
-      const payload = {
+      return apiResponseManager(req, res, {
+        statusCode: 429,
         success: false,
         message: options.message.text || "Too many requests. Please try again later.",
         errorCode: options.message.errorCode || "RATE_LIMITED",
-        timestamp: new Date().toISOString(),
-        requestId: req.requestId || req.headers["x-request-id"] || "unknown",
-      };
-      res.status(429).json(payload);
+      });
     },
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
