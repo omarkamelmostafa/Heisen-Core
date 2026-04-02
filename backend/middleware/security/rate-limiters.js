@@ -18,11 +18,11 @@ export const loginLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Register: 5 requests per hour per IP
+ * Register: 5 requests per 15 minutes per IP
  */
 export const registerLimiter = createRateLimiterMiddleware({
   windowMs: parseInt(process.env.RATE_LIMIT_REGISTER_WINDOW_MS, 10) || 15 * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_REGISTER_MAX, 10) || 5, // 5 requests per hour per IP 
+  max: parseInt(process.env.RATE_LIMIT_REGISTER_MAX, 10) || 5, // 5 requests per 15 minutes per IP 
   message: {
     text: "Too many registration attempts. Please try again later.",
     errorCode: "RATE_LIMITED",
@@ -31,7 +31,7 @@ export const registerLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Forgot Password: 3 requests per hour per IP
+ * Forgot Password: 3 requests per 15 minutes per IP
  */
 export const forgotPasswordLimiter = createRateLimiterMiddleware({
   windowMs: parseInt(process.env.RATE_LIMIT_FORGOT_WINDOW_MS, 10) || 15 * 60 * 1000,
@@ -57,7 +57,7 @@ export const refreshLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Reset Password: 3 requests per hour per IP
+ * Reset Password: 3 requests per 15 minutes per IP
  */
 export const resetPasswordLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -70,7 +70,7 @@ export const resetPasswordLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Verify Email: 10 requests per hour per IP
+ * Verify Email: 10 requests per 15 minutes per IP
  */
 export const verifyEmailLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -83,7 +83,7 @@ export const verifyEmailLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Resend Verification: 3 requests per hour per IP
+ * Resend Verification: 3 requests per 15 minutes per IP
  */
 export const resendVerificationLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -96,7 +96,7 @@ export const resendVerificationLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * User Me: 60 requests per hour per IP
+ * User Me: 60 requests per 15 minutes per IP
  */
 export const userMeLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -109,7 +109,7 @@ export const userMeLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Health: 30 requests per hour per IP
+ * Health: 30 requests per 15 minutes per IP
  */
 export const healthLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -122,7 +122,7 @@ export const healthLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Logout: 30 requests per hour per IP
+ * Logout: 30 requests per 15 minutes per IP
  */
 export const logoutLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -135,7 +135,7 @@ export const logoutLimiter = createRateLimiterMiddleware({
 });
 
 /**
- * Update Profile: 10 requests per hour per IP
+ * Update Profile: 10 requests per 15 minutes per IP
  */
 export const updateProfileLimiter = createRateLimiterMiddleware({
   windowMs: 15 * 60 * 1000,
@@ -145,6 +145,19 @@ export const updateProfileLimiter = createRateLimiterMiddleware({
     errorCode: "RATE_LIMITED",
   },
   prefix: "rl:updateprofile:",
+});
+
+/**
+ * Email Confirm: 10 requests per 15 minutes per IP
+ */
+export const emailConfirmLimiter = createRateLimiterMiddleware({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    text: "Too many email confirmation attempts. Please try again later.",
+    errorCode: "RATE_LIMITED",
+  },
+  prefix: "rl:email-confirm:",
 });
 
 /**

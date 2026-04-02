@@ -9,7 +9,7 @@ import {
 } from "../../middleware/security/rate-limiters.js";
 import { updateProfileValidationRules, updatePasswordValidationRules, toggle2faValidationRules, emailChangeValidationRules } from "../../validators/index.js";
 import { handleValidationErrors } from "../../middleware/validation/validation-middleware.js";
-import { emailChangeLimiter, changePasswordLimiter, toggle2faLimiter } from "../../middleware/security/rate-limiters.js";
+import { emailChangeLimiter, emailConfirmLimiter, changePasswordLimiter, toggle2faLimiter } from "../../middleware/security/rate-limiters.js";
 import { handleRequestEmailChange, handleConfirmEmailChange } from "../../controllers/user/email-change.controller.js";
 import { handleChangePassword } from "../../controllers/user/change-password.controller.js";
 import { handleToggle2fa } from "../../controllers/user/toggle-2fa.controller.js";
@@ -52,9 +52,10 @@ router.post(
 );
 
 // GET /api/v1/user/email/confirm/:token
-// NO auth, NO rate limiter, NO validation middleware
+// NO auth, NO validation middleware
 router.get(
   "/email/confirm/:token",
+  emailConfirmLimiter,
   handleConfirmEmailChange
 );
 
