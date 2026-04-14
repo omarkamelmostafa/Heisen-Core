@@ -108,7 +108,13 @@ describe("Extended Auth Endpoints", () => {
 
     it("A.2: Returns 401 if no access token provided", async () => {
       const res = await request(app).post("/api/v1/auth/logout-all");
+
+      // LAYER 1: HTTP
       expect(res.status).toBe(401);
+
+      // LAYER 2: Body
+      expect(res.body.success).toBe(false);
+      expect(res.body.errorCode).toBe("NO_ACCESS_TOKEN");
     });
   });
 

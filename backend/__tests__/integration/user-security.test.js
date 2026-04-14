@@ -103,7 +103,12 @@ describe("User Security Endpoints", () => {
           newPassword: "NewSecure123!",
         });
 
+      // LAYER 1: HTTP
       expect(res.status).toBe(401);
+
+      // LAYER 2: Body
+      expect(res.body.success).toBe(false);
+      expect(res.body.errorCode).toBe("NO_ACCESS_TOKEN");
     });
   });
 
@@ -165,7 +170,12 @@ describe("User Security Endpoints", () => {
         .patch("/api/v1/user/security/2fa")
         .send({ enabled: true });
 
+      // LAYER 1: HTTP
       expect(res.status).toBe(401);
+
+      // LAYER 2: Body
+      expect(res.body.success).toBe(false);
+      expect(res.body.errorCode).toBe("NO_ACCESS_TOKEN");
     });
   });
 });

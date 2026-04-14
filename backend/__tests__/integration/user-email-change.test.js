@@ -109,7 +109,12 @@ describe("Email Change Endpoints", () => {
           password: "anything"
         });
 
+      // LAYER 1: HTTP
       expect(res.status).toBe(401);
+
+      // LAYER 2: Body
+      expect(res.body.success).toBe(false);
+      expect(res.body.errorCode).toBe("NO_ACCESS_TOKEN");
     });
   });
 
