@@ -21,7 +21,7 @@ vi.mock("../../services/email/email.service.js", () => {
   };
 
   return {
-    EmailService: vi.fn().mockImplementation(function() {
+    EmailService: vi.fn().mockImplementation(function () {
       return mockInstance;
     }),
     default: mockInstance,
@@ -49,13 +49,13 @@ describe("Suite A — Registration Tests", () => {
 
     // Assert: HTTP 201
     expect(res.status).toBe(201);
-    
+
     // Assert: body.success === true
     expect(res.body.success).toBe(true);
-    
+
     // Assert: body.data.user.email === TEST_USER.email
     expect(res.body.data.user.email).toBe(TEST_USER.email);
-    
+
     // Assert: body.data.user.isVerified === false
     expect(res.body.data.user.isVerified).toBe(false);
 
@@ -65,21 +65,21 @@ describe("Suite A — Registration Tests", () => {
     // DB Assert: User exists with matching email
     const userInDb = await User.findOne({ email: TEST_USER.email }).select("+password");
     expect(userInDb).not.toBeNull();
-    
+
     // DB Assert: stored password !== TEST_USER.password
     expect(userInDb.password).not.toBe(TEST_USER.password);
-    
+
     // DB Assert: user.isVerified === false
     expect(userInDb.isVerified).toBe(false);
 
     // Mock Assert: emailInstance.sendVerificationEmail called once
     expect(emailService.sendVerificationEmail).toHaveBeenCalledTimes(1);
-    
+
     // Mock Assert: called with object containing email === TEST_USER.email
     expect(emailService.sendVerificationEmail.mock.calls[0][0].email).toBe(TEST_USER.email);
 
 
-    
+
     // Mock Assert: cloudinaryModule.createUserFolder called once
     // Account for structure based on previous inspection
     expect(cloudinaryModule.CloudinaryService.createUserFolder).toHaveBeenCalledTimes(1);
@@ -105,7 +105,7 @@ describe("Suite A — Registration Tests", () => {
     const res = await request(app)
       .post("/api/v1/auth/register")
       .send({});
-      
+
     expect(res.status).toBe(400);
     expect(res.body.success).toBe(false);
   });
@@ -135,5 +135,22 @@ describe("Suite A — Registration Tests", () => {
 
     expect(res.status).toBe(400);
     expect(res.body.success).toBe(false);
+  });
+
+  it("A7: Disposable email address rejected", async () => {
+    const res = await request(app)
+      .post("/api/v1/auth/register")
+      .send({ ...TEST_USER, email: "testuser@mailinator.com" });
+
+    // LAYER 1: HTTP
+    expect(res.status).toBe(400);
+
+    // LAYER 2: Body
+    expect(res.body.success).toBe(false);
+    expect(res.body.message).toMatch(/disposable/i);
+
+    // LAYER 3: DB — no user created with this email
+    const userInDb = await User.findOne({ email: "testuser@mailinator.com" });
+    expect(userInDb).toBeNull();
   });
 });
