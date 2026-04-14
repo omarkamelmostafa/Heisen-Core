@@ -39,6 +39,7 @@ next-env.d.ts
 # Local AI/Windsurf/Speckit tool artifacts (not for repo)
 .agent/
 .agents/
+.qwen/
 .claude/
 .cursor/
 .opencode/

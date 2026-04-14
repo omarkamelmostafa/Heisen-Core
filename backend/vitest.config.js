@@ -13,6 +13,7 @@ export default defineConfig({
         "utilities/auth/user-data-utils.js",
         "services/auth/token-service.js",
         "services/auth/cookie-service.js",
+        "utilities/general/response-manager.js",
       ],
       thresholds: {
         statements: 100,
