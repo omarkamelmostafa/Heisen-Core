@@ -50,6 +50,8 @@ vi.mock("@/store/slices/user", () => ({
 
 import { useVerifyEmail } from "@/features/auth/hooks/useVerifyEmail";
 import { useSearchParams } from "next/navigation";
+import { verifyEmail } from "@/store/slices/auth/auth-thunks";
+import { setAuthError } from "@/store/slices/auth/auth-slice";
 
 describe("useVerifyEmail - Batch 1", () => {
   const originalReplaceState = window.history.replaceState;
@@ -163,3 +165,78 @@ describe("useVerifyEmail - Batch 1", () => {
     expect(result.current.formatTime(0)).toBe("0:00");
   });
 });
+
+describe("useVerifyEmail - Batch 2 (Submit)", () => {
+  let errorSpy;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    errorSpy.mockRestore();
+  });
+
+  it("1) Malformed verification code rejection", async () => {
+    const mockSetAuthErrorAction = { type: "mock/setAuthError" };
+    setAuthError.mockReturnValueOnce(mockSetAuthErrorAction);
+
+    const { result } = renderHook(() => useVerifyEmail());
+    
+    await act(async () => {
+      await result.current.handleVerifySubmit({ verificationCode: ["1", "2"] });
+    });
+
+    expect(setAuthError).toHaveBeenCalledWith("toasts.enterVerificationCode");
+    expect(mockDispatch).toHaveBeenCalledWith(mockSetAuthErrorAction);
+    expect(verifyEmail).not.toHaveBeenCalled();
+    expect(mockPush).not.toHaveBeenCalled();
+  });
+
+  it("2) Successful verification redirect", async () => {
+    const mockVerifyEmailAction = { type: "mock/verifyEmailAction" };
+    verifyEmail.mockReturnValueOnce(mockVerifyEmailAction);
+    
+    mockDispatch
+      .mockReturnValueOnce() // 1st dispatch: clearError
+      .mockReturnValueOnce({ // 2nd dispatch: verifyEmailThunk
+        unwrap: () => Promise.resolve({ success: true }),
+      });
+
+    const { result } = renderHook(() => useVerifyEmail());
+
+    await act(async () => {
+      await result.current.handleVerifySubmit({ verificationCode: ["1", "2", "3", "4", "5", "6"] });
+    });
+
+    expect(verifyEmail).toHaveBeenCalledWith({ token: "123456" });
+    expect(mockDispatch).toHaveBeenCalledWith(mockVerifyEmailAction);
+    expect(mockPush).toHaveBeenCalledWith("/login?verified=true");
+    expect(setAuthError).not.toHaveBeenCalled();
+  });
+
+  it("3) API failure / error logging on submit", async () => {
+    const mockVerifyEmailAction = { type: "mock/verifyEmailAction" };
+    verifyEmail.mockReturnValueOnce(mockVerifyEmailAction);
+    const mockError = new Error("API Failure");
+    
+    mockDispatch
+      .mockReturnValueOnce() // 1st dispatch: clearError
+      .mockReturnValueOnce({ // 2nd dispatch: verifyEmailThunk
+        unwrap: () => Promise.reject(mockError),
+      });
+
+    const { result } = renderHook(() => useVerifyEmail());
+
+    await act(async () => {
+      await result.current.handleVerifySubmit({ verificationCode: ["1", "2", "3", "4", "5", "6"] });
+    });
+
+    expect(verifyEmail).toHaveBeenCalledWith({ token: "123456" });
+    expect(mockDispatch).toHaveBeenCalledWith(mockVerifyEmailAction);
+    expect(console.error).toHaveBeenCalledWith("Verification error:", mockError);
+    expect(mockPush).not.toHaveBeenCalled();
+  });
+});
+
