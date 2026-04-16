@@ -1,14 +1,15 @@
-// frontend/vitest.config.js
+// frontend/vite.config.js
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { fileURLToPath } from "url";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   root: __dirname,
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: [
       { find: /^@\/services\/(.*)$/, replacement: path.resolve(__dirname, "./src/services/$1") },
@@ -19,6 +20,7 @@ export default defineConfig({
       { find: /^@\/utils\/(.*)$/, replacement: path.resolve(__dirname, "./src/utils/$1") },
       { find: /^@\/app\/(.*)$/, replacement: path.resolve(__dirname, "./src/app/$1") },
       { find: "@", replacement: path.resolve(__dirname, "./src") },
+      { find: "lodash/isEqualWith", replacement: path.resolve(__dirname, "./node_modules/lodash/isEqualWith.js") },
     ],
   },
   css: {
@@ -34,6 +36,16 @@ export default defineConfig({
       deps: {
         inline: ["@reduxjs/toolkit", "react-redux"],
       },
+    },
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@/services": path.resolve(__dirname, "./src/services"),
+      "@/store": path.resolve(__dirname, "./src/store"),
+      "@/lib": path.resolve(__dirname, "./src/lib"),
+      "@/hooks": path.resolve(__dirname, "./src/hooks"),
+      "@/components": path.resolve(__dirname, "./src/components"),
+      "@/utils": path.resolve(__dirname, "./src/utils"),
+      "@/app": path.resolve(__dirname, "./src/app"),
     },
     css: false,
     mockReset: false,
