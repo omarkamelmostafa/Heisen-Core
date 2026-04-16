@@ -50,8 +50,10 @@ vi.mock("@/store/slices/user", () => ({
 
 import { useVerifyEmail } from "@/features/auth/hooks/useVerifyEmail";
 import { useSearchParams } from "next/navigation";
-import { verifyEmail } from "@/store/slices/auth/auth-thunks";
+import { verifyEmail, resendVerification } from "@/store/slices/auth/auth-thunks";
 import { setAuthError } from "@/store/slices/auth/auth-slice";
+import { NotificationService } from "@/lib/notifications/notify";
+import { selectUserEmail } from "@/store/slices/user";
 
 describe("useVerifyEmail - Batch 1", () => {
   const originalReplaceState = window.history.replaceState;
@@ -68,7 +70,7 @@ describe("useVerifyEmail - Batch 1", () => {
     // Default selector mock
     mockSelector.mockImplementation((selector) => {
       // By default returning test email to trigger timer init properly
-      if (selector.name === "selectUserEmail") return "test@example.com";
+      if (selector === selectUserEmail) return "test@example.com";
       return null;
     });
 
@@ -240,3 +242,116 @@ describe("useVerifyEmail - Batch 2 (Submit)", () => {
   });
 });
 
+describe("useVerifyEmail - Batch 3 (Resend)", () => {
+  let errorSpy;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    // Default selector mock to provide a usable email for success paths
+    mockSelector.mockImplementation((selector) => {
+      if (selector === selectUserEmail) return "test@example.com";
+      return null;
+    });
+  });
+
+  afterEach(() => {
+    errorSpy.mockRestore();
+  });
+
+  it("1) Missing email guard", async () => {
+    // Override selector to return no email
+    mockSelector.mockImplementation(() => null);
+
+    const { result } = renderHook(() => useVerifyEmail());
+
+    await act(async () => {
+      await result.current.handleResendCode();
+    });
+
+    expect(resendVerification).not.toHaveBeenCalled();
+    expect(NotificationService.error).toHaveBeenCalledWith("toasts.noEmailFound");
+    expect(result.current.timeLeft).toBe(0);
+    expect(mockPush).not.toHaveBeenCalled();
+  });
+
+  it("2) Resend success with timer reset", async () => {
+    const mockResendAction = { type: "mock/resendAction" };
+    resendVerification.mockReturnValueOnce(mockResendAction);
+
+    mockDispatch
+      .mockReturnValueOnce() // 1st dispatch: clearError (on mount)
+      .mockReturnValueOnce({ // 2nd dispatch: resendVerification
+        unwrap: () => Promise.resolve({ success: true }),
+      });
+
+    const { result } = renderHook(() => useVerifyEmail());
+
+    expect(result.current.timeLeft).toBe(0);
+
+    await act(async () => {
+      await result.current.handleResendCode();
+    });
+
+    expect(resendVerification).toHaveBeenCalledWith("test@example.com");
+    expect(mockDispatch).toHaveBeenCalledWith(mockResendAction);
+    expect(NotificationService.success).toHaveBeenCalledWith("toasts.verificationCodeSent", {
+      description: "toasts.verificationCodeSentTo",
+    });
+    expect(result.current.timeLeft).toBe(300);
+    expect(result.current.canResend).toBe(false);
+    expect(NotificationService.error).not.toHaveBeenCalled();
+  });
+
+  it("3) Resend rate-limited error", async () => {
+    const mockResendAction = { type: "mock/resendAction" };
+    resendVerification.mockReturnValueOnce(mockResendAction);
+    const rateLimitedError = new Error("Rate limit");
+    rateLimitedError.errorCode = "RATE_LIMITED";
+
+    mockDispatch
+      .mockReturnValueOnce() // 1st dispatch: clearError (on mount)
+      .mockReturnValueOnce({ // 2nd dispatch: resendVerification
+        unwrap: () => Promise.reject(rateLimitedError),
+      });
+
+    const { result } = renderHook(() => useVerifyEmail());
+
+    await act(async () => {
+      await result.current.handleResendCode();
+    });
+
+    expect(resendVerification).toHaveBeenCalledWith("test@example.com");
+    expect(mockDispatch).toHaveBeenCalledWith(mockResendAction);
+    expect(console.error).toHaveBeenCalledWith("Resend error:", rateLimitedError);
+    expect(NotificationService.error).toHaveBeenCalledWith("toasts.tooManyAttempts");
+    expect(NotificationService.success).not.toHaveBeenCalled();
+    expect(result.current.timeLeft).toBe(0);
+  });
+
+  it("4) Resend generic error", async () => {
+    const mockResendAction = { type: "mock/resendAction" };
+    resendVerification.mockReturnValueOnce(mockResendAction);
+    const genericError = new Error("Generic failure");
+
+    mockDispatch
+      .mockReturnValueOnce() // 1st dispatch: clearError (on mount)
+      .mockReturnValueOnce({ // 2nd dispatch: resendVerification
+        unwrap: () => Promise.reject(genericError),
+      });
+
+    const { result } = renderHook(() => useVerifyEmail());
+
+    await act(async () => {
+      await result.current.handleResendCode();
+    });
+
+    expect(resendVerification).toHaveBeenCalledWith("test@example.com");
+    expect(mockDispatch).toHaveBeenCalledWith(mockResendAction);
+    expect(console.error).toHaveBeenCalledWith("Resend error:", genericError);
+    expect(NotificationService.error).toHaveBeenCalledWith("toasts.failedToResendVerification");
+    expect(NotificationService.success).not.toHaveBeenCalled();
+    expect(result.current.timeLeft).toBe(0);
+  });
+});
