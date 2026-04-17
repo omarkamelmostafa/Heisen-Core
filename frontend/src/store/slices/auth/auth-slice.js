@@ -1,6 +1,20 @@
 // frontend/src/store/slices/auth/auth-slice.js
 import { createSlice } from "@reduxjs/toolkit";
 
+// ESM-safe import for auth thunks — required so Vitest / Vite alias resolution works
+import * as authThunks from "./auth-thunks";
+
+const {
+  loginUser,
+  registerUser,
+  verifyEmail,
+  forgotPassword,
+  resetPassword,
+  bootstrapAuth,
+  logoutAllDevices,
+  verify2fa,
+} = authThunks;
+
 const initialState = {
   // ==================== PRIMARY STATE ====================
   accessToken: null, // Held in memory only — never persisted to cookies/localStorage
@@ -97,19 +111,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Import thunks inline to avoid circular dependency at module top-level.
-    // This is evaluated lazily when the slice is created, by which time
-    // both modules have finished loading.
-    const {
-      loginUser,
-      registerUser,
-      verifyEmail,
-      forgotPassword,
-      resetPassword,
-      bootstrapAuth,
-      logoutAllDevices,
-      verify2fa,
-    } = require("./auth-thunks");
+    // auth-thunks imported at module top (ESM) for test loader compatibility
 
     // Helper to handle loading state
     const handlePending = (state) => {
