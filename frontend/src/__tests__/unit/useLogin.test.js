@@ -33,25 +33,6 @@ vi.mock("@/hooks/redux", () => ({
 }));
 
 // Mock Auth Thunks & Slice
-vi.mock("@/store/slices/auth/auth-thunks", () => ({
-  loginUser: vi.fn(),
-  verify2fa: vi.fn(),
-  resend2fa: vi.fn()
-}));
-
-vi.mock("@/store/slices/auth/auth-slice", () => ({
-  clearError: vi.fn(),
-}));
-
-vi.mock("@/store/slices/auth/auth-selectors", () => ({
-  selectAuthLoading: vi.fn(),
-  selectIsAuthenticated: vi.fn(),
-  selectAuthError: vi.fn(),
-}));
-
-vi.mock("@/store/slices/user", () => ({
-  selectUserProfile: vi.fn(),
-}));
 
 // Mock NotificationService
 vi.mock("@/lib/notifications/notify", () => ({
@@ -63,21 +44,24 @@ vi.mock("@/lib/notifications/notify", () => ({
 }));
 
 import { useAppSelector } from "@/hooks/redux";
-import { loginUser } from "@/store/slices/auth/auth-thunks";
-import { clearError } from "@/store/slices/auth/auth-slice";
-import { selectIsAuthenticated } from "@/store/slices/auth/auth-selectors";
+import { loginUser, verify2fa, resend2fa } from "@/store/slices/auth/auth-thunks";
+import { clearError, setCredentials } from "@/store/slices/auth/auth-slice";
+import { selectIsAuthenticated, selectAuthLoading, selectAuthError } from "@/store/slices/auth/auth-selectors";
+import { selectUserProfile } from "@/store/slices/user";
 import { NotificationService } from "@/lib/notifications/notify";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 
 describe("useLogin Hook - Batch 1", () => {
   const mockUnwrap = vi.fn();
+  let dispatchSpy;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
-    // Fix dispatch mock to return the action
-    mockHooks.dispatch.mockImplementation((action) => action);
-    
+
+    // Create a spy on dispatch to track dispatched actions
+    dispatchSpy = vi.fn((action) => action);
+    mockHooks.dispatch.mockImplementation(dispatchSpy);
+
     // Default search param mock
     mockHooks.getSearchParam.mockImplementation((param) => {
       if (param === "returnTo") return null; // Default falsy handles `/` fallback
@@ -91,13 +75,13 @@ describe("useLogin Hook - Batch 1", () => {
 
     // Default thunk return wrapper
     loginUser.mockReturnValue({ unwrap: mockUnwrap });
-    
+
     // Stub global BroadcastChannel
     global.BroadcastChannel = vi.fn(() => ({
       postMessage: mockHooks.postMessage,
       close: mockHooks.close,
     }));
-    
+
     // Spy on sessionStorage if available (we define it to ensure no window errors)
     Object.defineProperty(window, "sessionStorage", {
       value: { setItem: mockHooks.setItem },
@@ -111,18 +95,23 @@ describe("useLogin Hook - Batch 1", () => {
 
   it("1) Mount/Unmount cleanup: dispatches clearError exactly once on mount, once on unmount, no other side effects", () => {
     const { unmount } = renderHook(() => useLogin());
-    
-    // Check mount cleanup
-    expect(clearError).toHaveBeenCalledTimes(1);
-    expect(mockHooks.dispatch).toHaveBeenCalledWith(clearError.mock.results[0].value);
-    
+
+    // Check mount cleanup - verify clearError action was dispatched
+    const clearErrorCalls = dispatchSpy.mock.calls.filter(
+      (call) => call[0]?.type === "auth/clearError"
+    );
+    expect(clearErrorCalls.length).toBe(1);
+
     // Check side effects
     expect(loginUser).not.toHaveBeenCalled();
     expect(mockHooks.push).not.toHaveBeenCalled();
-    
+
     // Unmount triggers second cleanup
     unmount();
-    expect(clearError).toHaveBeenCalledTimes(2);
+    const finalClearErrorCalls = dispatchSpy.mock.calls.filter(
+      (call) => call[0]?.type === "auth/clearError"
+    );
+    expect(finalClearErrorCalls.length).toBe(2);
   });
 
   it("2) Happy path login success: calls API, sets storage/channel, navigates to default, shows toast", async () => {
@@ -130,29 +119,29 @@ describe("useLogin Hook - Batch 1", () => {
       user: { firstName: "Walter" },
       data: { requiresTwoFactor: false },
     });
-    
+
     const { result } = renderHook(() => useLogin());
-    
+
     const loginData = { email: "walter@heisen.com", password: "pwd" };
-    
+
     await act(async () => {
       await result.current.handleLogin(loginData);
     });
 
     // Validates that login action was dispatched with data
     expect(loginUser).toHaveBeenCalledWith(loginData);
-    
+
     // Success notification
     expect(NotificationService.success).toHaveBeenCalledWith("welcomeBack");
-    
+
     // Broadcast message
     expect(global.BroadcastChannel).toHaveBeenCalledWith("auth_channel");
     expect(mockHooks.postMessage).toHaveBeenCalledWith("LOGIN");
     expect(mockHooks.close).toHaveBeenCalledTimes(1);
-    
+
     // sessionStorage
     expect(window.sessionStorage.setItem).toHaveBeenCalledWith("login_source", "local");
-    
+
     // No error notification
     expect(NotificationService.warn).not.toHaveBeenCalled();
     expect(NotificationService.error).not.toHaveBeenCalled();
@@ -162,25 +151,33 @@ describe("useLogin Hook - Batch 1", () => {
     const errorWithCode = { errorCode: "ACCOUNT_NOT_VERIFIED" };
     mockUnwrap.mockRejectedValueOnce(errorWithCode);
 
+    // Clear the dispatch spy to start fresh
+    dispatchSpy.mockClear();
+
     const { result } = renderHook(() => useLogin());
     const loginData = { email: "jesse@heisen.com", password: "pwd" };
-    
-    // Capture the call count before hook handles error clear (1 from mount)
-    const clearErrorInitialCount = clearError.mock.calls.length;
-    
+
+    // Get initial clearError count from mount
+    const initialClearErrorCount = dispatchSpy.mock.calls.filter(
+      (call) => call[0]?.type === "auth/clearError"
+    ).length;
+
     await act(async () => {
       await result.current.handleLogin(loginData);
     });
 
     // Warn notification
     expect(NotificationService.warn).toHaveBeenCalledWith("verifyEmailBeforeLogin");
-    
-    // Additional clearError should have been dispatched inside handleLogin catch block
-    expect(clearError).toHaveBeenCalledTimes(clearErrorInitialCount + 1);
-    
+
+    // Verify additional clearError was dispatched inside handleLogin catch block
+    const finalClearErrorCount = dispatchSpy.mock.calls.filter(
+      (call) => call[0]?.type === "auth/clearError"
+    ).length;
+    expect(finalClearErrorCount).toBe(initialClearErrorCount + 1);
+
     // Router navigation asserts email query param 
     expect(mockHooks.push).toHaveBeenCalledWith("/verify-email?email=jesse%40heisen.com");
-    
+
     // No success calls
     expect(NotificationService.success).not.toHaveBeenCalled();
   });

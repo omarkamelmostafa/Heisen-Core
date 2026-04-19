@@ -20,11 +20,6 @@ vi.mock("@/hooks/redux", () => ({
   useAppSelector: (selector) => mockSelector(selector),
 }));
 
-vi.mock("@/store/slices/auth/auth-thunks", () => ({
-  verifyEmail: vi.fn(),
-  resendVerification: vi.fn(),
-}));
-
 const mockClearErrorAction = { type: "auth/clearError" };
 vi.mock("@/store/slices/auth/auth-slice", () => ({
   clearError: vi.fn(() => mockClearErrorAction),
@@ -36,16 +31,6 @@ vi.mock("@/lib/notifications/notify", () => ({
     success: vi.fn(),
     error: vi.fn(),
   },
-}));
-
-vi.mock("@/store/slices/auth/auth-selectors", () => ({
-  selectAuthLoading: vi.fn(),
-  selectIsAuthenticated: vi.fn(),
-  selectAuthError: vi.fn(),
-}));
-
-vi.mock("@/store/slices/user", () => ({
-  selectUserEmail: vi.fn(),
 }));
 
 import { useVerifyEmail } from "@/features/auth/hooks/useVerifyEmail";
@@ -60,7 +45,7 @@ describe("useVerifyEmail - Batch 1", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
+
     // Default search params mock
     useSearchParams.mockReturnValue({
       get: vi.fn().mockReturnValue(null),
@@ -161,7 +146,7 @@ describe("useVerifyEmail - Batch 1", () => {
 
   it("5) formatTime utility formats seconds correctly", () => {
     const { result } = renderHook(() => useVerifyEmail());
-    
+
     expect(result.current.formatTime(305)).toBe("5:05");
     expect(result.current.formatTime(59)).toBe("0:59");
     expect(result.current.formatTime(0)).toBe("0:00");
@@ -173,7 +158,7 @@ describe("useVerifyEmail - Batch 2 (Submit)", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    errorSpy = vi.spyOn(console, "error").mockImplementation(() => { });
   });
 
   afterEach(() => {
@@ -185,7 +170,7 @@ describe("useVerifyEmail - Batch 2 (Submit)", () => {
     setAuthError.mockReturnValueOnce(mockSetAuthErrorAction);
 
     const { result } = renderHook(() => useVerifyEmail());
-    
+
     await act(async () => {
       await result.current.handleVerifySubmit({ verificationCode: ["1", "2"] });
     });
@@ -199,7 +184,7 @@ describe("useVerifyEmail - Batch 2 (Submit)", () => {
   it("2) Successful verification redirect", async () => {
     const mockVerifyEmailAction = { type: "mock/verifyEmailAction" };
     verifyEmail.mockReturnValueOnce(mockVerifyEmailAction);
-    
+
     mockDispatch
       .mockReturnValueOnce() // 1st dispatch: clearError
       .mockReturnValueOnce({ // 2nd dispatch: verifyEmailThunk
@@ -222,7 +207,7 @@ describe("useVerifyEmail - Batch 2 (Submit)", () => {
     const mockVerifyEmailAction = { type: "mock/verifyEmailAction" };
     verifyEmail.mockReturnValueOnce(mockVerifyEmailAction);
     const mockError = new Error("API Failure");
-    
+
     mockDispatch
       .mockReturnValueOnce() // 1st dispatch: clearError
       .mockReturnValueOnce({ // 2nd dispatch: verifyEmailThunk
@@ -247,7 +232,7 @@ describe("useVerifyEmail - Batch 3 (Resend)", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    errorSpy = vi.spyOn(console, "error").mockImplementation(() => { });
 
     // Default selector mock to provide a usable email for success paths
     mockSelector.mockImplementation((selector) => {

@@ -21,24 +21,6 @@ vi.mock("@/hooks/redux", () => ({
   useAppSelector: vi.fn(),
 }));
 
-vi.mock("@/store/slices/auth/auth-thunks", () => ({
-  registerUser: vi.fn(),
-}));
-
-vi.mock("@/store/slices/auth/auth-slice", () => ({
-  clearError: vi.fn(),
-}));
-
-vi.mock("@/store/slices/auth/auth-selectors", () => ({
-  selectAuthLoading: vi.fn(),
-  selectIsAuthenticated: vi.fn(),
-  selectAuthError: vi.fn(),
-}));
-
-vi.mock("@/store/slices/user", () => ({
-  selectUserProfile: vi.fn(),
-}));
-
 vi.mock("@/lib/notifications/notify", () => ({
   NotificationService: {
     success: vi.fn(),
@@ -49,21 +31,26 @@ vi.mock("@/lib/notifications/notify", () => ({
 
 import { useAppSelector } from "@/hooks/redux";
 import { registerUser } from "@/store/slices/auth/auth-thunks";
-import { clearError } from "@/store/slices/auth/auth-slice";
+import { clearError, setCredentials } from "@/store/slices/auth/auth-slice";
+import { selectAuthLoading, selectIsAuthenticated, selectAuthError } from "@/store/slices/auth/auth-selectors";
+import { selectUserProfile } from "@/store/slices/user";
 import { NotificationService } from "@/lib/notifications/notify";
 import { useSignup } from "@/features/auth/hooks/useSignup";
 
 describe("useSignup Hook - Batch 1", () => {
   const mockUnwrap = vi.fn();
+  let dispatchSpy;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
-    mockHooks.dispatch.mockImplementation((action) => action);
-    
+
+    // Create a spy on dispatch to track dispatched actions
+    dispatchSpy = vi.fn((action) => action);
+    mockHooks.dispatch.mockImplementation(dispatchSpy);
+
     useAppSelector.mockReturnValue(null);
     registerUser.mockReturnValue({ unwrap: mockUnwrap });
-    
+
     vi.spyOn(console, "error").mockImplementation(mockHooks.consoleError);
   });
 
@@ -73,10 +60,13 @@ describe("useSignup Hook - Batch 1", () => {
 
   it("1) Mount cleanup: dispatches clearError exactly once on mount, no other side effects", () => {
     renderHook(() => useSignup());
-    
-    expect(clearError).toHaveBeenCalledTimes(1);
-    expect(mockHooks.dispatch).toHaveBeenCalledWith(clearError.mock.results[0].value);
-    
+
+    // Verify clearError action was dispatched
+    const clearErrorCalls = dispatchSpy.mock.calls.filter(
+      (call) => call[0]?.type === "auth/clearError"
+    );
+    expect(clearErrorCalls.length).toBe(1);
+
     expect(registerUser).not.toHaveBeenCalled();
     expect(mockHooks.push).not.toHaveBeenCalled();
   });
@@ -85,10 +75,10 @@ describe("useSignup Hook - Batch 1", () => {
     mockUnwrap.mockResolvedValueOnce({
       data: { emailSent: true }
     });
-    
+
     const { result } = renderHook(() => useSignup());
     const signupData = { email: "walter@heisen.com", password: "pwd" };
-    
+
     await act(async () => {
       await result.current.handleSignup(signupData);
     });
@@ -105,10 +95,10 @@ describe("useSignup Hook - Batch 1", () => {
     mockUnwrap.mockResolvedValueOnce({
       data: { emailSent: false }
     });
-    
+
     const { result } = renderHook(() => useSignup());
     const signupData = { email: "jesse@heisen.com", password: "pwd" };
-    
+
     await act(async () => {
       await result.current.handleSignup(signupData);
     });
@@ -128,20 +118,20 @@ describe("useSignup Hook - Batch 1", () => {
 
     const { result } = renderHook(() => useSignup());
     const signupData = { email: "mike@heisen.com", password: "pwd" };
-    
+
     await act(async () => {
       await result.current.handleSignup(signupData);
     });
 
     expect(registerUser).toHaveBeenCalledWith(signupData);
-    
+
     // Assert no success/warn notifications
     expect(NotificationService.success).not.toHaveBeenCalled();
     expect(NotificationService.warn).not.toHaveBeenCalled();
-    
+
     // Assert no navigation
     expect(mockHooks.push).not.toHaveBeenCalled();
-    
+
     // Assert console.error matches source behavior
     expect(mockHooks.consoleError).toHaveBeenCalledWith("Signup error:", errorMsg);
   });
