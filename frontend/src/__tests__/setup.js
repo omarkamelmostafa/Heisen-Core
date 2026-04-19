@@ -47,6 +47,116 @@ vi.mock("@/store/utils/thunk-utils", () => ({
   },
 }));
 
+// ─── Mock thunk modules to prevent real thunk evaluation in slice tests ─────
+// Mock using same path strings as the test files to override their incomplete mocks
+vi.mock("@/store/slices/auth/auth-thunks", () => ({
+  loginUser: Object.assign(vi.fn(), {
+    pending: { type: "auth/login/pending", match: (a) => a.type === "auth/login/pending" },
+    fulfilled: { type: "auth/login/fulfilled", match: (a) => a.type === "auth/login/fulfilled" },
+    rejected: { type: "auth/login/rejected", match: (a) => a.type === "auth/login/rejected" },
+    typePrefix: "auth/login",
+  }),
+  registerUser: Object.assign(vi.fn(), {
+    pending: { type: "auth/register/pending", match: (a) => a.type === "auth/register/pending" },
+    fulfilled: { type: "auth/register/fulfilled", match: (a) => a.type === "auth/register/fulfilled" },
+    rejected: { type: "auth/register/rejected", match: (a) => a.type === "auth/register/rejected" },
+    typePrefix: "auth/register",
+  }),
+  logoutUser: Object.assign(vi.fn(), {
+    pending: { type: "auth/logout/pending", match: (a) => a.type === "auth/logout/pending" },
+    fulfilled: { type: "auth/logout/fulfilled", match: (a) => a.type === "auth/logout/fulfilled" },
+    rejected: { type: "auth/logout/rejected", match: (a) => a.type === "auth/logout/rejected" },
+    typePrefix: "auth/logout",
+  }),
+  logoutAllDevices: Object.assign(vi.fn(), {
+    pending: { type: "auth/logoutAll/pending", match: (a) => a.type === "auth/logoutAll/pending" },
+    fulfilled: { type: "auth/logoutAll/fulfilled", match: (a) => a.type === "auth/logoutAll/fulfilled" },
+    rejected: { type: "auth/logoutAll/rejected", match: (a) => a.type === "auth/logoutAll/rejected" },
+    typePrefix: "auth/logoutAll",
+  }),
+  bootstrapAuth: Object.assign(vi.fn(), {
+    pending: { type: "auth/bootstrap/pending", match: (a) => a.type === "auth/bootstrap/pending" },
+    fulfilled: { type: "auth/bootstrap/fulfilled", match: (a) => a.type === "auth/bootstrap/fulfilled" },
+    rejected: { type: "auth/bootstrap/rejected", match: (a) => a.type === "auth/bootstrap/rejected" },
+    typePrefix: "auth/bootstrap",
+  }),
+  verifyEmail: Object.assign(vi.fn(), {
+    pending: { type: "auth/verifyEmail/pending", match: (a) => a.type === "auth/verifyEmail/pending" },
+    fulfilled: { type: "auth/verifyEmail/fulfilled", match: (a) => a.type === "auth/verifyEmail/fulfilled" },
+    rejected: { type: "auth/verifyEmail/rejected", match: (a) => a.type === "auth/verifyEmail/rejected" },
+    typePrefix: "auth/verifyEmail",
+  }),
+  resendVerification: Object.assign(vi.fn(), {
+    pending: { type: "auth/resendVerification/pending", match: (a) => a.type === "auth/resendVerification/pending" },
+    fulfilled: { type: "auth/resendVerification/fulfilled", match: (a) => a.type === "auth/resendVerification/fulfilled" },
+    rejected: { type: "auth/resendVerification/rejected", match: (a) => a.type === "auth/resendVerification/rejected" },
+    typePrefix: "auth/resendVerification",
+  }),
+  forgotPassword: Object.assign(vi.fn(), {
+    pending: { type: "auth/forgotPassword/pending", match: (a) => a.type === "auth/forgotPassword/pending" },
+    fulfilled: { type: "auth/forgotPassword/fulfilled", match: (a) => a.type === "auth/forgotPassword/fulfilled" },
+    rejected: { type: "auth/forgotPassword/rejected", match: (a) => a.type === "auth/forgotPassword/rejected" },
+    typePrefix: "auth/forgotPassword",
+  }),
+  resetPassword: Object.assign(vi.fn(), {
+    pending: { type: "auth/resetPassword/pending", match: (a) => a.type === "auth/resetPassword/pending" },
+    fulfilled: { type: "auth/resetPassword/fulfilled", match: (a) => a.type === "auth/resetPassword/fulfilled" },
+    rejected: { type: "auth/resetPassword/rejected", match: (a) => a.type === "auth/resetPassword/rejected" },
+    typePrefix: "auth/resetPassword",
+  }),
+  verify2fa: Object.assign(vi.fn(), {
+    pending: { type: "auth/verify2fa/pending", match: (a) => a.type === "auth/verify2fa/pending" },
+    fulfilled: { type: "auth/verify2fa/fulfilled", match: (a) => a.type === "auth/verify2fa/fulfilled" },
+    rejected: { type: "auth/verify2fa/rejected", match: (a) => a.type === "auth/verify2fa/rejected" },
+    typePrefix: "auth/verify2fa",
+  }),
+  resend2fa: Object.assign(vi.fn(), {
+    pending: { type: "auth/resend2fa/pending", match: (a) => a.type === "auth/resend2fa/pending" },
+    fulfilled: { type: "auth/resend2fa/fulfilled", match: (a) => a.type === "auth/resend2fa/fulfilled" },
+    rejected: { type: "auth/resend2fa/rejected", match: (a) => a.type === "auth/resend2fa/rejected" },
+    typePrefix: "auth/resend2fa",
+  }),
+}));
+
+vi.mock("@/store/slices/user/user-thunks", () => ({
+  fetchUserProfile: Object.assign(vi.fn(), {
+    pending: { type: "user/fetchProfile/pending", match: (a) => a.type === "user/fetchProfile/pending" },
+    fulfilled: { type: "user/fetchProfile/fulfilled", match: (a) => a.type === "user/fetchProfile/fulfilled" },
+    rejected: { type: "user/fetchProfile/rejected", match: (a) => a.type === "user/fetchProfile/rejected" },
+    typePrefix: "user/fetchProfile",
+  }),
+  updateProfile: Object.assign(vi.fn(), {
+    pending: { type: "user/updateProfile/pending", match: (a) => a.type === "user/updateProfile/pending" },
+    fulfilled: { type: "user/updateProfile/fulfilled", match: (a) => a.type === "user/updateProfile/fulfilled" },
+    rejected: { type: "user/updateProfile/rejected", match: (a) => a.type === "user/updateProfile/rejected" },
+    typePrefix: "user/updateProfile",
+  }),
+  changePassword: Object.assign(vi.fn(), {
+    pending: { type: "user/changePassword/pending", match: (a) => a.type === "user/changePassword/pending" },
+    fulfilled: { type: "user/changePassword/fulfilled", match: (a) => a.type === "user/changePassword/fulfilled" },
+    rejected: { type: "user/changePassword/rejected", match: (a) => a.type === "user/changePassword/rejected" },
+    typePrefix: "user/changePassword",
+  }),
+  requestEmailChange: Object.assign(vi.fn(), {
+    pending: { type: "user/requestEmailChange/pending", match: (a) => a.type === "user/requestEmailChange/pending" },
+    fulfilled: { type: "user/requestEmailChange/fulfilled", match: (a) => a.type === "user/requestEmailChange/fulfilled" },
+    rejected: { type: "user/requestEmailChange/rejected", match: (a) => a.type === "user/requestEmailChange/rejected" },
+    typePrefix: "user/requestEmailChange",
+  }),
+  toggle2fa: Object.assign(vi.fn(), {
+    pending: { type: "user/toggle2fa/pending", match: (a) => a.type === "user/toggle2fa/pending" },
+    fulfilled: { type: "user/toggle2fa/fulfilled", match: (a) => a.type === "user/toggle2fa/fulfilled" },
+    rejected: { type: "user/toggle2fa/rejected", match: (a) => a.type === "user/toggle2fa/rejected" },
+    typePrefix: "user/toggle2fa",
+  }),
+  uploadAvatar: Object.assign(vi.fn(), {
+    pending: { type: "user/uploadAvatar/pending", match: (a) => a.type === "user/uploadAvatar/pending" },
+    fulfilled: { type: "user/uploadAvatar/fulfilled", match: (a) => a.type === "user/uploadAvatar/fulfilled" },
+    rejected: { type: "user/uploadAvatar/rejected", match: (a) => a.type === "user/uploadAvatar/rejected" },
+    typePrefix: "user/uploadAvatar",
+  }),
+}));
+
 // ─── Mock next/navigation ───────────────────────────────────────────────────
 vi.mock("next/navigation", () => ({
   useRouter: () => ({

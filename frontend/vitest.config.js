@@ -10,16 +10,10 @@ export default defineConfig({
   root: __dirname,
   plugins: [react()],
   resolve: {
-    alias: [
-      { find: /^@\/services\/(.*)$/, replacement: path.resolve(__dirname, "./src/services/$1") },
-      { find: /^@\/store\/(.*)$/, replacement: path.resolve(__dirname, "./src/store/$1") },
-      { find: /^@\/lib\/(.*)$/, replacement: path.resolve(__dirname, "./src/lib/$1") },
-      { find: /^@\/hooks\/(.*)$/, replacement: path.resolve(__dirname, "./src/hooks/$1") },
-      { find: /^@\/components\/(.*)$/, replacement: path.resolve(__dirname, "./src/components/$1") },
-      { find: /^@\/utils\/(.*)$/, replacement: path.resolve(__dirname, "./src/utils/$1") },
-      { find: /^@\/app\/(.*)$/, replacement: path.resolve(__dirname, "./src/app/$1") },
-      { find: "@", replacement: path.resolve(__dirname, "./src") },
-    ],
+    alias: {
+      "@/services": path.resolve(__dirname, "./src/services"),
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
   css: {
     postcss: {
@@ -48,6 +42,7 @@ export default defineConfig({
         "src/lib/notifications/notify.js",
       ],
       thresholds: {
+        perFile: true,
         statements: 100,
         branches: 100,
         functions: 100,

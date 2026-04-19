@@ -16,6 +16,7 @@ export default defineConfig({
         "utilities/general/response-manager.js",
       ],
       thresholds: {
+        perFile: true,
         statements: 100,
         branches: 100,
         functions: 100,
