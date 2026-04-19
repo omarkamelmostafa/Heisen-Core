@@ -47,5 +47,80 @@ describe("User Data Utilities (user-data-utils.js)", () => {
       expect(sanitized.extra).toBeUndefined();
       expect(sanitized.password).toBeUndefined();
     });
+
+    it("should strip sensitive fields from the response", () => {
+      const sanitized = sanitizeUserForResponse(mockUser);
+
+      expect(sanitized.password).toBeUndefined();
+      expect(sanitized.refreshToken).toBeUndefined();
+      expect(sanitized.loginAttempts).toBeUndefined();
+      expect(sanitized.isLocked).toBeUndefined();
+      expect(sanitized.lockUntil).toBeUndefined();
+    });
+
+    it("should map _id to id", () => {
+      const sanitized = sanitizeUserForResponse(mockUser);
+
+      expect(sanitized.id).toBe("user-abc");
+      expect(sanitized._id).toBeUndefined();
+    });
+
+    it("should include avatar when provided", () => {
+      const userWithAvatar = {
+        ...mockUser,
+        avatar: "https://example.com/avatar.jpg",
+      };
+      const sanitized = sanitizeUserForResponse(userWithAvatar);
+
+      expect(sanitized.avatar).toBe("https://example.com/avatar.jpg");
+    });
+
+    it("should default avatar to null when not provided", () => {
+      const userNoAvatar = { ...mockUser };
+      delete userNoAvatar.avatar;
+      const sanitized = sanitizeUserForResponse(userNoAvatar);
+
+      expect(sanitized.avatar).toBeNull();
+    });
+
+    it("should default twoFactorEnabled to false when not set", () => {
+      const sanitized = sanitizeUserForResponse(mockUser);
+
+      expect(sanitized.twoFactorEnabled).toBe(false);
+    });
+
+    it("should reflect twoFactorEnabled when set to true", () => {
+      const userWith2FA = { ...mockUser, twoFactorEnabled: true };
+      const sanitized = sanitizeUserForResponse(userWith2FA);
+
+      expect(sanitized.twoFactorEnabled).toBe(true);
+    });
+
+    it("should return a new object (not mutate the original)", () => {
+      const sanitized = sanitizeUserForResponse(mockUser);
+
+      expect(sanitized).not.toBe(mockUser);
+      // Original should still have password
+      expect(mockUser.password).toBe("hashed-pw");
+    });
+
+    it("should return exactly the whitelisted property set", () => {
+      const sanitized = sanitizeUserForResponse(mockUser);
+      const keys = Object.keys(sanitized).sort();
+
+      expect(keys).toEqual([
+        "avatar",
+        "createdAt",
+        "email",
+        "firstname",
+        "id",
+        "isVerified",
+        "lastLogin",
+        "lastname",
+        "twoFactorEnabled",
+        "updatedAt",
+        "uuid",
+      ]);
+    });
   });
 });
