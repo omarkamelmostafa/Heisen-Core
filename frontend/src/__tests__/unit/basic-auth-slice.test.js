@@ -1,5 +1,6 @@
 // frontend/src/__tests__/unit/basic-auth-slice.test.js
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer, {
   logout,
