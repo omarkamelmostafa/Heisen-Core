@@ -57,11 +57,7 @@ export const apiResponseManager = (
   }
 
   if (errorCode) {
-    response.errorCode = errorCode
-      ? errorCode
-      : res?.statusMessage
-        ? res?.statusMessage
-        : null;
+    response.errorCode = errorCode;
   }
 
   // Send the response

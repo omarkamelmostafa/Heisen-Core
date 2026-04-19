@@ -46,7 +46,7 @@ export async function registerAndVerify(app, emailServiceMock, overrides = {}) {
 /**
  * Register, verify, and login using an agent for cookie persistence.
  * Returns accessToken, user object with password, and agent for cookie-based tests.
- * Handles 2FA-enabled users by returning accessToken: undefined and requires2FA: true.
+ * Handles 2FA-enabled users by completing the 2FA verification flow.
  */
 export async function registerVerifyAndLogin(app, emailServiceMock, overrides = {}) {
   const agent = request.agent(app);
@@ -82,13 +82,33 @@ export async function registerVerifyAndLogin(app, emailServiceMock, overrides = 
 
   // Handle 2FA-enabled users
   if (loginRes.body.data?.requiresTwoFactor) {
+    const tempToken = loginRes.body.data.tempToken;
+
+    // Get the 2FA code from email mock
+    if (!emailServiceMock.send2faCodeEmail || emailServiceMock.send2faCodeEmail.mock.calls.length === 0) {
+      throw new Error("send2faCodeEmail was not called - cannot complete 2FA verification");
+    }
+    const twoFactorCode = emailServiceMock.send2faCodeEmail.mock.calls[0][1];
+
+    // Complete 2FA verification
+    const verify2faRes = await agent
+      .post("/api/v1/auth/verify-2fa")
+      .send({ token: twoFactorCode, tempToken });
+
+    if (verify2faRes.status !== 200) {
+      throw new Error(`2FA verification failed: ${verify2faRes.status} - ${JSON.stringify(verify2faRes.body)}`);
+    }
+
     return {
       agent,
-      loginRes,
-      accessToken: undefined,
-      requires2FA: true,
-      tempToken: loginRes.body.data.tempToken,
-      user: { ...userData },
+      loginRes: verify2faRes, // Return the final verification response
+      accessToken: verify2faRes.body.data.accessToken,
+      requires2FA: false, // 2FA has been completed
+      user: {
+        ...userData,
+        id: verify2faRes.body.data.user?._id || verify2faRes.body.data.user?.id,
+        password: userData.password,
+      },
     };
   }
 

@@ -72,14 +72,9 @@ describe("Suite C — Refresh Token Tests", () => {
   it("C3: Revoked token (after logout)", async () => {
     const { agent } = await registerVerifyAndLogin(app, emailService);
 
-    const loginRes = await agent.post("/api/v1/auth/refresh");
-    const refreshCookie = loginRes.headers["set-cookie"][0].split(';')[0]; // Extract old session
-
     await agent.post("/api/v1/auth/logout");
 
-    const refreshRes = await request(app)
-      .post("/api/v1/auth/refresh")
-      .set("Cookie", refreshCookie);
+    const refreshRes = await agent.post("/api/v1/auth/refresh");
 
     // Assert: HTTP 401
     expect(refreshRes.status).toBe(401);

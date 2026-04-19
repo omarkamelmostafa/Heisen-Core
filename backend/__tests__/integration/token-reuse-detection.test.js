@@ -7,6 +7,14 @@ import RefreshToken from "../../model/RefreshToken.js";
 import { registerAndVerify, TEST_USER } from "./helpers.js";
 import emailService from "../../services/email/email.service.js";
 
+const seedAgentCookie = (agent, cookie) => {
+  if (!agent?.jar?.setCookie) {
+    throw new Error("Supertest agent cookie jar is unavailable");
+  }
+
+  agent.jar.setCookie(cookie);
+};
+
 // vi.mock() is hoisted — runs before all imports are bound
 vi.mock("../../services/email/email.service.js", () => {
   const mockSendVerificationEmail = vi.fn().mockResolvedValue({ success: true });
@@ -45,8 +53,9 @@ describe("S4: Token Reuse Detection", () => {
     // STEP 1: Register and verify user
     await registerAndVerify(app, emailService);
 
-    // STEP 2: Login to get token1
-    const loginRes = await request(app)
+    // STEP 2: Login to get token1 via persistent session agent
+    const sessionAgent = request.agent(app);
+    const loginRes = await sessionAgent
       .post("/api/v1/auth/login")
       .send({ email: TEST_USER.email, password: TEST_USER.password });
 
@@ -55,9 +64,7 @@ describe("S4: Token Reuse Detection", () => {
     const token1Cookie = cookies1.find((c) => c.startsWith("refresh_token="));
 
     // STEP 3: Refresh to rotate token1 → token2 (token1 becomes revoked+replaced)
-    const refreshRes1 = await request(app)
-      .post("/api/v1/auth/refresh")
-      .set("Cookie", token1Cookie);
+    const refreshRes1 = await sessionAgent.post("/api/v1/auth/refresh");
 
     expect(refreshRes1.status).toBe(200);
     const cookies2 = refreshRes1.headers["set-cookie"];
@@ -72,10 +79,11 @@ describe("S4: Token Reuse Detection", () => {
     expect(revokedToken).toBeTruthy();
     expect(revokedToken.replacedBy).toBeTruthy();
 
-    // STEP 5: Replay token1 (attacker scenario) → trigger mass revocation
-    const reuseRes = await request(app)
-      .post("/api/v1/auth/refresh")
-      .set("Cookie", token1Cookie);
+    // STEP 5: Replay token1 (attacker scenario) via dedicated replay agent → trigger mass revocation
+    const replayAgent = request.agent(app);
+    seedAgentCookie(replayAgent, token1Cookie);
+
+    const reuseRes = await replayAgent.post("/api/v1/auth/refresh");
 
     // LAYER 1: HTTP Status
     expect(reuseRes.status).toBe(401);
@@ -93,9 +101,7 @@ describe("S4: Token Reuse Detection", () => {
     expect(activeTokensCount).toBe(0);
 
     // STEP 6: Verify token2 is also revoked (collateral damage)
-    const token2Res = await request(app)
-      .post("/api/v1/auth/refresh")
-      .set("Cookie", token2Cookie);
+    const token2Res = await sessionAgent.post("/api/v1/auth/refresh");
 
     expect(token2Res.status).toBe(401);
     expect(token2Res.body.errorCode).toBe("TOKEN_REVOKED");

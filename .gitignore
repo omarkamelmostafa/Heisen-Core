@@ -39,6 +39,7 @@ next-env.d.ts
 # Local AI/Windsurf/Speckit tool artifacts (not for repo)
 .agent/
 .agents/
+.qwen/
 .claude/
 .cursor/
 .opencode/
@@ -56,3 +57,7 @@ frontend/.env.local
 frontend/.env.production
 backend/.env
 backend/.env.test
+
+
+# --- History files ---- #
+.history

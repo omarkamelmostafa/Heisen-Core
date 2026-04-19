@@ -47,15 +47,19 @@ describe("S5: Password Reset Session Revocation", () => {
     await registerAndVerify(app, emailService);
 
     // STEP 2: Create multiple active sessions (3 logins)
-    const session1 = await request(app)
+    const session1Agent = request.agent(app);
+    const session2Agent = request.agent(app);
+    const session3Agent = request.agent(app);
+
+    const session1 = await session1Agent
       .post("/api/v1/auth/login")
       .send({ email: TEST_USER.email, password: TEST_USER.password });
 
-    const session2 = await request(app)
+    const session2 = await session2Agent
       .post("/api/v1/auth/login")
       .send({ email: TEST_USER.email, password: TEST_USER.password });
 
-    const session3 = await request(app)
+    const session3 = await session3Agent
       .post("/api/v1/auth/login")
       .send({ email: TEST_USER.email, password: TEST_USER.password });
 
@@ -108,13 +112,9 @@ describe("S5: Password Reset Session Revocation", () => {
     expect(activeTokensAfter).toBe(0);
 
     // STEP 6: Verify all 3 sessions are now invalid
-    const cookie1 = session1.headers["set-cookie"].find(c => c.startsWith("refresh_token="));
-    const cookie2 = session2.headers["set-cookie"].find(c => c.startsWith("refresh_token="));
-    const cookie3 = session3.headers["set-cookie"].find(c => c.startsWith("refresh_token="));
-
-    const refresh1 = await request(app).post("/api/v1/auth/refresh").set("Cookie", cookie1);
-    const refresh2 = await request(app).post("/api/v1/auth/refresh").set("Cookie", cookie2);
-    const refresh3 = await request(app).post("/api/v1/auth/refresh").set("Cookie", cookie3);
+    const refresh1 = await session1Agent.post("/api/v1/auth/refresh");
+    const refresh2 = await session2Agent.post("/api/v1/auth/refresh");
+    const refresh3 = await session3Agent.post("/api/v1/auth/refresh");
 
     expect(refresh1.status).toBe(401);
     expect(refresh2.status).toBe(401);

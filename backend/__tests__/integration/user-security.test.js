@@ -12,12 +12,14 @@ vi.mock("../../services/email/email.service.js", () => {
   const mockSendPasswordResetEmail = vi.fn().mockResolvedValue({ success: true });
   const mockSendWelcomeEmail = vi.fn().mockResolvedValue({ success: true });
   const mockSendResetSuccessEmail = vi.fn().mockResolvedValue({ success: true });
+  const mockSend2faCodeEmail = vi.fn().mockResolvedValue({ success: true });
 
   const mockInstance = {
     sendVerificationEmail: mockSendVerificationEmail,
     sendPasswordResetEmail: mockSendPasswordResetEmail,
     sendWelcomeEmail: mockSendWelcomeEmail,
     sendResetSuccessEmail: mockSendResetSuccessEmail,
+    send2faCodeEmail: mockSend2faCodeEmail,
   };
 
   return {
@@ -45,11 +47,7 @@ describe("User Security Endpoints", () => {
     it("E.1: Successfully changes password", async () => {
       const { accessToken, user } = await registerVerifyAndLogin(app, emailService);
 
-      // Skip if 2FA user
-      if (!accessToken) {
-        console.warn("Skipping test: user has 2FA enabled");
-        return;
-      }
+      expect(accessToken, "helper must complete 2FA and return a real access token").toBeDefined();
 
       const res = await request(app)
         .post("/api/v1/user/security/password")
@@ -76,11 +74,7 @@ describe("User Security Endpoints", () => {
     it("E.2: Rejects incorrect current password", async () => {
       const { accessToken } = await registerVerifyAndLogin(app, emailService);
 
-      // Skip if 2FA user
-      if (!accessToken) {
-        console.warn("Skipping test: user has 2FA enabled");
-        return;
-      }
+      expect(accessToken, "helper must complete 2FA and return a real access token").toBeDefined();
 
       const res = await request(app)
         .post("/api/v1/user/security/password")
@@ -103,7 +97,12 @@ describe("User Security Endpoints", () => {
           newPassword: "NewSecure123!",
         });
 
+      // LAYER 1: HTTP
       expect(res.status).toBe(401);
+
+      // LAYER 2: Body
+      expect(res.body.success).toBe(false);
+      expect(res.body.errorCode).toBe("NO_ACCESS_TOKEN");
     });
   });
 
@@ -111,11 +110,7 @@ describe("User Security Endpoints", () => {
     it("F.1: Enables 2FA", async () => {
       const { accessToken, user } = await registerVerifyAndLogin(app, emailService);
 
-      // Skip if 2FA user
-      if (!accessToken) {
-        console.warn("Skipping test: user has 2FA enabled");
-        return;
-      }
+      expect(accessToken, "helper must complete 2FA and return a real access token").toBeDefined();
 
       const res = await request(app)
         .patch("/api/v1/user/security/2fa")
@@ -137,11 +132,7 @@ describe("User Security Endpoints", () => {
     it("F.2: Disables 2FA", async () => {
       const { accessToken, user } = await registerVerifyAndLogin(app, emailService);
 
-      // Skip if 2FA user
-      if (!accessToken) {
-        console.warn("Skipping test: user has 2FA enabled");
-        return;
-      }
+      expect(accessToken, "helper must complete 2FA and return a real access token").toBeDefined();
 
       // Enable first
       const userDoc = await User.findById(user.id);
@@ -165,7 +156,12 @@ describe("User Security Endpoints", () => {
         .patch("/api/v1/user/security/2fa")
         .send({ enabled: true });
 
+      // LAYER 1: HTTP
       expect(res.status).toBe(401);
+
+      // LAYER 2: Body
+      expect(res.body.success).toBe(false);
+      expect(res.body.errorCode).toBe("NO_ACCESS_TOKEN");
     });
   });
 });
