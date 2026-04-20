@@ -3,6 +3,7 @@
 
 import { useEffect } from "react";
 import ErrorFallback from "@/components/shared/error-fallback";
+import { isDevelopment } from "@/lib/environment";
 
 /**
  * Next.js App Router Segment Error Handler
@@ -10,7 +11,9 @@ import ErrorFallback from "@/components/shared/error-fallback";
 export default function Error({ error, reset }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error("Segment Error Boundary:", error);
+    if (isDevelopment) {
+      console.error("Segment Error Boundary:", error);
+    }
   }, [error]);
 
   return (

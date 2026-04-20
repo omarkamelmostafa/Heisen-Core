@@ -5,10 +5,13 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { AlertCircle, RefreshCw, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { isDevelopment } from "@/lib/environment";
 
 export default function SettingsError({ error, reset }) {
   useEffect(() => {
-    console.error("Settings error:", error);
+    if (isDevelopment) {
+      console.error("Settings error:", error);
+    }
   }, [error]);
 
   const isDev = process.env.NODE_ENV === "development";

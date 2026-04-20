@@ -4,6 +4,7 @@
 import { useEffect } from "react";
 import ErrorFallback from "@/components/shared/error-fallback";
 import { NextIntlClientProvider } from "next-intl";
+import { isDevelopment } from "@/lib/environment";
 
 /**
  * Next.js Global Error Handler
@@ -12,7 +13,9 @@ import { NextIntlClientProvider } from "next-intl";
  */
 export default function GlobalError({ error, reset }) {
   useEffect(() => {
-    console.error("Global error:", error);
+    if (isDevelopment) {
+      console.error("Global error:", error);
+    }
   }, [error]);
 
   // Inline fallback messages since global-error cannot access NextIntlClientProvider context

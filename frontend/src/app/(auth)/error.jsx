@@ -6,11 +6,14 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { AlertCircle, RefreshCw, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { isDevelopment } from "@/lib/environment";
 
 export default function AuthError({ error, reset }) {
   const t = useTranslations("errors");
   useEffect(() => {
-    console.error("Auth error:", error);
+    if (isDevelopment) {
+      console.error("Auth error:", error);
+    }
   }, [error]);
 
   const isDev = process.env.NODE_ENV === "development";

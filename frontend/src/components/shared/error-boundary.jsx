@@ -3,6 +3,7 @@
 
 import React from "react";
 import ErrorFallback from "./error-fallback";
+import { isDevelopment } from "@/lib/environment";
 
 /**
  * Standard React Class-based Error Boundary
@@ -21,7 +22,9 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     // You can also log the error to an error reporting service
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
+    if (isDevelopment) {
+      console.error("ErrorBoundary caught an error:", error, errorInfo);
+    }
   }
 
   handleReset = () => {
