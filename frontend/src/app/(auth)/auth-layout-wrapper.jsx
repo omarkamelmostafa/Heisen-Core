@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export function AuthLayoutWrapper({ children }) {
   return (
-    <main className="flex-1 overflow-y-auto">
+    <main id="main-content" className="flex-1 overflow-y-auto">
       <div className="min-h-[calc(100vh-3.5rem)] flex flex-col">
         <motion.div
           initial={{ opacity: 0, y: 10 }}

@@ -11,15 +11,13 @@ export default function AppLayout({ children }) {
   return (
     <ProtectedGuard>
       <div className="min-h-screen bg-background">
-        <header>
-          <PrivateHeader
-            initials={initials}
-            displayName={displayName}
-            onLogout={handleLogout}
-            avatarUrl={avatar?.url}
-          />
-        </header>
-        <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <PrivateHeader
+          initials={initials}
+          displayName={displayName}
+          onLogout={handleLogout}
+          avatarUrl={avatar?.url}
+        />
+        <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           {children}
         </main>
       </div>

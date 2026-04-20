@@ -1,4 +1,13 @@
 {
+  "accessibility": {
+    "skipToContent": "Skip to main content"
+  },
+  "metadata": {
+    "auth": {
+      "title": "Authentication",
+      "description": "Sign in, sign up, or reset your password to access your account."
+    }
+  },
   "publicNav": {
     "login": "Login",
     "signup": "Sign up"
