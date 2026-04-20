@@ -17,9 +17,7 @@ export default function SettingsLayout({ children }) {
     <>
       <SettingsMobileNav activeId={getActiveSection()} />
       <div className="flex items-start gap-5">
-        <aside>
-          <SettingsSidebar activeId={getActiveSection()} />
-        </aside>
+        <SettingsSidebar activeId={getActiveSection()} />
         <div className="flex-1 min-w-0">
           {children}
         </div>
