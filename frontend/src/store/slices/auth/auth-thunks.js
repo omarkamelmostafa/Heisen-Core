@@ -104,6 +104,20 @@ export const bootstrapAuth = createAppThunk(
   "Session restore failed"
 );
 
+/**
+ * Refresh Token — called by the axios interceptor when token expires.
+ * Returns the new access token but does NOT dispatch to Redux —
+ * the interceptor handles that to avoid double-dispatch.
+ */
+export const refreshAccessToken = createAppThunk(
+  "auth/refreshToken",
+  async (_, { signal }) => {
+    const response = await authService.refreshToken({ signal });
+    return response.data;
+  },
+  "Token refresh failed"
+);
+
 // ==================== LATER ENHANCEMENT THUNKS ====================
 
 /** Verify email */
