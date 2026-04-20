@@ -11,7 +11,7 @@ const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "New Starter Kit API",
+      title: "Heisen Core Kit API",
       version: "1.0.0",
       description: "Full-stack authentication API with JWT access tokens, HTTP-only refresh token cookies, email verification, and password recovery.",
       contact: {
@@ -52,7 +52,7 @@ const swaggerSpec = swaggerJsdoc(options);
 export function mountSwagger(app) {
   app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
     customCss: ".swagger-ui .topbar { display: none }",
-    customSiteTitle: "New Starter Kit API Docs",
+    customSiteTitle: "Heisen Core Kit API Docs",
   }));
 }
 

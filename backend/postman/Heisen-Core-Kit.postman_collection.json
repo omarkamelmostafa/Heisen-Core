@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "New Starter Kit API",
-    "description": "Complete API collection for the New Starter Kit authentication system.\n\nBase URL: {{base_url}}{{api_prefix}}\n\n## Authentication\n- Access Token: Returned in login/refresh response body. Set automatically via test scripts.\n- Refresh Token: HTTP-only cookie set automatically by the server.\n\n## Quick Start\n1. Import this collection and the environment file\n2. Select 'New Starter Kit - Local' environment\n3. Run 'Register' then 'Verify Email' then 'Login'\n4. All authenticated requests will use the saved access token automatically",
+    "name": "Heisen Core Kit API",
+    "description": "Complete API collection for the Heisen Core Kit authentication system.\n\nBase URL: {{base_url}}{{api_prefix}}\n\n## Authentication\n- Access Token: Returned in login/refresh response body. Set automatically via test scripts.\n- Refresh Token: HTTP-only cookie set automatically by the server.\n\n## Quick Start\n1. Import this collection and the environment file\n2. Select 'Heisen Core Kit - Local' environment\n3. Run 'Register' then 'Verify Email' then 'Login'\n4. All authenticated requests will use the saved access token automatically",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [

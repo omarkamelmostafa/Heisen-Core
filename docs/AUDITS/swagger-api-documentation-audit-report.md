@@ -35,7 +35,7 @@
 | Property | Value |
 |----------|-------|
 | OpenAPI Version | 3.1.0 |
-| API Title | New Starter Kit API |
+| API Title | Heisen Core Kit API |
 | API Version | 1.0.0 |
 | Base URL | `/api/v1` |
 | Custom CSS | Hides Swagger topbar |
