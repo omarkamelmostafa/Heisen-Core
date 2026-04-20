@@ -10,15 +10,14 @@ import storeAccessor from "@/store/store-accessor";
 import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
 import { NotificationService } from "@/lib/notifications/notify";
 import { normalizeError } from "@/lib/utils/error-utils";
-import { translateInterceptor } from "@/lib/i18n/api-error-translator";
 
 let isRefreshing = false;
 let failedQueue = [];
 
 const processQueue = (error, token = null) => {
-  failedQueue.forEach(({ resolve, reject }) => {
-    if (error) reject(error);
-    else resolve(token);
+  failedQueue.forEach((prom) => {
+    if (error) prom.reject(error);
+    else prom.resolve(token);
   });
   failedQueue = [];
 };
@@ -26,9 +25,11 @@ const processQueue = (error, token = null) => {
 class BaseClient {
   constructor(baseURL = API_CONFIG.FULL_BASE_URL) {
     this.instance = axios.create({
-      baseURL, // Now uses: http://localhost:3001/api/v1
+      baseURL,
       timeout: API_CONFIG.TIMEOUT,
-      headers: API_CONFIG.HEADERS,
+      headers: {
+        "Content-Type": "application/json",
+      },
       withCredentials: true,
     });
 
@@ -123,15 +124,17 @@ class BaseClient {
 
     const originalRequest = error.config;
 
+    // Handle 401 TOKEN_EXPIRED with refresh
     if (
       error.response?.status === 401 &&
       error.response?.data?.errorCode === "TOKEN_EXPIRED"
     ) {
+      // Already retried - logout and reject
       if (originalRequest._retry) {
         storeAccessor.dispatch(clearCredentials());
         storeAccessor.dispatch(setSessionExpired(true));
 
-        NotificationService.warn(translateInterceptor("sessionExpired"), {
+        NotificationService.warn("sessionExpired", {
           id: "session-expired",
         });
 
@@ -140,6 +143,7 @@ class BaseClient {
 
       originalRequest._retry = true;
 
+      // Queue concurrent requests
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -156,7 +160,6 @@ class BaseClient {
       isRefreshing = true;
 
       return new Promise((resolve, reject) => {
-        // Plain axios instance for refresh to avoid interceptor loop
         axios
           .post(`${API_CONFIG.FULL_BASE_URL}/auth/refresh`, {}, { withCredentials: true })
           .then((res) => {
@@ -170,12 +173,13 @@ class BaseClient {
             resolve(this.instance(originalRequest));
           })
           .catch((err) => {
-            storeAccessor.dispatch(clearCredentials());
-            storeAccessor.dispatch(setSessionExpired(true));
             isRefreshing = false;
             processQueue(err, null);
 
-            NotificationService.warn(translateInterceptor("sessionExpired"), {
+            storeAccessor.dispatch(clearCredentials());
+            storeAccessor.dispatch(setSessionExpired(true));
+
+            NotificationService.warn("sessionExpired", {
               id: "session-expired",
             });
 
@@ -184,47 +188,32 @@ class BaseClient {
       });
     }
 
+    // Handle other HTTP errors
     if (!error.response) {
       error.isGlobalError = true;
-      NotificationService.error(translateInterceptor("networkError"), {
+      NotificationService.error("networkError", {
         id: "global-network",
       });
     } else {
-      if (error.response.status === 403) {
-        const errorCode = error.response?.data?.errorCode;
-        if (errorCode !== "ACCOUNT_NOT_VERIFIED") {
-          error.isGlobalError = true;
-          NotificationService.error(translateInterceptor("forbidden"), {
-            id: "global-403",
-          });
-        }
-      }
-      if (error.response.status === 429) {
-        error.isGlobalError = true;
-        const retryAfter = error.response.headers["retry-after"];
-        let waitMessage = translateInterceptor("rateLimited");
+      const status = error.response.status;
+      const errorCode = error.response?.data?.errorCode;
 
-        if (retryAfter) {
-          const seconds = parseInt(retryAfter, 10);
-          if (!isNaN(seconds)) {
-            const minutes = Math.ceil(seconds / 60);
-            waitMessage = minutes > 1
-              ? translateInterceptor("rateLimitedMinutes", { minutes })
-              : translateInterceptor("rateLimitedSeconds", { seconds });
-          }
-        }
-
-        NotificationService.warn(waitMessage, { id: "global-429" });
-      }
-      if (error.response.status === 500) {
+      if (status === 403 && errorCode !== "ACCOUNT_NOT_VERIFIED") {
         error.isGlobalError = true;
-        NotificationService.error(translateInterceptor("serverError"), {
+        NotificationService.error("forbidden", {
+          id: "global-403",
+        });
+      } else if (status === 429) {
+        error.isGlobalError = true;
+        NotificationService.warn("rateLimited", { id: "global-429" });
+      } else if (status === 500) {
+        error.isGlobalError = true;
+        NotificationService.error("serverError", {
           id: "global-500",
         });
-      }
-      if ([502, 503, 504].includes(error.response.status)) {
+      } else if ([502, 503, 504].includes(status)) {
         error.isGlobalError = true;
-        NotificationService.error(translateInterceptor("serviceUnavailable"), {
+        NotificationService.error("serviceUnavailable", {
           id: "global-5xx",
         });
       }
