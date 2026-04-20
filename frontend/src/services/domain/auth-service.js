@@ -3,8 +3,6 @@
 import { authEndpoints } from "@/services/api/endpoints";
 import { publicClient, privateClient } from "@/services/api/client";
 import { normalizeError, normalizeResponse } from "@/lib/utils/error-utils";
-import StoreAccessor from "@/store/store-accessor";
-import { setAccessToken } from "@/store/slices/auth/auth-slice";
 import { translateApiError } from "@/lib/i18n/api-error-translator";
 
 /**
@@ -76,8 +74,8 @@ class AuthService {
    * The backend returns a new access token in the response body
    * and sets a rotated refresh token via Set-Cookie.
    *
-   * This method also stores the new access token in Redux state,
-   * so subsequent requests from private-client can inject it.
+   * Note: This service is stateless. The caller (thunk) is responsible
+   * for dispatching the new access token to Redux state.
    */
   async refreshToken(config = {}) {
     try {
@@ -86,19 +84,7 @@ class AuthService {
         {},
         config
       );
-      const normalized = normalizeResponse(response);
-
-      // Store the new access token in Redux memory
-      const accessToken = normalized.data?.data?.accessToken;
-      if (accessToken) {
-        try {
-          StoreAccessor.dispatch(setAccessToken(accessToken));
-        } catch {
-          // Store not yet initialized — bootstrapAuth handles this
-        }
-      }
-
-      return normalized;
+      return normalizeResponse(response);
     } catch (error) {
       throw normalizeError(error, translateApiError(error?.errorCode, "Token refresh failed"));
     }

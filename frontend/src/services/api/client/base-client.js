@@ -7,7 +7,7 @@ import {
   ERROR_MESSAGES,
 } from "@/lib/config/api-config";
 import storeAccessor from "@/store/store-accessor";
-import { clearCredentials, setSessionExpired, updateAccessToken } from "@/store/slices/auth/auth-slice";
+import { clearCredentials, setSessionExpired, setAccessToken } from "@/store/slices/auth/auth-slice";
 import { NotificationService } from "@/lib/notifications/notify";
 import { normalizeError } from "@/lib/utils/error-utils";
 
@@ -164,7 +164,7 @@ class BaseClient {
           .post(`${API_CONFIG.FULL_BASE_URL}/auth/refresh`, {}, { withCredentials: true })
           .then((res) => {
             const newAccessToken = res.data?.data?.accessToken;
-            storeAccessor.dispatch(updateAccessToken(newAccessToken));
+            storeAccessor.dispatch(setAccessToken(newAccessToken));
 
             isRefreshing = false;
             processQueue(null, newAccessToken);

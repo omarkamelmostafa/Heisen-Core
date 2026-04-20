@@ -53,6 +53,8 @@ class RefreshQueue {
 
     // Log results for monitoring
     this.logRetryResults(results);
+
+    return newToken;
   }
 
   /**
@@ -101,13 +103,14 @@ class RefreshQueue {
     try {
       // Call auth service directly (no intermediary)
       // Backend sets new cookies automatically via withCredentials
-      await authService.refreshToken();
+      const response = await authService.refreshToken();
+      const newAccessToken = response.data?.data?.accessToken;
 
-      // Process all queued requests
-      await this.processQueue();
+      // Process all queued requests with the new token
+      await this.processQueue(newAccessToken);
 
       this.isRefreshing = false;
-      return true;
+      return { success: true, accessToken: newAccessToken };
 
     } catch (error) {
       this.isRefreshing = false;

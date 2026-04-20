@@ -82,16 +82,15 @@ class PrivateClient extends BaseClient {
     // PATH 2: Expired token — attempt refresh via queue
     if (this.shouldRetryWithRefresh(error, originalRequest)) {
       try {
-        await refreshQueue.handleTokenRefresh({
+        const refreshResult = await refreshQueue.handleTokenRefresh({
           config: originalRequest,
           instance: this.instance,
           error: error,
         });
 
         // After successful refresh, re-inject the new access token
-        // (the refresh thunk/service will have updated Redux state)
-        const state = StoreAccessor.getState();
-        const newToken = state?.auth?.accessToken;
+        // The queue returns the new token directly from the service response
+        const newToken = refreshResult?.accessToken;
         if (newToken) {
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
         }
